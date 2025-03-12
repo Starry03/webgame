@@ -33,3 +33,50 @@ npm run dev
 cd ./backend/app
 ./.venv/bin/python ./main.py
 ```
+
+## Info
+
+### Menu
+
+- levels overview
+
+### Game UI
+
+- map preview (small -> big on click)
+- players stats
+
+### Player
+
+- hp
+- attack
+- def
+- mana points
+- speed
+- exp
+  
+### Objects
+
+- potions
+  - health
+  - mana
+- stat boosters
+  - atk
+  - def
+- compass (default)
+
+### Shop
+
+- enchanments
+  - poisoning ( x seconds )
+  - paralysis ( 2 seconds )
+
+### Enemies
+
+- wizard
+- soldier
+- tank
+- healer
+
+### Boss
+
+- all-abilities
