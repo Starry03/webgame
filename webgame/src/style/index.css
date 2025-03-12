@@ -1,0 +1,98 @@
+:root {
+	--black: #222121;
+	--white: #f0f0f0;
+	--accent-color: #2c302c;
+	--secondary-color: #f0f0f0;
+	--shadow-color: #797979e3;
+	--font-small: 0.8rem;
+	--font-mid: 1.2rem;
+	--font-big: 1.6rem;
+	--font-biggest: 2rem;
+}
+
+
+@font-face {
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 400;
+	src: local("Roboto") url("./fonts/Roboto-VariableFont_wdth,wght.ttf") format("ttf");
+}
+
+* {
+	padding: 0;
+	margin: 0;
+	border: 0;
+	font-family: "Roboto";
+}
+
+.app {
+	padding: 8px;
+}
+
+.flex {
+	display: flex;
+}
+
+.flex-column {
+	flex-direction: column;
+}
+
+.flex-row {
+	flex-direction: row;
+}
+
+.flex-center {
+	justify-content: center;
+	align-items: center;
+}
+
+.gap-mid {
+	gap: 1rem;
+}
+
+.gap-big {
+	gap: 2rem;
+}
+
+.font-small {
+	font-size: var(--font-small);
+}
+
+.font-mid {
+	font-size: var(--font-mid);
+}
+
+.font-big {
+	font-size: var(--font-big);
+}
+
+.font-biggest {
+	font-size: var(--font-biggest);
+}
+
+.text-color {
+	color: var(--text-color);
+}
+
+.button {
+	width: 128px;
+	height: 48px;
+	padding: 8px 16px;
+	border-radius: 12px;
+	cursor: pointer;
+	color: var(--white);
+	font-size: var(--font-mid);
+	text-transform: uppercase;
+	font-weight: 800;
+}
+
+.button-primary {
+	background-color: var(--accent-color);
+	color: var(--white);
+}
+
+.button-secondary {
+	background-color: var(--white);
+	color: var(--black);
+	border: 2px solid var(--black);
+}

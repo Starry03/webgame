@@ -1,1 +1,5 @@
+# project
 backend/.venv
+
+# generic
+.env

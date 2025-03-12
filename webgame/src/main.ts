@@ -1,6 +1,23 @@
-import './assets/main.css'
-
+import './style/index.css'
 import { createApp } from 'vue'
 import App from './App.vue'
 
-createApp(App).mount('#app')
+import { createWebHashHistory, createRouter } from 'vue-router'
+import Settings from './pages/settings/Settings.vue'
+import Game from './pages/game/Game.vue'
+import Menu from './pages/menu/Menu.vue'
+import Shop from './pages/shop/Shop.vue'
+
+const routes = [
+	{ path: '/', component: Menu },
+	{ path: '/settings', component: Settings },
+	{ path: '/game', component: Game },
+	{ path: '/shop', component: Shop },
+]
+
+const router = createRouter({
+	history: createWebHashHistory(),
+	routes,
+})
+
+createApp(App).use(router).mount('#app')
