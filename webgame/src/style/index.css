@@ -26,7 +26,7 @@
 }
 
 .app {
-	padding: 8px;
+
 }
 
 .flex {
@@ -44,6 +44,10 @@
 .flex-center {
 	justify-content: center;
 	align-items: center;
+}
+
+.flex-space-between {
+	justify-content: space-between;
 }
 
 .gap-mid {
@@ -95,4 +99,14 @@
 	background-color: var(--white);
 	color: var(--black);
 	border: 2px solid var(--black);
+}
+
+#canvas {
+	background-color: var(--black);
+}
+
+#game-header {
+	min-height: 48px;
+	background-color: var(--black);
+	border-bottom: 1px solid var(--white);
 }

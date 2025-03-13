@@ -1,6 +1,4 @@
-<script>
-export default {
-    name: 'Shop',
-};
+<script setup>
+
 </script>
 <template>Shop</template>

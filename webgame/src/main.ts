@@ -7,12 +7,14 @@ import Settings from './pages/settings/Settings.vue'
 import Game from './pages/game/Game.vue'
 import Menu from './pages/menu/Menu.vue'
 import Shop from './pages/shop/Shop.vue'
+import Tutorial from './pages/tutorial/Tutorial.vue'
 
 const routes = [
 	{ path: '/', component: Menu },
 	{ path: '/settings', component: Settings },
 	{ path: '/game', component: Game },
 	{ path: '/shop', component: Shop },
+	{ path: '/tutorial', component: Tutorial}
 ]
 
 const router = createRouter({
