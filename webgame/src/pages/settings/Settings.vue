@@ -1,4 +1,2 @@
-<script setup>
-
-</script>
+<script setup></script>
 <template>Settings</template>

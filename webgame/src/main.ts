@@ -10,16 +10,16 @@ import Shop from './pages/shop/Shop.vue'
 import Tutorial from './pages/tutorial/Tutorial.vue'
 
 const routes = [
-	{ path: '/', component: Menu },
-	{ path: '/settings', component: Settings },
-	{ path: '/game', component: Game },
-	{ path: '/shop', component: Shop },
-	{ path: '/tutorial', component: Tutorial}
+  { path: '/', component: Menu },
+  { path: '/settings', component: Settings },
+  { path: '/game', component: Game },
+  { path: '/shop', component: Shop },
+  { path: '/tutorial', component: Tutorial },
 ]
 
 const router = createRouter({
-	history: createWebHashHistory(),
-	routes,
+  history: createWebHashHistory(),
+  routes,
 })
 
 createApp(App).use(router).mount('#app')

@@ -1,4 +1,3 @@
-<script setup>
-</script>
+<script setup></script>
 
 <template>tutorial</template>
