@@ -3,3 +3,8 @@ backend/.venv
 
 # generic
 .env
+test/
+
+# python
+.pyc
+__pycache__/
