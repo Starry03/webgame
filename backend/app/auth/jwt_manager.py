@@ -15,14 +15,6 @@ class JWTManager:
     __EXPIRATION_TIME_MIN = getenv("JWT_EXPIRES_IN_MIN", default=60)
 
     @staticmethod
-    def __verify_password(plain_password, hashed_password) -> bool:
-        return JWTManager.__pwd_context.verify(plain_password, hashed_password)
-
-    @staticmethod
-    def __get_hashed(data) -> str:
-        return JWTManager.__pwd_context.hash(data)
-
-    @staticmethod
     def __get_token(to_encode: dict, delta_time: timedelta) -> str:
         expire = datetime.now(timezone.utc) + delta_time
         to_encode.update({"exp": expire})

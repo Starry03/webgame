@@ -12,6 +12,13 @@ class RSAManager:
     __KEY_SIZE: int = 2048
 
     @staticmethod
+    def from_base64(base64_str: str) -> bytes:
+        return base64.b64decode(base64_str)
+    
+    def to_base64(data: bytes) -> str:
+        return base64.b64encode(data).decode("utf-8")
+
+    @staticmethod
     def get_public_key() -> str:
         if not path.exists(RSAManager.__PUBLIC_KEY_PATH):
             RSAManager.__generate_key_pair()
@@ -40,6 +47,25 @@ class RSAManager:
                 label=None,
             ),
         )
+
+    @staticmethod
+    def encrypt(plain: bytes, key: rsa.RSAPublicKey | None) -> bytes:
+        print(f"plain: {len(plain)} key: {key.key_size}")
+        if key is None:
+            with open(RSAManager.__PUBLIC_KEY_PATH, "rb") as file:
+                key = serialization.load_pem_public_key(file.read())
+        try:
+            return key.encrypt(
+                plain,
+                padding=padding.OAEP(
+                    mgf=padding.MGF1(algorithm=hashes.SHA1()),
+                    algorithm=hashes.SHA1(),
+                    label=None,
+                ),
+            )
+        except Exception as e:
+            print('exception in encryption', e)
+            return b""
 
     @staticmethod
     def __generate_key_pair():

@@ -1,9 +1,15 @@
 import secrets
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 
+from app.auth.models import UserSession
 
 class AESManager:
     __BITS: int = 256
+
+    @staticmethod
+    def generate_session() -> UserSession:
+        sym_key = AESManager.__generate_key()
+        return UserSession(sym_key=sym_key.hex())
 
     @staticmethod
     def __generate_key():

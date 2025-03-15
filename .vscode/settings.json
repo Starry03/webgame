@@ -5,7 +5,7 @@
             "server": "localhost",
             "port": 5432,
             "driver": "PostgreSQL",
-            "name": "gamedev",
+            "name": "webgame",
             "database": "game",
             "username": "postgres",
             "password": "7070"

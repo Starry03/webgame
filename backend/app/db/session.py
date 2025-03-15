@@ -1,4 +1,5 @@
 from typing import Generator
+from contextlib import contextmanager
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
@@ -16,13 +17,14 @@ SQLALCHEMY_DATABASE_URL = f"postgresql://{USER}:{PASSWORD}@{HOST}/{DATABASE}"
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-# is connected?
 try:
     engine.connect()
+    print(f"Database connected at {HOST}:{PORT}")
 except Exception as e:
     print(f"Error: {e}")
 
 
+@contextmanager
 def get_db_session() -> Generator[Session]:
     db = session()
     try:

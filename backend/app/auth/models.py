@@ -9,3 +9,12 @@ class Credentials(BaseModel):
 class Token(BaseModel):
     access_token: str
     token_type: str
+
+
+class UserSession(BaseModel):
+    sym_key: str
+
+
+class UserSessionResponse(BaseModel):
+    token: Token
+    session_key: UserSession

@@ -1,10 +1,18 @@
+import json
+
 from fastapi import Request
 from fastapi.routing import APIRouter
 from fastapi.responses import JSONResponse
-from app.auth.rsa_manager import RSAManager
+from starlette.status import HTTP_401_UNAUTHORIZED
+from cryptography.hazmat.primitives.asymmetric.rsa import RSAPublicKey
+from cryptography.hazmat.primitives import serialization
 
+from app.auth.rsa_manager import RSAManager
 from app.auth.models import Credentials
 from app.auth.jwt_manager import JWTManager
+from app.auth.auth_manager import AuthManager
+from app.auth.models import UserSession, UserSessionResponse
+from app.auth.aes_manager import AESManager
 
 router = APIRouter(prefix="/auth")
 
@@ -16,10 +24,34 @@ def public_key() -> dict:
 
 
 @router.post("/login")
-async def login(request: Request) -> JSONResponse:
+async def login(request: Request):
     data = await request.json()
-    username = data.get("username")
-    password = data.get("password")
-    # validation
+    decrypted_data = json.loads(data.get("decrypted_data"))
+    plain_data = data.get("plain_data")
+    username = decrypted_data.get("username")
+    password = decrypted_data.get("password")
+    client_public_key = plain_data
+
+    print(f"username: {username}")
+    print(f"password: {password}")
+    print(f"client_public_key: {client_public_key}")
+
+    current_user = AuthManager.get_user_from_password(username, password)
+    if current_user is None:
+        return JSONResponse(
+            content={"detail": "Incorrect username or password"},
+            status_code=HTTP_401_UNAUTHORIZED,
+        )
+
+    session: UserSession = AESManager.generate_session()
     token = JWTManager.create_token(Credentials(username=username, password=password))
-    return JSONResponse(content=token)
+
+    res = UserSessionResponse(token=token, session_key=session)
+    string_res = json.dumps(res.model_dump()).encode("utf-8")
+
+    encrypted_res = RSAManager.encrypt(
+        string_res,
+        key=serialization.load_pem_public_key(client_public_key.encode("utf-8")),
+    )
+    encrypted_res_64 = RSAManager.to_base64(encrypted_res)
+    return JSONResponse(content=encrypted_res_64)
