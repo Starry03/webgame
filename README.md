@@ -15,7 +15,7 @@ npm run format
 ```sh
 cd backend
 python -m venv .venv
-backend/.venv/bin/pip install -r /path/to/requirements.txt
+pip install -r /path/to/requirements.txt
 ```
 
 ## Run (devel)
