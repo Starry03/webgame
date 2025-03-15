@@ -1,7 +1,12 @@
 import secrets
+import datetime
+
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+from sqlalchemy import text
 
 from app.auth.models import UserSession
+from app.db.session import get_db_session
+
 
 class AESManager:
     __BITS: int = 256
@@ -9,7 +14,16 @@ class AESManager:
     @staticmethod
     def generate_session() -> UserSession:
         sym_key = AESManager.__generate_key()
-        return UserSession(sym_key=sym_key.hex())
+        exp_time = datetime.datetime.now() + datetime.timedelta(days=1)
+        with get_db_session() as session:
+            res = session.execute(
+                text(
+                    "INSERT INTO public.session (key, expires_at) VALUES (:sym_key, :expires_at) RETURNING id"
+                ),
+                {"sym_key": sym_key, "expires_at": exp_time},
+            ).fetchone()[0]
+            session.commit()
+            return UserSession(ID=res, sym_key=sym_key.hex())
 
     @staticmethod
     def __generate_key():

@@ -4,7 +4,6 @@ from fastapi import Request
 from fastapi.routing import APIRouter
 from fastapi.responses import JSONResponse
 from starlette.status import HTTP_401_UNAUTHORIZED
-from cryptography.hazmat.primitives.asymmetric.rsa import RSAPublicKey
 from cryptography.hazmat.primitives import serialization
 
 from app.auth.rsa_manager import RSAManager
@@ -32,10 +31,6 @@ async def login(request: Request):
     password = decrypted_data.get("password")
     client_public_key = plain_data
 
-    print(f"username: {username}")
-    print(f"password: {password}")
-    print(f"client_public_key: {client_public_key}")
-
     current_user = AuthManager.get_user_from_password(username, password)
     if current_user is None:
         return JSONResponse(
@@ -45,8 +40,7 @@ async def login(request: Request):
 
     session: UserSession = AESManager.generate_session()
     token = JWTManager.create_token(Credentials(username=username, password=password))
-
-    res = UserSessionResponse(token=token, session_key=session)
+    res = UserSessionResponse(token=token, session=session)
     string_res = json.dumps(res.model_dump()).encode("utf-8")
 
     encrypted_res = RSAManager.encrypt(

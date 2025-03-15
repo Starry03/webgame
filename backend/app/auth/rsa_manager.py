@@ -50,7 +50,6 @@ class RSAManager:
 
     @staticmethod
     def encrypt(plain: bytes, key: rsa.RSAPublicKey | None) -> bytes:
-        print(f"plain: {len(plain)} key: {key.key_size}")
         if key is None:
             with open(RSAManager.__PUBLIC_KEY_PATH, "rb") as file:
                 key = serialization.load_pem_public_key(file.read())

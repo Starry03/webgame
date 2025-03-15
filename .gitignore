@@ -1,8 +1,7 @@
 # project
 backend/.venv
 node_modules/
-private_key.pem
-public_key.pem
+*.pem
 
 # generic
 .env

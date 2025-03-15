@@ -12,9 +12,10 @@ class Token(BaseModel):
 
 
 class UserSession(BaseModel):
+    ID: int
     sym_key: str
 
 
 class UserSessionResponse(BaseModel):
     token: Token
-    session_key: UserSession
+    session: UserSession
