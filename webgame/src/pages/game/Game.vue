@@ -2,6 +2,7 @@
 import { onMounted, onUnmounted, ref } from 'vue'
 import Map from '../../components/Map.vue'
 import HealthBar from '../../components/Healthbar.vue'
+import Header from '../../components/Header.vue'
 const window_width = ref(window.innerWidth)
 const window_height = ref(window.innerHeight)
 
@@ -19,6 +20,7 @@ onUnmounted(() => {
 })
 </script>
 <template>
+  <br><Header />
   <div class="flex flex-column">
     <div class="flex flex-row flex-space-between" id="game-header">
       <Map />

@@ -1,2 +1,4 @@
 <script setup></script>
-<template>Shop</template>
+<template>
+Shop
+</template>
