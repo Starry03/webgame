@@ -1,9 +1,10 @@
 import json
 
-from fastapi import Request
+from fastapi import Request, Depends
 from fastapi.routing import APIRouter
 from fastapi.responses import JSONResponse
-from starlette.status import HTTP_401_UNAUTHORIZED
+from jwt import InvalidTokenError
+from starlette.status import HTTP_401_UNAUTHORIZED, HTTP_500_INTERNAL_SERVER_ERROR
 from cryptography.hazmat.primitives import serialization
 
 from app.auth.rsa_manager import RSAManager
@@ -49,3 +50,21 @@ async def login(request: Request):
     )
     encrypted_res_64 = RSAManager.to_base64(encrypted_res)
     return JSONResponse(content=encrypted_res_64)
+
+
+@router.post("/verify-token")
+async def verify_token(token: str = Depends(JWTManager.passoauth2_scheme)):
+    try:
+        token_data = JWTManager.decode_token(token)
+        return JSONResponse(content={"detail": "Token is valid"})
+    except InvalidTokenError as e:
+        print(e)
+        return JSONResponse(
+            content={"detail": "Token is invalid"}, status_code=HTTP_401_UNAUTHORIZED
+        )
+    except Exception as e:
+        print(e)
+        return JSONResponse(
+            content={"detail": "Server error"}, status_code=HTTP_500_INTERNAL_SERVER_ERROR
+        )
+

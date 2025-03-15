@@ -20,7 +20,7 @@ class AESManager:
                 text(
                     "INSERT INTO public.session (key, expires_at) VALUES (:sym_key, :expires_at) RETURNING id"
                 ),
-                {"sym_key": sym_key, "expires_at": exp_time},
+                {"sym_key": sym_key.hex(), "expires_at": exp_time},
             ).fetchone()[0]
             session.commit()
             return UserSession(ID=res, sym_key=sym_key.hex())

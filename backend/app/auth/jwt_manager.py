@@ -9,7 +9,7 @@ from app.auth.models import Credentials, Token
 
 
 class JWTManager:
-    __passoauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+    passoauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
     __pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
     __EXPIRATION_TIME_MIN = getenv("JWT_EXPIRES_IN_MIN", default=60)
@@ -27,3 +27,7 @@ class JWTManager:
         expiration_time_min = timedelta(minutes=JWTManager.__EXPIRATION_TIME_MIN)
         token = JWTManager.__get_token(data.model_dump(), expiration_time_min)
         return Token(access_token=token, token_type="bearer")
+    
+    @staticmethod
+    def decode_token(token: str) -> dict:
+        return jwt.decode(token, getenv("JWT_SECRET"), algorithms=[getenv("JWT_ALGORITHM")])
