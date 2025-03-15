@@ -32,7 +32,7 @@ npm run dev
 ```sh
 # temporary
 cd ./backend
-/home/starry/Documents/coding/repos/webgame/backend/.venv/bin/uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
 ## Info
@@ -50,7 +50,7 @@ cd ./backend
 
 - hp
 - attack
-- def
+- defbin
 - mana points
 - speed
 - exp
