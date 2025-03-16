@@ -1,6 +1,8 @@
 import json
 
 from fastapi import Request, Depends
+from fastapi.encoders import jsonable_encoder
+from fastapi.logger import logger
 from fastapi.routing import APIRouter
 from fastapi.responses import JSONResponse
 from jwt import InvalidTokenError
@@ -13,7 +15,6 @@ from app.auth.jwt_manager import JWTManager
 from app.auth.auth_manager import AuthManager
 from app.auth.models import UserSession, UserSessionResponse
 from app.auth.aes_manager import AESManager
-from app.auth.encoders import DateTimeEncoder
 
 router = APIRouter(prefix="/auth")
 
@@ -43,7 +44,7 @@ async def login(request: Request):
     session: UserSession = AESManager.generate_session()
     token = JWTManager.create_token(Credentials(username=username, password=password))
     res = UserSessionResponse(token=token, session=session)
-    string_res = json.dumps(res.model_dump(), cls=DateTimeEncoder).encode("utf-8")
+    string_res = json.dumps(jsonable_encoder(res)).encode("utf-8")
 
     encrypted_res = RSAManager.encrypt(
         string_res,
@@ -57,15 +58,15 @@ async def login(request: Request):
 async def verify_token(token: str = Depends(AuthManager.get_token_header)):
     try:
         _ = JWTManager.decode_token(token)
-        return JSONResponse(content={"detail": "Token is valid"})
+        return JSONResponse(content={"detail": "Valid token"})
     except InvalidTokenError as e:
-        print('error:', e)
+        logger.error(e)
         return JSONResponse(
-            content={"detail": "Token is invalid"}, status_code=HTTP_401_UNAUTHORIZED
+            content={"detail": "Invalid token"}, status_code=HTTP_401_UNAUTHORIZED
         )
     except Exception as e:
-        print('error:', e)
+        logger.error(e)
         return JSONResponse(
-            content={"detail": "Server error"}, status_code=HTTP_500_INTERNAL_SERVER_ERROR
+            content={"detail": "Server error"},
+            status_code=HTTP_500_INTERNAL_SERVER_ERROR,
         )
-

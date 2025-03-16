@@ -1,6 +1,6 @@
-import secrets
 import datetime
-import os
+from secrets import token_bytes
+from os import urandom
 
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from sqlalchemy import text
@@ -29,11 +29,11 @@ class AESManager:
 
     @staticmethod
     def __generate_key():
-        return secrets.token_bytes(AESManager.__BITS // 8)
+        return token_bytes(AESManager.__BITS // 8)
 
     @staticmethod
     def encrypt(data: bytes, key: bytes | str) -> bytes:
-        nonce = os.urandom(AESManager.__NONCE_SIZE)
+        nonce = urandom(AESManager.__NONCE_SIZE)
         algo = algorithms.AES(key)
         cipher = Cipher(algo, modes.CTR(nonce))
         encryptor = cipher.encryptor()

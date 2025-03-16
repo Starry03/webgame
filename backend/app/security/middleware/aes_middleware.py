@@ -1,6 +1,7 @@
 import base64
 
-from fastapi import Request, logger
+from fastapi import Request
+from fastapi.logger import logger
 from fastapi.responses import JSONResponse
 from starlette.status import HTTP_400_BAD_REQUEST, HTTP_401_UNAUTHORIZED
 from starlette.middleware.base import BaseHTTPMiddleware
@@ -44,7 +45,7 @@ class AESDecryptionMiddleware(BaseHTTPMiddleware):
             )
             await self.decrypt_body(request=request, session_key=user_session.sym_key)
         except Exception as e:
-            logger.logger.error(e)
+            logger.error(e)
             return JSONResponse(
                 content={"detail": "bad request"},
                 status_code=HTTP_400_BAD_REQUEST,
