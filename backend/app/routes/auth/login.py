@@ -13,6 +13,7 @@ from app.auth.jwt_manager import JWTManager
 from app.auth.auth_manager import AuthManager
 from app.auth.models import UserSession, UserSessionResponse
 from app.auth.aes_manager import AESManager
+from app.auth.encoders import DateTimeEncoder
 
 router = APIRouter(prefix="/auth")
 
@@ -42,7 +43,7 @@ async def login(request: Request):
     session: UserSession = AESManager.generate_session()
     token = JWTManager.create_token(Credentials(username=username, password=password))
     res = UserSessionResponse(token=token, session=session)
-    string_res = json.dumps(res.model_dump()).encode("utf-8")
+    string_res = json.dumps(res.model_dump(), cls=DateTimeEncoder).encode("utf-8")
 
     encrypted_res = RSAManager.encrypt(
         string_res,
@@ -55,7 +56,7 @@ async def login(request: Request):
 @router.post("/verify-token")
 async def verify_token(token: str = Depends(AuthManager.get_token_header)):
     try:
-        token_data = JWTManager.decode_token(token)
+        _ = JWTManager.decode_token(token)
         return JSONResponse(content={"detail": "Token is valid"})
     except InvalidTokenError as e:
         print('error:', e)

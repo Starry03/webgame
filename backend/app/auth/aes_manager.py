@@ -25,14 +25,14 @@ class AESManager:
                 {"sym_key": sym_key.hex(), "expires_at": exp_time},
             ).fetchone()[0]
             session.commit()
-            return UserSession(ID=res, sym_key=sym_key.hex())
+            return UserSession(ID=res, sym_key=sym_key.hex(), expiration_date=exp_time)
 
     @staticmethod
     def __generate_key():
         return secrets.token_bytes(AESManager.__BITS // 8)
 
     @staticmethod
-    def encrypt(data: bytes, key: bytes) -> bytes:
+    def encrypt(data: bytes, key: bytes | str) -> bytes:
         nonce = os.urandom(AESManager.__NONCE_SIZE)
         algo = algorithms.AES(key)
         cipher = Cipher(algo, modes.CTR(nonce))

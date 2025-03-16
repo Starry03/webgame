@@ -1,5 +1,4 @@
 from fastapi.security import OAuth2PasswordBearer
-from passlib.context import CryptContext
 import jwt
 
 from os import getenv
@@ -10,8 +9,6 @@ from app.auth.models import Credentials, Token
 
 class JWTManager:
     passoauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
-    __pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
     __EXPIRATION_TIME_MIN = getenv("JWT_EXPIRES_IN_MIN", default=60)
 
     @staticmethod
@@ -27,7 +24,17 @@ class JWTManager:
         expiration_time_min = timedelta(minutes=JWTManager.__EXPIRATION_TIME_MIN)
         token = JWTManager.__get_token(data.model_dump(), expiration_time_min)
         return Token(access_token=token, token_type="bearer")
-    
+
     @staticmethod
     def decode_token(token: str) -> dict:
-        return jwt.decode(token, getenv("JWT_SECRET"), algorithms=[getenv("JWT_ALGORITHM")])
+        token = jwt.decode(
+            token, getenv("JWT_SECRET"), algorithms=[getenv("JWT_ALGORITHM")]
+        )
+        return JWTManager.checked_token(token)
+
+    @staticmethod
+    def checked_token(decoded_token: str) -> str:
+        expiration_time = datetime.fromtimestamp(decoded_token.get("exp"), timezone.utc)
+        if expiration_time < datetime.now(timezone.utc):
+            raise jwt.InvalidTokenError("Token has expired")
+        return decoded_token

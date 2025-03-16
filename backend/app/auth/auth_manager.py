@@ -1,8 +1,12 @@
-from sqlalchemy.sql import text
+import datetime
 import hashlib
-from app.db.session import get_db_session
+
+from sqlalchemy.sql import text
 from fastapi import Request, HTTPException
 from starlette.status import HTTP_401_UNAUTHORIZED
+
+from app.db.session import get_db_session
+from app.auth.models import UserSession
 
 
 class AuthManager:
@@ -17,6 +21,23 @@ class AuthManager:
                 params={"username": username, "password": password},
             )
             return result.fetchone()
+
+    @staticmethod
+    def is_session_expired(session: UserSession) -> bool:
+        return session.expiration_date < datetime.datetime.now()
+
+    @staticmethod
+    def get_user_session(_id: int) -> UserSession | None:
+        with get_db_session() as session:
+            res = session.execute(
+                text("SELECT * FROM public.session WHERE id = :id"), {"id": _id}
+            ).fetchone()
+            if res is None:
+                return None
+            session = UserSession(ID=res[0], sym_key=res[1], expiration_date=res[2])
+            if AuthManager.is_session_expired(session):
+                return None
+            return session
 
     @staticmethod
     def __get_hashed(data: str) -> str:

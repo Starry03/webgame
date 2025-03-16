@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+import datetime
 
 
 class Credentials(BaseModel):
@@ -14,6 +15,7 @@ class Token(BaseModel):
 class UserSession(BaseModel):
     ID: int
     sym_key: str
+    expiration_date: datetime.datetime
 
 
 class UserSessionResponse(BaseModel):
