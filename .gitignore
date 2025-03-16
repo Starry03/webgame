@@ -5,6 +5,8 @@ node_modules/
 
 # generic
 .env
+.vscode/
+.idea/
 test/
 
 # python

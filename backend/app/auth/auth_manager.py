@@ -1,6 +1,9 @@
 from sqlalchemy.sql import text
 import hashlib
 from app.db.session import get_db_session
+from fastapi import Request, HTTPException
+from starlette.status import HTTP_401_UNAUTHORIZED
+
 
 class AuthManager:
     @staticmethod
@@ -18,3 +21,11 @@ class AuthManager:
     @staticmethod
     def __get_hashed(data: str) -> str:
         return hashlib.sha256(data.encode("utf-8")).hexdigest()
+
+    async def get_token_header(request: Request) -> str:
+        token = getattr(request.state, "Authorization_jwt", None)
+        if token is None:
+            raise HTTPException(
+                status_code=HTTP_401_UNAUTHORIZED, detail="Token missing"
+            )
+        return token

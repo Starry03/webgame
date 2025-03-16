@@ -53,17 +53,17 @@ async def login(request: Request):
 
 
 @router.post("/verify-token")
-async def verify_token(token: str = Depends(JWTManager.passoauth2_scheme)):
+async def verify_token(token: str = Depends(AuthManager.get_token_header)):
     try:
         token_data = JWTManager.decode_token(token)
         return JSONResponse(content={"detail": "Token is valid"})
     except InvalidTokenError as e:
-        print(e)
+        print('error:', e)
         return JSONResponse(
             content={"detail": "Token is invalid"}, status_code=HTTP_401_UNAUTHORIZED
         )
     except Exception as e:
-        print(e)
+        print('error:', e)
         return JSONResponse(
             content={"detail": "Server error"}, status_code=HTTP_500_INTERNAL_SERVER_ERROR
         )

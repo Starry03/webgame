@@ -1,5 +1,6 @@
 import secrets
 import datetime
+import os
 
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from sqlalchemy import text
@@ -10,6 +11,7 @@ from app.db.session import get_db_session
 
 class AESManager:
     __BITS: int = 256
+    __NONCE_SIZE: int = 16
 
     @staticmethod
     def generate_session() -> UserSession:
@@ -31,14 +33,20 @@ class AESManager:
 
     @staticmethod
     def encrypt(data: bytes, key: bytes) -> bytes:
+        nonce = os.urandom(AESManager.__NONCE_SIZE)
         algo = algorithms.AES(key)
-        cipher = Cipher(algo, modes.CTR())
+        cipher = Cipher(algo, modes.CTR(nonce))
         encryptor = cipher.encryptor()
-        return encryptor.update(data) + encryptor.finalize()
+        cipher_text = encryptor.update(data) + encryptor.finalize()
+        return nonce + cipher_text
 
     @staticmethod
     def decrypt(data: bytes, key: bytes) -> bytes:
+        nonce, message = (
+            data[: AESManager.__NONCE_SIZE],
+            data[AESManager.__NONCE_SIZE :],
+        )
         algo = algorithms.AES(key)
-        cipher = Cipher(algo, modes.CTR())
+        cipher = Cipher(algo, modes.CTR(nonce))
         decryptor = cipher.decryptor()
-        return decryptor.update(data) + decryptor.finalize()
+        return decryptor.update(message) + decryptor.finalize()

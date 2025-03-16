@@ -38,12 +38,12 @@ class AESDecryptionMiddleware(BaseHTTPMiddleware):
                 ).fetchone()
                 session_key = session_found[1]
                 decrypted_token = AESManager.decrypt(
-                    encrypted_token.encode("utf-8"), bytes.fromhex(session_key)
+                    base64.b64decode(encrypted_token), bytes.fromhex(session_key)
                 ).decode("utf-8")
-                request.headers["Authorization"] = f"Bearer {decrypted_token}"
+                request.state.Authorization_jwt = decrypted_token
         except Exception as e:
             return JSONResponse(
-                content={"detail": str(e)},
+                content={"detail": "bad request"},
                 status_code=HTTP_400_BAD_REQUEST,
             )
         response = await call_next(request)
