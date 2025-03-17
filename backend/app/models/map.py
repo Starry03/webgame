@@ -4,4 +4,4 @@ from .room import Room
 
 
 class Map(BaseModel):
-    rooms: tuple[Room]
+    main_room: Room

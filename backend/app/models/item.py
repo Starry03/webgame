@@ -10,4 +10,4 @@ class Item(BaseModel):
 
 class ItemData(BaseModel):
     pos: tuple[int, int]
-    content: Item
+    item: Item

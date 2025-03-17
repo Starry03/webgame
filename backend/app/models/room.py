@@ -6,8 +6,7 @@ from .sprite import Sprite
 class Room(BaseModel):
     cod: int
     items: tuple[ItemData]
-    doors: tuple[ItemData]
-    texture: tuple[Sprite]
+    bg_texture: tuple[Sprite]
     left_room: 'Room' | None = None
     right_room: 'Room' | None = None
     up_room: 'Room' | None = None
