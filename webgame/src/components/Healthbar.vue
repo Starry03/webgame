@@ -1,4 +1,2 @@
 <script setup></script>
-<template>
-    Healthbar
-</template>
+<template>Healthbar</template>
