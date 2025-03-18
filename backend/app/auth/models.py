@@ -1,11 +1,14 @@
 from pydantic import BaseModel
 from datetime import datetime
+import json
+
+from fastapi.encoders import jsonable_encoder
 
 
 class User(BaseModel):
-    id: int
     username: str
-    email: str
+    password: str
+    email: str | None
     is_active: bool
 
 class Credentials(BaseModel):
@@ -27,3 +30,6 @@ class UserSession(BaseModel):
 class UserSessionResponse(BaseModel):
     token: Token
     session: UserSession
+
+    def to_json(self):
+        return json.dumps(jsonable_encoder(self)).encode("utf-8")

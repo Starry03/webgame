@@ -25,7 +25,7 @@ class AESManager:
                 {"sym_key": sym_key.hex(), "expires_at": exp_time},
             ).fetchone()[0]
             session.commit()
-            return UserSession(ID=res, sym_key=sym_key.hex(), expiration_date=exp_time)
+            return UserSession(id=res, sym_key=sym_key.hex(), expiration_date=exp_time)
 
     @staticmethod
     def __generate_key():
