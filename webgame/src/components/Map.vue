@@ -1,6 +1,5 @@
-<script setup>
-</script>
+<script setup></script>
 
 <template>
-    <p>map</p>
+  <p>map</p>
 </template>
