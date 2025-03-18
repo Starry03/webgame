@@ -81,3 +81,13 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 ### Boss
 
 - all-abilities
+
+## To-do
+
+### Ivan
+
+- [ ] page scelta personaggio 
+
+### Lorenzo
+
+### Starry
