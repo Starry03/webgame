@@ -2,6 +2,12 @@ from pydantic import BaseModel
 from datetime import datetime
 
 
+class User(BaseModel):
+    id: int
+    username: str
+    email: str
+    is_active: bool
+
 class Credentials(BaseModel):
     username: str
     password: str
@@ -13,7 +19,7 @@ class Token(BaseModel):
 
 
 class UserSession(BaseModel):
-    ID: int
+    id: int
     sym_key: str
     expiration_date: datetime
 

@@ -9,5 +9,6 @@
 
 ## Request protocol
 
-1. Encrypt with symmetric key
-2. Send jwt-token
+1. token
+2. body
+3. encrypt both

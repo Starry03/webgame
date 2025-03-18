@@ -9,5 +9,6 @@ class Item(BaseModel):
 
 
 class ItemData(BaseModel):
-    pos: tuple[int, int]
+    posX: int
+    posY: int
     item: Item

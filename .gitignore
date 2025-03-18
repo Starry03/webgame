@@ -1,5 +1,6 @@
 # project
 backend/.venv
+sql/
 node_modules/
 *.pem
 
