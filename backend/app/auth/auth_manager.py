@@ -34,7 +34,7 @@ class AuthManager:
             ).fetchone()
             if res is None:
                 return None
-            session = UserSession(ID=res[0], sym_key=res[1], expiration_date=res[2])
+            session = UserSession(id=res[0], sym_key=res[1], expiration_date=res[2])
             if AuthManager.is_session_expired(session):
                 return None
             return session
