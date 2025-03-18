@@ -2,7 +2,11 @@
 <template>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <div class="flex flex-column flex-center gap-big">
+<!------<audio id="home_music" src="../../style/Song_of_Heart.mp3" autoplay loop></audio>>------>
+  <audio>
+    <source src="../../style/Song_of_Heart.mp3" type="audio/mpeg">
+  </audio>
+<div class="flex flex-column flex-center gap-big">
     <h1>Adventuring in the Tower</h1><br>
     <button class="button button-primary b-play" @click="$router.push('/game')">Play</button>
     <button class="button button-secondary b-tutorial" @click="$router.push('/tutorial')">Tutorial</button>
@@ -45,7 +49,7 @@
         text-shadow: 0 0 10px black, 0 0 20px black;
         color: darkred;
         transition: 0.1s;
-        animation: liquido 3s ease-in-out infinite alternate; 
+        animation: liquido 4s ease-in-out infinite alternate; 
     }
 
     .b-settings, .b-tutorial{
