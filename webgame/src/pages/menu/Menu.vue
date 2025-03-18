@@ -1,18 +1,17 @@
-<script setup></script>
+<script setup>
+    
+</script>
 <template>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!------<audio id="home_music" src="../../style/Song_of_Heart.mp3" autoplay loop></audio>>------>
-  <audio>
-    <source src="../../style/Song_of_Heart.mp3" type="audio/mpeg">
-  </audio>
+  <audio id="music" src="../../style/Song_of_Heart.mp3" autoplay loop></audio>
 <div class="flex flex-column flex-center gap-big">
     <h1>Adventuring in the Tower</h1><br>
     <button class="button button-primary b-play" @click="$router.push('/game')">Play</button>
     <button class="button button-secondary b-tutorial" @click="$router.push('/tutorial')">Tutorial</button>
     <button class="button button-secondary b-shop" @click="$router.push('/shop')">Shop</button>
     <button class="button button-secondary b-settings" @click="$router.push('/settings')">Settings</button>
-  </div>
+</div>
 </template>
 
 <style scoped>
