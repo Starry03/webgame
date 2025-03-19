@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selezione Personaggio</title>
+    <link rel="stylesheet" href="scelta_personaggio.css" type="text/css">
+    <script src="scelta_personaggio.js"></script>
+</head>
+<body>
+    <section class="container">
+        <h1>Scegli il tuo personaggio</h1>
+        <div class="menu">
+            <div class="personaggio">
+                <button type="button" name="guerriero">Warror</button>
+                <button type="button" name="guerriero_desc" onclick="showDescription('warrior')">Show</button>
+            </div>
+            <div class="personaggio">
+                <button type="button" name="mago">Mage</button>
+                <button type="button" name="mago_desc" onclick="showDescription('mage')">Show</button>
+            </div>
+            <div class="personaggio">
+                <button type="button" name="ladro">Thief</button>
+                <button type="button" name="ladro_desc" onclick="showDescription('thief')">Show</button>
+            </div>
+        </div>
+
+        <textarea id="description" style="display:none;" rows="4" cols="80"></textarea>
+    </section>
+</body>
+</html>
