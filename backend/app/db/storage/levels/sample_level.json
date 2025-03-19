@@ -1,0 +1,28 @@
+{
+    "name": "Sample Level",
+    "description": "Sample level",
+    "head_room": [
+        {
+            "items": [
+                {
+                    "kind": "weapon",
+                    "value": 10,
+                    "pos_x": 12,
+                    "pos_y": 12,
+                    "takeable": true
+                }
+            ],
+            "bg_texture": "path",
+            "left_room": {},
+            "right_room": {
+                "items": [],
+                "left_room": {},
+                "right_room": {},
+                "top_room": {},
+                "bottom_room": {}
+            },
+            "top_room": {},
+            "bottom_room": {}
+        }
+    ]
+}

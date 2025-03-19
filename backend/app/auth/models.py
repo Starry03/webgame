@@ -9,7 +9,8 @@ class User(BaseModel):
     username: str
     password: str
     email: str | None
-    is_active: bool
+    online: bool
+    money: int
 
 class Credentials(BaseModel):
     username: str

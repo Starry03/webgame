@@ -5,10 +5,10 @@ from .sprite import Sprite
 
 class Player(BaseModel):
     id: int
-    user_id: int
+    owner: int
     sprite: Sprite
-    posX: int
-    posY: int
+    pos_x: int
+    pos_y: int
     hp: int
     attack: int
     defence: int
