@@ -1,19 +1,31 @@
-<script setup>
-    
-</script>
 <template>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <audio id="music" src="../../style/Song_of_Heart.mp3" autoplay loop></audio>
+  <audio controls style="display: none;" id="music" autoplay loop>
+        <source src="../../style/Song_of_Heart.mp3" type="audio/mpeg">
+  </audio>
 <div class="flex flex-column flex-center gap-big">
-    <h1>Adventuring in the Tower</h1><br>
+    <h1>Awakening in the Dark Tower</h1><br>
     <button class="button button-primary b-play" @click="$router.push('/game')">Play</button>
     <button class="button button-secondary b-tutorial" @click="$router.push('/tutorial')">Tutorial</button>
     <button class="button button-secondary b-shop" @click="$router.push('/shop')">Shop</button>
     <button class="button button-secondary b-settings" @click="$router.push('/settings')">Settings</button>
 </div>
 </template>
+<script>
 
+    function playAudio() {
+        let audio = document.getElementById("music");
+        audio.play().then(() => {
+            console.log("Audio avviato con il movimento del mouse.");
+        }).catch(error => console.log("Riproduzione bloccata:", error));
+
+        // Rimuove l'evento dopo la prima riproduzione
+        //document.removeEventListener("mousemove", playAudio);
+    }
+    document.addEventListener("mousemove", playAudio);
+
+</script>
 <style scoped>
 
     div{

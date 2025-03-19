@@ -7,6 +7,13 @@
 </template>
 
 <style scoped>
+div{
+        background: url('../../style/sfondo3.gif');
+        background-size: cover;
+        
+        display: flex;
+        /*height: 100vh;*/
+}
 h1 {
   font-family: 'Press Start 2P', cursive;
   font-size: 2rem;
