@@ -87,8 +87,16 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
 ### Ivan
 
-- [ ] page scelta personaggio 
+- [ ] page scelta personaggio -> mergiamo
+- [ ] statistiche
 
 ### Lorenzo
 
+- [ ] login
+- [ ] css
+
 ### Starry
+
+- [ ] finire database
+- [ ] endpoint statistiche
+- [ ] endpoint classi
