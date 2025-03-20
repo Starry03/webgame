@@ -59,11 +59,11 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 ### Objects
 
 - potions
-  - health
-  - mana
+  - health  70%
+  - mana    100%
 - stat boosters
-  - atk
-  - def
+  - atk     3%
+  - def     3%
 - compass (default)
 
 ### Shop
