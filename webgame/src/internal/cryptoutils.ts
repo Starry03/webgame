@@ -29,9 +29,32 @@ export class RequestWrapper {
         });
     }
 
-    static cryptedFetch(url: string, options: RequestInit, token: Token): Promise<Response> {
+    /**
+     * fetch wrapper for encryption
+     * @param url 
+     * @param options plain data, function will encrypt it
+     * @param token
+     * @returns promise
+     */
+    static cryptedFetch(url: string, options: RequestInit): Promise<Response> {
         const body = options.body as string;
-        const session: Session = JSON.parse(localStorage.getItem(prefixed("session"))!);
+        const sessionData: string | null = localStorage.getItem(prefixed("session"));
+        if (!sessionData)
+            throw new Error("Session not found");
+        const session: Session = JSON.parse(sessionData);
+        const tokenData: string | null = localStorage.getItem(prefixed("token"));
+        if (!tokenData)
+            throw new Error("Token not found");
+        const token: Token = JSON.parse(tokenData);
+        if (options.method !== "POST")
+            return fetch(url, {
+                headers: {
+                    "Authorization": `Bearer ${AESUtils.encrypt(session.sym_key, token.token)}`,
+                    "SessionID": session.id,
+                    ...options.headers
+                },
+                ...options
+            });
         const encrypted_body = AESUtils.encrypt(session.sym_key, body);
         return fetch(url, {
             headers: {
