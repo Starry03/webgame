@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from .routes.level.level import router as generation_router
 from .routes.auth.login import router as login_router
 from .security.middleware.rsa_middleware import RSADecryptionMiddleware
 from .security.middleware.aes_middleware import AESDecryptionMiddleware
@@ -20,5 +19,4 @@ app.add_middleware(RSADecryptionMiddleware)
 app.add_middleware(AESDecryptionMiddleware)
 
 # router
-app.include_router(generation_router)
 app.include_router(login_router)
