@@ -95,9 +95,10 @@ async def login(request: Request):
 
 
 @router.post("/verify-token")
-async def verify_token(token: str = Depends(AuthManager.get_token_header)):
+async def verify_token(user: str = Depends(AuthManager.get_token_header)):
     try:
-        _ = JWTManager.decode_token(token)
+        t = JWTManager.decode_token(user)
+        print(t)
         return JSONResponse(content={"detail": "Valid token"})
     except InvalidTokenError as e:
         logger.error(e)

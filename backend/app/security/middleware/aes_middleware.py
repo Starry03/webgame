@@ -18,7 +18,10 @@ class AESDecryptionMiddleware(BaseHTTPMiddleware):
     )
 
     async def dispatch(self, request: Request, call_next):
-        if request.url.path in AESDecryptionMiddleware.__excluded_paths:
+        if (
+            request.url.path in AESDecryptionMiddleware.__excluded_paths
+            or request.method != "POST"
+        ):
             return await call_next(request)
         try:
             headers = request.headers

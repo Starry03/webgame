@@ -1,4 +1,3 @@
-import { generateKeyPairSync } from "crypto";
 import crypto from 'crypto';
 
 /**
@@ -36,7 +35,7 @@ export class RequestWrapper {
         const encrypted_body = AESUtils.encrypt(session.sym_key, body);
         return fetch(url, {
             headers: {
-                "Authorization": `Bearer ${token.token}`,
+                "Authorization": `Bearer ${AESUtils.encrypt(session.sym_key, token.token)}`,
                 "SessionID": session.id,
                 ...options.headers
             },
@@ -76,7 +75,7 @@ export class AESUtils {
 export class RSAUtils {
     private static BITS: number = 2048;
     static generate(): void {
-        const { publicKey, privateKey } = generateKeyPairSync('rsa', {
+        const { publicKey, privateKey } = crypto.generateKeyPairSync('rsa', {
             modulusLength: this.BITS,
             publicKeyEncoding: {
                 type: 'spki',

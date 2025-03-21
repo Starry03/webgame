@@ -2,18 +2,25 @@ from sqlalchemy.sql import text
 
 from app.auth.models import User
 from app.db.session import get_db_session
-from app.auth.auth_manager import AuthManager
+from app.auth.hasher import Hasher
 
 
 class UserManager:
     @staticmethod
-    def user_exists(username: str) -> bool:
+    def get_user_by_username(username: str) -> User | None:
         with get_db_session() as db:
             res = db.execute(
                 text("SELECT * FROM public.user WHERE username = :username"),
                 {"username": username},
             )
-            return res.fetchone() is not None
+            user = res.fetchone()
+            if user is None:
+                return None
+            return User(id=user[0], username=user[1], password=user[2], email=user[3])
+
+    @staticmethod
+    def user_exists(username: str) -> bool:
+        return UserManager.get_user_by_username(username) is not None
 
     @staticmethod
     def create_user(user: User) -> bool:
@@ -24,7 +31,7 @@ class UserManager:
                 ),
                 {
                     "username": user.username,
-                    "password": AuthManager.get_hashed(user.password),
+                    "password": Hasher.get_hashed(user.password),
                     "email": user.email,
                 },
             )
