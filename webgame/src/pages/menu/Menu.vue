@@ -5,26 +5,45 @@
         <source src="../../style/Song_of_Heart.mp3" type="audio/mpeg">
   </audio>
 <div class="flex flex-column flex-center gap-big">
+
+    <button class="button button-logout" @click="logout">Logout</button>
+    <button class="button button-mute" @click="toggleMute">🔊</button>
+
     <h1>Awakening in the Dark Tower</h1><br>
     <button class="button button-primary b-play" @click="$router.push('/game')">Play</button>
     <button class="button button-secondary b-tutorial" @click="$router.push('/tutorial')">Tutorial</button>
-    <button class="button button-secondary b-shop" @click="$router.push('/shop')">Shop</button>
+    <button class="button button-secondary b-shop" @click="$router.push('/login')">Login</button>
+   <!-- <button class="button button-secondary b-shop" @click="$router.push('/shop')">Shop</button>-->
     <button class="button button-secondary b-settings" @click="$router.push('/settings')">Settings</button>
+    
 </div>
 </template>
 <script>
-
-    function playAudio() {
-        let audio = document.getElementById("music");
-        audio.play().then(() => {
-            console.log("Audio avviato con il movimento del mouse.");
-        }).catch(error => console.log("Riproduzione bloccata:", error));
-
-        // Rimuove l'evento dopo la prima riproduzione
-        //document.removeEventListener("mousemove", playAudio);
-    }
-    document.addEventListener("mousemove", playAudio);
-
+    export default {
+        methods: {
+            logout() {
+            console.log("Logout eseguito");
+            // Qui potresti aggiungere una logica per rimuovere i dati utente e reindirizzare alla login
+            },
+            toggleMute() {
+            let audio = document.getElementById("music");
+            if (audio.muted) {
+                audio.muted = false;
+                event.target.innerText = "🔊";
+            } else {
+                audio.muted = true;
+                event.target.innerText = "🔇";
+            }
+            }
+        },
+        mounted() {
+            function playAudio() {
+            let audio = document.getElementById("music");
+            audio.play().catch(error => console.log("Riproduzione bloccata:", error));
+            }
+            document.addEventListener("mousemove", playAudio);
+        }
+    };
 </script>
 <style scoped>
 
@@ -36,13 +55,13 @@
         justify-content: center;
         flex-direction: column;
         align-items: center;
-    }   
+    }
 
     button, h1{
         font-family: 'Press Start 2P', cursive;
     }
     
-    button{
+    .button-primary, .button-secondary {
         border: none;
         background-color: transparent;
         color: white;
@@ -87,4 +106,26 @@
         transform: scale(1.1);
         text-shadow: 0 0 10px darkviolet, 0 0 20px darkviolet;
     }
+
+    .button-logout {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        font-size: 1rem;
+        background-color: rgb(148, 20, 60);
+    }
+
+    .button-mute {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 1.5rem;
+        background-color: rgb(148, 20, 60);
+    }
+
+    .button-logout:hover, .button-mute:hover {
+        transform: scale(1.1);
+        text-shadow: 0 0 10px black, 0 0 20px black;
+    }
+
 </style>
