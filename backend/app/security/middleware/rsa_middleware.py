@@ -8,14 +8,16 @@ from app.auth.rsa_manager import RSAManager
 
 
 class RSADecryptionMiddleware(BaseHTTPMiddleware):
+    allowed_paths: tuple[str] = ("/auth/login", "/auth/register")
+    __allowed_methods: tuple[str] = ("POST")
+
     async def dispatch(self, request: Request, call_next):
         METHOD: str = request.method
         URL: str = request.url.path
-        valid_urls = ["/auth/login"]
-        valid_methods = ["POST"]
-        if (METHOD not in valid_methods) or (URL not in valid_urls):
-            response = await call_next(request)
-            return response
+        if (URL not in RSADecryptionMiddleware.allowed_paths) or (
+            METHOD not in RSADecryptionMiddleware.__allowed_methods
+        ):
+            return await call_next(request)
         try:
             body = await request.body()
             body = json.loads(body)
@@ -26,15 +28,16 @@ class RSADecryptionMiddleware(BaseHTTPMiddleware):
                     status_code=HTTP_400_BAD_REQUEST,
                 )
             decrypted_data = RSAManager.decrypt(encrypted_data)
-            request._body = json.dumps(dict(
-                decrypted_data=decrypted_data.decode("utf-8"),
-                plain_data=body.get("plain_data", ""),
-            )).encode("utf-8")
+            request._body = json.dumps(
+                dict(
+                    decrypted_data=decrypted_data.decode("utf-8"),
+                    plain_data=body.get("plain_data", ""),
+                )
+            ).encode("utf-8")
         except Exception as e:
             print(e)
             return JSONResponse(
                 content={"error": "Invalid encrypted message"},
                 status_code=HTTP_400_BAD_REQUEST,
             )
-        response = await call_next(request)
-        return response
+        return await call_next(request)

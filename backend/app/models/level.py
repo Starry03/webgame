@@ -1,7 +1,9 @@
 from pydantic import BaseModel
 
+from .room import Room
+
 
 class Level(BaseModel):
-    id: int
     name: str
-    difficulty: int
+    description: str
+    head_room: Room

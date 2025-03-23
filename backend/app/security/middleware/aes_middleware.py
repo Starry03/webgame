@@ -9,14 +9,20 @@ from starlette.middleware.base import BaseHTTPMiddleware
 from app.auth.aes_manager import AESManager
 from app.auth.auth_manager import AuthManager
 from app.auth.models import UserSession
+from app.security.middleware.rsa_middleware import RSADecryptionMiddleware
 
 
 class AESDecryptionMiddleware(BaseHTTPMiddleware):
+    __excluded_paths: tuple[str] = RSADecryptionMiddleware.allowed_paths + (
+        "/auth/public-key",
+    )
+
     async def dispatch(self, request: Request, call_next):
-        excluded_paths = ["/auth/public-key", "/auth/login"]
-        if request.url.path in excluded_paths:
-            response = await call_next(request)
-            return response
+        if (
+            request.url.path in AESDecryptionMiddleware.__excluded_paths
+            or request.method != "POST"
+        ):
+            return await call_next(request)
         try:
             headers = request.headers
             session_id = headers.get("SessionID", None)
@@ -50,8 +56,7 @@ class AESDecryptionMiddleware(BaseHTTPMiddleware):
                 content={"detail": "bad request"},
                 status_code=HTTP_400_BAD_REQUEST,
             )
-        response = await call_next(request)
-        return response
+        return await call_next(request)
 
     async def decrypt_body(self, request: Request, session_key: str):
         body = await request.body()

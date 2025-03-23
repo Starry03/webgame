@@ -22,7 +22,9 @@ class JWTManager:
     @staticmethod
     def create_token(data: Credentials) -> Token:
         expiration_time_min = timedelta(minutes=JWTManager.__EXPIRATION_TIME_MIN)
-        token = JWTManager.__get_token(data.model_dump(), expiration_time_min)
+        token = JWTManager.__get_token(
+            dict(username=data.username), expiration_time_min
+        )
         return Token(access_token=token, token_type="bearer")
 
     @staticmethod
@@ -33,7 +35,7 @@ class JWTManager:
         return JWTManager.checked_token(token)
 
     @staticmethod
-    def checked_token(decoded_token: str) -> str:
+    def checked_token(decoded_token: dict) -> dict:
         expiration_time = datetime.fromtimestamp(decoded_token.get("exp"), timezone.utc)
         if expiration_time < datetime.now(timezone.utc):
             raise jwt.InvalidTokenError("Token has expired")

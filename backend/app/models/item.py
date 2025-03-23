@@ -4,11 +4,14 @@ from .sprite import Sprite
 
 
 class Item(BaseModel):
-    name: str
+    kind: str
     sprite: Sprite
 
 
 class ItemData(BaseModel):
-    posX: int
-    posY: int
-    item: Item
+    kind: str
+    sprite: Sprite
+    value: int
+    pos_x: int
+    pos_y: int
+    takeable: bool

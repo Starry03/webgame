@@ -9,6 +9,7 @@ import Menu from './pages/menu/Menu.vue'
 import Shop from './pages/shop/Shop.vue'
 import Tutorial from './pages/tutorial/Tutorial.vue'
 import LoginView from './pages/auth/LoginView.vue'
+import NotFound from './pages/NotFound.vue'
 
 const routes = [
   { path: '/', component: Menu },
@@ -17,6 +18,7 @@ const routes = [
   { path: '/shop', component: Shop },
   { path: '/login', component: LoginView },
   { path: '/tutorial', component: Tutorial },
+  { path: '/:catchAll(.*)*', component: NotFound },
 ]
 
 const router = createRouter({
