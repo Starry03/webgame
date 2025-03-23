@@ -12,8 +12,10 @@
     <h1>Awakening in the Dark Tower</h1><br>
     <button class="button button-primary b-play" @click="$router.push('/game')">Play</button>
     <button class="button button-secondary b-tutorial" @click="$router.push('/tutorial')">Tutorial</button>
+    
     <button class="button button-secondary b-shop" @click="$router.push('/login')">Login</button>
-   <!-- <button class="button button-secondary b-shop" @click="$router.push('/shop')">Shop</button>-->
+   <!--
+     <button class="button button-secondary b-shop" @click="$router.push('/shop')">Shop</button>-->
     <button class="button button-secondary b-settings" @click="$router.push('/settings')">Settings</button>
     
 </div>
@@ -22,18 +24,18 @@
     export default {
         methods: {
             logout() {
-            console.log("Logout eseguito");
-            // Qui potresti aggiungere una logica per rimuovere i dati utente e reindirizzare alla login
+                console.log("Logout eseguito");
+                // Qui potresti aggiungere una logica per rimuovere i dati utente e reindirizzare alla login
             },
             toggleMute() {
-            let audio = document.getElementById("music");
-            if (audio.muted) {
-                audio.muted = false;
-                event.target.innerText = "🔊";
-            } else {
-                audio.muted = true;
-                event.target.innerText = "🔇";
-            }
+                let audio = document.getElementById("music");
+                if (audio.muted) {
+                    audio.muted = false;
+                    event.target.innerText = "🔊";
+                } else {
+                    audio.muted = true;
+                    event.target.innerText = "🔇";
+                }
             }
         },
         mounted() {
