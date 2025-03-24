@@ -77,7 +77,7 @@ async def login(request: Request):
     body: CoroutineType[Any, Any, Any] = await request.json()
     credentials: Credentials = RequestUtil.get_credentials(body)
     plain_data = RequestUtil.get_plain_data(body)
-    client_public_key = plain_data.get("client_public_key")
+    client_public_key = plain_data.get("client_public_key") # pem
     current_user = AuthManager.get_user_from_credentials(credentials)
     if current_user is None:
         return JSONResponse(
@@ -86,13 +86,19 @@ async def login(request: Request):
         )
     session = AuthManager.generate_session(credentials)
     string_res = session.to_json()
-    encrypted_res = RSAManager.encrypt(
-        string_res,
-        key=serialization.load_pem_public_key(client_public_key.encode("utf-8")),
-    )
-    encrypted_res_64 = RSAManager.to_base64(encrypted_res)
-    return JSONResponse(content=encrypted_res_64)
-
+    try:
+        encrypted_res = RSAManager.encrypt(
+            string_res,
+            key=serialization.load_pem_public_key(client_public_key.encode("utf-8")),
+        )
+        encrypted_res_64 = RSAManager.to_base64(encrypted_res)
+        return JSONResponse(content=encrypted_res_64)
+    except Exception as e:
+        logger.error(e)
+        return JSONResponse(
+            content={"detail": "client public key is invalid or missing"},
+            status_code=HTTP_500_INTERNAL_SERVER_ERROR,
+        )
 
 @router.post("/verify-token")
 async def verify_token(user: str = Depends(AuthManager.get_token_header)):

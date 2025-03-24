@@ -1,6 +1,7 @@
 import json
 
 from fastapi import Request
+from fastapi.logger import logger
 from fastapi.responses import JSONResponse
 from starlette.status import HTTP_400_BAD_REQUEST
 from starlette.middleware.base import BaseHTTPMiddleware
@@ -35,7 +36,7 @@ class RSADecryptionMiddleware(BaseHTTPMiddleware):
                 )
             ).encode("utf-8")
         except Exception as e:
-            print(e)
+            logger.error(f"Error in RSA Decryption Middleware: {e}")
             return JSONResponse(
                 content={"error": "Invalid encrypted message"},
                 status_code=HTTP_400_BAD_REQUEST,

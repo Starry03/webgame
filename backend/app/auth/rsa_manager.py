@@ -9,12 +9,13 @@ class RSAManager:
     __PUBLIC_KEY_PATH: str = "public_key.pem"
     __PRIVATE_KEY_PATH: str = "private_key.pem"
     __PUBLIC_EXPONENT: int = 65537
-    __KEY_SIZE: int = 2048
+    __KEY_SIZE: int = 4096
 
     @staticmethod
     def from_base64(base64_str: str) -> bytes:
         return base64.b64decode(base64_str)
     
+    @staticmethod
     def to_base64(data: bytes) -> str:
         return base64.b64encode(data).decode("utf-8")
 
@@ -42,8 +43,8 @@ class RSAManager:
         return private_key.decrypt(
             encrypted_message,
             padding=padding.OAEP(
-                mgf=padding.MGF1(algorithm=hashes.SHA1()),
-                algorithm=hashes.SHA1(),
+                mgf=padding.MGF1(algorithm=hashes.SHA256()),
+                algorithm=hashes.SHA256(),
                 label=None,
             ),
         )
@@ -57,8 +58,8 @@ class RSAManager:
             return key.encrypt(
                 plain,
                 padding=padding.OAEP(
-                    mgf=padding.MGF1(algorithm=hashes.SHA1()),
-                    algorithm=hashes.SHA1(),
+                    mgf=padding.MGF1(algorithm=hashes.SHA256()),
+                    algorithm=hashes.SHA256(),
                     label=None,
                 ),
             )

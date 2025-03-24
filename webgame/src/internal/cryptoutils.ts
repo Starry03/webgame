@@ -1,5 +1,3 @@
-import crypto from 'crypto';
-
 /**
  * Prefix for all keys stored in local storage
  */
@@ -21,10 +19,20 @@ export type Session = {
 };
 
 export class RequestWrapper {
-    static loginFetch(url: string, options: RequestInit, data: { username: string, password: string }): Promise<Response> {
-        const encrypted_data = RSAUtils.encrypt(RSAUtils.read().publicKey, JSON.stringify(data));
+    static async loginFetch(url: string, options: RequestInit, data: { username: string, password: string }): Promise<Response> {
+        const public_key_request = await fetch('http://127.0.0.1:8000/auth/public-key');
+        if (public_key_request.status !== 200)
+            throw new Error("Failed to fetch public key");
+        const public_key_data = await public_key_request.json();
+        const server_public_key: string = public_key_data.public_key;
+        localStorage.setItem(prefixed("server_public_key"), server_public_key);
+        RSAUtils.generate();
+        const encrypted_data = await RSAUtils.encrypt(server_public_key, JSON.stringify(data));
         return fetch(url, {
-            body: encrypted_data,
+            body: JSON.stringify({
+                plain_data: { client_public_key: RSAUtils.read().publicKey },
+                encrypted_data: encrypted_data,
+            }),
             ...options
         });
     }
@@ -36,7 +44,7 @@ export class RequestWrapper {
      * @param token
      * @returns promise
      */
-    static cryptedFetch(url: string, options: RequestInit): Promise<Response> {
+    static async cryptedFetch(url: string, options: RequestInit): Promise<Response> {
         const body = options.body as string;
         const sessionData: string | null = localStorage.getItem(prefixed("session"));
         if (!sessionData)
@@ -49,16 +57,16 @@ export class RequestWrapper {
         if (options.method !== "POST")
             return fetch(url, {
                 headers: {
-                    "Authorization": `Bearer ${AESUtils.encrypt(session.sym_key, token.token)}`,
+                    "Authorization": `Bearer ${AESUtils.encrypt(token.token)}`,
                     "SessionID": session.id,
                     ...options.headers
                 },
                 ...options
             });
-        const encrypted_body = AESUtils.encrypt(session.sym_key, body);
+        const encrypted_body = await AESUtils.encrypt(body);
         return fetch(url, {
             headers: {
-                "Authorization": `Bearer ${AESUtils.encrypt(session.sym_key, token.token)}`,
+                "Authorization": `Bearer ${AESUtils.encrypt(token.token)}`,
                 "SessionID": session.id,
                 ...options.headers
             },
@@ -69,12 +77,12 @@ export class RequestWrapper {
 }
 
 export class AESUtils {
-    static save_session(session: Session, token: Token): void {
+    static save(session: Session, token: Token): void {
         localStorage.setItem(prefixed("token"), JSON.stringify(token));
         localStorage.setItem(prefixed("session"), JSON.stringify(session));
     }
 
-    static read_session(): { session: Session, token: Token } {
+    static read(): { session: Session, token: Token } {
         const token = localStorage.getItem(prefixed("token"));
         const session = localStorage.getItem(prefixed("session"));
         if (!token || !session) {
@@ -86,32 +94,29 @@ export class AESUtils {
         };
     }
 
-    static encrypt(key: string, data: string): string {
-        const iv = crypto.randomBytes(16);
-        const cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(key), iv);
-        let encrypted = cipher.update(data);
-        encrypted = Buffer.concat([encrypted, cipher.final()]);
-        return Buffer.concat([iv, encrypted]).toString('base64');
+    static async encrypt(data: string): Promise<string> {
+        const iv = window.crypto.getRandomValues(new Uint8Array(16));
+        const cryptoKey = await window.crypto.subtle.importKey(
+            "raw",
+            new TextEncoder().encode(AESUtils.read().session.sym_key),
+            "AES-CBC",
+            false,
+            ["encrypt"]
+        );
+        const encryptedData = await window.crypto.subtle.encrypt(
+            { name: "AES-CBC", iv },
+            cryptoKey,
+            new TextEncoder().encode(data)
+        );
+        const result = new Uint8Array(iv.length + encryptedData.byteLength);
+        result.set(iv, 0);
+        result.set(new Uint8Array(encryptedData), iv.length);
+        return RSAUtils._arrayBufferToBase64(result.buffer);
     }
 }
 
 export class RSAUtils {
-    private static BITS: number = 2048;
-    static generate(): void {
-        const { publicKey, privateKey } = crypto.generateKeyPairSync('rsa', {
-            modulusLength: this.BITS,
-            publicKeyEncoding: {
-                type: 'spki',
-                format: 'pem'
-            },
-            privateKeyEncoding: {
-                type: 'pkcs8',
-                format: 'pem'
-            }
-        });
-        localStorage.setItem(prefixed("public_key"), publicKey);
-        localStorage.setItem(prefixed("private_KEY"), privateKey);
-    }
+    private static BITS: number = 4096;
 
     static read(): { publicKey: string, privateKey: string } {
         const publicKey = localStorage.getItem(prefixed("public_key"));
@@ -119,16 +124,127 @@ export class RSAUtils {
         if (!publicKey || !privateKey) {
             throw new Error("RSA keys not found");
         }
-        return { publicKey: publicKey, privateKey: privateKey };
+        return {
+            publicKey: publicKey,
+            privateKey: privateKey
+        };
+    };
+
+    static async generate(): Promise<{ publicKey: ArrayBuffer, privateKey: ArrayBuffer }> {
+        try {
+            const keyPair = await window.crypto.subtle.generateKey(
+                {
+                    name: "RSA-OAEP",
+                    modulusLength: RSAUtils.BITS,
+                    publicExponent: new Uint8Array([1, 0, 1]),
+                    hash: "SHA-256",
+                },
+                true,
+                ["encrypt", "decrypt"]
+            );
+            const publicKeyBuffer = await window.crypto.subtle.exportKey(
+                "spki",
+                keyPair.publicKey
+            );
+            const privateKeyBuffer = await window.crypto.subtle.exportKey(
+                "pkcs8",
+                keyPair.privateKey
+            );
+            const publicKeyBase64 = RSAUtils._arrayBufferToPEM(publicKeyBuffer, false);
+            const privateKeyBase64 = RSAUtils._arrayBufferToPEM(privateKeyBuffer, true);
+            localStorage.setItem(prefixed("public_key"), publicKeyBase64);
+            localStorage.setItem(prefixed("private_key"), privateKeyBase64);
+            return { publicKey: publicKeyBuffer, privateKey: privateKeyBuffer };
+        } catch (error) {
+            console.error("Failed to generate RSA key pair:", error);
+            throw new Error("Failed to generate RSA key pair");
+        }
     }
 
-    static encrypt(public_key: string, data: string): string {
-        const buffer = Buffer.from(JSON.stringify(data), 'utf8');
-        const encryptedData = crypto.publicEncrypt({
-            key: public_key,
-            padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
-            oaepHash: "sha1"
-        }, buffer);
-        return encryptedData.toString('base64')
+    static async decrypt(data: string): Promise<string> {
+        let cleanedKey = RSAUtils.read().privateKey
+            .replace('-----BEGIN PRIVATE KEY-----', '')
+            .replace('-----END PRIVATE KEY-----', '')
+            .replace(/\s/g, '');
+
+        const privateKeyBuffer = RSAUtils._base64ToArrayBuffer(cleanedKey);
+        const cryptoKey = await window.crypto.subtle.importKey(
+            "pkcs8",
+            privateKeyBuffer,
+            {
+                name: "RSA-OAEP",
+                hash: "SHA-256",
+            },
+            false,
+            ["decrypt"]
+        );
+        try {
+
+            const decryptedData = await window.crypto.subtle.decrypt(
+                {
+                    name: "RSA-OAEP",
+                },
+                cryptoKey,
+                RSAUtils._base64ToArrayBuffer(data)
+            );
+            return new TextDecoder().decode(decryptedData);
+        } catch (error) {
+            console.error(error);
+            throw new Error("Failed to decrypt data");
+        }
+    }
+
+    static async encrypt(publicKey: string, data: string): Promise<string> {
+        let cleanedKey = publicKey
+            .replace('-----BEGIN PUBLIC KEY-----', '')
+            .replace('-----END PUBLIC KEY-----', '')
+            .replace(/\s/g, '');
+
+        const publicKeyBuffer = RSAUtils._base64ToArrayBuffer(cleanedKey);
+        const cryptoKey = await window.crypto.subtle.importKey(
+            "spki",
+            publicKeyBuffer,
+            {
+                name: "RSA-OAEP",
+                hash: "SHA-256",
+            },
+            false,
+            ["encrypt"]
+        );
+        const encryptedData = await window.crypto.subtle.encrypt(
+            {
+                name: "RSA-OAEP",
+            },
+            cryptoKey,
+            new TextEncoder().encode(data)
+        );
+        return RSAUtils._arrayBufferToBase64(encryptedData);
+    }
+
+    static _base64ToArrayBuffer(base64: string) {
+        const binary = window.atob(base64);
+        const bytes = new Uint8Array(binary.length);
+        for (let i = 0; i < binary.length; i++)
+            bytes[i] = binary.charCodeAt(i);
+        return bytes.buffer;
+    }
+
+    static _arrayBufferToBase64(publicKeyBuffer: ArrayBuffer) {
+        const bytes = new Uint8Array(publicKeyBuffer);
+        let binary = "";
+        for (let i = 0; i < bytes.byteLength; i++) {
+            binary += String.fromCharCode(bytes[i]);
+        }
+        return window.btoa(binary);
+    }
+
+    static _arrayBufferToPEM(buffer: ArrayBuffer, isPrivate: boolean = false): string {
+        const base64 = RSAUtils._arrayBufferToBase64(buffer);
+        const type = isPrivate ? "PRIVATE KEY" : "PUBLIC KEY";
+        let formatted = '';
+        for (let i = 0; i < base64.length; i += 64) {
+            formatted += base64.substring(i, i + 64) + '\n';
+        }
+        return `-----BEGIN ${type}-----\n${formatted}-----END ${type}-----`;
     }
 }
