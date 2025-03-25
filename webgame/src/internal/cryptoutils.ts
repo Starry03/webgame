@@ -57,7 +57,7 @@ export class RequestWrapper {
         if (options.method !== "POST")
             return fetch(url, {
                 headers: {
-                    "Authorization": `Bearer ${AESUtils.encrypt(token.token)}`,
+                    "Authorization": `Bearer ${AESUtils.encrypt(token.access_token)}`,
                     "SessionID": session.id,
                     ...options.headers
                 },
@@ -66,7 +66,7 @@ export class RequestWrapper {
         const encrypted_body = await AESUtils.encrypt(body);
         return fetch(url, {
             headers: {
-                "Authorization": `Bearer ${AESUtils.encrypt(token.token)}`,
+                "Authorization": `Bearer ${AESUtils.encrypt(token.access_token)}`,
                 "SessionID": session.id,
                 ...options.headers
             },
