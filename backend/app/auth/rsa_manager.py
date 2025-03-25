@@ -34,17 +34,22 @@ class RSAManager:
             return file.read()
 
     @staticmethod
-    def decrypt(encrypted_message64: bytes) -> bytes:
+    def decrypt(encrypted_message64: bytes, test: bool = False) -> bytes:
         encrypted_message = base64.b64decode(encrypted_message64)
         with open(RSAManager.__PRIVATE_KEY_PATH, "rb") as file:
             private_key: rsa.RSAPrivateKey = serialization.load_pem_private_key(
                 file.read(), password=None
             )
+        if test:
+            with open("./test.pem", "rb") as file:
+                private_key = serialization.load_pem_private_key(
+                    file.read(), password=None
+                )
         return private_key.decrypt(
             encrypted_message,
             padding=padding.OAEP(
-                mgf=padding.MGF1(algorithm=hashes.SHA256()),
-                algorithm=hashes.SHA256(),
+                mgf=padding.MGF1(algorithm=hashes.SHA1()),
+                algorithm=hashes.SHA1(),
                 label=None,
             ),
         )
@@ -58,8 +63,8 @@ class RSAManager:
             return key.encrypt(
                 plain,
                 padding=padding.OAEP(
-                    mgf=padding.MGF1(algorithm=hashes.SHA256()),
-                    algorithm=hashes.SHA256(),
+                    mgf=padding.MGF1(algorithm=hashes.SHA1()),
+                    algorithm=hashes.SHA1(),
                     label=None,
                 ),
             )

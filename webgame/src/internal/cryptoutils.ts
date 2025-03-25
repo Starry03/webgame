@@ -8,7 +8,7 @@ export function prefixed(key: string): string {
 }
 
 export type Token = {
-    token: string,
+    access_token: string,
     type: string,
 }
 
@@ -26,7 +26,7 @@ export class RequestWrapper {
         const public_key_data = await public_key_request.json();
         const server_public_key: string = public_key_data.public_key;
         localStorage.setItem(prefixed("server_public_key"), server_public_key);
-        RSAUtils.generate();
+        await RSAUtils.generate();
         const encrypted_data = await RSAUtils.encrypt(server_public_key, JSON.stringify(data));
         return fetch(url, {
             body: JSON.stringify({
@@ -137,7 +137,7 @@ export class RSAUtils {
                     name: "RSA-OAEP",
                     modulusLength: RSAUtils.BITS,
                     publicExponent: new Uint8Array([1, 0, 1]),
-                    hash: "SHA-256",
+                    hash: "SHA-1",
                 },
                 true,
                 ["encrypt", "decrypt"]
@@ -166,14 +166,15 @@ export class RSAUtils {
             .replace('-----BEGIN PRIVATE KEY-----', '')
             .replace('-----END PRIVATE KEY-----', '')
             .replace(/\s/g, '');
-
+        
         const privateKeyBuffer = RSAUtils._base64ToArrayBuffer(cleanedKey);
+        
         const cryptoKey = await window.crypto.subtle.importKey(
             "pkcs8",
             privateKeyBuffer,
             {
                 name: "RSA-OAEP",
-                hash: "SHA-256",
+                hash: "SHA-1",
             },
             false,
             ["decrypt"]
@@ -206,7 +207,7 @@ export class RSAUtils {
             publicKeyBuffer,
             {
                 name: "RSA-OAEP",
-                hash: "SHA-256",
+                hash: "SHA-1",
             },
             false,
             ["encrypt"]
