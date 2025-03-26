@@ -41,7 +41,7 @@
         mounted() {
             function playAudio() {
             let audio = document.getElementById("music");
-            audio.play().catch(error => console.log("Riproduzione bloccata:", error));
+            audio?.play().catch(error => console.log("Riproduzione bloccata:", error));
             }
             document.addEventListener("mousemove", playAudio);
         }

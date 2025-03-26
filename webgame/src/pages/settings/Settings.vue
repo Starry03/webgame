@@ -29,12 +29,6 @@
         font-family: 'Press Start 2P', cursive;
         justify-content: center;
     }
-    
-    /*button{
-        border: none;
-        background-color: transparent;
-        color: white;
-    }*/
 
     .title{
         font-size: 2rem;
