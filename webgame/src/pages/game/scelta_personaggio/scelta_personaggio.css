@@ -6,8 +6,8 @@
 
 body {
     display: flex;
-    justify-content: center; 
-    align-items: center; 
+    justify-content: center;
+    align-items: center;
     height: 100vh;
     background-color: #121212;
     color: white;
@@ -15,22 +15,21 @@ body {
 }
 
 .container {
-    width: 600px; 
-    height: 300px; 
-    overflow: hidden; 
-    resize: none; 
-    margin: 0 auto; 
+    width: 700px;
+    height: 400px;
+    overflow: hidden;
+    resize: none;
+    margin: 0 auto;
     position: relative;
-    
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
     align-items: center;
     background: white;
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
     color: black;
-    gap: 30px; 
+    gap: 30px;
 }
 
 h1 {
@@ -38,19 +37,24 @@ h1 {
     margin-bottom: 20px;
 }
 
+button, h1{
+    font-family: 'Press Start 2P', cursive;
+}
+
 .menu {
     display: flex;
-    gap: 30px; 
+    gap: 30px;
+    margin-bottom: 5px;
 }
 
 .personaggio {
     display: flex;
-    flex-direction: column; 
-    align-items: center; 
+    flex-direction: column;
+    align-items: center;
 }
 
 .personaggio button:first-child {
-    margin-bottom: 10px; 
+    margin-bottom: 10px;
 }
 
 button {
@@ -60,7 +64,7 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    width: 150px; 
+    width: 150px;
 }
 
 button:hover {
@@ -69,6 +73,38 @@ button:hover {
 
 textarea {
     width: 100%;
-    display: none; 
-    resize: none; 
+    resize: none;
+    display: none;
+}
+
+#description_section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    background-color: #333;
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+}
+
+#close_description {
+    padding: 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 150px;
+    margin-top: 10px;
+}
+
+
+#close_description:hover {
+    background-color: #555;
+}
+#description {
+    display: block; 
 }
