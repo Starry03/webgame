@@ -6,12 +6,10 @@
       <div class="container flex flex-column flex-center gap-big">
         <img src="../../style/disegno.webp" alt="Logo" class="logo">
         <h2>Awakening in the Dark Tower</h2>
-        
         <div class="forma">
-          <form @submit.prevent="login">
-            
-            <input class="in1" id="username" type="text" placeholder="Username">
-            <input class="in2" id="password" type="password" placeholder="Password">
+          <form>
+            <input class="in1" id="username" type="text" placeholder="Username" v-model="username">
+            <input class="in2" id="password" type="password" placeholder="Password" v-model="password">
             <br><br><br>
             <div class="bot flex flex-center gap-big">
               <button class="btn-regist" type="submit">SIGN UP</button>
