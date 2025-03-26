@@ -42,6 +42,8 @@ class AESManager:
 
     @staticmethod
     def decrypt(data: bytes, key: bytes) -> bytes:
+        if len(data) < AESManager.__NONCE_SIZE:
+            return bytes(0)
         nonce, message = (
             data[: AESManager.__NONCE_SIZE],
             data[AESManager.__NONCE_SIZE :],

@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { RequestWrapper, RSAUtils } from '@/internal/cryptoutils'
+import { RequestWrapper, RSAUtils, prefixed, AESUtils } from '@/internal/cryptoutils'
 import type { Token, Session } from '@/internal/cryptoutils'
 
 const username = ref('')
@@ -45,7 +45,7 @@ async function login() {
 		)
 
 		if (req.status !== 200) {
-			console.log('Errore login')
+			console.log('Errore login');
 			return
 		}
 		let res = await req.json();
@@ -55,9 +55,7 @@ async function login() {
 		const session: Session = res.session;
 		token.access_token = await RSAUtils.decrypt(token.access_token);
 		session.sym_key = await RSAUtils.decrypt(session.sym_key);
-
-		localStorage.setItem('token', JSON.stringify(token));
-		localStorage.setItem('session', JSON.stringify(session));
+		AESUtils.save(session, token);
 
 	} catch (error) {
 		console.log(error)

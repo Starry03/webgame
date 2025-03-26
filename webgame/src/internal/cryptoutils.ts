@@ -9,7 +9,7 @@ export function prefixed(key: string): string {
 
 export type Token = {
     access_token: string,
-    type: string,
+    token_type: string,
 }
 
 export type Session = {
@@ -46,37 +46,28 @@ export class RequestWrapper {
      */
     static async cryptedFetch(url: string, options: RequestInit): Promise<Response> {
         const body = options.body as string;
-        const sessionData: string | null = localStorage.getItem(prefixed("session"));
-        if (!sessionData)
-            throw new Error("Session not found");
-        const session: Session = JSON.parse(sessionData);
-        const tokenData: string | null = localStorage.getItem(prefixed("token"));
-        if (!tokenData)
-            throw new Error("Token not found");
-        const token: Token = JSON.parse(tokenData);
+        const { session, token } = AESUtils.read();
+        const encrypted_token: string = await AESUtils.encrypt(token.access_token);
+        const headers = new Headers(options.headers);
+        headers.set("Authorization", `Bearer ${encrypted_token}`);
+        headers.set('sessionid', session.id);
         if (options.method !== "POST")
             return fetch(url, {
-                headers: {
-                    "Authorization": `Bearer ${AESUtils.encrypt(token.access_token)}`,
-                    "SessionID": session.id,
-                    ...options.headers
-                },
-                ...options
+                ...options,
+                headers: headers,
             });
-        const encrypted_body = await AESUtils.encrypt(body);
+        const encrypted_body = body ? await AESUtils.encrypt(body) : null;
         return fetch(url, {
-            headers: {
-                "Authorization": `Bearer ${AESUtils.encrypt(token.access_token)}`,
-                "SessionID": session.id,
-                ...options.headers
-            },
+            ...options,
+            headers: headers,
             body: encrypted_body,
-            ...options
-        });
+        } as RequestInit);
     }
 }
 
 export class AESUtils {
+    private static BITS: number = 256;
+
     static save(session: Session, token: Token): void {
         localStorage.setItem(prefixed("token"), JSON.stringify(token));
         localStorage.setItem(prefixed("session"), JSON.stringify(session));
@@ -94,24 +85,47 @@ export class AESUtils {
         };
     }
 
+    static hexToBytes(hex: string): Uint8Array {
+        const bytes = new Uint8Array(hex.length / 2);
+        for (let i = 0; i < hex.length; i += 2) {
+            bytes[i / 2] = parseInt(hex.substring(i, i + 2), 16);
+        }
+        return bytes;
+    }
+
     static async encrypt(data: string): Promise<string> {
-        const iv = window.crypto.getRandomValues(new Uint8Array(16));
-        const cryptoKey = await window.crypto.subtle.importKey(
-            "raw",
-            new TextEncoder().encode(AESUtils.read().session.sym_key),
-            "AES-CBC",
-            false,
-            ["encrypt"]
-        );
-        const encryptedData = await window.crypto.subtle.encrypt(
-            { name: "AES-CBC", iv },
-            cryptoKey,
-            new TextEncoder().encode(data)
-        );
-        const result = new Uint8Array(iv.length + encryptedData.byteLength);
-        result.set(iv, 0);
-        result.set(new Uint8Array(encryptedData), iv.length);
-        return RSAUtils._arrayBufferToBase64(result.buffer);
+        const session = AESUtils.read().session;
+        const keyBytes = AESUtils.hexToBytes(session.sym_key);
+        const nonce = window.crypto.getRandomValues(new Uint8Array(16));
+        try {
+            const cryptoKey = await window.crypto.subtle.importKey(
+                "raw",
+                keyBytes,
+                {
+                    name: "AES-CTR",
+                    length: AESUtils.BITS
+                },
+                false,
+                ["encrypt"]
+            );
+            const encryptedData = await window.crypto.subtle.encrypt(
+                {
+                    name: "AES-CTR",
+                    counter: nonce,
+                    length: 128
+                },
+                cryptoKey,
+                new TextEncoder().encode(data)
+            );
+            const result = new Uint8Array(nonce.length + encryptedData.byteLength);
+            result.set(nonce, 0);
+            result.set(new Uint8Array(encryptedData), nonce.length);
+            return RSAUtils._arrayBufferToBase64(result.buffer);
+        } catch (err) {
+            console.error('error in aes');
+            console.error(err);
+            return "";
+        }
     }
 }
 
@@ -166,9 +180,9 @@ export class RSAUtils {
             .replace('-----BEGIN PRIVATE KEY-----', '')
             .replace('-----END PRIVATE KEY-----', '')
             .replace(/\s/g, '');
-        
+
         const privateKeyBuffer = RSAUtils._base64ToArrayBuffer(cleanedKey);
-        
+
         const cryptoKey = await window.crypto.subtle.importKey(
             "pkcs8",
             privateKeyBuffer,
