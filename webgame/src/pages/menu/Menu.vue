@@ -26,29 +26,32 @@
     </button>
   </div>
 </template>
-<script setup>
-
-function logout() {
-  console.log('Logout eseguito');
-}
-function toggleMute() {
-  let audio = document.getElementById('music')
-  if (audio.muted) {
-    audio.muted = false
-    event.target.innerText = '🔊'
-  } else {
-    audio.muted = true
-    event.target.innerText = '🔇'
-  }
-}
-
-function onMounted() {
-  function playAudio() {
-    let audio = document.getElementById('music')
-    audio.play().catch((error) => console.log('Riproduzione bloccata:', error))
-  }
-  document.addEventListener('mousemove', playAudio)
-}
+<script>
+    export default {
+        methods: {
+            logout() {
+                console.log("Logout eseguito");
+                // Qui potresti aggiungere una logica per rimuovere i dati utente e reindirizzare alla login
+            },
+            toggleMute() {
+                let audio = document.getElementById("music");
+                if (audio.muted) {
+                    audio.muted = false;
+                    event.target.innerText = "🔊";
+                } else {
+                    audio.muted = true;
+                    event.target.innerText = "🔇";
+                }
+            }
+        },
+        mounted() {
+            function playAudio() {
+            let audio = document.getElementById("music");
+            audio?.play().catch(error => console.log("Riproduzione bloccata:", error));
+            }
+            document.addEventListener("mousemove", playAudio);
+        }
+    };
 </script>
 <style scoped>
 div {

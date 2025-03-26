@@ -2,9 +2,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .routes.auth.login import router as login_router
-from .routes.game.router import router as game_router
-from .security.middleware.rsa_middleware import RSADecryptionMiddleware
-from .security.middleware.aes_middleware import AESDecryptionMiddleware
+from routes.game.router import router as game_router
+from security.middleware.rsa_middleware import RSADecryptionMiddleware
+from security.middleware.aes_middleware import AESDecryptionMiddleware
 
 app = FastAPI()
 
