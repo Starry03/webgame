@@ -14,7 +14,7 @@ from starlette.status import (
 from cryptography.hazmat.primitives import serialization
 
 from app.auth.rsa_manager import RSAManager
-from app.auth.models import Credentials, User
+from app.auth.models import Credentials, User, UserSession, UserSessionResponse, Token
 from app.auth.jwt_manager import JWTManager
 from app.auth.auth_manager import AuthManager
 from app.utils.request_util import RequestUtil
@@ -77,21 +77,45 @@ async def login(request: Request):
     body: CoroutineType[Any, Any, Any] = await request.json()
     credentials: Credentials = RequestUtil.get_credentials(body)
     plain_data = RequestUtil.get_plain_data(body)
-    client_public_key = plain_data.get("client_public_key")
+    client_public_key_pem = plain_data.get("client_public_key")
     current_user = AuthManager.get_user_from_credentials(credentials)
     if current_user is None:
         return JSONResponse(
             content={"detail": "Incorrect username or password"},
             status_code=HTTP_401_UNAUTHORIZED,
         )
-    session = AuthManager.generate_session(credentials)
-    string_res = session.to_json()
-    encrypted_res = RSAManager.encrypt(
-        string_res,
-        key=serialization.load_pem_public_key(client_public_key.encode("utf-8")),
-    )
-    encrypted_res_64 = RSAManager.to_base64(encrypted_res)
-    return JSONResponse(content=encrypted_res_64)
+    session: UserSessionResponse = AuthManager.generate_session(credentials)
+    try:
+        client_public_key = serialization.load_pem_public_key(
+            client_public_key_pem.encode()
+        )
+        crypted_token: str = RSAManager.to_base64(
+            RSAManager.encrypt(
+                session.token.access_token.encode("utf-8"),
+                key=client_public_key,
+            )
+        )
+        encrypted_sym_key = RSAManager.to_base64(
+            RSAManager.encrypt(
+                session.session.sym_key.encode("utf-8"),
+                key=client_public_key,
+            )
+        )
+        encrypted_session: UserSessionResponse = UserSessionResponse(
+            token=Token(access_token=crypted_token, token_type="bearer"),
+            session=UserSession(
+                id=session.session.id,
+                sym_key=encrypted_sym_key,
+                expiration_date=session.session.expiration_date,
+            ),
+        )
+        return JSONResponse(content=encrypted_session.to_json())
+    except Exception as e:
+        logger.error(e)
+        return JSONResponse(
+            content={"detail": "client public key is invalid or missing"},
+            status_code=HTTP_500_INTERNAL_SERVER_ERROR,
+        )
 
 
 @router.post("/verify-token")

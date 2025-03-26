@@ -9,12 +9,13 @@ class RSAManager:
     __PUBLIC_KEY_PATH: str = "public_key.pem"
     __PRIVATE_KEY_PATH: str = "private_key.pem"
     __PUBLIC_EXPONENT: int = 65537
-    __KEY_SIZE: int = 2048
+    __KEY_SIZE: int = 4096
 
     @staticmethod
     def from_base64(base64_str: str) -> bytes:
         return base64.b64decode(base64_str)
     
+    @staticmethod
     def to_base64(data: bytes) -> str:
         return base64.b64encode(data).decode("utf-8")
 
@@ -33,12 +34,17 @@ class RSAManager:
             return file.read()
 
     @staticmethod
-    def decrypt(encrypted_message64: bytes) -> bytes:
+    def decrypt(encrypted_message64: bytes, test: bool = False) -> bytes:
         encrypted_message = base64.b64decode(encrypted_message64)
         with open(RSAManager.__PRIVATE_KEY_PATH, "rb") as file:
             private_key: rsa.RSAPrivateKey = serialization.load_pem_private_key(
                 file.read(), password=None
             )
+        if test:
+            with open("./test.pem", "rb") as file:
+                private_key = serialization.load_pem_private_key(
+                    file.read(), password=None
+                )
         return private_key.decrypt(
             encrypted_message,
             padding=padding.OAEP(

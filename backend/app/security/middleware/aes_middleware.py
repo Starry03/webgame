@@ -25,7 +25,7 @@ class AESDecryptionMiddleware(BaseHTTPMiddleware):
             return await call_next(request)
         try:
             headers = request.headers
-            session_id = headers.get("SessionID", None)
+            session_id = headers.get("sessionid", None)
             if session_id is None:
                 return JSONResponse(
                     content={"detail": "SessionID missing"},
@@ -66,7 +66,10 @@ class AESDecryptionMiddleware(BaseHTTPMiddleware):
         request._body = decrypted_body
 
     def decrypt_token(self, request: Request, session_key: str, encrypted_token: str):
-        decrypted_token = AESManager.decrypt(
-            base64.b64decode(encrypted_token), bytes.fromhex(session_key)
-        ).decode("utf-8")
-        request.state.Authorization_jwt = decrypted_token
+        try:
+            decrypted_token = AESManager.decrypt(
+                base64.b64decode(encrypted_token), bytes.fromhex(session_key)
+            ).decode("utf-8")
+            request.state.Authorization_jwt = decrypted_token
+        except Exception as e:
+            print('ciao', e)

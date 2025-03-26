@@ -33,4 +33,4 @@ class UserSessionResponse(BaseModel):
     session: UserSession
 
     def to_json(self):
-        return json.dumps(jsonable_encoder(self)).encode("utf-8")
+        return json.dumps(jsonable_encoder(self))
