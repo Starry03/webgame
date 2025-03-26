@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistiche</title>
+    <link rel="stylesheet" href="stats.css">
+    <script src="stats.js" defer></script>
+</head>
+<body>
+    <section id="level-stats">
+        <h2>Statistiche del livello</h2>
+        <div class="item-stats">
+            <h1>Tempo impiegato </h1>
+            <p id="time-taken">00:00</p>
+        </div>
+        <div class="item-stats">
+            <h1>Punti guadagnati</h1>
+            <p id="gained-points">0</p>
+        </div>
+        <div class="item-stats">
+            <h1> Livello attuale personaggio</h1>
+            <p id="current-level">0</p>
+        </div>
+        <div class="item-stats">
+            <label for = "esp">Esperienza</label>
+            <input type="range" id="esp" name="esp" min="0" max="100" value="50" disabled>
+            <span id="value">50</span>
+        </div>
+        <div class="item-stats">
+            <label for="remained-xp-points">Punti vita rimanenti</label>
+            <input type="range" id="remained-xp-points" name="remained-xp-points" min="400" max="1000" value="700">
+            <span id="value">700</span>
+        </div>
+        <div class="item-stats">
+            <h1>Potenziamenti usati</h1>
+            <p id="used-enchantments">0</p>
+        </div>
+        <div class="item-stats">
+            <h1>Nemici sconfitti</h1>
+            <p id="defeated-enemies">0</p>
+        </div>
+        <button id="next-step-button">Prosegui</button>
+    </section>
+</body>
+</html>
