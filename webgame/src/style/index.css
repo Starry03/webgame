@@ -1,7 +1,7 @@
 :root {
   --black: #222121;
   --white: #f0f0f0;
-  --accent-color: #2c302c;
+  --accent-color: linear-gradient(135deg, #8a0576, #120446);;
   --secondary-color: #f0f0f0;
   --shadow-color: #797979e3;
   --font-small: 0.8rem;
@@ -103,17 +103,13 @@
   font-size: var(--font-mid);
   text-transform: uppercase;
   font-weight: 800;
+  text-align: center;
 }
 
 .button-primary {
-  background-color: var(--accent-color);
-  color: var(--white);
-}
-
-.button-secondary {
-  background-color: var(--white);
-  color: var(--black);
-  border: 2px solid var(--black);
+  background-color: blueviolet;
+  background: var(--accent-color);
+  color: black;
 }
 
 #canvas {
@@ -137,7 +133,6 @@ h1 {
   font-size: var(--font-big);
 }
 
-.button-primary,
 .button-secondary {
   border: none;
   background-color: transparent;

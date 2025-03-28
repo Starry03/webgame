@@ -9,8 +9,8 @@
           <input class="in1" id="username" type="text" placeholder="Username" v-model="username">
           <input class="in2" id="password" type="password" placeholder="Password" v-model="password">
           <div class="bot flex flex-space-between gap-mid">
-            <button class="btn-regist flex-grow" type="submit">SIGN UP</button>
-            <button class="btn-login flex-grow" type="submit" @click="login">SIGN IN</button>
+            <button class="button-primary btn-regist flex-grow" type="submit">SIGN UP</button>
+            <button class="button-primary btn-login flex-grow" type="submit" @click="login">SIGN IN</button>
           </div>
         </form>
       </div>
@@ -111,9 +111,6 @@ h2 {
 
 .btn-login,
 .btn-regist {
-  background: linear-gradient(135deg, #8a0576, #120446);
-  background-color: blueviolet;
-  color: black;
   text-shadow: 0 0 1px red, 0 0 20px red;
   padding: 8px;
   font-size: var(--font-small);

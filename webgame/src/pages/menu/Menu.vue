@@ -3,23 +3,16 @@
   <audio controls style="display: none" id="music" autoplay loop>
     <source src="../../style/Song_of_Heart.mp3" type="audio/mpeg" />
   </audio>
-  <div class="flex flex-column flex-center gap-big">
-    <button class="button button-logout" @click="logout">Logout</button>
+  <div class="flex flex-column flex-center gap-mid">
     <button class="button button-mute" @click="toggleMute">🔊</button>
 
     <h1>Awakening in the Dark Tower</h1>
-    <br />
-    <button class="button button-primary b-play" @click="$router.push('/play')">Play</button>
+    <button class="button button-secondary b-play" @click="$router.push('/play')">Play</button>
 
     <button class="button button-secondary b-shop" @click="$router.push('/login')">Login</button>
-    <!--
-    <button class="button button-secondary b-tutorial" @click="$router.push('/tutorial')">
-      Tutorial
-    </button>
-     <button class="button button-secondary b-shop" @click="$router.push('/shop')">Shop</button>-->
-    <button class="button button-secondary b-settings" @click="$router.push('/settings')">
-      Settings
-    </button>
+    
+    <button class="button button-secondary b-settings" @click="$router.push('/settings')">Settings</button>
+    <button class="button button-logout" @click="logout">Logout</button>
   </div>
 </template>
 <script>
@@ -50,11 +43,24 @@
     };
 </script>
 <style scoped>
+
+@media(max-height: 600px) {
+  h1 {
+    font-size: var(--font-mid);
+    padding-top: 7%;
+  }
+  .button {
+    font-size: var(--font-small);
+    
+  }
+
+}
+
 div {
   background: url('../../style/sfondo3.gif');
   background-size: cover;
   display: flex;
-  height: 100vh;
+  height: 100svh;
   justify-content: center;
   flex-direction: column;
   align-items: center;
@@ -82,6 +88,10 @@ div {
   }
 }
 
+button{
+  width: 20svw;
+}
+
 h1 {
   text-shadow:0 0 10px black, 0 0 20px black;
   color: darkred;
@@ -89,30 +99,10 @@ h1 {
   animation: liquido 4s ease-in-out infinite alternate;
 }
 
-.b-settings/*,
-.b-tutorial*/ {
-  margin-left: -50px;
-  font-display: flex;
-}
-
 .b-play:hover {
   transform: scale(1.2);
   text-shadow:0 0 10px blue, 0 0 20px blue;
 }
-
-/*.b-tutorial:hover {
-  transform: scale(1.1);
-  text-shadow:
-    0 0 10px lightgreen,
-    0 0 20px lightgreen;
-}*/
-
-/*.b-shop:hover {
-  transform: scale(1.1);
-  text-shadow:
-    0 0 10px yellow,
-    0 0 20px yellow;
-}*/
 
 .b-settings:hover {
   transform: scale(1.1);
@@ -122,19 +112,15 @@ h1 {
 }
 
 .button-logout {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  font-size: 1rem;
-  background-color: rgb(148, 20, 60);
+  background-color: transparent
 }
 
 .button-mute {
   position: absolute;
   top: 20px;
   right: 20px;
-  font-size: 1.5rem;
-  background-color: rgb(148, 20, 60);
+  font-size: 3rem;
+  background-color: transparent;
 }
 
 .button-logout:hover,
