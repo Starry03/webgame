@@ -1,22 +1,25 @@
 <template>
-	<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
-	<div class="master">
-    <button class="button button-home" @click="$router.push('/')">🏠Home</button><br><br>      
+	<meta name="viewport" content="width=device-height, initial-scale=1.0" />
+  <div class="master">
+    <button class="button button-home" @click="$router.push('/')">🏠Home</button>      
 
-      <div class="container flex flex-column flex-center gap-big">
+      <div class="container flex flex-center gap-big">
         <img src="../../style/disegno.webp" alt="Logo" class="logo">
-        <h2>Awakening in the Dark Tower</h2>
-        <div class="forma">
-          <form>
-            <input class="in1" id="username" type="text" placeholder="Username" v-model="username">
-            <input class="in2" id="password" type="password" placeholder="Password" v-model="password">
-            <br><br><br>
-            <div class="bot flex flex-center gap-big">
-              <button class="btn-regist" type="submit">SIGN UP</button>
-              <button class="btn-login" type="submit" @click="login">SIGN IN</button>
-            </div>
-            
-          </form>
+        
+        <div>
+          <h2>Awakening in the Dark Tower</h2>
+          <div class="forma">
+            <form>
+              <input class="in1" id="username" type="text" placeholder="Username" v-model="username">
+              <input class="in2" id="password" type="password" placeholder="Password" v-model="password">
+              
+              <div class="bot flex flex-center gap-big">
+                <button class="btn-regist" type="submit">SIGN UP</button>
+                <button class="btn-login" type="submit" @click="login">SIGN IN</button>
+              </div>
+              
+            </form>
+          </div>
         </div>
         
       </div>
@@ -69,6 +72,23 @@ async function login() {
 
 <style scoped>
 
+  @media (orientation: portrait) {
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: black;
+      color: white;
+      text-align: center;
+      font-size: var(--font-biggest);
+    }
+
+    body::before {
+      content: "Ruota il dispositivo in orizzontale per continuare";
+    }
+  }
+
   .master{
     background: linear-gradient(135deg, #8a0576, #120446);
     background-color: blueviolet;
@@ -76,7 +96,6 @@ async function login() {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0;
   }
 
   .container{
@@ -93,13 +112,18 @@ async function login() {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
   }
 
+  @media (max-height: 600px) {
+    .container {
+      flex-direction: row;
+    }
+  }
+
   .logo{
     width: 100%;
     margin-bottom: 15px;
   }
 
   h2{
-      font-family: 'Press Start 2P', cursive;
       justify-content: center;
       margin-bottom: 20px;
       width: 100%;
@@ -113,7 +137,7 @@ async function login() {
     text-shadow: 0 0 1px red, 0 0 20px red;
     padding: 10px;
     border: none;
-    font-size: 16px;
+    font-size: var(--font-small);
     border-radius: 5px;
     cursor: pointer;
   }
@@ -128,11 +152,6 @@ async function login() {
     border: none;
     border-radius: 5px;
     font-size: 16px;
-    font-family: 'Press Start 2P', cursive;
-  }
-
-  button{
-    font-family: 'Press Start 2P', cursive;
   }
 
   .bot{

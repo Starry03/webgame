@@ -6,8 +6,8 @@
   --shadow-color: #797979e3;
   --font-small: 0.8rem;
   --font-mid: 1.2rem;
-  --font-big: 1.6rem;
-  --font-biggest: 2rem;
+  --font-big: 2rem;
+  --font-biggest: 3rem;
 }
 
 @font-face {
@@ -107,4 +107,19 @@
   min-height: 48px;
   background-color: var(--black);
   border-bottom: 1px solid var(--white);
+}
+
+h1, h2, button, input{
+  font-family: 'Press Start 2P', cursive;
+}
+
+h1{
+  font-size: var(--font-big);
+}
+
+.button-primary,
+.button-secondary {
+  border: none;
+  background-color: transparent;
+  color: white;
 }

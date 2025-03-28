@@ -1,5 +1,4 @@
 <template>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <div class="master flex flex-column flex-cemter">
         <button class="button button-home" @click="$router.push('/')">🏠Home</button>
         <h1 class="title flex flex-row gap-big">Awakening in the Dark Tower</h1><br>
