@@ -12,7 +12,7 @@
     <button class="button button-secondary b-shop" @click="$router.push('/login')">Login</button>
     
     <button class="button button-secondary b-settings" @click="$router.push('/settings')">Settings</button>
-    <button class="button button-logout" @click="logout">Logout</button>
+    <button class="button button-secondary button-logout" @click="logout">Logout</button>
   </div>
 </template>
 <script>
@@ -86,10 +86,6 @@ div {
   100% {
     filter: blur(0px);
   }
-}
-
-button{
-  width: 20svw;
 }
 
 h1 {
