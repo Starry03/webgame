@@ -8,23 +8,16 @@
   --font-mid: 1.2rem;
   --font-big: 2rem;
   --font-biggest: 3rem;
-}
-
-@font-face {
-  font-family: 'Roboto';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Roboto') url('./fonts/Roboto-VariableFont_wdth,wght.ttf') format('ttf');
+  --gap-small: 0.5rem;
+  --gap-mid: 1rem;
+  --gap-big: 2rem;
 }
 
 * {
   padding: 0;
   margin: 0;
-  border: 0;
-  font-family: 'Roboto';
-}
-
-.app {
+  border: none;
+  box-sizing: border-box;
 }
 
 .flex {
@@ -46,6 +39,30 @@
 
 .flex-space-between {
   justify-content: space-between;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+
+.flex-shrink {
+  flex-shrink: 1;
+}
+
+.flex-stretch {
+  align-items: stretch;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.grid {
+  display: grid;
+}
+
+.gap-small {
+  gap: 0.5rem;
 }
 
 .gap-mid {
@@ -109,11 +126,14 @@
   border-bottom: 1px solid var(--white);
 }
 
-h1, h2, button, input{
+h1,
+h2,
+button,
+input {
   font-family: 'Press Start 2P', cursive;
 }
 
-h1{
+h1 {
   font-size: var(--font-big);
 }
 
