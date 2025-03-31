@@ -67,6 +67,7 @@ export class RequestWrapper {
 
 export class AESUtils {
     private static BITS: number = 256;
+    private static NONCE_LENGTH: number = 16;
 
     static save(session: Session, token: Token): void {
         localStorage.setItem(prefixed("token"), JSON.stringify(token));
@@ -94,9 +95,9 @@ export class AESUtils {
     }
 
     static async encrypt(data: string): Promise<string> {
-        const session = AESUtils.read().session;
+        const session: Session = AESUtils.read().session;
         const keyBytes = AESUtils.hexToBytes(session.sym_key);
-        const nonce = window.crypto.getRandomValues(new Uint8Array(16));
+        const nonce = window.crypto.getRandomValues(new Uint8Array(AESUtils.NONCE_LENGTH));
         try {
             const cryptoKey = await window.crypto.subtle.importKey(
                 "raw",
