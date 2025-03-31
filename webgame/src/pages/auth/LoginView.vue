@@ -66,6 +66,7 @@ async function login() {
   background: linear-gradient(135deg, #8a0576, #120446);
   background-color: blueviolet;
   height: 100svh;
+  width: 100svw;
 }
 
 .container {
@@ -75,6 +76,23 @@ async function login() {
   max-width: 1024px;
   background: #0e0e1a;
   border-radius: 12px;
+}
+
+@media(orientation: portrait) {
+  .logo{
+    width: 90%;
+    margin-left: -63px;
+    margin-right: -63px;
+    /*border-radius: 20px;
+    padding-top: 96px;
+    padding-left: 63px;
+    padding-right: 63px;
+    margin-top: -100px;*/
+  }
+
+  .container{
+    height: 150%;
+  }
 }
 
 @media (max-width: 600px) {

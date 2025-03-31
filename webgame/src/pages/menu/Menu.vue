@@ -7,7 +7,7 @@
     <button class="button button-mute" @click="toggleMute">🔊</button>
 
     <h1>Awakening in the Dark Tower</h1>
-    <button class="button button-secondary b-play" @click="$router.push('/play')">Play</button>
+    <button class="button button-secondary b-play" @click="$router.push('/game')">Play</button>
 
     <button class="button button-secondary b-shop" @click="$router.push('/login')">Login</button>
     
@@ -20,7 +20,7 @@
         methods: {
             logout() {
                 console.log("Logout eseguito");
-                // Qui potresti aggiungere una logica per rimuovere i dati utente e reindirizzare alla login
+                
             },
             toggleMute() {
                 let audio = document.getElementById("music");
@@ -53,14 +53,37 @@
     font-size: var(--font-small);
     
   }
-
+  .button-mute {
+    width: fit-content;
+    height: fit-content;
+  }
 }
+
+@media(orientation: portrait) {
+  h1 {
+    font-size: var(--font-big);
+    text-align: center;
+    width: 69%;
+    display: block;
+
+  }
+
+  .button-mute{
+    width: fit-content;
+    height: fit-content;
+    position: absolute;
+    top: 0;
+    left: 75svw;
+  }
+}
+
 
 div {
   background: url('../../style/sfondo3.gif');
   background-size: cover;
   display: flex;
   height: 100svh;
+  width: 100svw;
   justify-content: center;
   flex-direction: column;
   align-items: center;
