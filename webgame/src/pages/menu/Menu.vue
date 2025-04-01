@@ -10,9 +10,9 @@
     <button class="button button-secondary b-play" @click="$router.push('/game')">Play</button>
 
     <button class="button button-secondary b-shop" @click="$router.push('/login')">Login</button>
-    
+    <!--⚙️-->
     <button class="button button-secondary b-settings" @click="$router.push('/settings')">Settings</button>
-    <button class="button button-secondary button-logout" @click="logout">Logout</button>
+    <!----><button class="button button-secondary button-logout" @click="logout">Logout</button>
   </div>
 </template>
 <script>
@@ -59,13 +59,19 @@
   }
 }
 
+@media(orientation: landscape) {
+  h1 {
+    margin-bottom: 2%;
+  }
+}
+
 @media(orientation: portrait) {
   h1 {
     font-size: var(--font-big);
     text-align: center;
     width: 69%;
     display: block;
-
+    margin-bottom: 15%;
   }
 
   .button-mute{

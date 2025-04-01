@@ -1,7 +1,7 @@
 <template>
     <div class="master flex flex-column flex-cemter">
         <button class="button button-home button-secondary" @click="$router.push('/')">Home</button>
-        <h1 class="title flex flex-row gap-big">Awakening in the Dark Tower</h1><br>
+        <h1 class="title flex flex-row gap-big">Awakening in the Dark Tower</h1>
         <div class="set">
             <h2>Settings</h2>
             <h3>Master Volume</h3>
@@ -20,10 +20,19 @@
         
         h1 {
             font-size: var(--font-big);
-            margin-top: 30%;
+            margin-top: 35%;
         }
         
         h2{
+            margin-top: 15%;
+            margin-bottom: 5%;
+        }
+        h3{
+            margin-top: 2%;
+            margin-bottom:3%;
+        }
+
+        input{
             margin-bottom: 5%;
         }
 
@@ -34,13 +43,18 @@
 
     @media(orientation: landscape) {
         h1 {
-            width: 70%;
+            margin-top: 5%;
             font-size: var(--font-mid);
-            
+            justify-items: center;
             
         }
         
-        h2{
+        h3{
+            margin-top: 1%;
+        }
+
+        input{
+            margin-top: 1%;
             margin-bottom: 1%;
         }
 
@@ -59,7 +73,6 @@
     }
 
     h1, h2, h3{
-        font-family: 'Press Start 2P', cursive;
         justify-content: center;
     }
 
@@ -67,6 +80,17 @@
         font-size: 2rem;
         text-shadow: 0 0 10px black, 0 0 20px black;
         color: darkred;
+    }
+    .set{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding-top: 10%;
+    }
+
+    h2,h3{
+        text-shadow: 0 0 10px black, 0 0 20px black;
     }
 
     .set{
