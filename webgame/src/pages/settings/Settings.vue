@@ -68,7 +68,7 @@
         background-size: cover;
         display: flex;
         height: 100svh;
-        color: cyan;
+        color: red;
         text-align: center;
     }
 
