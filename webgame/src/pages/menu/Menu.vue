@@ -1,29 +1,18 @@
 <template>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
-    rel="stylesheet"
-  />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <audio controls style="display: none" id="music" autoplay loop>
     <source src="../../style/Song_of_Heart.mp3" type="audio/mpeg" />
   </audio>
-  <div class="flex flex-column flex-center gap-big">
-    <button class="button button-logout" @click="logout">Logout</button>
+  <div class="flex flex-column flex-center gap-mid">
     <button class="button button-mute" @click="toggleMute">🔊</button>
 
     <h1>Awakening in the Dark Tower</h1>
-    <br />
-    <button class="button button-primary b-play" @click="$router.push('/game')">Play</button>
-    <button class="button button-secondary b-tutorial" @click="$router.push('/tutorial')">
-      Tutorial
-    </button>
+    <button class="button button-secondary b-play" @click="$router.push('/game')">Play</button>
 
     <button class="button button-secondary b-shop" @click="$router.push('/login')">Login</button>
-    <!--
-     <button class="button button-secondary b-shop" @click="$router.push('/shop')">Shop</button>-->
-    <button class="button button-secondary b-settings" @click="$router.push('/settings')">
-      Settings
-    </button>
+    <!--⚙️-->
+    <button class="button button-secondary b-settings" @click="$router.push('/settings')">Settings</button>
+    <!----><button class="button button-secondary button-logout" @click="logout">Logout</button>
   </div>
 </template>
 <script>
@@ -31,7 +20,7 @@
         methods: {
             logout() {
                 console.log("Logout eseguito");
-                // Qui potresti aggiungere una logica per rimuovere i dati utente e reindirizzare alla login
+                
             },
             toggleMute() {
                 let audio = document.getElementById("music");
@@ -54,26 +43,56 @@
     };
 </script>
 <style scoped>
+
+@media(max-height: 600px) {
+  h1 {
+    font-size: var(--font-mid);
+    padding-top: 7%;
+  }
+  .button {
+    font-size: var(--font-small);
+    
+  }
+  .button-mute {
+    width: fit-content;
+    height: fit-content;
+  }
+}
+
+@media(orientation: landscape) {
+  h1 {
+    margin-bottom: 2%;
+  }
+}
+
+@media(orientation: portrait) {
+  h1 {
+    font-size: var(--font-big);
+    text-align: center;
+    width: 69%;
+    display: block;
+    margin-bottom: 15%;
+  }
+
+  .button-mute{
+    width: fit-content;
+    height: fit-content;
+    position: absolute;
+    top: 0;
+    left: 75svw;
+  }
+}
+
+
 div {
   background: url('../../style/sfondo3.gif');
   background-size: cover;
   display: flex;
-  height: 100vh;
+  height: 100svh;
+  width: 100svw;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-}
-
-button,
-h1 {
-  font-family: 'Press Start 2P', cursive;
-}
-
-.button-primary,
-.button-secondary {
-  border: none;
-  background-color: transparent;
-  color: white;
 }
 
 @keyframes liquido {
@@ -99,40 +118,15 @@ h1 {
 }
 
 h1 {
-  font-size: 2rem;
-  text-shadow:
-    0 0 10px black,
-    0 0 20px black;
+  text-shadow:0 0 10px black, 0 0 20px black;
   color: darkred;
   transition: 0.1s;
   animation: liquido 4s ease-in-out infinite alternate;
 }
 
-.b-settings,
-.b-tutorial {
-  margin-left: -50px;
-  font-display: flex;
-}
-
 .b-play:hover {
   transform: scale(1.2);
-  text-shadow:
-    0 0 10px blue,
-    0 0 20px blue;
-}
-
-.b-tutorial:hover {
-  transform: scale(1.1);
-  text-shadow:
-    0 0 10px lightgreen,
-    0 0 20px lightgreen;
-}
-
-.b-shop:hover {
-  transform: scale(1.1);
-  text-shadow:
-    0 0 10px yellow,
-    0 0 20px yellow;
+  text-shadow:0 0 10px blue, 0 0 20px blue;
 }
 
 .b-settings:hover {
@@ -143,19 +137,15 @@ h1 {
 }
 
 .button-logout {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  font-size: 1rem;
-  background-color: rgb(148, 20, 60);
+  background-color: transparent
 }
 
 .button-mute {
   position: absolute;
   top: 20px;
   right: 20px;
-  font-size: 1.5rem;
-  background-color: rgb(148, 20, 60);
+  font-size: 3rem;
+  background-color: transparent;
 }
 
 .button-logout:hover,
