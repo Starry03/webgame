@@ -1,17 +1,17 @@
 <template>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <section id="level-stats">
-        <h2>Statistiche del livello</h2>
+        <h1>Statistiche del livello</h1>
         <div class="item-stats">
-            <h1>Tempo impiegato </h1>
+            <h2>Tempo impiegato </h2>
             <p id="time-taken">00:00</p>
         </div>
         <div class="item-stats">
-            <h1>Punti guadagnati</h1>
+            <h2>Punti guadagnati</h2>
             <p id="gained-points">0</p>
         </div>
         <div class="item-stats">
-            <h1> Livello attuale personaggio</h1>
+            <h2> Livello attuale personaggio</h2>
             <p id="current-level">0</p>
         </div>
         <div class="item-stats">
@@ -25,11 +25,11 @@
             <span id="value">700</span>
         </div>
         <div class="item-stats">
-            <h1>Potenziamenti usati</h1>
+            <h2>Potenziamenti usati</h2>
             <p id="used-enchantments">0</p>
         </div>
         <div class="item-stats">
-            <h1>Nemici sconfitti</h1>
+            <h2>Nemici sconfitti</h2>
             <p id="defeated-enemies">0</p>
         </div>
         <button id="next-step-button">Prosegui</button>
