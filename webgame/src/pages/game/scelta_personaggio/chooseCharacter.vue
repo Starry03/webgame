@@ -1,5 +1,4 @@
 <template>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <section class="container">
         <h1>Scegli il tuo personaggio</h1>
         <div class="menu">

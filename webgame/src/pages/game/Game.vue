@@ -18,25 +18,24 @@ onUnmounted(() => {
   window.removeEventListener('resize', handle_resize)
 })
 /*
-// Funzione per mostrare il popup
+// mostrare il popup
 const confirmExit = () => {
   showConfirmDialog.value = true
 }
 
-// Funzione per tornare alla home
+// tornare alla home
 const goToHome = () => {
   showConfirmDialog.value = false
   window.location.href = "/menu"
 }
 
-// Funzione per chiudere il popup
+// chiudere il popup
 const closeDialog = () => {
   showConfirmDialog.value = false
 }
 */
 </script>
 <template>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <audio controls style="display: none;" id="music" autoplay loop>
         <source src="../../style/Trust_In_Your_Perseverance.wav" type="audio/mpeg">
   </audio>

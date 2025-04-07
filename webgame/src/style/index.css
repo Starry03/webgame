@@ -1,30 +1,30 @@
 :root {
   --black: #222121;
   --white: #f0f0f0;
-  --accent-color: #2c302c;
+  --accent-color: linear-gradient(135deg, #8a0576, #120446);
   --secondary-color: #f0f0f0;
   --shadow-color: #797979e3;
   --font-small: 0.8rem;
   --font-mid: 1.2rem;
-  --font-big: 1.6rem;
-  --font-biggest: 2rem;
+  --font-big: 2rem;
+  --font-biggest: 3rem;
+  --gap-small: 0.5rem;
+  --gap-mid: 1rem;
+  --gap-big: 2rem;
 }
 
 @font-face {
-  font-family: 'Roboto';
+  font-family: 'Press Start 2P';
+  src: url("../assets/font/PressStart2P-Regular.ttf") format("truetype");
+  font-weight: normal;
   font-style: normal;
-  font-weight: 400;
-  src: local('Roboto') url('./fonts/Roboto-VariableFont_wdth,wght.ttf') format('ttf');
 }
 
 * {
   padding: 0;
   margin: 0;
-  border: 0;
-  font-family: 'Roboto';
-}
-
-.app {
+  border: none;
+  box-sizing: border-box;
 }
 
 .flex {
@@ -46,6 +46,30 @@
 
 .flex-space-between {
   justify-content: space-between;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+
+.flex-shrink {
+  flex-shrink: 1;
+}
+
+.flex-stretch {
+  align-items: stretch;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.grid {
+  display: grid;
+}
+
+.gap-small {
+  gap: 0.5rem;
 }
 
 .gap-mid {
@@ -86,17 +110,13 @@
   font-size: var(--font-mid);
   text-transform: uppercase;
   font-weight: 800;
+  text-align: center;
 }
 
 .button-primary {
-  background-color: var(--accent-color);
-  color: var(--white);
-}
-
-.button-secondary {
-  background-color: var(--white);
-  color: var(--black);
-  border: 2px solid var(--black);
+  background-color: blueviolet;
+  background: var(--accent-color);
+  color: black;
 }
 
 #canvas {
@@ -107,4 +127,23 @@
   min-height: 48px;
   background-color: var(--black);
   border-bottom: 1px solid var(--white);
+}
+
+h1,
+h2,
+h3,
+button,
+input {
+  font-family: 'Press Start 2P', cursive;
+}
+
+h1 {
+  font-size: var(--font-big);
+}
+
+.button-secondary {
+  border: none;
+  background-color: transparent;
+  color: white;
+  width: fit-content;
 }
