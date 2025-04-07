@@ -3,6 +3,15 @@ from pydantic import BaseModel
 from .sprite import Sprite
 
 
+class PlayerClass(BaseModel):
+    name: str
+    speed: int
+    attack: int
+    defence: int
+    mana: int
+    hp: int
+
+
 class Player(BaseModel):
     id: int
     owner: int

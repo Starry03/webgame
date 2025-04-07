@@ -18,10 +18,7 @@ class AESDecryptionMiddleware(BaseHTTPMiddleware):
     )
 
     async def dispatch(self, request: Request, call_next):
-        if (
-            request.url.path in AESDecryptionMiddleware.__excluded_paths
-            or request.method != "POST"
-        ):
+        if request.url.path in AESDecryptionMiddleware.__excluded_paths or request.method == "OPTIONS":
             return await call_next(request)
         try:
             headers = request.headers
@@ -31,10 +28,10 @@ class AESDecryptionMiddleware(BaseHTTPMiddleware):
                     content={"detail": "SessionID missing"},
                     status_code=HTTP_401_UNAUTHORIZED,
                 )
-            bearer_token = headers.get("Authorization", None)
+            bearer_token = headers.get("authorization", None)
             if bearer_token is None:
                 return JSONResponse(
-                    content={"detail": "Token missing"},
+                    content={"detail": "Token error"},
                     status_code=HTTP_401_UNAUTHORIZED,
                 )
             encrypted_token = bearer_token.split(" ")[1]
@@ -72,4 +69,4 @@ class AESDecryptionMiddleware(BaseHTTPMiddleware):
             ).decode("utf-8")
             request.state.Authorization_jwt = decrypted_token
         except Exception as e:
-            print('ciao', e)
+            print("ciao", e)

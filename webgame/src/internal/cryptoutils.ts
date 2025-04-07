@@ -49,7 +49,7 @@ export class RequestWrapper {
         const { session, token } = AESUtils.read();
         const encrypted_token: string = await AESUtils.encrypt(token.access_token);
         const headers = new Headers(options.headers);
-        headers.set("Authorization", `Bearer ${encrypted_token}`);
+        headers.set("authorization", `Bearer ${encrypted_token}`);
         headers.set('sessionid', session.id);
         if (options.method !== "POST")
             return fetch(url, {

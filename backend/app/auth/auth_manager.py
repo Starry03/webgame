@@ -50,7 +50,7 @@ class AuthManager:
             return session
 
     @staticmethod
-    async def get_token_header(request: Request) -> str:
+    def get_token_header(request: Request) -> str:
         token = getattr(request.state, "Authorization_jwt", None)
         if token is None:
             raise HTTPException(
