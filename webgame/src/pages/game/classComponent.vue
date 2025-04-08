@@ -21,7 +21,7 @@
         <p><strong>Speed:</strong> {{ character.speed }}</p>
         <p><strong>Attack:</strong> {{ character.attack }}</p>
         <p><strong>Defence:</strong> {{ character.defence }}</p>
-        <p><strong>Maba:</strong> {{ character.mana }}</p>
+        <p><strong>Mana:</strong> {{ character.mana }}</p>
         <p><strong>Hp:</strong> {{ character.hp }}</p>
     </div>
 </template>

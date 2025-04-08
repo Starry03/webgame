@@ -9,10 +9,10 @@
                             :onSelect="selectCharacter"/>
 
         </div>
-        <div v-if="selectedCharacter">
-            <h2>Description of {{ selectedCharacter.name }} </h2>
-            <textarea :value="selectedCharacter.description"></textarea>
-            <button @click="startGame(character)" :disabled="!selectCharacter">Start Game</button>
+        <div class="character-description-block" v-if="selectedCharacter">
+            <h2 id="character-description-header">Description of {{ selectedCharacter.name }} </h2>
+            <textarea class="character-description" :value="selectedCharacter.description"></textarea>
+            <button id="start-game-button" @click="startGame(character)" :disabled="!selectCharacter">Start Game</button>
         </div>
     </section>
 </template>
@@ -20,6 +20,9 @@
 <script setup>
     import {ref, onMounted} from 'vue';
     import ClassComponent from './ClassComponent.vue';
+    import {UseRouter} from 'vue-router';
+
+    const router = UseRouter();
     
     const characters = ref([]);
     const selectedCharacter = ref(null);
@@ -54,7 +57,7 @@
             localStorage.setItem('selectedCharacter',character.name);
             console.log('Personaggio salvato:', character.name);
             console.log("Avvio del gioco...");
-
+            router.push();
         }
     }
 
@@ -62,5 +65,56 @@
 </script>
 
 <style scoped>
+    .container {
+        display: flex;
+        padding: 1rem;
+        font-family:'Press Start 2P',cursive
+    }
+
+    #container-title {
+        font-size: 1.8rem;
+        font-weight: bold;
+    }
+
+    .character-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .character-description-block {
+        display: flex;
+        background: fixed;
+        padding: 1rem;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        background-color: white;
+    }
+
+    #character-description-header {
+        font-size: 1.5rem;
+        font-weight: 400;
+    }
+
+    .character-description {
+        width: 100%;
+        padding: 0.5rem;
+        outline: auto;
+        resize: none
+    }
+
+    #start-game-button {
+        cursor: pointer;
+        border-radius: 5px;
+        padding: 10px;
+        width: 150px;
+        background-color: red;
+    }
+
+    #start-game-button {
+        background-color: black;
+    }
 
 </style>
