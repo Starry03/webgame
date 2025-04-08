@@ -32,6 +32,11 @@
                     "Content-Type": "application/json",
                 }
             });
+
+            if (!response.ok) {
+                throw new Error(`Errore HTTP: ${response.status}`)
+            }
+
             const data = await response.json();
             characters.value = data;
         }
@@ -49,7 +54,7 @@
             localStorage.setItem('selectedCharacter',character.name);
             console.log('Personaggio salvato:', character.name);
             console.log("Avvio del gioco...");
-            
+
         }
     }
 
