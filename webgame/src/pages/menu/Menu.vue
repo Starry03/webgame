@@ -73,12 +73,6 @@ onUnmounted(() => {
 
 <style scoped>
 @media (max-height: 600px) {
-  h1 {
-    font-size: var(--font-mid);
-  }
-  .button {
-    font-size: var(--font-small);
-  }
   .button-mute {
     width: fit-content;
     height: fit-content;
@@ -87,7 +81,6 @@ onUnmounted(() => {
 
 @media (orientation: portrait) {
   h1 {
-    font-size: var(--font-big);
     text-align: center;
     width: 69%;
   }
@@ -102,7 +95,7 @@ onUnmounted(() => {
 }
 
 #wrapper {
-  background: url('../../style/sfondo3.gif');
+  background: url('@/assets/images/sfondo3.gif');
   background-size: cover;
   height: 100svh;
   width: 100svw;

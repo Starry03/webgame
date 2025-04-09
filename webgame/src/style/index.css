@@ -11,6 +11,16 @@
   --gap-small: 0.5rem;
   --gap-mid: 1rem;
   --gap-big: 2rem;
+  font-size: 16px;
+}
+
+@media screen and (max-height: 600px) {
+  :root {
+    font-size: 12px;
+  }
+  .button {
+    font-size: var(--font-small);
+  }
 }
 
 @font-face {

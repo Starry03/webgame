@@ -2,12 +2,12 @@
   <div class="master flex flex-column flex-align gap-big">
     <button class="button button-home button-secondary" @click="$router.push('/')">Home</button>
     <h1 class="title">Awakening in the Dark Tower</h1>
-    <div class="set flex flex-column flex-center gap-mid">
+    <div class="set flex flex-column flex-center gap-big">
       <h2>Settings</h2>
       <div class="flex flex-column gap-small">
-        <p>Master Volume</p>
+        <h3>Master Volume</h3>
         <input type="range" min="0" max="10" value="5" class="slider" id="vol_range" />
-        <p>SFX Volume</p>
+        <h3>SFX Volume</h3>
         <input type="range" min="0" max="10" value="5" class="slider" id="vol_range" />
       </div>
     </div>
@@ -50,8 +50,7 @@ h3 {
 }
 
 h2,
-p {
-  font-weight: bold;
+h3 {
   font-size: var(--font-mid);
   text-shadow:
     0 0 10px black,

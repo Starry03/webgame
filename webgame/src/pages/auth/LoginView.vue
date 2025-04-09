@@ -2,15 +2,25 @@
   <div class="master flex flex-center">
     <button class="button button-secondary button-home" @click="$router.push('/')">home</button>
     <div class="container flex flex-center flex-row gap-big">
-      <img src="../../assets/images/disegno.webp" alt="Logo" class="logo flex-grow">
+      <img src="../../assets/images/disegno.webp" alt="Logo" class="logo flex-grow" />
       <div id="cnt" class="flex flex-center flex-column gap-big flex-grow">
         <h2>Awakening in the Dark Tower</h2>
         <form class="flex flex-center flex-column gap-mid" @submit.prevent="login">
-          <input class="in1" id="username" type="text" placeholder="Username" v-model="username">
-          <input class="in2" id="password" type="password" placeholder="Password" v-model="password">
+          <input class="in1" id="username" type="text" placeholder="Username" v-model="username" />
+          <input
+            class="in2"
+            id="password"
+            type="password"
+            placeholder="Password"
+            v-model="password"
+          />
           <div class="bot flex flex-space-between gap-mid">
-            <button class="button-primary btn-regist flex-grow" type="submit">SIGN UP</button>
-            <button class="button-primary btn-login flex-grow" type="submit" @click="login">SIGN IN</button>
+            <button class="button-primary btn-regist flex-grow" type="submit" @click="register">
+              SIGN UP
+            </button>
+            <button class="button-primary btn-login flex-grow" type="submit" @click="login">
+              SIGN IN
+            </button>
           </div>
         </form>
       </div>
@@ -20,41 +30,54 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { RequestWrapper, RSAUtils, AESUtils } from '@/internal/cryptoutils'
 import type { Token, Session } from '@/internal/cryptoutils'
 
 const username = ref('')
 const password = ref('')
+const router = useRouter()
+
+async function main_req(path: String): Promise<{ session: Session; token: Token }> {
+  const f = await RequestWrapper.loginFetch(
+    `http://127.0.0.1:8000/auth/${path}`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+    {
+      username: username.value,
+      password: password.value,
+    },
+  )
+  let res = await f.json()
+  return (await JSON.parse(res)) as { session: Session; token: Token }
+}
+
+async function process_session(req: { session: Session; token: Token }) {
+  const token: Token = req.token
+  const session: Session = req.session
+  token.access_token = await RSAUtils.decrypt(token.access_token)
+  session.sym_key = await RSAUtils.decrypt(session.sym_key)
+  AESUtils.save(session, token)
+  router.push('/')
+}
 
 async function login() {
+  const req = await main_req('login')
   try {
-    const req = await RequestWrapper.loginFetch(
-      'http://127.0.0.1:8000/auth/login',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      },
-      {
-        username: username.value,
-        password: password.value,
-      },
-    )
+    process_session(req)
+  } catch (error) {
+    console.log(error)
+  }
+}
 
-    if (req.status !== 200) {
-      console.log('Errore login');
-      return
-    }
-    let res = await req.json();
-    res = JSON.parse(res);
-
-    const token: Token = res.token;
-    const session: Session = res.session;
-    token.access_token = await RSAUtils.decrypt(token.access_token);
-    session.sym_key = await RSAUtils.decrypt(session.sym_key);
-    AESUtils.save(session, token);
-
+async function register() {
+  const req = await main_req('register')
+  try {
+    process_session(req)
   } catch (error) {
     console.log(error)
   }
@@ -78,19 +101,12 @@ async function login() {
   border-radius: 12px;
 }
 
-@media(orientation: portrait) {
-  .logo{
+@media (orientation: portrait) {
+  .logo {
     width: 90%;
-    margin-left: -63px;
-    margin-right: -63px;
-    /*border-radius: 20px;
-    padding-top: 96px;
-    padding-left: 63px;
-    padding-right: 63px;
-    margin-top: -100px;*/
   }
 
-  .container{
+  .container {
     height: 150%;
   }
 }
@@ -115,10 +131,11 @@ async function login() {
   border-radius: 12px;
 }
 
-
 h2 {
   text-align: center;
-  text-shadow: 0 0 10px red, 0 0 20px red;
+  text-shadow:
+    0 0 10px red,
+    0 0 20px red;
 }
 
 @media (max-height: 400px) {
@@ -129,7 +146,9 @@ h2 {
 
 .btn-login,
 .btn-regist {
-  text-shadow: 0 0 1px red, 0 0 20px red;
+  text-shadow:
+    0 0 1px red,
+    0 0 20px red;
   padding: 8px;
   font-size: var(--font-small);
   border-radius: 4px;
@@ -150,7 +169,9 @@ input {
 }
 
 .button-home:hover {
-  text-shadow: 0 0 10px black, 0 0 20px black;
+  text-shadow:
+    0 0 10px black,
+    0 0 20px black;
 }
 
 form {
