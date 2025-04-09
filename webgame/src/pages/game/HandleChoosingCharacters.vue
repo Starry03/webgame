@@ -26,7 +26,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import ClassComponent from '../ClassComponent.vue'
+import ClassComponent from '@/components/ClassComponent.vue'
 import { RequestWrapper, prefixed } from '@/internal/cryptoutils'
 import { useRouter } from 'vue-router'
 

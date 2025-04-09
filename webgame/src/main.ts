@@ -6,7 +6,7 @@ import { createWebHashHistory, createRouter } from 'vue-router'
 import Settings from '@/pages/settings/Settings.vue'
 import Game from '@/pages/game/Game.vue'
 import Menu from '@/pages/menu/Menu.vue'
-import HandleChoosingCharacter from '@/pages/game/scelta_personaggio/HandleChoosingCharacters.vue'
+import HandleChoosingCharacter from '@/pages/game/HandleChoosingCharacters.vue'
 import LoginView from '@/pages/auth/LoginView.vue'
 import NotFound from '@/pages/NotFound.vue'
 
