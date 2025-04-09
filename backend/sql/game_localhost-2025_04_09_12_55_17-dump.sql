@@ -205,9 +205,9 @@ ALTER TABLE ONLY public."user" ALTER COLUMN id SET DEFAULT nextval('public.user_
 --
 
 COPY public.classe (name, speed, attack, defence, mana, hp, description) FROM stdin;
-warrior	50	80	45	500	400	Un combattente potente con una forza d’attacco eccezionale e una buona resistenza. Anche se non eccelle nella velocità o nella magia, è un solido baluardo sul campo di battaglia
-wizard	60	65	60	1000	1000	Un maestro delle arti magiche con un’enorme riserva di mana e punti vita. Equilibrato in velocità e difesa, è ideale per infliggere danni magici a distanza
-thief	85	55	40	600	650	Agile e rapido, questo ladro si muove con velocità impressionante. Sebbene abbia una difesa e un attacco più bassi, la sua mobilità lo rende perfetto per colpi rapidi e fughe strategiche
+warrior	50	80	45	500	400	'Un combattente potente con una forza d’attacco eccezionale e una buona resistenza. Anche se non eccelle nella velocità o nella magia, è un solido baluardo sul campo di battaglia'
+wizard	60	65	60	1000	1000	'Un maestro delle arti magiche con un’enorme riserva di mana e punti vita. Equilibrato in velocità e difesa, è ideale per infliggere danni magici a distanza'
+thief	85	55	40	600	650	'Agile e rapido, questo ladro si muove con velocità impressionante. Sebbene abbia una difesa e un attacco più bassi, la sua mobilità lo rende perfetto per colpi rapidi e fughe strategiche'
 \.
 
 
