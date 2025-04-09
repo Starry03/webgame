@@ -1,40 +1,3 @@
-<script setup>
-import { onMounted, onUnmounted, ref } from 'vue'
-import Map from '../../components/Map.vue'
-import HealthBar from '../../components/Healthbar.vue'
-const window_width = ref(window.innerWidth)
-const window_height = ref(window.innerHeight)
-
-const handle_resize = () => {
-  window_width.value = window.innerWidth
-  window_height.value = window.innerHeight
-}
-
-onMounted(() => {
-  window.addEventListener('resize', handle_resize)
-})
-
-onUnmounted(() => {
-  window.removeEventListener('resize', handle_resize)
-})
-/*
-// mostrare il popup
-const confirmExit = () => {
-  showConfirmDialog.value = true
-}
-
-// tornare alla home
-const goToHome = () => {
-  showConfirmDialog.value = false
-  window.location.href = "/menu"
-}
-
-// chiudere il popup
-const closeDialog = () => {
-  showConfirmDialog.value = false
-}
-*/
-</script>
 <template>
   <audio controls style="display: none" id="music" autoplay loop>
     <source src="../../style/Trust_In_Your_Perseverance.wav" type="audio/mpeg" />
@@ -56,6 +19,22 @@ const closeDialog = () => {
 </template>
 
 <script setup>
+import { onMounted, onUnmounted, ref } from 'vue'
+import Map from '../../components/Map.vue'
+import HealthBar from '../../components/Healthbar.vue'
+const window_width = ref(window.innerWidth)
+const window_height = ref(window.innerHeight)
+
+const handle_resize = () => {
+  window_width.value = window.innerWidth
+  window_height.value = window.innerHeight
+}
+
+function playAudio() {
+  let audio = document.getElementById('music')
+  audio?.play().catch((error) => console.log('Riproduzione bloccata:', error))
+}
+
 function toggleMute() {
   let audio = document.getElementById('music')
   if (audio.muted) {
@@ -67,14 +46,34 @@ function toggleMute() {
   }
 }
 
-mounted(() => {
-  function playAudio() {
-    let audio = document.getElementById('music')
-    audio?.play().catch((error) => console.log('Riproduzione bloccata:', error))
-  }
+onMounted(() => {
+  window.addEventListener('resize', handle_resize)
   document.addEventListener('mousemove', playAudio)
 })
+
+onUnmounted(() => {
+  window.removeEventListener('resize', handle_resize)
+  document.removeEventListener('mousemove', playAudio)
+})
+/*
+    // mostrare il popup
+    const confirmExit = () => {
+      showConfirmDialog.value = true
+    }
+    
+    // tornare alla home
+    const goToHome = () => {
+      showConfirmDialog.value = false
+      window.location.href = "/menu"
+    }
+    
+    // chiudere il popup
+    const closeDialog = () => {
+      showConfirmDialog.value = false
+    }
+    */
 </script>
+
 <style scoped>
 .master {
   background: url('../../style/sfondo3.gif');

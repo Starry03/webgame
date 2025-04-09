@@ -5,10 +5,8 @@
   </audio>
   <div class="flex flex-column flex-center gap-mid">
     <button class="button button-mute" @click="toggleMute">🔊</button>
-
     <h1>Awakening in the Dark Tower</h1>
-    <button class="button button-secondary b-play" @click="$router.push('/game')">Play</button>
-
+    <button class="button button-secondary b-play" @click="redirectGameButton">Play</button>
     <button class="button button-secondary b-shop" @click="$router.push('/login')">Login</button>
     <!--⚙️-->
     <button class="button button-secondary b-settings" @click="$router.push('/settings')">
@@ -18,6 +16,12 @@
   </div>
 </template>
 <script setup>
+import { AESUtils, prefixed } from '@/internal/cryptoutils'
+import { useRouter } from 'vue-router'
+import { onMounted, onUnmounted } from 'vue'
+
+const router = useRouter()
+
 function logout() {
   console.log('Logout eseguito')
 }
@@ -33,14 +37,30 @@ function toggleMute() {
   }
 }
 
-mounted(() => {
+function redirectGameButton() {
+  try {
+    AESUtils.read()
+  } catch (error) {
+    router.push('/login')
+  }
+  const character = localStorage.getItem(prefixed('selectedCharacter'))
+  if (character == null) router.push('/selection')
+  router.push('/game')
+}
+
+onMounted(() => {
   function playAudio() {
     let audio = document.getElementById('music')
     audio?.play().catch((error) => console.log('Riproduzione bloccata:', error))
   }
   document.addEventListener('mousemove', playAudio)
 })
+
+onUnmounted(() => {
+  document.removeEventListener('mousemove', playAudio);
+})
 </script>
+
 <style scoped>
 @media (max-height: 600px) {
   h1 {
