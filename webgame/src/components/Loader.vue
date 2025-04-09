@@ -18,7 +18,7 @@
 </template>
 
 <style scoped>
-@keyframes loader {
+@keyframes spin {
   0% {
     transform: rotate(0deg);
   }
@@ -30,10 +30,10 @@
 .loader {
   width: 2rem;
   height: 2rem;
-  animation: loader 1.5s linear infinite;
+  animation: spin 1.5s linear infinite;
 }
 
 .loaderpath {
-  stroke: var(--accent-primary, white); /* Fallback color if variable is not defined */
+  stroke: var(--accent-primary, white);
 }
 </style>
