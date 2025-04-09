@@ -10,6 +10,7 @@ class PlayerClass(BaseModel):
     defence: int
     mana: int
     hp: int
+    description: str | None = None
 
 
 class Player(BaseModel):

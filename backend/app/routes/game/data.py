@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, Request
 from fastapi.responses import JSONResponse
+from starlette.status import HTTP_200_OK
 from sqlalchemy import text
 
 from app.auth.auth_manager import AuthManager
@@ -23,12 +24,12 @@ async def get_classes(__: Request, _=Depends(AuthManager.get_user)):
                 defence=cls[3],
                 mana=cls[4],
                 hp=cls[5],
+                description=cls[6],
             ).model_dump()
             for cls in classes
         ]
-        res = JSONResponse(
+        return JSONResponse(
             content=classes_models,
-            status_code=200,
+            status_code=HTTP_200_OK,
         )
-        print(res)
-        return res
+
