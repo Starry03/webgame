@@ -27,7 +27,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import ClassComponent from '../ClassComponent.vue'
-import { RequestWrapper } from '@/internal/cryptoutils'
+import { RequestWrapper, prefixed } from '@/internal/cryptoutils'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -61,7 +61,7 @@ const selectCharacter = (char) => {
 
 const startGame = (character) => {
   if (character.value) {
-    localStorage.setItem('selectedCharacter', character.name)
+    localStorage.setItem(prefixed(character.name))
     console.log('Saved character:', character.name)
     console.log('Starting game...')
     router.push('/game')
