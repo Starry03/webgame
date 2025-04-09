@@ -21,6 +21,7 @@
     import {ref, onMounted} from 'vue';
     import ClassComponent from './ClassComponent.vue';
     import {RequestWrapper} from '@/internal/cryptoutils'
+    import {UseRouter} from 'vue-router'
 
     const router = UseRouter();
     
