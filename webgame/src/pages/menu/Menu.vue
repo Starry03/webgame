@@ -11,61 +11,60 @@
 
     <button class="button button-secondary b-shop" @click="$router.push('/login')">Login</button>
     <!--⚙️-->
-    <button class="button button-secondary b-settings" @click="$router.push('/settings')">Settings</button>
+    <button class="button button-secondary b-settings" @click="$router.push('/settings')">
+      Settings
+    </button>
     <!----><button class="button button-secondary button-logout" @click="logout">Logout</button>
   </div>
 </template>
-<script>
-    export default {
-        methods: {
-            logout() {
-                console.log("Logout eseguito");
-                
-            },
-            toggleMute() {
-                let audio = document.getElementById("music");
-                if (audio.muted) {
-                    audio.muted = false;
-                    event.target.innerText = "🔊";
-                } else {
-                    audio.muted = true;
-                    event.target.innerText = "🔇";
-                }
-            }
-        },
-        mounted() {
-            function playAudio() {
-            let audio = document.getElementById("music");
-            audio?.play().catch(error => console.log("Riproduzione bloccata:", error));
-            }
-            document.addEventListener("mousemove", playAudio);
-        }
-    };
+<script setup>
+function logout() {
+  console.log('Logout eseguito')
+}
+
+function toggleMute() {
+  let audio = document.getElementById('music')
+  if (audio.muted) {
+    audio.muted = false
+    event.target.innerText = '🔊'
+  } else {
+    audio.muted = true
+    event.target.innerText = '🔇'
+  }
+}
+
+mounted(() => {
+  function playAudio() {
+    let audio = document.getElementById('music')
+    audio?.play().catch((error) => console.log('Riproduzione bloccata:', error))
+  }
+  document.addEventListener('mousemove', playAudio)
+})
 </script>
 <style scoped>
-
-@media(max-height: 600px) {
+@media (max-height: 600px) {
   h1 {
     font-size: var(--font-mid);
     padding-top: 7%;
   }
+
   .button {
     font-size: var(--font-small);
-    
   }
+
   .button-mute {
     width: fit-content;
     height: fit-content;
   }
 }
 
-@media(orientation: landscape) {
+@media (orientation: landscape) {
   h1 {
     margin-bottom: 2%;
   }
 }
 
-@media(orientation: portrait) {
+@media (orientation: portrait) {
   h1 {
     font-size: var(--font-big);
     text-align: center;
@@ -74,7 +73,7 @@
     margin-bottom: 15%;
   }
 
-  .button-mute{
+  .button-mute {
     width: fit-content;
     height: fit-content;
     position: absolute;
@@ -82,7 +81,6 @@
     left: 75svw;
   }
 }
-
 
 div {
   background: url('../../style/sfondo3.gif');
@@ -100,6 +98,7 @@ div {
     filter: blur(0px);
     transform: scale(1);
   }
+
   30% {
     transform: scale(1.1);
     filter: blur(2px);
@@ -108,17 +107,21 @@ div {
       0 0 20px darkred;
     color: red;
   }
+
   60% {
     filter: blur(1px);
     transform: scale(0.95);
   }
+
   100% {
     filter: blur(0px);
   }
 }
 
 h1 {
-  text-shadow:0 0 10px black, 0 0 20px black;
+  text-shadow:
+    0 0 10px black,
+    0 0 20px black;
   color: darkred;
   transition: 0.1s;
   animation: liquido 4s ease-in-out infinite alternate;
@@ -126,7 +129,9 @@ h1 {
 
 .b-play:hover {
   transform: scale(1.2);
-  text-shadow:0 0 10px blue, 0 0 20px blue;
+  text-shadow:
+    0 0 10px blue,
+    0 0 20px blue;
 }
 
 .b-settings:hover {
@@ -137,7 +142,7 @@ h1 {
 }
 
 .button-logout {
-  background-color: transparent
+  background-color: transparent;
 }
 
 .button-mute {
