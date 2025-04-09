@@ -6,7 +6,7 @@
                             :key="character.id"
                             :character="character"
                             :selected_character_id="selectedCharacter?.id"
-                            :onSelect="selectCharacter"/>
+                            :onSelect="selectCharacter(character.name)"/>
 
         </div>
         <div class="character-description-block" v-if="selectedCharacter">
@@ -20,7 +20,7 @@
 <script setup>
     import {ref, onMounted} from 'vue';
     import ClassComponent from './ClassComponent.vue';
-    import {UseRouter} from 'vue-router';
+    import {RequestWrapper} from '@/internal/cryptoutils'
 
     const router = UseRouter();
     
@@ -29,7 +29,7 @@
 
     const fetchCharacters = async () => {
         try {
-            const response = await fetch("http://127.0.0.1:8000/game/data/classes", {
+            const response = await RequestWrapper.cryptedFetch("http://127.0.0.1:8000/game/data/classes", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -55,9 +55,9 @@
     const startGame = (character) => {
         if (character.value) {
             localStorage.setItem('selectedCharacter',character.name);
-            console.log('Personaggio salvato:', character.name);
-            console.log("Avvio del gioco...");
-            router.push();
+            console.log('Saved character:', character.name);
+            console.log("Starting game...");
+            router.push('/game');
         }
     }
 
@@ -113,7 +113,7 @@
         background-color: red;
     }
 
-    #start-game-button {
+    #start-game-button:hover {
         background-color: black;
     }
 
