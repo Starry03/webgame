@@ -42,22 +42,27 @@ function redirectGameButton() {
     AESUtils.read()
   } catch (error) {
     router.push('/login')
+    return
   }
   const character = localStorage.getItem(prefixed('selectedCharacter'))
-  if (character == null) router.push('/selection')
+  if (character == null) {
+    router.push('/selection')
+    return
+  }
   router.push('/game')
 }
 
+function playAudio() {
+  let audio = document.getElementById('music')
+  audio?.play().catch((error) => console.log('Riproduzione bloccata:', error))
+}
+
 onMounted(() => {
-  function playAudio() {
-    let audio = document.getElementById('music')
-    audio?.play().catch((error) => console.log('Riproduzione bloccata:', error))
-  }
   document.addEventListener('mousemove', playAudio)
 })
 
 onUnmounted(() => {
-  document.removeEventListener('mousemove', playAudio);
+  document.removeEventListener('mousemove', playAudio)
 })
 </script>
 
