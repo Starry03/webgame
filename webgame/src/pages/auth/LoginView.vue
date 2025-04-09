@@ -14,7 +14,7 @@
             placeholder="Password"
             v-model="password"
           />
-          <div class="bot flex flex-space-between gap-mid">
+          <div v-if="!isLogging" class="bot flex flex-space-between gap-mid">
             <button class="button-primary btn-regist flex-grow" type="submit" @click="register">
               SIGN UP
             </button>
@@ -22,6 +22,7 @@
               SIGN IN
             </button>
           </div>
+        <Loader v-else/>
         </form>
       </div>
     </div>
@@ -33,9 +34,11 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { RequestWrapper, RSAUtils, AESUtils } from '@/internal/cryptoutils'
 import type { Token, Session } from '@/internal/cryptoutils'
+import Loader from '@/components/Loader.vue'
 
-const username = ref('')
-const password = ref('')
+const isLogging = ref<Boolean>(false)
+const username = ref<String>('')
+const password = ref<String>('')
 const router = useRouter()
 
 async function main_req(path: String): Promise<{ session: Session; token: Token }> {
@@ -62,23 +65,28 @@ async function process_session(req: { session: Session; token: Token }) {
   token.access_token = await RSAUtils.decrypt(token.access_token)
   session.sym_key = await RSAUtils.decrypt(session.sym_key)
   AESUtils.save(session, token)
+  isLogging.value = false
   router.push('/')
 }
 
 async function login() {
+  isLogging.value = true
   const req = await main_req('login')
   try {
     process_session(req)
   } catch (error) {
+    isLogging.value = false
     console.log(error)
   }
 }
 
 async function register() {
+  isLogging.value = true
   const req = await main_req('register')
   try {
     process_session(req)
   } catch (error) {
+    isLogging.value = false
     console.log(error)
   }
 }
