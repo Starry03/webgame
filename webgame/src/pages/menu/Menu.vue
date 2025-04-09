@@ -4,7 +4,7 @@
     <source src="../../style/Song_of_Heart.mp3" type="audio/mpeg" />
   </audio>
   <div class="flex flex-column flex-center gap-mid">
-    <button class="button button-mute" @click="toggleMute">🔊</button>
+    <button class="button button-mute" @click="toggleMute">{{ mute_icon }}</button>
     <h1>Awakening in the Dark Tower</h1>
     <button class="button button-secondary b-play" @click="redirectGameButton">Play</button>
     <button class="button button-secondary b-shop" @click="$router.push('/login')">Login</button>
@@ -18,23 +18,17 @@
 <script setup>
 import { AESUtils, prefixed } from '@/internal/cryptoutils'
 import { useRouter } from 'vue-router'
-import { onMounted, onUnmounted } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 
 const router = useRouter()
+const mute_icon = ref('🔊')
 
 function logout() {
   console.log('Logout eseguito')
 }
 
 function toggleMute() {
-  let audio = document.getElementById('music')
-  if (audio.muted) {
-    audio.muted = false
-    event.target.innerText = '🔊'
-  } else {
-    audio.muted = true
-    event.target.innerText = '🔇'
-  }
+  mute_icon.value = mute_icon.value === '🔊' ? '🔇' : '🔊'
 }
 
 function redirectGameButton() {
