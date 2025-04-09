@@ -1,6 +1,9 @@
 function chooseCharacter(personaggio) {
-    alert(`Hai scelto: ${personaggio}`);
-    //window.location.href = "game.html?personaggio=" + encodeURIComponent(personaggio);
+    //alert(`Hai scelto: ${personaggio}`);
+
+    localStorage.setItem("selectedCharacter",personaggio)
+
+    showStartGameButton()
 }
 
 function blockTextArea() {
@@ -15,7 +18,8 @@ function closeTextArea() {
 
 function handleDescription(character) {
     var descriptionText = "";
-    
+    document.getElementById("start_game").style.display="none";     /* nascondo il bottone "Avvia Gioco" in caso di precedente pressione di un bottone di uno dei personaggi  */
+
     switch(character) {
         case 'warrior':
             descriptionText = "Warrior's description";
@@ -40,16 +44,21 @@ function handleDescription(character) {
     };
 }
 
-function startGame(character) {
+function startGame() {
+    const selectedCharacter = localStorage.getItem("selectedCharacter");
 
+   /* if (selectedCharacter) {
+        window.location.href = "game.html";
+    } else {
+        alert("Seleziona un personaggio per iniziare il gioco!");
+    }*/
 }
  
-function showStartGameButton(character) {
-    localStorage.setItem("selected character", character)
+function showStartGameButton() {
     var button = document.getElementById("start_game")
-    button.style.display="none"
-    document.getElementById("start_game").onclick = function() {
-        startGame(character);
-    }
+    button.style.display="inline-block"
+    button.onclick = function() {
+        startGame();
+    };
 }
 

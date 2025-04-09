@@ -25,51 +25,97 @@
     </section>
   </template>
   
-  <script>
-  export default {
-    data() {
-      return {
-        selectedCharacter: null,
-        showDescription: false,
-        descriptionText: "",
-        showStartButton: false
-      };
-    },
-    methods: {
-      chooseCharacter(personaggio) {
-        alert(`Hai scelto: ${personaggio}`);
-        this.selectedCharacter = personaggio;
-        this.handleDescription(personaggio);
-        this.showStartButton = true;
-      },
-      handleDescription(character) {
+<script setup>
+	import {ref} from 'vue'
+	import {RequestWrapper} from '@/internal/cryptoutils'
+
+	const showDescription = ref();
+	const selectedCharacter = ref();
+	const descriptionText = ref("");
+	const showStartButton = ref();
+
+  	const chooseCharacter = (personaggio) => {
+		alert(`Hai scelto: ${personaggio}`);
+		selectedCharacter = personaggio;
+        handleDescription(personaggio);
+        showStartButton = true;
+	}
+
+	const handleDescription = (character) => {
+        showStartButton = false
         switch (character) {
           case "warrior":
-            this.descriptionText = "Warrior's description";
+            descriptionText = "Warrior's description";
             break;
           case "mage":
-            this.descriptionText = "Mage's description";
+            descriptionText = "Mage's description";
             break;
           case "thief":
-            this.descriptionText = "Thief's description";
+            descriptionText = "Thief's description";
             break;
           default:
-            this.descriptionText = "";
+            descriptionText = "";
         }
-        this.showDescription = true;
-      },
-      closeTextArea() {
-        this.showDescription = false;
-      },
-      startGame(character) {
+        showDescription = true;
+    }
+
+	const closeTextArea = () => {
+        showDescription = false;
+    }
+
+	const startGame = (character) => {
         localStorage.setItem("selectedCharacter", character);
         alert(`Il gioco inizia con ${character}`);
         // Puoi fare un redirect a un'altra pagina Vue con Vue Router
         // this.$router.push({ path: "/game", query: { personaggio: character } });
-      }
     }
-  };
-  </script>
+	
+	const current_player = ref();
+
+	async function requestPlayers() {
+        try {
+            const req = await fetch("http://127.0.0.1:8000/game/data/classes", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                }
+            });
+            return await req.json();
+        }catch (error) {
+            console.error("Errore nel recupero dei personaggi:", error);
+        }
+    }
+
+    async function makeChoice(selectedCharacter) {
+        try {
+            const req = await RequestWrapper.cryptedFetch("http://127.0.0.1:8000/game/data/classes", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ character: selectedCharacter })
+            });
+            if (!req.ok) {
+                throw new Error(`Errore HTTP: ${req.status}`);
+            }
+            const res = await req.json();
+            return res;
+        } catch (error) {
+            console.error("Errore nell'invio della scelta:", error);
+            return null;
+        }
+    }
+    
+    async function handleChoice(selectedCharacter) {
+        const players = await requestPlayers();
+        console.log("Personaggi disponibili:", players);
+
+        const response = await makeChoice(selectedCharacter);
+        console.log("Risultato della scelta:", response);
+    }
+
+
+</script>
   
   <style scoped>
     * {
@@ -99,7 +145,7 @@
         flex-direction: column;
         align-items: center;
         background: white;
-        padding: 30px;
+        padding: 20px;
         border-radius: 10px;
         box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
         color: black;
@@ -152,12 +198,13 @@
     }
 
     #description_section {
+        margin-bottom: 20px;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         width: 80%;
-        background-color: #333;
+        background-color: white;
         padding: 20px;
         border-radius: 10px;
         color: white;
@@ -173,6 +220,8 @@
         cursor: pointer;
         width: 150px;
         margin-top: 10px;
+        margin-left: auto; 
+        margin-right: auto;
     }
 
 
@@ -180,7 +229,9 @@
         background-color: #555;
     }
     #description {
-        display: block; 
+        display: block;
+        border-radius: 5px;
+        box-sizing: border-box; 
     }
   </style>
   
