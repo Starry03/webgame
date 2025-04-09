@@ -2,7 +2,7 @@
   <div class="master flex flex-center">
     <button class="button button-secondary button-home" @click="$router.push('/')">home</button>
     <div class="container flex flex-center flex-row gap-big">
-      <img src="../../style/disegno.webp" alt="Logo" class="logo flex-grow">
+      <img src="../../assets/images/disegno.webp" alt="Logo" class="logo flex-grow">
       <div id="cnt" class="flex flex-center flex-column gap-big flex-grow">
         <h2>Awakening in the Dark Tower</h2>
         <form class="flex flex-center flex-column gap-mid" @submit.prevent="login">

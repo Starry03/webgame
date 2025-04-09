@@ -39,6 +39,14 @@
   flex-direction: row;
 }
 
+.flex-justify {
+  justify-content: center;
+}
+
+.flex-align {
+  align-items: center;
+}
+
 .flex-center {
   justify-content: center;
   align-items: center;

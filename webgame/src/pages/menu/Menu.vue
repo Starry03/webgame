@@ -3,20 +3,32 @@
   <audio controls style="display: none" id="music" autoplay loop>
     <source src="../../style/Song_of_Heart.mp3" type="audio/mpeg" />
   </audio>
-  <div class="flex flex-column flex-center gap-mid">
-    <button class="button button-mute" @click="toggleMute">{{ mute_icon }}</button>
-    <h1>Awakening in the Dark Tower</h1>
-    <button class="button button-secondary b-play" @click="redirectGameButton">Play</button>
-    <button class="button button-secondary b-shop" @click="$router.push('/login')">Login</button>
-    <!--⚙️-->
-    <button class="button button-secondary b-settings" @click="$router.push('/settings')">
-      Settings
-    </button>
-    <!----><button class="button button-secondary button-logout" @click="logout">Logout</button>
+  <div id="wrapper" class="flex flex-center" style="">
+    <div class="flex flex-column flex-center gap-big">
+      <button class="button button-secondary button-mute" @click="toggleMute">
+        {{ mute_icon }}
+      </button>
+      <h1>Awakening in the Dark Tower</h1>
+      <div class="flex flex-column flex-center gap-small">
+        <button class="button button-secondary b-play" @click="redirectGameButton">Play</button>
+        <!--⚙️-->
+        <button class="button button-secondary b-settings" @click="$router.push('/settings')">
+          Settings
+        </button>
+        <button
+          v-if="!SessionUtils.isLogged()"
+          class="button button-secondary b-shop"
+          @click="$router.push('/login')"
+        >
+          Login
+        </button>
+        <button v-else class="button button-secondary button-logout" @click="logout">Logout</button>
+      </div>
+    </div>
   </div>
 </template>
 <script setup>
-import { AESUtils, prefixed } from '@/internal/cryptoutils'
+import { SessionUtils, prefixed } from '@/internal/cryptoutils'
 import { useRouter } from 'vue-router'
 import { onMounted, onUnmounted, ref } from 'vue'
 
@@ -24,7 +36,8 @@ const router = useRouter()
 const mute_icon = ref('🔊')
 
 function logout() {
-  console.log('Logout eseguito')
+  SessionUtils.logout()
+  router.push('/login')
 }
 
 function toggleMute() {
@@ -32,9 +45,7 @@ function toggleMute() {
 }
 
 function redirectGameButton() {
-  try {
-    AESUtils.read()
-  } catch (error) {
+  if (!SessionUtils.isLogged()) {
     router.push('/login')
     return
   }
@@ -64,22 +75,13 @@ onUnmounted(() => {
 @media (max-height: 600px) {
   h1 {
     font-size: var(--font-mid);
-    padding-top: 7%;
   }
-
   .button {
     font-size: var(--font-small);
   }
-
   .button-mute {
     width: fit-content;
     height: fit-content;
-  }
-}
-
-@media (orientation: landscape) {
-  h1 {
-    margin-bottom: 2%;
   }
 }
 
@@ -88,8 +90,6 @@ onUnmounted(() => {
     font-size: var(--font-big);
     text-align: center;
     width: 69%;
-    display: block;
-    margin-bottom: 15%;
   }
 
   .button-mute {
@@ -101,15 +101,11 @@ onUnmounted(() => {
   }
 }
 
-div {
+#wrapper {
   background: url('../../style/sfondo3.gif');
   background-size: cover;
-  display: flex;
   height: 100svh;
   width: 100svw;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
 }
 
 @keyframes liquido {
@@ -146,6 +142,13 @@ h1 {
   animation: liquido 4s ease-in-out infinite alternate;
 }
 
+.button-mute {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 2rem;
+}
+
 .b-play:hover {
   transform: scale(1.2);
   text-shadow:
@@ -158,18 +161,6 @@ h1 {
   text-shadow:
     0 0 10px darkviolet,
     0 0 20px darkviolet;
-}
-
-.button-logout {
-  background-color: transparent;
-}
-
-.button-mute {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  font-size: 3rem;
-  background-color: transparent;
 }
 
 .button-logout:hover,
