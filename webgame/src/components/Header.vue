@@ -7,16 +7,13 @@
 </template>
 
 <style scoped>
-div{
-        background: url('../../style/sfondo3.gif');
-        background-size: cover;
-        
-        display: flex;
-        /*height: 100vh;*/
+div {
+  background: url('../../style/sfondo3.gif');
+  background-size: cover;
+  display: flex;
 }
+
 h1 {
-  font-family: 'Press Start 2P', cursive;
-  font-size: 2rem;
   text-shadow: 0 0 10px red, 0 0 20px red;
 }
 </style>

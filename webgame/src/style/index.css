@@ -1,7 +1,7 @@
 :root {
   --black: #222121;
   --white: #f0f0f0;
-  --accent-color: linear-gradient(135deg, #8a0576, #120446);;
+  --accent-color: linear-gradient(135deg, #8a0576, #120446);
   --secondary-color: #f0f0f0;
   --shadow-color: #797979e3;
   --font-small: 0.8rem;
@@ -11,6 +11,23 @@
   --gap-small: 0.5rem;
   --gap-mid: 1rem;
   --gap-big: 2rem;
+  font-size: 16px;
+}
+
+@media screen and (max-height: 600px) {
+  :root {
+    font-size: 12px;
+  }
+  .button {
+    font-size: var(--font-small);
+  }
+}
+
+@font-face {
+  font-family: 'Press Start 2P';
+  src: url("../assets/font/PressStart2P-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
 
 * {
@@ -30,6 +47,14 @@
 
 .flex-row {
   flex-direction: row;
+}
+
+.flex-justify {
+  justify-content: center;
+}
+
+.flex-align {
+  align-items: center;
 }
 
 .flex-center {
@@ -122,7 +147,11 @@
   border-bottom: 1px solid var(--white);
 }
 
-h1, h2, h3, button, input {
+h1,
+h2,
+h3,
+button,
+input {
   font-family: 'Press Start 2P', cursive;
 }
 

@@ -1,17 +1,17 @@
 <template>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <section id="level-stats">
-        <h2>Statistiche del livello</h2>
+        <h1>Statistiche del livello</h1>
         <div class="item-stats">
-            <h1>Tempo impiegato </h1>
+            <h2>Tempo impiegato </h2>
             <p id="time-taken">00:00</p>
         </div>
         <div class="item-stats">
-            <h1>Punti guadagnati</h1>
+            <h2>Punti guadagnati</h2>
             <p id="gained-points">0</p>
         </div>
         <div class="item-stats">
-            <h1> Livello attuale personaggio</h1>
+            <h2> Livello attuale personaggio</h2>
             <p id="current-level">0</p>
         </div>
         <div class="item-stats">
@@ -25,69 +25,62 @@
             <span id="value">700</span>
         </div>
         <div class="item-stats">
-            <h1>Potenziamenti usati</h1>
+            <h2>Potenziamenti usati</h2>
             <p id="used-enchantments">0</p>
         </div>
         <div class="item-stats">
-            <h1>Nemici sconfitti</h1>
+            <h2>Nemici sconfitti</h2>
             <p id="defeated-enemies">0</p>
         </div>
         <button id="next-step-button">Prosegui</button>
     </section>
 </template>
   
-<script>
-export default {
-  data() {
-    return {
-      timeTaken: '00:00',          
-      gainedPoints: 0,             
-      currentLevel: 0,             
-      esp: 50,                     
-      remainedXpPoints: 700,       
-      usedEnchantments: 0,         
-      defeatedEnemies: 0,          
-    };
-  },
-  methods: {
-    showStats(time, gainedPoints, esp, remainedXpPoints, usedEnchantments, defeatedEnemies) {
-      this.timeTaken = time;
-      this.gainedPoints = gainedPoints;
-      this.esp = esp;
-      this.remainedXpPoints = remainedXpPoints;
-      this.usedEnchantments = usedEnchantments;
-      this.defeatedEnemies = defeatedEnemies;
+<script setup>
+    import ref from 'vue'
 
-      document.getElementById("level-stats").style.display = "block";
-    },
+    var timeTaken = ref("")
+    var gainedPoints = ref("")
+    var currentLevel = ref("")
+    var esp = ref("")
+    var remainedXpPoints = ref("")
+    var usedEnchantments = ref("")
+    var defeatedEnemies = ref("")
 
-    prosegui() {
+    showStats = (time, points, espPoints, xpPoints, enchantments, enemies) => {
+        timeTaken = time;
+        gainedPoints = points;
+        esp = espPoints;
+        remainedXpPoints = xpPoints;
+        usedEnchantments = enchantments;
+        defeatedEnemies = enemies;
+
+        document.getElementById("level-stats").style.display = "block";
+    } 
+
+    continueGame = () => {
         document.getElementById("level-stats").style.display = "none";
-
         console.log("Starting next level...");
-        // Qui potresti aggiungere qualsiasi altra logica necessaria per il livello successivo
     },
 
-    setSliderValue(slider, val) {
-      val.textContent = slider.value;
-    },
+    setSliderValue = (slider, val) => {
+        val.textContent = slider.value;
+    }
 
-    handleSlider(id, value) {
+    handleSlider = (id, value) => {
         const slider = document.getElementById(id);
         const val = document.getElementById(value);
 
         slider.addEventListener("input", () => {
-            this.setSliderValue(slider, val);
-        });
+            this.setSliderValue(slider,val);
+        })
     }
-  },
-
-  //inizializzazione slider
-  mounted() {
-    this.handleSlider('esp', 'espValue');
-    this.handleSlider('remained-xp-points', 'remainedXpValue');
+    
+    //inizializzazione slider
+    mounted = () => {
+        this.handleSlider('esp', 'espValue');
+        this.handleSlider('remained-xp-points', 'remainedXpValue');
   }
-};
 </script>
   
 <style scoped>
