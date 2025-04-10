@@ -90,7 +90,7 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
 ### Ivan
 
--   [ ] page scelta personaggio -> mergiamo
+-   [x] page scelta personaggio -> mergiamo
 -   [x] statistiche (frontend)
 -   [ ] statistiche (request)
 
@@ -102,7 +102,7 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
 -   [ ] endpoint statistiche
 -   [x] endpoint classi
--   [ ] download font
+-   [x] download font
 
 ## To-do (Game)
 

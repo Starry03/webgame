@@ -22,7 +22,7 @@
               SIGN IN
             </button>
           </div>
-        <Loader v-else/>
+          <Loader v-else />
         </form>
       </div>
     </div>
@@ -33,6 +33,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { RequestWrapper, RSAUtils, AESUtils } from '@/internal/cryptoutils'
+import { AuthService, buildEndpoint } from '@/internal/apiService'
 import type { Token, Session } from '@/internal/cryptoutils'
 import Loader from '@/components/Loader.vue'
 
@@ -42,19 +43,7 @@ const password = ref<String>('')
 const router = useRouter()
 
 async function main_req(path: String): Promise<{ session: Session; token: Token }> {
-  const f = await RequestWrapper.loginFetch(
-    `http://127.0.0.1:8000/auth/${path}`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    },
-    {
-      username: username.value,
-      password: password.value,
-    },
-  )
+  const f = await AuthService.login(path, username.value, password.value)
   let res = await f.json()
   return (await JSON.parse(res)) as { session: Session; token: Token }
 }
@@ -71,7 +60,7 @@ async function process_session(req: { session: Session; token: Token }) {
 
 async function login() {
   isLogging.value = true
-  const req = await main_req('login')
+  const req = await main_req(import.meta.env.VITE_LOGIN_PATH)
   try {
     process_session(req)
   } catch (error) {
@@ -82,7 +71,7 @@ async function login() {
 
 async function register() {
   isLogging.value = true
-  const req = await main_req('register')
+  const req = await main_req(import.meta.env.VITE_REGISTER_PATH)
   try {
     process_session(req)
   } catch (error) {

@@ -29,6 +29,7 @@ import { ref, onMounted } from 'vue'
 import ClassComponent from '@/components/ClassComponent.vue'
 import { RequestWrapper, prefixed } from '@/internal/cryptoutils'
 import { useRouter } from 'vue-router'
+import { GameService } from '@/internal/apiService'
 
 const router = useRouter()
 
@@ -37,17 +38,10 @@ const selectedCharacter = ref(null)
 
 const fetchCharacters = async () => {
   try {
-    const response = await RequestWrapper.cryptedFetch('http://127.0.0.1:8000/game/data/classes', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-
+    const response = await GameService.classes()
     if (!response.ok) {
       throw new Error(`Errore HTTP: ${response.status}`)
     }
-
     const data = await response.json()
     characters.value = data
   } catch (error) {

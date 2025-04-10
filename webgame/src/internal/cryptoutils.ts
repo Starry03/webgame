@@ -40,7 +40,7 @@ export class RequestWrapper {
   static async loginFetch(
     url: string,
     options: RequestInit,
-    data: { username: string; password: string },
+    data: { username: String; password: String },
   ): Promise<Response> {
     const public_key_request = await fetch('http://127.0.0.1:8000/auth/public-key')
     if (public_key_request.status !== 200) throw new Error('Failed to fetch public key')
