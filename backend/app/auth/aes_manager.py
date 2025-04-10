@@ -1,6 +1,7 @@
 import datetime
 from secrets import token_bytes
 from os import urandom
+import base64
 
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from sqlalchemy import text
@@ -18,14 +19,15 @@ class AESManager:
         sym_key = AESManager.__generate_key()
         exp_time = datetime.datetime.now() + datetime.timedelta(days=1)
         with get_db_session() as session:
+            b64key = base64.b64encode(sym_key).decode("utf-8")
             res = session.execute(
                 text(
                     "INSERT INTO public.session (key, expires_at) VALUES (:sym_key, :expires_at) RETURNING id"
                 ),
-                {"sym_key": sym_key.hex(), "expires_at": exp_time},
+                {"sym_key": b64key, "expires_at": exp_time},
             ).fetchone()[0]
             session.commit()
-            return UserSession(id=res, sym_key=sym_key.hex(), expiration_date=exp_time)
+            return UserSession(id=res, sym_key=b64key, expiration_date=exp_time)
 
     @staticmethod
     def __generate_key():

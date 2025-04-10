@@ -102,10 +102,10 @@ export class AESUtils {
 
   static encrypt(data: string): string {
     const { session } = AESUtils.read()
-    const key = forge.util.decode64(session.sym_key)
+    const key = forge.util.createBuffer(forge.util.decode64(session.sym_key)).getBytes()
     const iv = forge.random.getBytesSync(16)
 
-    const cipher = forge.cipher.createCipher('AES-CBC', key)
+    const cipher = forge.cipher.createCipher('AES-CTR', key)
     cipher.start({ iv })
     cipher.update(forge.util.createBuffer(data))
     cipher.finish()
@@ -116,13 +116,13 @@ export class AESUtils {
 
   static decrypt(encryptedData: string): string {
     const { session } = AESUtils.read()
-    const key = forge.util.decode64(session.sym_key)
+    const key = forge.util.createBuffer(forge.util.decode64(session.sym_key))
     const input = forge.util.decode64(encryptedData)
 
     const iv = input.substring(0, 16)
     const encrypted = input.substring(16)
 
-    const decipher = forge.cipher.createDecipher('AES-CBC', key)
+    const decipher = forge.cipher.createDecipher('AES-CTR', key)
     decipher.start({ iv })
     decipher.update(forge.util.createBuffer(encrypted))
     decipher.finish()

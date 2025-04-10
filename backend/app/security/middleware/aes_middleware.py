@@ -58,15 +58,15 @@ class AESDecryptionMiddleware(BaseHTTPMiddleware):
     async def decrypt_body(self, request: Request, session_key: str):
         body = await request.body()
         decrypted_body = AESManager.decrypt(
-            base64.b64decode(body), bytes.fromhex(session_key)
+            base64.b64decode(body), base64.b64decode(session_key)
         ).decode()
         request._body = decrypted_body
 
     def decrypt_token(self, request: Request, session_key: str, encrypted_token: str):
         try:
             decrypted_token = AESManager.decrypt(
-                base64.b64decode(encrypted_token), bytes.fromhex(session_key)
+                base64.b64decode(encrypted_token), base64.b64decode(session_key)
             ).decode("utf-8")
             request.state.Authorization_jwt = decrypted_token
         except Exception as e:
-            print("ciao", e)
+            logger.error(e)

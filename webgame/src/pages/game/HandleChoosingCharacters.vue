@@ -27,7 +27,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import ClassComponent from '@/components/ClassComponent.vue'
-import { RequestWrapper, prefixed } from '@/internal/cryptoutils'
+import { prefixed } from '@/internal/cryptoutils'
 import { useRouter } from 'vue-router'
 import { GameService } from '@/internal/apiService'
 
@@ -62,7 +62,7 @@ const startGame = (character) => {
   }
 }
 
-onMounted(fetchCharacters)
+onMounted(() => fetchCharacters())
 </script>
 
 <style scoped>
