@@ -42,6 +42,10 @@ function logout() {
 
 function toggleMute() {
   mute_icon.value = mute_icon.value === '🔊' ? '🔇' : '🔊'
+  const audio = document.getElementById('music')
+  if (audio) {
+    audio.muted = !audio.muted
+  }
 }
 
 function redirectGameButton() {
