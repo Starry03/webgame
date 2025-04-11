@@ -72,7 +72,6 @@ export class RequestWrapper {
         headers,
       })
     }
-
     const encrypted_body = body ? AESUtils.encrypt(body) : null
     return fetch(url, {
       ...options,
