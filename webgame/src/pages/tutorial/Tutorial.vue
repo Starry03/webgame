@@ -1,9 +1,5 @@
 <script setup></script>
 
-<template>
-tutorial
-</template>
+<template>tutorial</template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

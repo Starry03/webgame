@@ -14,7 +14,7 @@ const routes = [
   { path: '/', component: Menu },
   { path: '/settings', component: Settings },
   { path: '/game', component: Game },
-  { path: '/selection', component: HandleChoosingCharacter},
+  { path: '/selection', component: HandleChoosingCharacter },
   { path: '/login', component: LoginView },
   { path: '/:catchAll(.*)*', component: NotFound },
 ]
