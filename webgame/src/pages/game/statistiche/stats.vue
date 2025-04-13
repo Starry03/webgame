@@ -67,7 +67,6 @@ showStats = (time, points, espPoints, xpPoints, enchantments, enemies) => {
 
   document.getElementById('level-stats').style.display = 'block'
 }
-
 ;(continueGame = () => {
   document.getElementById('level-stats').style.display = 'none'
   console.log('Starting next level...')
