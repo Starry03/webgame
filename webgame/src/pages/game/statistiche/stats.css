@@ -12,7 +12,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   /*display: none;  Nascondi il modulo inizialmente */
-  z-index: 1000; 
+  z-index: 1000;
 }
 
 h2 {
@@ -21,24 +21,26 @@ h2 {
 }
 
 h1 {
-    font-weight: bold;
-    color: white;
-    font-size: 1.2em;
+  font-weight: bold;
+  color: white;
+  font-size: 1.2em;
 }
 
 label {
-    font-weight: bold;
-    color: white;
-    font-size: 1.2em;
+  font-weight: bold;
+  color: white;
+  font-size: 1.2em;
 }
 
-h1, p {
-    display: inline-block;
-    margin-right: 10px;
-    margin-bottom: 10px;
+h1,
+p {
+  display: inline-block;
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
-button, h1{
+button,
+h1 {
   font-family: 'Press Start 2P', cursive;
 }
 
@@ -70,16 +72,16 @@ body {
   display: flex;
   position: relative;
   text-align: center;
-  justify-content: center; 
-  height: 100vh; 
+  justify-content: center;
+  height: 100vh;
 }
 
 #esp:disabled {
-    background-color: lightgreen;
-    cursor: not-allowed; 
+  background-color: lightgreen;
+  cursor: not-allowed;
 }
 
 #remained-xp-points:disabled {
-    background-color: red;
-    cursor: not-allowed; 
+  background-color: red;
+  cursor: not-allowed;
 }

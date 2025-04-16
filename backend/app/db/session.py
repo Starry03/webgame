@@ -7,7 +7,7 @@ from sqlalchemy.orm.session import Session
 from dotenv import load_dotenv, find_dotenv
 from os import getenv
 
-load_dotenv(dotenv_path=find_dotenv())
+load_dotenv('.env')
 USER = getenv("DB_USER")
 PASSWORD = getenv("DB_PASSWORD")
 HOST = getenv("DB_HOST")
