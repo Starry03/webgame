@@ -16,6 +16,10 @@ const getCardClass = () => {
 
 <template>
   <div :class="getCardClass()" @click="() => onSelect(character)">
+    <!-- Placeholder per l'icona -->
+    <div class="character-icon">
+      <img src="/placeholder-icon.png" alt="Character Icon" />
+    </div>
     <h2 class="character-name">{{ character.name }}</h2>
     <p><strong>Speed:</strong> {{ character.speed }}</p>
     <p><strong>Attack:</strong> {{ character.attack }}</p>
@@ -24,3 +28,32 @@ const getCardClass = () => {
     <p><strong>Hp:</strong> {{ character.hp }}</p>
   </div>
 </template>
+
+<style scoped>
+	.character-card {
+		border: 2px solid black;
+		border-radius: 10px;
+		padding: 1rem;
+		background-color: lightgrey;
+		transition: transform 0.2s, box-shadow 0.2s;
+		cursor: pointer;
+  		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.character-card.selected {
+		border-color: green;
+		box-shadow: 0 0 10px green;
+		transform: scale(1.05);
+	}
+
+	.character-icon img {
+		width: 80px;
+		height: 80px;
+		object-fit: contain;
+		margin-bottom: 1rem;
+	}
+
+</style>

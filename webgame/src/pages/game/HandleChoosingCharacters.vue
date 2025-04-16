@@ -12,12 +12,8 @@
     </div>
     <div class="character-description-block" v-if="selectedCharacter">
       <h2 id="character-description-header">Description of {{ selectedCharacter.name }}</h2>
-      <textarea class="character-description" :value="selectedCharacter.description"></textarea>
-      <button
-        id="start-game-button"
-        @click="startGame(selectedCharacter)"
-        :disabled="!selectCharacter"
-      >
+      <textarea class="character-description" :value="selectedCharacter.description" readonly></textarea>
+      <button id="start-game-button" @click="startGame(selectedCharacter)" :disabled="!selectCharacter">
         Start Game
       </button>
     </div>
@@ -66,55 +62,64 @@ onMounted(() => fetchCharacters())
 </script>
 
 <style scoped>
-.container {
-  display: flex;
-  padding: 1rem;
-  font-family: 'Press Start 2P', cursive;
-}
+  .container {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    font-family: 'Press Start 2P', cursive;
+    align-items: center;
+  }
 
-#container-title {
-  font-size: 1.8rem;
-  font-weight: bold;
-}
+  #container-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-align: center;
+    text-shadow: 2px 2px 0 #000;
+  }
 
-.character-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
+  .character-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+    border: 2px;
+    border-color: black;
+    justify-items: center;
+    width: 100%;
+  }
 
-.character-description-block {
-  display: flex;
-  background: fixed;
-  padding: 1rem;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  background-color: white;
-}
+  .character-description-block {
+    display: flex;
+    background: fixed;
+    padding: 1rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: white;
+  }
 
-#character-description-header {
-  font-size: 1.5rem;
-  font-weight: 400;
-}
+  #character-description-header {
+    font-size: 1.5rem;
+    font-weight: 400;
+  }
 
-.character-description {
-  width: 100%;
-  padding: 0.5rem;
-  outline: auto;
-  resize: none;
-}
+  .character-description {
+    width: 100%;
+    padding: 0.5rem;
+    outline: auto;
+    resize: none;
+  }
 
-#start-game-button {
-  cursor: pointer;
-  border-radius: 5px;
-  padding: 10px;
-  width: 150px;
-  background-color: red;
-}
+  #start-game-button {
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 10px;
+    width: 150px;
+    background-color: red;
+  }
 
-#start-game-button:hover {
-  background-color: black;
-}
+  #start-game-button:hover {
+    background-color: #000;
+    color: red;
+  }
 </style>
