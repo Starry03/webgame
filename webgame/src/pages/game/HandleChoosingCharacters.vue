@@ -68,6 +68,8 @@ onMounted(() => fetchCharacters())
     padding: 2rem;
     font-family: 'Press Start 2P', cursive;
     align-items: center;
+    justify-content: center;
+    height: 100vh;
   }
 
   #container-title {
@@ -75,6 +77,7 @@ onMounted(() => fetchCharacters())
     font-weight: bold;
     text-align: center;
     text-shadow: 2px 2px 0 #000;
+    margin-bottom: 3rem;
   }
 
   .character-grid {
@@ -85,6 +88,7 @@ onMounted(() => fetchCharacters())
     border-color: black;
     justify-items: center;
     width: 100%;
+    margin-bottom: 3rem;
   }
 
   .character-description-block {
@@ -125,4 +129,6 @@ onMounted(() => fetchCharacters())
     background-color: #000;
     color: red;
   }
+
+
 </style>
