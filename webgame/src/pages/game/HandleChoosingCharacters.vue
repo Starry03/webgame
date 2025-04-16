@@ -4,10 +4,10 @@
     <div class="character-grid">
       <ClassComponent
         v-for="character in characters"
-        :key="character.id"
+        :key="character.name"
         :character="character"
-        :selected_character_id="selectedCharacter?.id"
-        :onSelect="selectCharacter(character.name)"
+        :selected_character_id="selectedCharacter?.name"
+        :onSelect="() => selectCharacter(character)"
       />
     </div>
     <div class="character-description-block" v-if="selectedCharacter">
@@ -15,7 +15,7 @@
       <textarea class="character-description" :value="selectedCharacter.description"></textarea>
       <button
         id="start-game-button"
-        @click="startGame(selectedCharacter)"
+        @click="() => startGame(selectedCharacter)"
         :disabled="!selectCharacter"
       >
         Start Game
@@ -24,17 +24,18 @@
   </section>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import ClassComponent from '@/components/ClassComponent.vue'
 import { prefixed } from '@/internal/cryptoutils'
 import { useRouter } from 'vue-router'
+import ClassComponent from '@/components/ClassComponent.vue'
 import { GameService } from '@/internal/apiService'
+import type { Character } from '@/internal/types'
 
 const router = useRouter()
 
-const characters = ref([])
-const selectedCharacter = ref(null)
+const characters = ref<Character[]>([])
+const selectedCharacter = ref<Character | null>(null)
 
 const fetchCharacters = async () => {
   try {
@@ -42,24 +43,21 @@ const fetchCharacters = async () => {
     if (!response.ok) {
       throw new Error(`Errore HTTP: ${response.status}`)
     }
-    const data = await response.json()
+    const data: Character[] = await response.json()
     characters.value = data
   } catch (error) {
     console.error('Errore nel recupero dei personaggi:', error)
   }
 }
 
-const selectCharacter = (char) => {
-  selectedCharacter.value = char
+const selectCharacter = (character: Character | null) => {
+  selectedCharacter.value = character
 }
 
-const startGame = (character) => {
-  if (character.value) {
-    localStorage.setItem(prefixed(character))
-    console.log('Saved character:', character.name)
-    console.log('Starting game...')
-    router.push('/game')
-  }
+const startGame = (character: Character | null) => {
+  if (!character) return
+  localStorage.setItem(prefixed('character'), JSON.stringify(character))
+  router.push('/game')
 }
 
 onMounted(() => fetchCharacters())

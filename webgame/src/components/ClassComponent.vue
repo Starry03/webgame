@@ -6,7 +6,7 @@ const props = defineProps({
 })
 
 const getCardClass = () => {
-  if (props.selected_character_id == props.character.id) {
+  if (props.selected_character_id == props.character.name) {
     return 'character-card selected'
   } else {
     return 'character-card'
