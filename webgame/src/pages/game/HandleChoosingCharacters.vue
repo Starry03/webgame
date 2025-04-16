@@ -23,9 +23,9 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import ClassComponent from '@/components/ClassComponent.vue'
-import { prefixed } from '@/internal/cryptoutils'
+import { prefixed } from '@/internal/cryptoutils.js'
 import { useRouter } from 'vue-router'
-import { GameService } from '@/internal/apiService'
+import { GameService } from '@/internal/apiService.js'
 
 const router = useRouter()
 
@@ -111,11 +111,14 @@ onMounted(() => fetchCharacters())
   }
 
   #start-game-button {
+    margin-top: 1rem;
     cursor: pointer;
-    border-radius: 5px;
-    padding: 10px;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
     width: 150px;
     background-color: red;
+    font-size: 1rem;
+    transition: all 0.2s ease-in-out;
   }
 
   #start-game-button:hover {
