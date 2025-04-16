@@ -13,22 +13,16 @@
         <Map />
         <HealthBar />
       </div>
-      <canvas id="canvas" :width="window_width" :height="window_height / 1.5"></canvas>
+      <Canvas />
     </div>
   </div>
 </template>
 
 <script setup>
 import { onMounted, onUnmounted, ref } from 'vue'
+import Canvas from '@/components/Canvas.vue'
 import Map from '@/components/Map.vue'
 import HealthBar from '@/components/Healthbar.vue'
-const window_width = ref(window.innerWidth)
-const window_height = ref(window.innerHeight)
-
-const handle_resize = () => {
-  window_width.value = window.innerWidth
-  window_height.value = window.innerHeight
-}
 
 function playAudio() {
   let audio = document.getElementById('music')
