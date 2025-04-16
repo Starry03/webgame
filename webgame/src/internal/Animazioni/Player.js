@@ -8,21 +8,21 @@ class Player extends Obj {
   // Metodo ausiliario: determina la direzione in base ai tasti premuti
   getDirectionFromKeys() {
     let direction = null;
-    if (this.keysPressed['ArrowRight'] && this.keysPressed['ArrowUp']) {
+    if ((this.keysPressed['ArrowRight'] || this.keysPressed['d']) && (this.keysPressed['ArrowUp'] || this.keysPressed['w'])) {
       direction = 'up-right';
-    } else if (this.keysPressed['ArrowRight'] && this.keysPressed['ArrowDown']) {
+    } else if ((this.keysPressed['ArrowRight'] || this.keysPressed['d']) && (this.keysPressed['ArrowDown'] || this.keysPressed['s'])) {
       direction = 'down-right';
-    } else if (this.keysPressed['ArrowLeft'] && this.keysPressed['ArrowUp']) {
+    } else if ((this.keysPressed['ArrowLeft'] || this.keysPressed['a']) && (this.keysPressed['ArrowUp'] || this.keysPressed['w'])) {
       direction = 'up-left';
-    } else if (this.keysPressed['ArrowLeft'] && this.keysPressed['ArrowDown']) {
+    } else if ((this.keysPressed['ArrowLeft'] || this.keysPressed['a']) && (this.keysPressed['ArrowDown'] || this.keysPressed['s'])) {
       direction = 'down-left';
-    } else if (this.keysPressed['ArrowRight']) {
+    } else if (this.keysPressed['ArrowRight'] || this.keysPressed['d']) {
       direction = 'right';
-    } else if (this.keysPressed['ArrowLeft']) {
+    } else if (this.keysPressed['ArrowLeft'] || this.keysPressed['a']) {
       direction = 'left';
-    } else if (this.keysPressed['ArrowUp']) {
+    } else if (this.keysPressed['ArrowUp'] || this.keysPressed['w']) {
       direction = 'up';
-    } else if (this.keysPressed['ArrowDown']) {
+    } else if (this.keysPressed['ArrowDown'] || this.keysPressed['s']) {
       direction = 'down';
     }
     return direction;
@@ -91,11 +91,11 @@ class Player extends Obj {
 
  // Metodo per gestire input e attivare animazioni
   handleInput(input) {
-    if (input === 'light-attack') {
+    if (input === 'e') {
       this.playAttackAnimation('light');
-    } else if (input === 'heavy-attack') {
+    } else if (input === 'q') {
       this.playAttackAnimation('heavy');
-    } else if (input === 'special-attack') {
+    } else if (input === 'r') {
       this.playAttackAnimation('special');
     }
   }
