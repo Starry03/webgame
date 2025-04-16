@@ -20,8 +20,8 @@
 
 <script setup>
 import { onMounted, onUnmounted, ref } from 'vue'
-import Map from '../../components/Map.vue'
-import HealthBar from '../../components/Healthbar.vue'
+import Map from '@/components/Map.vue'
+import HealthBar from '@/components/Healthbar.vue'
 const window_width = ref(window.innerWidth)
 const window_height = ref(window.innerHeight)
 
@@ -55,23 +55,6 @@ onUnmounted(() => {
   window.removeEventListener('resize', handle_resize)
   document.removeEventListener('mousemove', playAudio)
 })
-/*
-    // mostrare il popup
-    const confirmExit = () => {
-      showConfirmDialog.value = true
-    }
-    
-    // tornare alla home
-    const goToHome = () => {
-      showConfirmDialog.value = false
-      window.location.href = "/menu"
-    }
-    
-    // chiudere il popup
-    const closeDialog = () => {
-      showConfirmDialog.value = false
-    }
-    */
 </script>
 
 <style scoped>
