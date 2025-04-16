@@ -41,19 +41,17 @@ function toggleMute() {
 }
 
 onMounted(() => {
-  window.addEventListener('resize', handle_resize)
   document.addEventListener('mousemove', playAudio)
 })
 
 onUnmounted(() => {
-  window.removeEventListener('resize', handle_resize)
   document.removeEventListener('mousemove', playAudio)
 })
 </script>
 
 <style scoped>
 .master {
-  background: url('../../style/sfondo3.gif');
+  background: url('@/assets/images/sfondo3.gif');
   background-size: cover;
   height: 100vh;
 }

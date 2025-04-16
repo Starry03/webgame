@@ -1,6 +1,8 @@
+import { Player } from '@/internal/Animazioni/Player';
+
 export class Samurai extends Player {
-    constructor(options) {
-      super(options);
+    constructor(canvas, ctx) {
+      super(canvas, ctx);
       this.framePaths = {
         run: ['@/Samurai/Run/frame_0_0@png', '@/Samurai/Run/frame_0_1@png', '@/Samurai/Run/frame_0_2@png', '@/Samurai/Run/frame_0_3@png', '@/Samurai/Run/frame_0_4@png', '@/Samurai/Run/frame_0_5@png', '@/Samurai/Run/frame_0_6@png', '@/Samurai/Run/frame_0_7@png'],
         attack1: ['@/Samurai/Attack 1/frame_0_0@png', '@/Samurai/Attack 1/frame_0_1@png', '@/Samurai/Attack 1/frame_0_2@png', '@/Samurai/Attack 1/frame_0_3@png', '@/Samurai/Attack 1/frame_0_4@png', '@/Samurai/Attack 1/frame_0_5@png', '@/Samurai/Attack 1/frame_0_6@png', '@/Samurai/Attack 1/frame_0_7@png', '@/Samurai/Attack 1/frame_0_8@png', '@/Samurai/Attack 1/frame_0_9@png'],

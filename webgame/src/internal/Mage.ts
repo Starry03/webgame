@@ -1,6 +1,8 @@
+import { Player } from '@/internal/Animazioni/Player';
+
 export class Mage extends Player {
-    constructor(options) {
-      super(options);
+    constructor(canvas, ctx) {
+      super(canvas, ctx);
       this.framePaths = {
         run: ['@/Mage/Run/frame_0_0@png', '@/Mage/Run/frame_0_1@png', '@/Mage/Run/frame_0_2@png', '@/Mage/Run/frame_0_3@png', '@/Mage/Run/frame_0_4@png', '@/Mage/Run/frame_0_5@png', '@/Mage/Run/frame_0_6@png', '@/Mage/Run/frame_0_7@png'],
         attack1: ['@/Mage/Attack 1/frame_0_0@png', '@/Mage/Attack 1/frame_0_1@png', '@/Mage/Attack 1/frame_0_2@png', '@/Mage/Attack 1/frame_0_3@png', '@/Mage/Attack 1/frame_0_4@png', '@/Mage/Attack 1/frame_0_5@png', '@/Mage/Attack 1/frame_0_6@png', '@/Mage/Attack 1/frame_0_7@png', '@/Mage/Attack 1/frame_0_8@png', '@/Mage/Attack 1/frame_0_9@png'],

@@ -8,3 +8,9 @@ export type Character = {
   speed: number
   hp: number
 }
+
+export enum AttackType {
+  LIGHT = 'light',
+  HEAVY = 'heavy',
+  SPECIAL = 'special',
+}

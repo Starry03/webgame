@@ -1,44 +1,47 @@
-class Player extends Obj {
-  constructor(options) {
-    super(options);
-    this.keysPressed = {}; // Memorizza lo stato dei tasti premuti
-    this.currentAnimation = null; // Memorizza l'animazione corrente
+import { AttackType } from '../types';
+import { Obj } from './Obj';
+
+export class Player extends Obj {
+  currentAnimation: string;
+  constructor(canvas, ctx) {
+    super(canvas, ctx);
+    this.currentAnimation = 'idle';
   }
 
-  // Metodo ausiliario: determina la direzione in base ai tasti premuti
-  getDirectionFromKeys() {
+  getDirectionFromKeys(keysPressed: any) {
+    
     let direction = null;
-    if ((this.keysPressed['ArrowRight'] || this.keysPressed['d']) && (this.keysPressed['ArrowUp'] || this.keysPressed['w'])) {
+    if ((keysPressed['ArrowRight'] || keysPressed['d']) && (keysPressed['ArrowUp'] || keysPressed['w'])) {
       direction = 'up-right';
-    } else if ((this.keysPressed['ArrowRight'] || this.keysPressed['d']) && (this.keysPressed['ArrowDown'] || this.keysPressed['s'])) {
+    } else if ((keysPressed['ArrowRight'] || keysPressed['d']) && (keysPressed['ArrowDown'] || keysPressed['s'])) {
       direction = 'down-right';
-    } else if ((this.keysPressed['ArrowLeft'] || this.keysPressed['a']) && (this.keysPressed['ArrowUp'] || this.keysPressed['w'])) {
+    } else if ((keysPressed['ArrowLeft'] || keysPressed['a']) && (keysPressed['ArrowUp'] || keysPressed['w'])) {
       direction = 'up-left';
-    } else if ((this.keysPressed['ArrowLeft'] || this.keysPressed['a']) && (this.keysPressed['ArrowDown'] || this.keysPressed['s'])) {
+    } else if ((keysPressed['ArrowLeft'] || keysPressed['a']) && (keysPressed['ArrowDown'] || keysPressed['s'])) {
       direction = 'down-left';
-    } else if (this.keysPressed['ArrowRight'] || this.keysPressed['d']) {
+    } else if (keysPressed['ArrowRight'] || keysPressed['d']) {
       direction = 'right';
-    } else if (this.keysPressed['ArrowLeft'] || this.keysPressed['a']) {
+    } else if (keysPressed['ArrowLeft'] || keysPressed['a']) {
       direction = 'left';
-    } else if (this.keysPressed['ArrowUp'] || this.keysPressed['w']) {
+    } else if (keysPressed['ArrowUp'] || keysPressed['w']) {
       direction = 'up';
-    } else if (this.keysPressed['ArrowDown'] || this.keysPressed['s']) {
+    } else if (keysPressed['ArrowDown'] || keysPressed['s']) {
       direction = 'down';
     }
     return direction;
   }
 
-  playAttackAnimation(type) {
+  playAttackAnimation(type: AttackType) {
     switch (type) {
-      case 'light':
+      case AttackType.LIGHT:
         this.currentAnimation = 'light-attack';
         console.log('Playing light attack animation');
         break;
-      case 'heavy':
+      case AttackType.HEAVY:
         this.currentAnimation = 'heavy-attack';
         console.log('Playing heavy attack animation');
         break;
-      case 'special':
+      case AttackType.SPECIAL:
         this.currentAnimation = 'special-attack';
         console.log('Playing special attack animation');
         break;
@@ -48,8 +51,8 @@ class Player extends Obj {
   }
 
   // Overriding del metodo move per il giocatore
-  move() {
-    const direction = this.getDirectionFromKeys();
+  move(key: any) {
+    const direction = this.getDirectionFromKeys(key);
     switch (direction) {
       case 'right':
         if (this.xPos + 100 < this.canvas.width) this.xPos += this.speed;
@@ -90,13 +93,14 @@ class Player extends Obj {
 
 
  // Metodo per gestire input e attivare animazioni
-  handleInput(input) {
-    if (input === 'e') {
-      this.playAttackAnimation('light');
-    } else if (input === 'q') {
-      this.playAttackAnimation('heavy');
-    } else if (input === 'r') {
-      this.playAttackAnimation('special');
+  handleInput(keyPressed: any) {
+    if (keyPressed['e']) {
+      this.playAttackAnimation(AttackType.LIGHT);
+    } else if (keyPressed['q']) {
+      this.playAttackAnimation(AttackType.HEAVY);
+    } else if (keyPressed['r']) {
+      this.playAttackAnimation(AttackType.SPECIAL);
     }
+    else this.move(keyPressed);
   }
 }
