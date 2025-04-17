@@ -1,18 +1,20 @@
+import { AnimationType, Vector2 } from './types'
+
 export class Obj {
   canvas
   ctx
   framePaths
+  pos: Vector2
   xPos
   yPos
   speed
-  currentAnimation
   frames
   currentFrame
   frameDelay
   lastUpdateTime
-  facingDirection
-  animationInProgress
-  animationChanged
+  facingDirection: Vector2
+  currentAnimation: AnimationType
+  prevAnimation: AnimationType | null
 
   constructor(
     canvas,
@@ -20,25 +22,24 @@ export class Obj {
     xPos = 50,
     yPos = 50,
     speed = 3,
-    initialAnimation = 'idle',
+    initialAnimation: AnimationType = AnimationType.IDLE,
     frameDelay = 100,
   ) {
     this.canvas = canvas
     this.ctx = ctx
+    this.pos = new Vector2(50, 50)
     this.xPos = xPos
     this.yPos = yPos
     this.speed = speed
-    this.currentAnimation = initialAnimation
     this.frames = []
     this.currentFrame = 0
     this.frameDelay = frameDelay
     this.lastUpdateTime = performance.now()
-    this.facingDirection = 'right'
-    this.animationInProgress = false
-    this.animationChanged = false
+    this.facingDirection = new Vector2(0, 1)
+    this.currentAnimation = initialAnimation
+    this.prevAnimation = null
   }
 
-  // Carica i frame dell'animazione richiesta
   loadFrames(animationName: string) {
     this.frames = []
     this.currentFrame = 0
@@ -54,7 +55,6 @@ export class Obj {
     })
   }
 
-  // Disegna il frame corrente sul canvas
   drawFrame() {
     const ctx = this.ctx
     if (this.frames.length === 0 || !this.frames[this.currentFrame]) {
@@ -64,38 +64,41 @@ export class Obj {
     const frame = this.frames[this.currentFrame]
     if (frame.complete) {
       ctx.save()
-      if (this.facingDirection === 'left') {
-        ctx.translate(this.xPos + 100, this.yPos) // Sposta l'origine per il flip
+      if (this.facingDirection.x < 0) {
+        ctx.translate(this.pos.x + 100, this.yPos)
         ctx.scale(-1, 1)
-        ctx.drawImage(frame, 0, 0, 100, 100) // Disegna immagine flippata
+        ctx.drawImage(frame, 0, 0, 100, 100)
       } else {
-        ctx.drawImage(frame, this.xPos, this.yPos, 100, 100)
+        ctx.drawImage(frame, this.pos.x, this.pos.y, 100, 100)
       }
       ctx.restore()
     }
   }
 
-  // Aggiorna l'animazione in base al tempo trascorso
   animate(timestamp) {
-    if (timestamp - this.lastUpdateTime > this.frameDelay) {
-      this.currentFrame++
-      if (this.currentFrame >= this.frames.length) this.currentFrame = 0
-      this.lastUpdateTime = timestamp
-    }
+    if (timestamp - this.lastUpdateTime <= this.frameDelay) return
+    this.currentFrame++
+    console.log('Current frame:', this.currentFrame)
+    if (this.currentFrame >= this.frames.length) this.currentFrame = 0
+    this.lastUpdateTime = timestamp
   }
 
-  // Metodo generico per il movimento: verrà **override** nelle classi derivate
   move(keyPressed: any) {
     console.log('Metodo move() generico: implementa il movimento specifico nelle classi derivate.')
   }
 
-  // Metodo di aggiornamento chiamato dal game loop (aggregando animate, move e draw)
+  isAnimationChanged() {
+    return this.prevAnimation !== this.currentAnimation
+  }
+
+  changeAnimation(animationName: AnimationType) {
+    this.prevAnimation = this.currentAnimation
+    this.currentAnimation = animationName
+  }
+
   update(timestamp) {
     this.animate(timestamp)
-    if (this.animationChanged) {
-      this.loadFrames(this.currentAnimation)
-      this.animationChanged = false
-    }
+    if (this.isAnimationChanged()) this.loadFrames(this.currentAnimation)
     this.drawFrame()
   }
 }

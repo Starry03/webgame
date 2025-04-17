@@ -1,4 +1,4 @@
-import { Player } from '@/internal/Animazioni/Player'
+import { Player } from '@/internal/Player'
 
 export class Thief extends Player {
   constructor(canvas, ctx) {
