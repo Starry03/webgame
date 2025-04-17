@@ -15,6 +15,7 @@ export class Obj {
   facingDirection: Vector2
   currentAnimation: AnimationType
   prevAnimation: AnimationType | null
+  isIdle: boolean
 
   constructor(
     canvas,
@@ -24,6 +25,7 @@ export class Obj {
     speed = 3,
     initialAnimation: AnimationType = AnimationType.IDLE,
     frameDelay = 100,
+    isIdle = false,
   ) {
     this.canvas = canvas
     this.ctx = ctx
@@ -38,9 +40,11 @@ export class Obj {
     this.facingDirection = new Vector2(0, 1)
     this.currentAnimation = initialAnimation
     this.prevAnimation = null
+    this.isIdle = isIdle
   }
 
-  loadFrames(animationName: string) {
+  loadFrames(animationName: AnimationType) {
+    if (this.isIdle) return;
     this.frames = []
     this.currentFrame = 0
     if (!this.framePaths[animationName]) {
@@ -78,7 +82,6 @@ export class Obj {
   animate(timestamp) {
     if (timestamp - this.lastUpdateTime <= this.frameDelay) return
     this.currentFrame++
-    console.log('Current frame:', this.currentFrame)
     if (this.currentFrame >= this.frames.length) this.currentFrame = 0
     this.lastUpdateTime = timestamp
   }
@@ -91,8 +94,11 @@ export class Obj {
     return this.prevAnimation !== this.currentAnimation
   }
 
-  changeAnimation(animationName: AnimationType) {
-    this.prevAnimation = this.currentAnimation
+  changeAnimation(animationName: AnimationType, prevAnimation: AnimationType | null = null) {
+    if (prevAnimation) this.prevAnimation = prevAnimation
+    else this.prevAnimation = this.currentAnimation
+    if (animationName !== AnimationType.IDLE)
+      this.isIdle = false
     this.currentAnimation = animationName
   }
 
@@ -100,5 +106,11 @@ export class Obj {
     this.animate(timestamp)
     if (this.isAnimationChanged()) this.loadFrames(this.currentAnimation)
     this.drawFrame()
+  }
+
+  idle() {
+    this.changeAnimation(AnimationType.IDLE)
+    this.loadFrames(this.currentAnimation)
+    this.isIdle = true
   }
 }

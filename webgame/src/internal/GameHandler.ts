@@ -9,7 +9,7 @@ export class GameHandlder {
     this.ctx = ctx
     this.canvas = canvas
     this.player = player
-    this.player.loadFrames(this.player.currentAnimation)
+    this.player.idle()
     this.gameLoop = this.gameLoop.bind(this)
 
     window.addEventListener('keydown', (e) => {

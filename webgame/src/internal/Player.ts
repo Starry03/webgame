@@ -1,4 +1,4 @@
-import { AnimationType, AttackType, Vector2 } from './types'
+import { AnimationType, Vector2 } from './types'
 import { Obj } from './Obj'
 
 export class Player extends Obj {
@@ -7,7 +7,7 @@ export class Player extends Obj {
     this.currentAnimation = AnimationType.IDLE
   }
 
-  move(key: any) {
+  move(key: string) {
     let newDirection = new Vector2(0, 0)
     if (key === 'ArrowUp' || key === 'w') {
       newDirection.y = -1
@@ -27,7 +27,7 @@ export class Player extends Obj {
     }
   }
 
-  attack(keyPressed: any) {
+  attack(keyPressed: string) {
     if (keyPressed === 'q') {
       this.changeAnimation(AnimationType.ATTACK_1)
     } else if (keyPressed === 'e') {
@@ -35,9 +35,5 @@ export class Player extends Obj {
     } else if (keyPressed === 'r') {
       this.changeAnimation(AnimationType.SPECIAL)
     }
-  }
-
-  idle() {
-    this.changeAnimation(AnimationType.IDLE)
   }
 }
