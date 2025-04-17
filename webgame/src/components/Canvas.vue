@@ -32,6 +32,10 @@ onMounted(() => {
     return
   }
   const ctx = canvas.getContext('2d')
+  if (!ctx) {
+    console.error('ctx null')
+    return
+  }
   switch (characterObject.name) {
     case 'wizard':
       player.value = new Mage(canvasRef.value, ctx)
@@ -49,7 +53,7 @@ onMounted(() => {
     console.error('Player is null')
     return
   }
-  gameHandler.value = new GameHandlder(player.value)
+  gameHandler.value = new GameHandlder(player.value, canvas, ctx)
   gameHandler.value.gameLoop()
 })
 

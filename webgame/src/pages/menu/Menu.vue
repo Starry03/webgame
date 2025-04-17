@@ -99,7 +99,7 @@ onUnmounted(() => {
 }
 
 #wrapper {
-  background: url('@/assets/images/sfondo3.gif');
+  background: url('assets/images/sfondo3.gif');
   background-size: cover;
   height: 100svh;
   width: 100svw;

@@ -12,6 +12,7 @@ export class Obj {
   lastUpdateTime
   facingDirection
   animationInProgress
+  animationChanged
 
   constructor(
     canvas,
@@ -34,10 +35,11 @@ export class Obj {
     this.lastUpdateTime = performance.now()
     this.facingDirection = 'right'
     this.animationInProgress = false
+    this.animationChanged = false
   }
 
   // Carica i frame dell'animazione richiesta
-  loadFrames(animationName) {
+  loadFrames(animationName: string) {
     this.frames = []
     this.currentFrame = 0
     if (!this.framePaths[animationName]) {
@@ -77,15 +79,7 @@ export class Obj {
   animate(timestamp) {
     if (timestamp - this.lastUpdateTime > this.frameDelay) {
       this.currentFrame++
-      if (this.currentFrame >= this.frames.length) {
-        // Se si sta eseguendo un'animazione speciale (es. attacco, danno, morte)
-        if (this.animationInProgress) {
-          this.animationInProgress = false // Termina l'animazione speciale
-          this.currentAnimation = 'idle' // Ritorna all'animazione idle
-          this.loadFrames(this.currentAnimation)
-        }
-        this.currentFrame = 0
-      }
+      if (this.currentFrame >= this.frames.length) this.currentFrame = 0
       this.lastUpdateTime = timestamp
     }
   }
@@ -98,6 +92,10 @@ export class Obj {
   // Metodo di aggiornamento chiamato dal game loop (aggregando animate, move e draw)
   update(timestamp) {
     this.animate(timestamp)
+    if (this.animationChanged) {
+      this.loadFrames(this.currentAnimation)
+      this.animationChanged = false
+    }
     this.drawFrame()
   }
 }

@@ -51,7 +51,7 @@ onUnmounted(() => {
 
 <style scoped>
 .master {
-  background: url('@/assets/images/sfondo3.gif');
+  background: url('assets/images/sfondo3.gif');
   background-size: cover;
   height: 100vh;
 }
