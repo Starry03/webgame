@@ -7,13 +7,13 @@
         :key="character.id"
         :character="character"
         :selected_character_id="selectedCharacter?.id"
-        :onSelect="selectCharacter(character.name)"
+        :onSelect="() => selectCharacter(character)"
       />
     </div>
     <div class="character-description-block" v-if="selectedCharacter">
       <h2 id="character-description-header">Description of {{ selectedCharacter.name }}</h2>
       <textarea class="character-description" :value="selectedCharacter.description" readonly></textarea>
-      <button id="start-game-button" @click="startGame(selectedCharacter)" :disabled="!selectCharacter">
+      <button id="start-game-button" @click="startGame(selectedCharacter)" :disabled="!selectedCharacter">
         Start Game
       </button>
     </div>
@@ -30,7 +30,7 @@ import { GameService } from '@/internal/apiService.js'
 const router = useRouter()
 
 const characters = ref([])
-const selectedCharacter = ref(null)
+const selectedCharacter = ref(null);
 
 const fetchCharacters = async () => {
   try {
@@ -45,13 +45,13 @@ const fetchCharacters = async () => {
   }
 }
 
-const selectCharacter = (char) => {
-  selectedCharacter.value = char
+const selectCharacter = (character) => {
+  selectedCharacter.value = character
 }
 
 const startGame = (character) => {
-  if (character.value) {
-    localStorage.setItem(prefixed(character.name))
+  if (character) {
+    localStorage.setItem('selectedCharacter', character.name)
     console.log('Saved character:', character.name)
     console.log('Starting game...')
     router.push('/game')
@@ -70,13 +70,17 @@ onMounted(() => fetchCharacters())
     align-items: center;
     justify-content: center;
     height: 100vh;
+    background-image: url('@/assets/images/sfondo1.gif');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
   }
 
   #container-title {
     font-size: 1.8rem;
     font-weight: bold;
     text-align: center;
-    text-shadow: 2px 2px 0 #000;
+    text-shadow: 2px 2px 0 black;
     margin-bottom: 3rem;
   }
 
@@ -88,7 +92,7 @@ onMounted(() => fetchCharacters())
     border-color: black;
     justify-items: center;
     width: 100%;
-    margin-bottom: 3rem;
+    margin-bottom: 5rem;
   }
 
   .character-description-block {
@@ -99,7 +103,6 @@ onMounted(() => fetchCharacters())
     align-items: center;
     justify-content: center;
     text-align: center;
-    background-color: white;
   }
 
   #character-description-header {
@@ -109,8 +112,11 @@ onMounted(() => fetchCharacters())
 
   .character-description {
     width: 100%;
+    height: 70px;
     padding: 0.5rem;
-    outline: auto;
+    outline: none;
+    border: 2px solid black;
+    border-radius: 8px;
     resize: none;
   }
 
@@ -130,5 +136,5 @@ onMounted(() => fetchCharacters())
     color: red;
   }
 
-
+  
 </style>
