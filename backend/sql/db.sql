@@ -734,3 +734,7 @@ ALTER TABLE ONLY public.score
 -- PostgreSQL database dump complete
 --
 
+-- delete single quotes on character's description
+UPDATE classe
+SET description = TRIM(BOTH '''' FROM description)
+WHERE description LIKE '''%''' AND description LIKE '%''';
