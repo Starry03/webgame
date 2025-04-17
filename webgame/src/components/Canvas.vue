@@ -38,13 +38,13 @@ onMounted(() => {
   }
   switch (characterObject.name) {
     case 'wizard':
-      player.value = new Mage(canvasRef.value, ctx)
+      player.value = new Mage(canvas, ctx)
       break
     case 'warrior':
-      player.value = new Samurai(canvasRef.value, ctx)
+      player.value = new Samurai(canvas, ctx)
       break
     case 'thief':
-      player.value = new Thief(canvasRef.value, ctx)
+      player.value = new Thief(canvas, ctx)
       break
     default:
       console.error('Invalid character type')
