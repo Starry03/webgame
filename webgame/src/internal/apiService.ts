@@ -11,7 +11,7 @@ export function buildEndpoint(path: String) {
 }
 
 export const AuthService = {
-  login: (endpoint: String, username: String, password: String) =>
+  login: (endpoint: String, username: string, password: string) =>
     RequestWrapper.loginFetch(
       buildEndpoint(endpoint),
       {

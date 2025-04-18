@@ -13,22 +13,16 @@
         <Map />
         <HealthBar />
       </div>
-      <canvas id="canvas" :width="window_width" :height="window_height / 1.5"></canvas>
+      <Canvas />
     </div>
   </div>
 </template>
 
 <script setup>
 import { onMounted, onUnmounted, ref } from 'vue'
-import Map from '../../components/Map.vue'
-import HealthBar from '../../components/Healthbar.vue'
-const window_width = ref(window.innerWidth)
-const window_height = ref(window.innerHeight)
-
-const handle_resize = () => {
-  window_width.value = window.innerWidth
-  window_height.value = window.innerHeight
-}
+import Canvas from '@/components/Canvas.vue'
+import Map from '@/components/Map.vue'
+import HealthBar from '@/components/Healthbar.vue'
 
 function playAudio() {
   let audio = document.getElementById('music')
@@ -47,36 +41,17 @@ function toggleMute() {
 }
 
 onMounted(() => {
-  window.addEventListener('resize', handle_resize)
   document.addEventListener('mousemove', playAudio)
 })
 
 onUnmounted(() => {
-  window.removeEventListener('resize', handle_resize)
   document.removeEventListener('mousemove', playAudio)
 })
-/*
-    // mostrare il popup
-    const confirmExit = () => {
-      showConfirmDialog.value = true
-    }
-    
-    // tornare alla home
-    const goToHome = () => {
-      showConfirmDialog.value = false
-      window.location.href = "/menu"
-    }
-    
-    // chiudere il popup
-    const closeDialog = () => {
-      showConfirmDialog.value = false
-    }
-    */
 </script>
 
 <style scoped>
 .master {
-  background: url('../../style/sfondo3.gif');
+  background: url('assets/images/sfondo3.gif');
   background-size: cover;
   height: 100vh;
 }
