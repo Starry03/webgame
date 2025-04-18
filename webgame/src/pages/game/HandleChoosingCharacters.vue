@@ -13,18 +13,14 @@
     <div class="character-description-block" v-if="selectedCharacter">
       <h2 id="character-description-header">Description of {{ selectedCharacter.name }}</h2>
       <textarea class="character-description" :value="selectedCharacter.description"></textarea>
-      <button
-        id="start-game-button"
-        @click="() => startGame(selectedCharacter)"
-        :disabled="!selectCharacter"
-      >
+      <button id="start-game-button" @click="() => selectedCharacter && startGame(selectedCharacter)" :disabled="!selectCharacter">
         Start Game
-      </button>
+      </button> <!-- @click="..." viene effettuato il controllo se selectedCharacter è null -->
     </div>
   </section>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref, onMounted } from 'vue'
 import ClassComponent from '@/components/ClassComponent.vue'
 import { prefixed } from '@/internal/cryptoutils'
@@ -32,9 +28,8 @@ import { useRouter } from 'vue-router'
 import { GameService } from '@/internal/apiService'
 
 const router = useRouter()
-
-const characters = ref([])
-const selectedCharacter = ref(null)
+const characters = ref([]);
+const selectedCharacter = ref<Character | null>(null)
 
 const fetchCharacters = async () => {
   try {
@@ -42,20 +37,20 @@ const fetchCharacters = async () => {
     if (!response.ok) {
       throw new Error(`Errore HTTP: ${response.status}`)
     }
-    const data: Character[] = await response.json()
+    const data = await response.json()
     characters.value = data
   } catch (error) {
     console.error('Errore nel recupero dei personaggi:', error)
   }
 }
 
-const selectCharacter = (char) => {
-  selectedCharacter.value = char
+const selectCharacter = (character) => {
+  selectedCharacter.value = character
 }
 
 const startGame = (character) => {
-  if (character.value) {
-    localStorage.setItem(prefixed(character.name))
+  if (character) {
+    localStorage.setItem(prefixed(character.name), JSON.stringify(character))
     console.log('Saved character:', character.name)
     console.log('Starting game...')
     router.push('/game')
