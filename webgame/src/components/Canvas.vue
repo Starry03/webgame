@@ -54,7 +54,7 @@ onMounted(() => {
     return
   }
   gameHandler.value = new GameHandlder(player.value, canvas, ctx)
-  gameHandler.value.gameLoop()
+  gameHandler.value.gameLoop(performance.now())
 })
 
 onUnmounted(() => {

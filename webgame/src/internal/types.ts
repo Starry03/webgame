@@ -33,7 +33,13 @@ export class Vector2 {
     this.x = x
     this.y = y
   }
-  compare(other: Vector2) {
+  compare(other: Vector2): boolean {
     return this.x === other.x && this.y === other.y
+  }
+  normalize(): void {
+    const length = Math.sqrt(this.x ** 2 + this.y ** 2)
+    if (length === 0) return
+    this.x /= length
+    this.y /= length
   }
 }

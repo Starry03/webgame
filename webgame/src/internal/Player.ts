@@ -7,32 +7,33 @@ export class Player extends Obj {
     this.currentAnimation = AnimationType.IDLE
   }
 
-  move(key: string) {
-    let newDirection = new Vector2(0, 0)
-    if (key === 'ArrowUp' || key === 'w') {
-      newDirection.y = -1
-    } else if (key === 'ArrowDown' || key === 's') {
-      newDirection.y = 1
-    }
-    if (key === 'ArrowLeft' || key === 'a') {
-      newDirection.x = -1
-    } else if (key === 'ArrowRight' || key === 'd') {
-      newDirection.x = 1
-    }
-    this.pos.x += newDirection.x * this.speed
-    this.pos.y += newDirection.y * this.speed
-    if (!newDirection.compare(new Vector2(0, 0))) {
+  handleInput(keys: Set<string>) {
+    this.move(keys)
+    this.attack(keys)
+  }
+
+  move(keys: Set<string>) {
+    let dir = new Vector2(
+      (keys.has('d') || keys.has('ArrowRight') ? 1 : 0) +
+        (keys.has('a') || keys.has('ArrowLeft') ? -1 : 0),
+      (keys.has('s') || keys.has('ArrowDown') ? 1 : 0) +
+        (keys.has('w') || keys.has('ArrowUp') ? -1 : 0),
+    )
+    dir.normalize()
+    this.pos.x += dir.x * this.speed
+    this.pos.y += dir.y * this.speed
+    if (!dir.compare(new Vector2(0, 0))) {
       this.changeAnimation(AnimationType.RUN)
-      this.facingDirection = newDirection
+      this.facingDirection = dir
     }
   }
 
-  attack(keyPressed: string) {
-    if (keyPressed === 'q') {
+  attack(keys: Set<string>) {
+    if (keys.has('q')) {
       this.changeAnimation(AnimationType.ATTACK_1)
-    } else if (keyPressed === 'e') {
+    } else if (keys.has('e')) {
       this.changeAnimation(AnimationType.ATTACK_2)
-    } else if (keyPressed === 'r') {
+    } else if (keys.has('r')) {
       this.changeAnimation(AnimationType.SPECIAL)
     }
   }
