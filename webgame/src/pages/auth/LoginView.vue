@@ -32,8 +32,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { RequestWrapper, RSAUtils, AESUtils } from '@/internal/cryptoutils'
-import { AuthService, buildEndpoint } from '@/internal/apiService'
+import { RSAUtils, AESUtils } from '@/internal/cryptoutils'
+import { AuthService } from '@/internal/apiService'
 import type { Token, Session } from '@/internal/cryptoutils'
 import Loader from '@/components/Loader.vue'
 
@@ -51,8 +51,8 @@ async function main_req(path: String): Promise<{ session: Session; token: Token 
 async function process_session(req: { session: Session; token: Token }) {
   const token: Token = req.token
   const session: Session = req.session
-  token.access_token = await RSAUtils.decrypt(token.access_token)
-  session.sym_key = await RSAUtils.decrypt(session.sym_key)
+  token.access_token = RSAUtils.decrypt(token.access_token)
+  session.sym_key = RSAUtils.decrypt(session.sym_key)
   AESUtils.save(session, token)
   isLogging.value = false
   router.push('/')
