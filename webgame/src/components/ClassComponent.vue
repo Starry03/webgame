@@ -1,5 +1,5 @@
 <template>
-  <div :class="getCardClass()" @click="handleClick">
+  <div :class="getCardClass()" @click="handleClick" :style="hoverStyle">
     <!-- Placeholder per l'icona -->
     <div class="character-icon">
       <img :src="getCharacterIcon(character.name)" :alt="`${character.name} icon`" />
@@ -30,6 +30,8 @@
   </div>
 </template>
 <script setup>
+import { computed } from 'vue';
+
 	const props = defineProps({
 	character: Object,
 	selected_character_id: Number,
@@ -68,6 +70,22 @@
     }
   }
 
+  const hoverStyle = computed(() => {
+    var name = props.character.name;
+    if (name == "warrior") {
+      return {'--hover-color': 'red'};
+    }
+    else if (name == "wizard") {
+      return {'--hover-color': 'yellow'};
+    }
+    else if (name == "thief") {
+      return {'--hover-color': 'blue'};
+    }
+    else {
+      return {'--hover-color': 'black'};
+    }
+  })
+
 </script>
 
 <style scoped>
@@ -84,8 +102,8 @@
 	}
 
 	.character-card:hover {
-		box-shadow: 0 0 10px red;
-		transform: scale(1.05);  
+		transform: scale(1.05);
+    box-shadow: var(--hover-color);  
 	}
 
 	.character-icon img {
