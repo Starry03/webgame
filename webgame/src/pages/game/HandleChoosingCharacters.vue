@@ -14,9 +14,13 @@
       <h2 id="character-description-header">Description of {{ selectedCharacter.name }}</h2>
       <textarea class="character-description" :value="selectedCharacter.description"></textarea>
       <button
+       
         id="start-game-button"
-        @click="() => selectedCharacter && startGame(selectedCharacter)"
+       
+        @click="() => startGame(selectedCharacter)"
+       
         :disabled="!selectCharacter"
+      
       >
         Start Game
       </button>
@@ -27,14 +31,23 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+<<<<<<< HEAD
+<<<<<<< HEAD
+import ClassComponent from '@/components/ClassComponent.vue'
+import { prefixed } from '@/internal/cryptoutils.js'
+import { useRouter } from 'vue-router'
+import { GameService } from '@/internal/apiService.js'
+
+const router = useRouter()
+
+const characters = ref([])
+const selectedCharacter = ref(null);
 import ClassComponent from '@/components/ClassComponent.vue'
 import { prefixed } from '@/internal/cryptoutils'
 import { useRouter } from 'vue-router'
 import { GameService } from '@/internal/apiService'
 
-const router = useRouter()
-const characters = ref([])
-const selectedCharacter = (ref < Character) | (null > null)
+
 
 const fetchCharacters = async () => {
   try {
