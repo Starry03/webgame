@@ -7,15 +7,20 @@
         :key="character.name"
         :character="character"
 <<<<<<< HEAD
+<<<<<<< HEAD
         :selected_character_id="selectedCharacter?.id"
 =======
         :selected_character_id="selectedCharacter?.name"
 >>>>>>> main
+=======
+        :selected_character_id="selectedCharacter?.name"
+>>>>>>> 74ce90c000d6efc6f8b13b2d85fa5516a93ccc21
         :onSelect="() => selectCharacter(character)"
       />
     </div>
     <div class="character-description-block" v-if="selectedCharacter">
       <h2 id="character-description-header">Description of {{ selectedCharacter.name }}</h2>
+<<<<<<< HEAD
 <<<<<<< HEAD
       <textarea class="character-description" :value="selectedCharacter.description" readonly></textarea>
       <button id="start-game-button" @click="startGame(selectedCharacter)" :disabled="!selectedCharacter">
@@ -27,14 +32,19 @@
         :disabled="!selectCharacter"
       >
 >>>>>>> main
+=======
+      <textarea class="character-description" :value="selectedCharacter.description"></textarea>
+      <button id="start-game-button" @click="() => selectedCharacter && startGame(selectedCharacter)" :disabled="!selectCharacter">
+>>>>>>> 74ce90c000d6efc6f8b13b2d85fa5516a93ccc21
         Start Game
-      </button>
+      </button> <!-- @click="..." viene effettuato il controllo se selectedCharacter è null -->
     </div>
   </section>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref, onMounted } from 'vue'
+<<<<<<< HEAD
 <<<<<<< HEAD
 import ClassComponent from '@/components/ClassComponent.vue'
 import { prefixed } from '@/internal/cryptoutils.js'
@@ -46,17 +56,20 @@ const router = useRouter()
 const characters = ref([])
 const selectedCharacter = ref(null);
 =======
+=======
+import ClassComponent from '@/components/ClassComponent.vue'
+>>>>>>> 74ce90c000d6efc6f8b13b2d85fa5516a93ccc21
 import { prefixed } from '@/internal/cryptoutils'
 import { useRouter } from 'vue-router'
-import ClassComponent from '@/components/ClassComponent.vue'
 import { GameService } from '@/internal/apiService'
-import type { Character } from '@/internal/types'
 
 const router = useRouter()
-
-const characters = ref<Character[]>([])
+const characters = ref([]);
 const selectedCharacter = ref<Character | null>(null)
+<<<<<<< HEAD
 >>>>>>> main
+=======
+>>>>>>> 74ce90c000d6efc6f8b13b2d85fa5516a93ccc21
 
 const fetchCharacters = async () => {
   try {
@@ -64,7 +77,7 @@ const fetchCharacters = async () => {
     if (!response.ok) {
       throw new Error(`Errore HTTP: ${response.status}`)
     }
-    const data: Character[] = await response.json()
+    const data = await response.json()
     characters.value = data
   } catch (error) {
     console.error('Errore nel recupero dei personaggi:', error)
@@ -72,17 +85,21 @@ const fetchCharacters = async () => {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 74ce90c000d6efc6f8b13b2d85fa5516a93ccc21
 const selectCharacter = (character) => {
   selectedCharacter.value = character
 }
 
 const startGame = (character) => {
   if (character) {
-    localStorage.setItem('selectedCharacter', character.name)
+    localStorage.setItem(prefixed(character.name), JSON.stringify(character))
     console.log('Saved character:', character.name)
     console.log('Starting game...')
     router.push('/game')
   }
+<<<<<<< HEAD
 =======
 const selectCharacter = (character: Character | null) => {
   selectedCharacter.value = character
@@ -93,6 +110,8 @@ const startGame = (character: Character | null) => {
   localStorage.setItem(prefixed('character'), JSON.stringify(character))
   router.push('/game')
 >>>>>>> main
+=======
+>>>>>>> 74ce90c000d6efc6f8b13b2d85fa5516a93ccc21
 }
 
 onMounted(() => fetchCharacters())
