@@ -13,70 +13,70 @@
   </div>
 </template>
 <script setup>
-const props = defineProps({
-  character: Object,
-  selected_character_id: Number,
-  onSelect: Function,
-})
+	const props = defineProps({
+	character: Object,
+	selected_character_id: Number,
+	onSelect: Function,
+	})
 
-const getCardClass = () => {
-  if (props.selected_character_id == props.character.id) {
-    return 'character-card selected'
-  } else {
-    return 'character-card'
-  }
-}
+	const getCardClass = () => {
+		if (props.selected_character_id == props.character.id) {
+			return 'character-card selected';
+		} 
+		else {
+			return 'character-card';
+		}
+	}
 
-const handleClick = () => {
-  if (props.onSelect) {
-    props.onSelect(props.character)
-  }
-}
-
-const getCharacterIcon = (name) => {
+	const handleClick = () => {
+		if (props.onSelect) {
+			props.onSelect(props.character)
+		}
+	}
+	
+	const getCharacterIcon = (name) => {
   try {
-    if (name === 'warrior') {
-      return new URL('@/assets/images/warrior_icon.jpg', import.meta.url).href
-    } else if (name === 'wizard') {
-      return new URL('@/assets/images/wizard_icon.jpg', import.meta.url).href
-    } else if (name === 'thief') {
-      return new URL('@/assets/images/thief_icon.jpg', import.meta.url).href
+    if (name === "warrior") {
+      return "/assets/images/warrior_icon.jpg";
+    } else if (name === "wizard") {
+      return "/assets/images/wizard_icon.jpg";
+    } else if (name === "thief") {
+      return "/assets/images/thief_icon.jpg";
     } else {
-      return new URL('@/assets/images/default_icon.jpg', import.meta.url).href
+      return "/assets/images/default_icon.jpg"; // personaggio non riconosciuto
     }
   } catch (e) {
-    console.error("Errore nel caricamento dell'icona:", e)
-    return new URL('@/assets/images/default_icon.jpg', import.meta.url).href
+    console.error("Errore nel caricamento dell'icona:", e);
+    return "/assets/images/default_icon.jpg"; 
   }
 }
+
 </script>
 
 <style scoped>
-.character-card {
-  border: 2px solid black;
-  border-radius: 10px;
-  padding: 1rem;
-  background-color: lightgrey;
-  transition:
-    transform 0.2s,
-    box-shadow 0.2s,
-    border-color 0.3s ease;
-  cursor: pointer;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+	.character-card {
+		border: 2px solid black;
+		border-radius: 10px;
+		padding: 1rem;
+		background-color: lightgrey;
+		transition: transform 0.2s, box-shadow 0.2s, border-color 0.3s ease;
+		cursor: pointer;
+  		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
 
-.character-card:hover {
-  box-shadow: 0 0 10px red;
-  transform: scale(1.05);
-}
+	.character-card:hover {
+		box-shadow: 0 0 10px red;
+		transform: scale(1.05);  
+	}
 
-.character-icon img {
-  width: 80px;
-  height: 80px;
-  object-fit: contain;
-  margin-bottom: 1rem;
-}
+	.character-icon img {
+		width: 80px;
+		height: 80px;
+		object-fit: contain;
+		margin-bottom: 1rem;
+	}
+
 </style>
