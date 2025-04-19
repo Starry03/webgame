@@ -6,36 +6,18 @@
         v-for="character in characters"
         :key="character.name"
         :character="character"
-<<<<<<< HEAD
-<<<<<<< HEAD
-        :selected_character_id="selectedCharacter?.id"
-=======
         :selected_character_id="selectedCharacter?.name"
->>>>>>> main
-=======
-        :selected_character_id="selectedCharacter?.name"
->>>>>>> 74ce90c000d6efc6f8b13b2d85fa5516a93ccc21
         :onSelect="() => selectCharacter(character)"
       />
     </div>
     <div class="character-description-block" v-if="selectedCharacter">
       <h2 id="character-description-header">Description of {{ selectedCharacter.name }}</h2>
-<<<<<<< HEAD
-<<<<<<< HEAD
-      <textarea class="character-description" :value="selectedCharacter.description" readonly></textarea>
-      <button id="start-game-button" @click="startGame(selectedCharacter)" :disabled="!selectedCharacter">
-=======
       <textarea class="character-description" :value="selectedCharacter.description"></textarea>
       <button
         id="start-game-button"
         @click="() => startGame(selectedCharacter)"
         :disabled="!selectCharacter"
       >
->>>>>>> main
-=======
-      <textarea class="character-description" :value="selectedCharacter.description"></textarea>
-      <button id="start-game-button" @click="() => selectedCharacter && startGame(selectedCharacter)" :disabled="!selectCharacter">
->>>>>>> 74ce90c000d6efc6f8b13b2d85fa5516a93ccc21
         Start Game
       </button> <!-- @click="..." viene effettuato il controllo se selectedCharacter è null -->
     </div>
