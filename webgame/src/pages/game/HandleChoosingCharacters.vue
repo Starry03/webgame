@@ -38,13 +38,6 @@ import { GameService } from '@/internal/apiService.js'
 
 const router = useRouter()
 
-const characters = ref([])
-const selectedCharacter = ref(null);
-import ClassComponent from '@/components/ClassComponent.vue'
-import { prefixed } from '@/internal/cryptoutils'
-import { useRouter } from 'vue-router'
-import { GameService } from '@/internal/apiService'
-
 const fetchCharacters = async () => {
   try {
     const response = await GameService.classes()
