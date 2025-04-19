@@ -33,7 +33,7 @@ import { GameService } from '@/internal/apiService.js'
 
 const router = useRouter()
 
-const characters = ref([])<<<<<<< HEAD
+const characters = ref([])
 const selectedCharacter = ref(null);
 import ClassComponent from '@/components/ClassComponent.vue'
 import { prefixed } from '@/internal/cryptoutils'
@@ -43,10 +43,6 @@ import { GameService } from '@/internal/apiService'
 const router = useRouter()
 const characters = ref([]);
 const selectedCharacter = ref<Character | null>(null)
-<<<<<<< HEAD
->>>>>>> main
-=======
->>>>>>> 74ce90c000d6efc6f8b13b2d85fa5516a93ccc21
 
 const fetchCharacters = async () => {
   try {
