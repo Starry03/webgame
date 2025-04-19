@@ -33,7 +33,7 @@ import { GameService } from '@/internal/apiService.js'
 
 const router = useRouter()
 
-const characters = ref([])
+const characters = ref([])<<<<<<< HEAD
 const selectedCharacter = ref(null);
 import ClassComponent from '@/components/ClassComponent.vue'
 import { prefixed } from '@/internal/cryptoutils'
@@ -61,10 +61,6 @@ const fetchCharacters = async () => {
   }
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 74ce90c000d6efc6f8b13b2d85fa5516a93ccc21
 const selectCharacter = (character) => {
   selectedCharacter.value = character
 }
@@ -76,6 +72,7 @@ const startGame = (character) => {
     console.log('Starting game...')
     router.push('/game')
   }
+}
 const selectCharacter = (character: Character | null) => {
   selectedCharacter.value = character
 }
@@ -148,8 +145,7 @@ onMounted(() => fetchCharacters())
     resize: none;
   }
 
-  #start-game-button {
-    margin-top: 1rem;
+  #start-game-button {  
     cursor: pointer;
     border-radius: 8px;
     padding: 0.75rem 1rem;
