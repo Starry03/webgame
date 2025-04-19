@@ -45,14 +45,6 @@ import { prefixed } from '@/internal/cryptoutils'
 import { useRouter } from 'vue-router'
 import { GameService } from '@/internal/apiService'
 
-<<<<<<< HEAD
-
-=======
-const router = useRouter()
-const characters = ref([]);
-const selectedCharacter = ref<Character | null>(null)
->>>>>>> 5954865b8b6febd72c2f8601a2d9bf09b1c23260
-
 const fetchCharacters = async () => {
   try {
     const response = await GameService.classes()
@@ -141,18 +133,6 @@ onMounted(() => fetchCharacters())
   resize: none;
 }
 
-<<<<<<< HEAD
-#start-game-button {
-  margin-top: 1rem;
-  cursor: pointer;
-  border-radius: 8px;
-  padding: 0.75rem 1rem;
-  width: 150px;
-  background-color: red;
-  font-size: 1rem;
-  transition: all 0.2s ease-in-out;
-}
-=======
   #start-game-button {  
     cursor: pointer;
     border-radius: 8px;
@@ -162,7 +142,6 @@ onMounted(() => fetchCharacters())
     font-size: 1rem;
     transition: all 0.2s ease-in-out;
   }
->>>>>>> 5954865b8b6febd72c2f8601a2d9bf09b1c23260
 
 #start-game-button:hover {
   background-color: #000;
