@@ -26,8 +26,6 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-<<<<<<< HEAD
-<<<<<<< HEAD
 import ClassComponent from '@/components/ClassComponent.vue'
 import { prefixed } from '@/internal/cryptoutils.js'
 import { useRouter } from 'vue-router'
@@ -37,10 +35,7 @@ const router = useRouter()
 
 const characters = ref([])
 const selectedCharacter = ref(null);
-=======
-=======
 import ClassComponent from '@/components/ClassComponent.vue'
->>>>>>> 74ce90c000d6efc6f8b13b2d85fa5516a93ccc21
 import { prefixed } from '@/internal/cryptoutils'
 import { useRouter } from 'vue-router'
 import { GameService } from '@/internal/apiService'
@@ -81,8 +76,6 @@ const startGame = (character) => {
     console.log('Starting game...')
     router.push('/game')
   }
-<<<<<<< HEAD
-=======
 const selectCharacter = (character: Character | null) => {
   selectedCharacter.value = character
 }
@@ -91,9 +84,6 @@ const startGame = (character: Character | null) => {
   if (!character) return
   localStorage.setItem(prefixed('character'), JSON.stringify(character))
   router.push('/game')
->>>>>>> main
-=======
->>>>>>> 74ce90c000d6efc6f8b13b2d85fa5516a93ccc21
 }
 
 onMounted(() => fetchCharacters())
