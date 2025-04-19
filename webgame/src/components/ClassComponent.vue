@@ -5,11 +5,28 @@
       <img :src="getCharacterIcon(character.name)" :alt="`${character.name} icon`" />
     </div>
     <h2 class="character-name">{{ character.name }}</h2>
-    <p><strong>Speed:</strong> {{ character.speed }}</p>
-    <p><strong>Attack:</strong> {{ character.attack }}</p>
-    <p><strong>Defence:</strong> {{ character.defence }}</p>
-    <p><strong>Mana:</strong> {{ character.mana }}</p>
-    <p><strong>Hp:</strong> {{ character.hp }}</p>
+    <section class="character-stats">
+      <div class="stat">
+        <strong>Speed:</strong>
+        <span>{{ character.speed }}</span>
+      </div>
+      <div class="stat">
+        <strong>Attack:</strong>
+        <span>{{ character.attack }}</span>
+      </div>
+      <div class="stat">
+        <strong>Defence:</strong>
+        <span>{{ character.defence }}</span>
+      </div>
+      <div class="stat">
+        <strong>Mana:</strong>
+        <span>{{ character.mana }}</span>
+      </div>
+      <div class="stat">
+        <strong>Hp:</strong>
+        <span>{{ character.hp }}</span>
+      </div>
+    </section>
   </div>
 </template>
 <script setup>
@@ -35,21 +52,21 @@
 	}
 	
 	const getCharacterIcon = (name) => {
-  try {
-    if (name === "warrior") {
-      return "/assets/images/warrior_icon.jpg";
-    } else if (name === "wizard") {
-      return "/assets/images/wizard_icon.jpg";
-    } else if (name === "thief") {
-      return "/assets/images/thief_icon.jpg";
-    } else {
-      return "/assets/images/default_icon.jpg"; // personaggio non riconosciuto
+    try {
+      if (name === "warrior") {
+        return "/assets/images/warrior_icon.png";
+      } else if (name === "wizard") {
+        return "/assets/images/wizard_icon.png";
+      } else if (name === "thief") {
+        return "/assets/images/thief_icon.png";
+      } else {
+        return "/assets/images/default_icon.jpg"; // personaggio non riconosciuto
+      }
+    } catch (e) {
+      console.error("Errore nel caricamento dell'icona:", e);
+      return "/assets/images/default_icon.jpg"; 
     }
-  } catch (e) {
-    console.error("Errore nel caricamento dell'icona:", e);
-    return "/assets/images/default_icon.jpg"; 
   }
-}
 
 </script>
 
@@ -61,7 +78,6 @@
 		background-color: lightgrey;
 		transition: transform 0.2s, box-shadow 0.2s, border-color 0.3s ease;
 		cursor: pointer;
-  		text-align: center;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -78,5 +94,30 @@
 		object-fit: contain;
 		margin-bottom: 1rem;
 	}
+
+  .character-stats {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .stat {
+    display: flex;
+    justify-content: space-between;
+    margin: 0.5rem 0;
+    width: 100%;
+  }
+
+  .stat strong {
+    flex-basis: 30%; 
+    text-align: left;
+  }
+
+.stat span {
+  flex-grow: 1;
+  text-align: right;
+}
 
 </style>
