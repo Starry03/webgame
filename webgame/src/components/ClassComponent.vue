@@ -1,25 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-<script setup>
-const props = defineProps({
-  character: Object,
-  selected_character_id: Number,
-  onSelect: Function,
-})
-
-const getCardClass = () => {
-  if (props.selected_character_id == props.character.name) {
-    return 'character-card selected'
-  } else {
-    return 'character-card'
-  }
-}
-</script>
->>>>>>> main
-
-=======
->>>>>>> 74ce90c000d6efc6f8b13b2d85fa5516a93ccc21
 <template>
   <div :class="getCardClass()" @click="handleClick">
     <!-- Placeholder per l'icona -->
