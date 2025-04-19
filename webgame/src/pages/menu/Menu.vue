@@ -1,7 +1,7 @@
 <template>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <audio controls style="display: none" id="music" autoplay loop>
-    <source src="../../style/Song_of_Heart.mp3" type="audio/mpeg" />
+    <source src="/assets/audio/Song_of_Heart.mp3" type="audio/mpeg" />
   </audio>
   <div id="wrapper" class="flex flex-center" style="">
     <div class="flex flex-column flex-center gap-big">
@@ -99,7 +99,7 @@ onUnmounted(() => {
 }
 
 #wrapper {
-  background: url('@/assets/images/sfondo3.gif');
+  background: url('assets/images/sfondo3.gif');
   background-size: cover;
   height: 100svh;
   width: 100svw;

@@ -4,24 +4,38 @@
     <div class="character-grid">
       <ClassComponent
         v-for="character in characters"
-        :key="character.id"
+        :key="character.name"
         :character="character"
+<<<<<<< HEAD
         :selected_character_id="selectedCharacter?.id"
+=======
+        :selected_character_id="selectedCharacter?.name"
+>>>>>>> main
         :onSelect="() => selectCharacter(character)"
       />
     </div>
     <div class="character-description-block" v-if="selectedCharacter">
       <h2 id="character-description-header">Description of {{ selectedCharacter.name }}</h2>
+<<<<<<< HEAD
       <textarea class="character-description" :value="selectedCharacter.description" readonly></textarea>
       <button id="start-game-button" @click="startGame(selectedCharacter)" :disabled="!selectedCharacter">
+=======
+      <textarea class="character-description" :value="selectedCharacter.description"></textarea>
+      <button
+        id="start-game-button"
+        @click="() => startGame(selectedCharacter)"
+        :disabled="!selectCharacter"
+      >
+>>>>>>> main
         Start Game
       </button>
     </div>
   </section>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from 'vue'
+<<<<<<< HEAD
 import ClassComponent from '@/components/ClassComponent.vue'
 import { prefixed } from '@/internal/cryptoutils.js'
 import { useRouter } from 'vue-router'
@@ -31,6 +45,18 @@ const router = useRouter()
 
 const characters = ref([])
 const selectedCharacter = ref(null);
+=======
+import { prefixed } from '@/internal/cryptoutils'
+import { useRouter } from 'vue-router'
+import ClassComponent from '@/components/ClassComponent.vue'
+import { GameService } from '@/internal/apiService'
+import type { Character } from '@/internal/types'
+
+const router = useRouter()
+
+const characters = ref<Character[]>([])
+const selectedCharacter = ref<Character | null>(null)
+>>>>>>> main
 
 const fetchCharacters = async () => {
   try {
@@ -38,13 +64,14 @@ const fetchCharacters = async () => {
     if (!response.ok) {
       throw new Error(`Errore HTTP: ${response.status}`)
     }
-    const data = await response.json()
+    const data: Character[] = await response.json()
     characters.value = data
   } catch (error) {
     console.error('Errore nel recupero dei personaggi:', error)
   }
 }
 
+<<<<<<< HEAD
 const selectCharacter = (character) => {
   selectedCharacter.value = character
 }
@@ -56,6 +83,16 @@ const startGame = (character) => {
     console.log('Starting game...')
     router.push('/game')
   }
+=======
+const selectCharacter = (character: Character | null) => {
+  selectedCharacter.value = character
+}
+
+const startGame = (character: Character | null) => {
+  if (!character) return
+  localStorage.setItem(prefixed('character'), JSON.stringify(character))
+  router.push('/game')
+>>>>>>> main
 }
 
 onMounted(() => fetchCharacters())
