@@ -81,18 +81,18 @@ onMounted(() => fetchCharacters())
     font-weight: bold;
     text-align: center;
     text-shadow: 2px 2px 0 black;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
   }
 
   .character-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 2rem;
+    gap: 1rem;
     border: 2px;
     border-color: black;
     justify-items: center;
     width: 100%;
-    margin-bottom: 5rem;
+    margin-bottom: 2rem;
   }
 
   .character-description-block {
@@ -103,6 +103,7 @@ onMounted(() => fetchCharacters())
     align-items: center;
     justify-content: center;
     text-align: center;
+    max-width: 400rem;
   }
 
   #character-description-header {
@@ -135,5 +136,51 @@ onMounted(() => fetchCharacters())
     background-color: #000;
     color: red;
   }
-  
+
+  @media (max-width: 600px) {
+    .container {
+      padding: 1rem;
+      height: auto;
+    }
+
+    #container-title {
+      font-size: 1rem;
+      margin-bottom: 1.5rem; 
+    }
+
+    .character-grid {
+      gap: 1rem; 
+      margin-bottom: 2rem;
+      grid-template-columns: auto;
+    }
+
+    .character-description-block {
+      width: 90%; 
+      margin-top: 1rem;
+      padding: 1rem;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .container {
+      padding: 1.5rem; 
+    }
+
+    #container-title {
+      font-size: 1.7rem; 
+      margin-bottom: 0.5rem; 
+    }
+
+    .character-grid {
+      grid-template-columns: repeat(auto-fit, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .character-description-block {
+      width: 80%;
+      margin-top: 1.5rem;
+    }
+  }
+ 
 </style>

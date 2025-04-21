@@ -1,5 +1,5 @@
 <template>
-  <div :class="getCardClass()" @click="handleClick" :style="hoverStyle">
+  <div :class="getCardClass()" @click="handleClick">
     <!-- Placeholder per l'icona -->
     <div class="character-icon">
       <img :src="getCharacterIcon(character.name)" :alt="`${character.name} icon`" />
@@ -30,7 +30,6 @@
   </div>
 </template>
 <script setup>
-import { computed } from 'vue';
 
 	const props = defineProps({
 	character: Object,
@@ -39,12 +38,25 @@ import { computed } from 'vue';
 	})
 
 	const getCardClass = () => {
-		if (props.selected_character_id == props.character.id) {
-			return 'character-card selected';
-		} 
-		else {
-			return 'character-card';
-		}
+		let baseClass = 'character-card';
+    let selected = '';
+    if (props.selected_character_id === props.character.id) {
+      selected = 'selected';
+    }
+    let hover = '';
+    if (props.character.name == "warrior") {
+      hover = 'hover-warrior';
+    }
+    else if (props.character.name == "wizard") {
+      hover = 'hover-wizard';
+    }
+    else if (props.character.name == "thief") {
+      hover = 'hover-thief';
+    }
+    else {
+      hover = 'hover-default';
+    }
+    return `${baseClass} ${hover} ${selected}`.trim()
 	}
 
 	const handleClick = () => {
@@ -70,22 +82,6 @@ import { computed } from 'vue';
     }
   }
 
-  const hoverStyle = computed(() => {
-    var name = props.character.name;
-    if (name == "warrior") {
-      return {'--hover-color': 'red'};
-    }
-    else if (name == "wizard") {
-      return {'--hover-color': 'yellow'};
-    }
-    else if (name == "thief") {
-      return {'--hover-color': 'blue'};
-    }
-    else {
-      return {'--hover-color': 'black'};
-    }
-  })
-
 </script>
 
 <style scoped>
@@ -101,10 +97,18 @@ import { computed } from 'vue';
 		align-items: center;
 	}
 
-	.character-card:hover {
-		transform: scale(1.05);
-    box-shadow: var(--hover-color);  
-	}
+	.character-card.hover-warrior:hover {
+    box-shadow: 0 0 10px 3px red;
+  }
+  .character-card.hover-wizard:hover {
+    box-shadow: 0 0 10px 3px yellow;
+  }
+  .character-card.hover-thief:hover {
+    box-shadow: 0 0 10px 3px blue;
+  }
+  .character-card.hover-default:hover {
+    box-shadow: 0 0 10px 3px black;
+  }
 
 	.character-icon img {
 		width: 80px;
@@ -133,9 +137,9 @@ import { computed } from 'vue';
     text-align: left;
   }
 
-.stat span {
-  flex-grow: 1;
-  text-align: right;
-}
+  .stat span {
+    flex-grow: 1;
+    text-align: right;
+  }
 
 </style>
