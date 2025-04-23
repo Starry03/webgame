@@ -15,7 +15,7 @@
         <span>{{ character.attack }}</span>
       </div>
       <div class="stat">
-        <strong>Defence:</strong>
+        <strong>Defence: </strong>
         <span>{{ character.defence }}</span>
       </div>
       <div class="stat">
@@ -32,9 +32,9 @@
 <script setup>
 
 	const props = defineProps({
-	character: Object,
-	selected_character_id: Number,
-	onSelect: Function,
+    character: Object,
+    selected_character_id: Number,
+    onSelect: Function,
 	})
 
 	const getCardClass = () => {
@@ -76,7 +76,8 @@
       } else {
         return "/assets/images/default_icon.jpg"; // personaggio non riconosciuto
       }
-    } catch (e) {
+    } 
+    catch (e) {
       console.error("Errore nel caricamento dell'icona:", e);
       return "/assets/images/default_icon.jpg"; 
     }
@@ -95,13 +96,15 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+    width: 100%;
+    max-width: 12rem;
 	}
 
 	.character-card.hover-warrior:hover {
     box-shadow: 0 0 10px 3px red;
   }
   .character-card.hover-wizard:hover {
-    box-shadow: 0 0 10px 3px yellow;
+    box-shadow: 0 0 10px 3px lightyellow;
   }
   .character-card.hover-thief:hover {
     box-shadow: 0 0 10px 3px blue;
@@ -109,12 +112,21 @@
   .character-card.hover-default:hover {
     box-shadow: 0 0 10px 3px black;
   }
+  .character-card.hover-warrior:hover.selected {
+    background-color: darkgrey;
+  }
+  .character-card.hover-wizard:hover.selected {
+    background-color: darkgrey;
+  }
+  .character-card.hover-thief:hover.selected {
+    background-color: darkgrey
+  }
 
 	.character-icon img {
-		width: 80px;
-		height: 80px;
+		width: 12vh;
+		height: 12vh;
 		object-fit: contain;
-		margin-bottom: 1rem;
+		margin-bottom: 0.5rem;
 	}
 
   .character-stats {
@@ -128,8 +140,9 @@
   .stat {
     display: flex;
     justify-content: space-between;
-    margin: 0.5rem 0;
+    margin: 0.25rem 0;
     width: 100%;
+    font-size: 0.9em;
   }
 
   .stat strong {
@@ -140,6 +153,18 @@
   .stat span {
     flex-grow: 1;
     text-align: right;
+  }
+
+  @media screen and (orientation: landscape) {
+    .character-card {
+      padding: 0.5rem;
+      font-size: 0.75rem;
+    }
+
+  .character-icon img {
+      width: 60px;
+      height: 60px;
+    }
   }
 
 </style>

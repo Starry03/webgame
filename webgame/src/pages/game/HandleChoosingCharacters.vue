@@ -51,7 +51,7 @@ const selectCharacter = (character) => {
 
 const startGame = (character) => {
   if (character) {
-    localStorage.setItem('selectedCharacter', character.name)
+    localStorage.setItem(prefixed('selectedCharacter'), character)
     console.log('Saved character:', character.name)
     console.log('Starting game...')
     router.push('/game')
@@ -65,10 +65,10 @@ onMounted(() => fetchCharacters())
   .container {
     display: flex;
     flex-direction: column;
-    padding: 2rem;
+    padding: 0.5rem;
     font-family: 'Press Start 2P', cursive;
     align-items: center;
-    justify-content: center;
+    justify-content: space-betweenW;
     height: 100vh;
     background-image: url('assets/images/sfondo1.gif');
     background-size: cover;
@@ -77,22 +77,24 @@ onMounted(() => fetchCharacters())
   }
 
   #container-title {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     font-weight: bold;
     text-align: center;
     text-shadow: 2px 2px 0 black;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
   }
 
   .character-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
     border: 2px;
     border-color: black;
     justify-items: center;
+    flex: 1;
     width: 100%;
-    margin-bottom: 2rem;
+    max-width: 100vw;
+    overflow: hidden;
   }
 
   .character-description-block {
@@ -102,27 +104,29 @@ onMounted(() => fetchCharacters())
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    text-align: center;
-    max-width: 400rem;
+    max-height: 30vh;
+    overflow: auto;
   }
 
   #character-description-header {
-    font-size: 1.5rem;
+    font-size: 1rem;
     font-weight: 400;
   }
 
   .character-description {
-    width: 100%;
-    height: 70px;
+    width: 60rem;
+    height: 6rem;
     padding: 0.5rem;
     outline: none;
     border: 2px solid black;
     border-radius: 8px;
     resize: none;
+    font-family: 'Press Start 2P', cursive;
+    font-weight: 200;
   }
 
   #start-game-button {
-    margin-top: 1rem;
+    margin-top: 0.5rem;
     cursor: pointer;
     border-radius: 8px;
     padding: 0.75rem 1rem;
@@ -137,50 +141,46 @@ onMounted(() => fetchCharacters())
     color: red;
   }
 
-  @media (max-width: 600px) {
-    .container {
-      padding: 1rem;
-      height: auto;
-    }
-
-    #container-title {
-      font-size: 1rem;
-      margin-bottom: 1.5rem; 
-    }
-
-    .character-grid {
-      gap: 1rem; 
-      margin-bottom: 2rem;
-      grid-template-columns: auto;
-    }
-
-    .character-description-block {
-      width: 90%; 
-      margin-top: 1rem;
-      padding: 1rem;
-    }
+  @media screen and (orientation: landscape) {
+  .container {
+    padding: 1rem;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 
-  @media (max-width: 1024px) {
-    .container {
-      padding: 1.5rem; 
-    }
-
-    #container-title {
-      font-size: 1.7rem; 
-      margin-bottom: 0.5rem; 
-    }
-
-    .character-grid {
-      grid-template-columns: repeat(auto-fit, 1fr);
-      gap: 1.5rem;
-      margin-bottom: 3rem;
-    }
-
-    .character-description-block {
-      width: 80%;
-      margin-top: 1.5rem;
-    }
+  #container-title {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
   }
- 
+
+  .character-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .character-description-block {
+    max-height: 30vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0.5rem;
+  }
+
+  .character-description {
+    height: 4rem;
+    font-size: 0.75rem;
+  }
+
+  #start-game-button {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    width: 120px;
+  }
+  
+}
 </style>
