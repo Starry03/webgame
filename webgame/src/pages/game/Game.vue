@@ -9,20 +9,14 @@
       <button class="button button-mute" @click="toggleMute">🔊</button>
     </div>
     <div class="flex flex-column">
-      <div style="color: aliceblue" class="flex flex-row flex-space-between" id="game-header">
-        <Map />
-        <HealthBar />
-      </div>
       <Canvas />
     </div>
   </div>
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onMounted, onUnmounted } from 'vue'
 import Canvas from '@/components/Canvas.vue'
-import Map from '@/components/Map.vue'
-import HealthBar from '@/components/Healthbar.vue'
 
 function playAudio() {
   let audio = document.getElementById('music')

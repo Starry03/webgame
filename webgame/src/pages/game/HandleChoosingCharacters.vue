@@ -51,7 +51,7 @@ const selectCharacter = (character) => {
 
 const startGame = (character) => {
   if (character) {
-    localStorage.setItem(prefixed('selectedCharacter'), character)
+    localStorage.setItem(prefixed('selectedCharacter'), JSON.stringify(character))
     console.log('Saved character:', character.name)
     console.log('Starting game...')
     router.push('/game')
