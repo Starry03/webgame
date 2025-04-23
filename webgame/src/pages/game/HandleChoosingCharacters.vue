@@ -86,8 +86,8 @@ onMounted(() => fetchCharacters())
 
   .character-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.25rem;
     border: 2px;
     border-color: black;
     justify-items: center;

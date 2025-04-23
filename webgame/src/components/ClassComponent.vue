@@ -104,7 +104,7 @@
     box-shadow: 0 0 10px 3px red;
   }
   .character-card.hover-wizard:hover {
-    box-shadow: 0 0 10px 3px lightyellow;
+    box-shadow: 0 0 10px 3px yellow;
   }
   .character-card.hover-thief:hover {
     box-shadow: 0 0 10px 3px blue;
@@ -114,12 +114,15 @@
   }
   .character-card.hover-warrior:hover.selected {
     background-color: darkgrey;
+    transform: scale(1.05);
   }
   .character-card.hover-wizard:hover.selected {
     background-color: darkgrey;
+    transform: scale(1.05);
   }
   .character-card.hover-thief:hover.selected {
-    background-color: darkgrey
+    background-color: darkgrey;
+    transform: scale(1.05);
   }
 
 	.character-icon img {
@@ -161,9 +164,13 @@
       font-size: 0.75rem;
     }
 
-  .character-icon img {
-      width: 60px;
-      height: 60px;
+    .character-icon img {
+        width: 60px;
+        height: 60px;
+    }
+
+    .character-card:active {
+      transform: scale(1.05);
     }
   }
 
