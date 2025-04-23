@@ -74,6 +74,7 @@ onMounted(() => fetchCharacters())
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+    overflow: hidden;
   }
 
   #container-title {
@@ -142,45 +143,83 @@ onMounted(() => fetchCharacters())
   }
 
   @media screen and (orientation: landscape) {
-  .container {
-    padding: 1rem;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    .container {
+      padding: 1rem;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    #container-title {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .character-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .character-description-block {
+      max-height: 30vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 0.5rem;
+    }
+
+    .character-description {
+      height: 4rem;
+      font-size: 0.75rem;
+    }
+
+    #start-game-button {
+      padding: 0.5rem;
+      font-size: 0.9rem;
+      width: 120px;
+    }
   }
 
-  #container-title {
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-  }
+  @media screen and (orientation: portrait) {
+    .container {
+      padding: 1rem;
+      height: auto;
+    }
 
-  .character-grid {
-    flex: 1;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1rem;
-    align-items: center;
-  }
+    #container-title {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
 
-  .character-description-block {
-    max-height: 30vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 0.5rem;
-  }
+    .character-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, (220px, 1fr));
+      gap: 1rem;
+      align-items: center;
+      overflow-y: auto;
+    }
 
-  .character-description {
-    height: 4rem;
-    font-size: 0.75rem;
-  }
+    .character-description-block {
+      padding: 1rem;
+      max-height: 50vh;
+      overflow-y: auto;
+    }
 
-  #start-game-button {
-    padding: 0.5rem;
-    font-size: 0.9rem;
-    width: 120px;
+    .character-description {
+      width: 25rem;
+      height: 5rem;
+    }
+    
+    #start-game-button {
+      width: 120px;
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+
   }
-  
-}
 </style>

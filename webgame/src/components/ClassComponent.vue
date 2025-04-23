@@ -174,4 +174,29 @@
     }
   }
 
+  @media screen and (orientation: portrait) {
+    .character-card {
+      width: 80%;
+      padding: 1rem;
+      font-size: 0.9rem;
+      height: auto;
+    }
+
+    .character-description-block {
+      width: 80%;
+      padding: 0.5rem;
+      overflow-y: auto;
+    }
+
+    .character-card .character-icon img {
+      width: 60px;
+      height: 60px;
+    }
+    
+    .character-stats {
+      font-size: 0.9rem;
+    }
+
+  }
+
 </style>
