@@ -33,6 +33,7 @@ export class SessionUtils {
     localStorage.removeItem(prefixed('public_key'))
     localStorage.removeItem(prefixed('private_key'))
     localStorage.removeItem(prefixed('server_public_key'))
+    localStorage.removeItem(prefixed('selecterCharacter'))
   }
 }
 

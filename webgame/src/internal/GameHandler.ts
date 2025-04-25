@@ -15,7 +15,7 @@ export class GameHandlder {
     this.player.idle()
     this.gameLoop = this.gameLoop.bind(this)
 
-    window.addEventListener('keypress', (e) => {
+    window.addEventListener('keydown', (e) => {
       e.preventDefault()
       this.keys.add(e.key)
     })

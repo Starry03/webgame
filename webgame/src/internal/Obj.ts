@@ -5,6 +5,7 @@ export class Obj {
   ctx: CanvasRenderingContext2D
   framePaths
   pos: Vector2
+  dim: Vector2
   xPos
   yPos
   speed
@@ -18,13 +19,14 @@ export class Obj {
   prevAnimation: AnimationType | null
   isIdle: boolean
   ready: boolean
+  canAttack: boolean
+  isAttacking: boolean
 
   constructor(
     canvas,
     ctx,
     xPos = 50,
     yPos = 50,
-    speed = 3,
     initialAnimation: AnimationType = AnimationType.IDLE,
     frameDelay = 100,
     isIdle = false,
@@ -32,9 +34,9 @@ export class Obj {
     this.canvas = canvas
     this.ctx = ctx
     this.pos = new Vector2(50, 50)
+    this.dim = new Vector2(100, 100)
     this.xPos = xPos
     this.yPos = yPos
-    this.speed = speed
     this.frames = {} as Record<AnimationType, HTMLImageElement[]>
     this.currentFrame = 0
     this.frameDelay = frameDelay
@@ -44,6 +46,7 @@ export class Obj {
     this.prevAnimation = null
     this.isIdle = isIdle
     this.ready = false
+    this.canAttack = true
   }
 
   preloadImages() {
@@ -86,8 +89,9 @@ export class Obj {
     const frame = this.selectedFrames[this.currentFrame]
     if (frame.complete) {
       ctx.save()
-      if (this.facingDirection.x < 0) this.drawFlipped(frame, this.pos.x, this.pos.y, 100, 100)
-      else ctx.drawImage(frame, this.pos.x, this.pos.y, 100, 100)
+      if (this.facingDirection.x < 0)
+        this.drawFlipped(frame, this.pos.x, this.pos.y, this.dim.x, this.dim.y)
+      else ctx.drawImage(frame, this.pos.x, this.pos.y, this.dim.x, this.dim.y)
     }
     ctx.restore()
   }
@@ -95,7 +99,15 @@ export class Obj {
   animate(timestamp) {
     if (timestamp - this.lastUpdateTime <= this.frameDelay) return
     this.currentFrame++
-    if (this.currentFrame >= this.selectedFrames.length) this.currentFrame = 0
+    if (this.currentFrame >= this.selectedFrames.length) {
+      this.currentFrame = 0
+      if (
+        this.currentAnimation in
+        [AnimationType.ATTACK_1, AnimationType.ATTACK_2, AnimationType.SPECIAL]
+      )
+        this.canAttack = false
+        this.idle()
+    }
     this.lastUpdateTime = timestamp
   }
 
