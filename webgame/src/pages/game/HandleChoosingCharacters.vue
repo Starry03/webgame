@@ -1,5 +1,5 @@
 <template>
-  <section class="container">
+  <section class="select-container">
     <h1 id="container-title">Choose your character</h1>
     <div class="character-grid">
       <ClassComponent
@@ -66,13 +66,14 @@ onMounted(() => fetchCharacters())
     overflow-x: hidden;
   }
 
-  .container {
+  .select-container {
     display: flex;
     flex-direction: column;
     padding: 0.5rem;
     font-family: 'Press Start 2P', cursive;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 1.5rem;
     height: 100vh;
     background-image: url('assets/images/sfondo1.gif');
     background-size: cover;
@@ -105,12 +106,13 @@ onMounted(() => fetchCharacters())
   .character-description-block {
     display: flex;
     background: fixed;
-    padding: 1rem;
+    padding: 0.5rem 1rem 0 1rem;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     max-height: 30vh;
     overflow: auto;
+    margin-top: 0rem;
   }
 
   #character-description-header {
@@ -119,8 +121,8 @@ onMounted(() => fetchCharacters())
   }
 
   .character-description {
-    width: 90%;
-    height: 5rem;
+    width: 60rem;
+    height: 6rem;
     padding: 0.5rem;
     outline: none;
     border: 2px solid black;
@@ -147,17 +149,15 @@ onMounted(() => fetchCharacters())
   }
 
   @media screen and (orientation: landscape) {
-    .container {
+    .select-container {
       padding: 1rem;
       height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
     }
 
     #container-title {
       font-size: 1.2rem;
-      margin-bottom: 1rem;
     }
 
     .character-grid {
@@ -169,7 +169,8 @@ onMounted(() => fetchCharacters())
     }
 
     .character-description-block {
-      max-height: 30vh;
+      min-height: 30vh;
+      max-height: 35vh;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -189,7 +190,7 @@ onMounted(() => fetchCharacters())
   }
 
   @media screen and (orientation: portrait) {
-    .container {
+    .select-container {
       padding: 1rem;
       height: 100vh;
     }
