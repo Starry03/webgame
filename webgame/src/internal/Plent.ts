@@ -6,13 +6,16 @@ export class Plent extends Player {
     this.framePaths = {
       run: [
         'assets/Sprite/Nemici/Plent/Disguise/frame_0_0.png',
-        'assets/Sprite/Nemici/Plent/Run/frame_0_1.png',
-        'assets/Sprite/Nemici/Plent/Run/frame_0_2.png',
-        'assets/Sprite/Nemici/Plent/Run/frame_0_3.png',
-        'assets/Sprite/Nemici/Plent/Run/frame_0_4.png',
-        'assets/Sprite/Nemici/Plent/Run/frame_0_5.png',
-        'assets/Sprite/Nemici/Plent/Run/frame_0_6.png',
-        'assets/Sprite/Nemici/Plent/Run/frame_0_7.png',
+        'assets/Sprite/Nemici/Plent/Disguise/frame_0_1.png',
+        'assets/Sprite/Nemici/Plent/Disguise/frame_0_2.png',
+        'assets/Sprite/Nemici/Plent/Disguise/frame_0_3.png',
+        'assets/Sprite/Nemici/Plent/Disguise/frame_0_4.png',
+        'assets/Sprite/Nemici/Plent/Disguise/frame_0_5.png',
+        'assets/Sprite/Nemici/Plent/Disguise/frame_0_6.png',
+        'assets/Sprite/Nemici/Plent/Disguise/frame_0_7.png',
+        'assets/Sprite/Nemici/Plent/Disguise/frame_0_8.png',
+        'assets/Sprite/Nemici/Plent/Disguise/frame_0_9.png',
+        'assets/Sprite/Nemici/Plent/Disguise/frame_0_10.png',
       ],
       attack1: [
         'assets/Sprite/Nemici/Plent/Attack 1/frame_0_0.png',
