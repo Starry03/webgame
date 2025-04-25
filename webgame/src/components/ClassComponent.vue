@@ -188,9 +188,9 @@
       overflow-y: auto;
     }
 
-    .character-card .character-icon img {
-      width: 60px;
-      height: 60px;
+    .character-icon img {
+      width: 22vw;
+      height: 22vw;
     }
     
     .character-stats {

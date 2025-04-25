@@ -62,13 +62,17 @@ onMounted(() => fetchCharacters())
 </script>
 
 <style scoped>
+  body {
+    overflow-x: hidden;
+  }
+
   .container {
     display: flex;
     flex-direction: column;
     padding: 0.5rem;
     font-family: 'Press Start 2P', cursive;
     align-items: center;
-    justify-content: space-betweenW;
+    justify-content: space-between;
     height: 100vh;
     background-image: url('assets/images/sfondo1.gif');
     background-size: cover;
@@ -115,8 +119,8 @@ onMounted(() => fetchCharacters())
   }
 
   .character-description {
-    width: 60rem;
-    height: 6rem;
+    width: 90%;
+    height: 5rem;
     padding: 0.5rem;
     outline: none;
     border: 2px solid black;
@@ -187,7 +191,7 @@ onMounted(() => fetchCharacters())
   @media screen and (orientation: portrait) {
     .container {
       padding: 1rem;
-      height: auto;
+      height: 100vh;
     }
 
     #container-title {
@@ -197,22 +201,26 @@ onMounted(() => fetchCharacters())
     }
 
     .character-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, (220px, 1fr));
-      gap: 1rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
       align-items: center;
       overflow-y: auto;
     }
 
     .character-description-block {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       padding: 1rem;
-      max-height: 50vh;
+      min-height: 32vh;
+      max-height: 35vh;
       overflow-y: auto;
     }
 
     .character-description {
-      width: 25rem;
-      height: 5rem;
+      width: 97%;
+      height: 6rem;
     }
     
     #start-game-button {
