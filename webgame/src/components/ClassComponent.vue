@@ -34,18 +34,16 @@ import { ref } from 'vue';
 
 const props = defineProps({
   character: Object,
-  selected_character_id: Number,
+  selected: Boolean,
   onSelect: Function,
 });
 
-const selectedCardId = ref(null);  // Variabile per memorizzare la card selezionata
-
 const getCardClass = () => {
   let baseClass = 'character-card';
-  let selected = '';
-
-  if (selectedCardId.value === props.character.id) {
-    selected = 'selected'; 
+  let selectedClass = '';
+  
+  if (props.selected) {
+    selectedClass = 'selected';
   }
 
   let hover = '';
@@ -59,19 +57,12 @@ const getCardClass = () => {
     hover = 'hover-default';
   }
 
-  return `${baseClass} ${hover} ${selected}`.trim();  // Restituisci le classi combinate
+  return `${baseClass} ${hover} ${selectedClass}`.trim();
 };
 
 const handleClick = () => {
-  if (selectedCardId.value === props.character.id) {
-    selectedCardId.value = null;  // Deseleziona la card se è già selezionata
-  } 
-  else {
-    selectedCardId.value = props.character.id;  // Seleziona la card
-  }
-
   if (props.onSelect) {
-    props.onSelect(props.character);
+    props.onSelect();  // passaggio del controllo al modulo principale
   }
 };
 
@@ -92,6 +83,7 @@ const getCharacterIcon = (name) => {
   }
 };
 </script>
+
 
 <style scoped>
 .character-card {

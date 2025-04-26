@@ -3,11 +3,11 @@
     <h1 id="container-title">Choose your character</h1>
     <div class="character-grid">
       <ClassComponent
-        v-for="character in characters"
+        v-for="(character, index) in characters"
         :key="character.id"
         :character="character"
-        :selected_character_id="selectedCharacter?.id"
-        :onSelect="() => selectCharacter(character)"
+        :selected="selectedCards[index]"
+        :onSelect="() => selectCharacter(index)"
       />
     </div>
     <div class="character-description-block" v-if="selectedCharacter">
@@ -32,6 +32,9 @@ const router = useRouter()
 const characters = ref([])
 const selectedCharacter = ref(null);
 
+// Variabili per tenere traccia delle selezioni delle card
+const selectedCards = ref([false, false, false]);
+
 const fetchCharacters = async () => {
   try {
     const response = await GameService.classes()
@@ -45,8 +48,12 @@ const fetchCharacters = async () => {
   }
 }
 
-const selectCharacter = (character) => {
-  selectedCharacter.value = character
+const selectCharacter = (index) => {
+  selectedCards.value = [false, false, false];    // reset totale delle card
+
+  selectedCards.value[index] = true;          // Seleziona la card cliccata
+
+  selectedCharacter.value = characters.value[index];    // Imposta il personaggio selezionato
 }
 
 const startGame = (character) => {
@@ -60,6 +67,7 @@ const startGame = (character) => {
 
 onMounted(() => fetchCharacters())
 </script>
+
 
 <style scoped>
   body {
