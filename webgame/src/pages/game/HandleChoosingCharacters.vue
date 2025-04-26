@@ -49,11 +49,11 @@ const fetchCharacters = async () => {
 }
 
 const selectCharacter = (index) => {
-  selectedCards.value = [false, false, false];    // reset totale delle card
+  selectedCards.value = [false, false, false];    //reset totale delle card
 
-  selectedCards.value[index] = true;          // Seleziona la card cliccata
+  selectedCards.value[index] = true;          //seleziona la card cliccata
 
-  selectedCharacter.value = characters.value[index];    // Imposta il personaggio selezionato
+  selectedCharacter.value = characters.value[index];    //imposta il personaggio selezionato
 }
 
 const startGame = (character) => {
