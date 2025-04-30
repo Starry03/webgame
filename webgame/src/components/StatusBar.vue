@@ -8,7 +8,6 @@ defineProps({
   mana: Number,
   level: Number,
   exp: Number,
-  canAttack: Boolean,
 })
 
 </script>
