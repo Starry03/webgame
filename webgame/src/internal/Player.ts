@@ -14,7 +14,6 @@ export class Player extends Obj {
   ) {
     super(canvas, ctx)
     this.currentAnimation = AnimationType.IDLE
-    this.canAttack = true
     this.speed = speed
     this.health = health
     this.maxHealth = health
@@ -29,6 +28,7 @@ export class Player extends Obj {
   }
 
   move(keys: Set<string>, deltaTime: number) {
+	if (this.isAnimationBlocking) return
     let dir = new Vector2(
       (keys.has('d') || keys.has('ArrowRight') ? 1 : 0) +
         (keys.has('a') || keys.has('ArrowLeft') ? -1 : 0),
@@ -49,28 +49,24 @@ export class Player extends Obj {
     let cooldownFactor: number = 1
     let usedAnimation: AnimationType = AnimationType.IDLE
     if (keys.has('e') && this.cooldowns.get(AnimationType.ATTACK_1) == 0) {
-      this.changeAnimation(AnimationType.ATTACK_1)
+      this.changeAnimation(AnimationType.ATTACK_1, true)
       usedAnimation = AnimationType.ATTACK_1
     } else if (keys.has('q') && this.cooldowns.get(AnimationType.ATTACK_2) == 0) {
-      this.changeAnimation(AnimationType.ATTACK_2)
+      this.changeAnimation(AnimationType.ATTACK_2, true)
       usedAnimation = AnimationType.ATTACK_2
       cooldownFactor = 2.5
     } else if (keys.has('r') && this.cooldowns.get(AnimationType.SPECIAL) == 0) {
-      this.changeAnimation(AnimationType.SPECIAL)
+      this.changeAnimation(AnimationType.SPECIAL, true)
       usedAnimation = AnimationType.SPECIAL
       cooldownFactor = 10
     } else isAttacking = false
-    if (isAttacking && this.canAttack) {
-      this.cooldowns.set(usedAnimation, this.speed * 10 * cooldownFactor)
-      console.log(this.cooldowns)
-      setTimeout(
-        () => {
-          this.cooldowns.set(usedAnimation, 0)
-          console.log('reset')
-          console.log(this.cooldowns)
-        },
-        this.speed * 10 * cooldownFactor,
-      )
-    }
+    if (!isAttacking) return
+    this.cooldowns.set(usedAnimation, this.speed * 10 * cooldownFactor)
+    setTimeout(
+      () => {
+        this.cooldowns.set(usedAnimation, 0)
+      },
+      this.speed * 10 * cooldownFactor,
+    )
   }
 }

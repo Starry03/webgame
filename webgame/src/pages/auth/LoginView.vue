@@ -38,11 +38,11 @@ import type { Token, Session } from '@/internal/cryptoutils'
 import Loader from '@/components/Loader.vue'
 
 const isLogging = ref<Boolean>(false)
-const username = ref<String>('')
-const password = ref<String>('')
+const username = ref<string>('')
+const password = ref<string>('')
 const router = useRouter()
 
-async function main_req(path: String): Promise<{ session: Session; token: Token }> {
+async function main_req(path: string): Promise<{ session: Session; token: Token }> {
   const f = await AuthService.login(path, username.value, password.value)
   let res = await f.json()
   return (await JSON.parse(res)) as { session: Session; token: Token }

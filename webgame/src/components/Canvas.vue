@@ -2,7 +2,6 @@
   <div style="color: aliceblue" class="flex flex-row flex-space-between" id="game-header">
     <Map />
     <StatusBar
-      :can-attack="player?.canAttack"
       :health="player?.health"
       :max-health="player?.maxHealth"
     />
@@ -64,9 +63,7 @@ onMounted(() => {
     return
   }
   window.addEventListener('keydown', (event) => {
-    if (event.key === ' ') {
-      player.value.health = Math.random() * 100
-    }
+
   })
   gameHandler.value = new GameHandlder(player.value, canvas, ctx)
   gameHandler.value.gameLoop(performance.now())

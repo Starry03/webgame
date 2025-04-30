@@ -8,8 +8,10 @@ defineProps({
   mana: Number,
   maxMana: Number,
   level: Number,
+  exp: Number,
   canAttack: Boolean,
 });
+
 
 const cooldownQ = ref(0); // Cooldown per l'attacco Q
 const cooldownR = ref(0); // Cooldown per l'attacco R
@@ -41,6 +43,8 @@ watch([cooldownQ, cooldownR], ([newQ, newR]) => {
 // Percentuali per le barre di progresso
 const healthPercentage = /*computed(() => (health / maxHealth) * */ 100;//);
 const manaPercentage = /*computed(() => (mana / maxMana) * */100;//);
+
+
 </script>
 
 <template>

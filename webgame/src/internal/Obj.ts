@@ -6,8 +6,6 @@ export class Obj {
   framePaths: Record<AnimationType, string[]>
   pos: Vector2
   dim: Vector2
-  xPos
-  yPos
   speed: number
   frames: Record<AnimationType, HTMLImageElement[]>
   selectedFrames: HTMLImageElement[] = []
@@ -19,14 +17,12 @@ export class Obj {
   prevAnimation: AnimationType | null
   isIdle: boolean
   ready: boolean
-  canAttack: boolean
   cooldowns: Map<AnimationType, number>
+  isAnimationBlocking: boolean
 
   constructor(
     canvas: HTMLCanvasElement,
     ctx: CanvasRenderingContext2D,
-    xPos = 50,
-    yPos = 50,
     initialAnimation: AnimationType = AnimationType.IDLE,
     frameDelay = 100,
     isIdle = false,
@@ -35,8 +31,6 @@ export class Obj {
     this.ctx = ctx
     this.pos = new Vector2(50, 50)
     this.dim = new Vector2(100, 100)
-    this.xPos = xPos
-    this.yPos = yPos
     this.speed = 0
     this.frames = {} as Record<AnimationType, HTMLImageElement[]>
     this.framePaths = {} as Record<AnimationType, string[]>
@@ -48,25 +42,40 @@ export class Obj {
     this.prevAnimation = null
     this.isIdle = isIdle
     this.ready = false
-    this.canAttack = true
     this.cooldowns = new Map<AnimationType, number>()
+    this.isAnimationBlocking = false
   }
 
   preloadImages() {
+    const promises: Promise<void>[] = []
     for (const animation in this.framePaths) {
       const animType = animation as AnimationType
       this.frames[animType as AnimationType] = []
       this.framePaths[animType].forEach((path: string) => {
         const img = new Image()
-        img.src = path
-        img.onerror = () => console.error(`Errore nel caricamento dell'immagine: ${path}`)
-        img.onload = () => {
-          this.frames[animType].push(img)
-        }
+        const promise = new Promise<void>((resolve, reject) => {
+          img.src = path
+          img.onerror = () => {
+            reject(`${path} failed to load`)
+          }
+          img.onload = () => {
+            this.frames[animType].push(img)
+            resolve()
+          }
+        })
+        promises.push(promise)
       })
     }
-    this.changeFrames(this.currentAnimation)
-    this.ready = true
+    Promise.all(promises)
+      .then(() => {
+        this.ready = true
+        this.idle()
+      })
+      .catch((error) => {
+        console.error('Error loading images:', error)
+        this.ready = true
+        this.idle()
+      })
   }
 
   changeFrames(animationName: AnimationType) {
@@ -96,23 +105,23 @@ export class Obj {
         this.drawFlipped(frame, this.pos.x, this.pos.y, this.dim.x, this.dim.y)
       else ctx.drawImage(frame, this.pos.x, this.pos.y, this.dim.x, this.dim.y)
     }
-    ctx.restore()
+    ctx.restore() 
   }
 
-  animate(timestamp) {
+  animate(timestamp: number) {
     if (timestamp - this.lastUpdateTime <= this.frameDelay) return
     this.currentFrame++
+    this.lastUpdateTime = timestamp
     if (this.currentFrame >= this.selectedFrames.length) {
       this.currentFrame = 0
+      this.isAnimationBlocking = false
       if (
-        this.currentAnimation in
-        [AnimationType.ATTACK_1, AnimationType.ATTACK_2, AnimationType.SPECIAL]
+        this.cooldowns.has(this.currentAnimation) &&
+        this.cooldowns.get(this.currentAnimation) != 0
       ) {
         this.idle()
-        console.log(this.cooldowns)
       }
     }
-    this.lastUpdateTime = timestamp
   }
 
   move(keyPressed: string | Set<string>, deltaTime: number) {}
@@ -121,16 +130,23 @@ export class Obj {
     return this.prevAnimation !== this.currentAnimation
   }
 
-  changeAnimation(animationName: AnimationType, prevAnimation: AnimationType | null = null) {
+  changeAnimation(
+    animationName: AnimationType,
+    isBlocking: boolean = false,
+    prevAnimation: AnimationType | null = null,
+  ) {
     if (prevAnimation) this.prevAnimation = prevAnimation
     else this.prevAnimation = this.currentAnimation
     if (animationName !== AnimationType.IDLE) this.isIdle = false
     this.currentAnimation = animationName
+    if (isBlocking && !this.isAnimationBlocking) this.isAnimationBlocking = true
   }
 
-  update(timestamp) {
+  update(timestamp: number) {
     if (!this.ready) return
-    if (this.isAnimationChanged() && !this.isIdle) this.changeFrames(this.currentAnimation)
+    if (this.isAnimationChanged() && !this.isIdle) {
+      this.changeFrames(this.currentAnimation)
+    }
     this.animate(timestamp)
     this.drawFrame()
   }
