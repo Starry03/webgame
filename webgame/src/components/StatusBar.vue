@@ -1,15 +1,11 @@
 <script setup lang="ts">
+import type { Thief } from '@/internal/Thief';
 import ProgressBar from './ProgressBar.vue';
-import { ref, computed, watch } from 'vue';
+import { ref, type Reactive, watch } from 'vue';
+import type { Samurai } from '@/internal/Samurai';
 
 defineProps({
-  health: Number,
-  maxHealth: Number,
-  mana: Number,
-  maxMana: Number,
-  level: Number,
-  exp: Number,
-  canAttack: Boolean,
+  player : Reactive <Thief | Samurai | Mage>(),
 });
 
 
@@ -19,7 +15,7 @@ const maxCooldownQ = 3; // Cooldown massimo per Q in secondi
 const maxCooldownR = 5; // Cooldown massimo per R in secondi
 
 // Funzione per avviare il cooldown
-function startCooldown(ability: 'Q' | 'R') {
+export function startCooldown(ability: 'Q' | 'R') {
   if (ability === 'Q' && cooldownQ.value === 0) {
     cooldownQ.value = maxCooldownQ;
     const interval = setInterval(() => {

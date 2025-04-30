@@ -9,7 +9,7 @@
   <canvas ref="canvasRef" id="canvas" :width="window_width" :height="window_height / 1.5"></canvas>
 </template>
 <script lang="ts" setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, reactive } from 'vue'
 import { Mage } from '@/internal/Mage'
 import { Samurai } from '@/internal/Samurai'
 import { Thief } from '@/internal/Thief'
@@ -21,9 +21,9 @@ import StatusBar from '@/components/StatusBar.vue'
 
 const window_width = ref(window.innerWidth)
 const window_height = ref(window.innerHeight)
-const player = ref<Mage | Samurai | Thief | null>(null)
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 const gameHandler = ref<GameHandlder | null>()
+let player
 
 const handle_resize = () => {
   window_width.value = window.innerWidth
@@ -47,13 +47,13 @@ onMounted(() => {
   }
   switch (characterObject.name) {
     case 'wizard':
-      player.value = new Mage(canvas, ctx, characterObject.speed, characterObject.health)
+      player = reactive(new Mage(canvas, ctx, characterObject.speed, characterObject.health))
       break
     case 'warrior':
-      player.value = new Samurai(canvas, ctx, characterObject.speed, characterObject.health)
+      player = reactive (new Samurai(canvas, ctx, characterObject.speed, characterObject.health))
       break
     case 'thief':
-      player.value = new Thief(canvas, ctx, characterObject.speed, characterObject.health)
+      player = reactive(new Thief(canvas, ctx, characterObject.speed, characterObject.health))
       break
     default:
       console.error('Invalid character type')
