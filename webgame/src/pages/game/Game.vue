@@ -1,28 +1,27 @@
 <template>
   <audio controls style="display: none" id="music" autoplay loop>
-    <source src="../../../public/assets/audio/Trust_In_Your_Perseverance.wav" type="audio/mpeg" />
+    <source src="/assets/audio/Trust_In_Your_Perseverance.wav" type="audio/mpeg" />
   </audio>
   <div class="master">
     <div class="flex flex-row flex-column flex-center gap-big">
-      <button class="button button-home" @click="$router.push('/')">🏠Home</button>
+      <button class="button button-home" @click="goHome">🏠Home</button>
       <h1>Adventuring in the Tower</h1>
       <button class="button button-mute" @click="toggleMute">🔊</button>
     </div>
     <div class="flex flex-column">
-      <div style="color: aliceblue" class="flex flex-row flex-space-between" id="game-header">
-        <Map />
-        <HealthBar />
-      </div>
       <Canvas />
     </div>
   </div>
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onMounted, onUnmounted } from 'vue'
 import Canvas from '@/components/Canvas.vue'
-import Map from '@/components/Map.vue'
-import HealthBar from '@/components/Healthbar.vue'
+import { useRouter } from 'vue-router'
+import { prefixed } from '@/internal/cryptoutils'
+import { Storage_e } from '@/internal/types'
+
+const router = useRouter()
 
 function playAudio() {
   let audio = document.getElementById('music')
@@ -40,6 +39,11 @@ function toggleMute() {
   }
 }
 
+function goHome() {
+  localStorage.removeItem(prefixed(Storage_e.SELECTED_CHARACTER))
+  router.push('/')
+}
+
 onMounted(() => {
   document.addEventListener('mousemove', playAudio)
 })
@@ -51,7 +55,7 @@ onUnmounted(() => {
 
 <style scoped>
 .master {
-  background: url('/webgame/public/assets/images/sfondo3.gif');
+  background: url('/assets/images/sfondo3.gif');
   background-size: cover;
   height: 100vh;
 }

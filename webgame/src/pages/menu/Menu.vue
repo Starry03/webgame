@@ -31,6 +31,7 @@
 import { SessionUtils, prefixed } from '@/internal/cryptoutils'
 import { useRouter } from 'vue-router'
 import { onMounted, onUnmounted, ref } from 'vue'
+import { Storage_e as Storage_e } from '@/internal/types'
 
 const router = useRouter()
 const mute_icon = ref('🔊')
@@ -53,7 +54,7 @@ function redirectGameButton() {
     router.push('/login')
     return
   }
-  const character = localStorage.getItem(prefixed('selectedCharacter'))
+  const character = localStorage.getItem(prefixed(Storage_e.SELECTED_CHARACTER))
   if (character == null) {
     router.push('/selection')
     return

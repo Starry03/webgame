@@ -2,17 +2,33 @@ import { AnimationType, Vector2 } from './types'
 import { Obj } from './Obj'
 
 export class Player extends Obj {
-  constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
+  speed: number
+  health: number
+  maxHealth: number
+
+  constructor(
+    canvas: HTMLCanvasElement,
+    ctx: CanvasRenderingContext2D,
+    speed: number,
+    health: number,
+  ) {
     super(canvas, ctx)
     this.currentAnimation = AnimationType.IDLE
+    this.speed = speed
+    this.health = health
+    this.maxHealth = health
+    this.cooldowns.set(AnimationType.ATTACK_1, 0)
+    this.cooldowns.set(AnimationType.ATTACK_2, 0)
+    this.cooldowns.set(AnimationType.SPECIAL, 0)
   }
 
-  handleInput(keys: Set<string>) {
-    this.move(keys)
+  handleInput(keys: Set<string>, deltaTime: number) {
+    this.move(keys, deltaTime)
     this.attack(keys)
   }
 
-  move(keys: Set<string>) {
+  move(keys: Set<string>, deltaTime: number) {
+	if (this.isAnimationBlocking) return
     let dir = new Vector2(
       (keys.has('d') || keys.has('ArrowRight') ? 1 : 0) +
         (keys.has('a') || keys.has('ArrowLeft') ? -1 : 0),
@@ -20,8 +36,8 @@ export class Player extends Obj {
         (keys.has('w') || keys.has('ArrowUp') ? -1 : 0),
     )
     dir.normalize()
-    this.pos.x += dir.x * this.speed
-    this.pos.y += dir.y * this.speed
+    this.pos.x += dir.x * this.speed * deltaTime * 4
+    this.pos.y += dir.y * this.speed * deltaTime * 4
     if (!dir.compare(new Vector2(0, 0))) {
       this.changeAnimation(AnimationType.RUN)
       this.facingDirection = dir
@@ -29,12 +45,28 @@ export class Player extends Obj {
   }
 
   attack(keys: Set<string>) {
-    if (keys.has('q')) {
-      this.changeAnimation(AnimationType.ATTACK_1)
-    } else if (keys.has('e')) {
-      this.changeAnimation(AnimationType.ATTACK_2)
-    } else if (keys.has('r')) {
-      this.changeAnimation(AnimationType.SPECIAL)
-    }
+    let isAttacking: boolean = true
+    let cooldownFactor: number = 1
+    let usedAnimation: AnimationType = AnimationType.IDLE
+    if (keys.has('e') && this.cooldowns.get(AnimationType.ATTACK_1) == 0) {
+      this.changeAnimation(AnimationType.ATTACK_1, true)
+      usedAnimation = AnimationType.ATTACK_1
+    } else if (keys.has('q') && this.cooldowns.get(AnimationType.ATTACK_2) == 0) {
+      this.changeAnimation(AnimationType.ATTACK_2, true)
+      usedAnimation = AnimationType.ATTACK_2
+      cooldownFactor = 2.5
+    } else if (keys.has('r') && this.cooldowns.get(AnimationType.SPECIAL) == 0) {
+      this.changeAnimation(AnimationType.SPECIAL, true)
+      usedAnimation = AnimationType.SPECIAL
+      cooldownFactor = 10
+    } else isAttacking = false
+    if (!isAttacking) return
+    this.cooldowns.set(usedAnimation, this.speed * 10 * cooldownFactor)
+    setTimeout(
+      () => {
+        this.cooldowns.set(usedAnimation, 0)
+      },
+      this.speed * 10 * cooldownFactor,
+    )
   }
 }

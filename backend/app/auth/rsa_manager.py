@@ -1,3 +1,5 @@
+from fastapi import logger
+
 from os import path
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
 from cryptography.hazmat.primitives import serialization
@@ -69,7 +71,8 @@ class RSAManager:
                 ),
             )
         except Exception as e:
-            print('exception in encryption', e)
+            logger.logger.error("encryption:", e)
+            logger.logger.error(plain)
             return b""
 
     @staticmethod

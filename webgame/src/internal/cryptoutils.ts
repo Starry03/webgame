@@ -1,4 +1,5 @@
 import forge from 'node-forge'
+import { Storage_e } from './types'
 
 export const PREFIX = 'aitdt'
 
@@ -28,11 +29,12 @@ export class SessionUtils {
   }
 
   static logout(): void {
-    localStorage.removeItem(prefixed('token'))
-    localStorage.removeItem(prefixed('session'))
-    localStorage.removeItem(prefixed('public_key'))
-    localStorage.removeItem(prefixed('private_key'))
-    localStorage.removeItem(prefixed('server_public_key'))
+    localStorage.removeItem(prefixed(Storage_e.TOKEN))
+    localStorage.removeItem(prefixed(Storage_e.SESSION))
+    localStorage.removeItem(prefixed(Storage_e.PUBLIC_KEY))
+    localStorage.removeItem(prefixed(Storage_e.PRIVATE_KEY))
+    localStorage.removeItem(prefixed(Storage_e.SERVER_PUBLIC_KEY))
+    localStorage.removeItem(prefixed(Storage_e.SELECTED_CHARACTER))
   }
 }
 
@@ -45,7 +47,7 @@ export class RequestWrapper {
     const public_key_request = await fetch('http://127.0.0.1:8000/auth/public-key')
     if (public_key_request.status !== 200) throw new Error('Failed to fetch public key')
     const { public_key: serverPublicKey } = await public_key_request.json()
-    localStorage.setItem(prefixed('server_public_key'), serverPublicKey)
+    localStorage.setItem(prefixed(Storage_e.SERVER_PUBLIC_KEY), serverPublicKey)
     RSAUtils.generate()
     const encrypted_data = RSAUtils.encrypt(serverPublicKey, JSON.stringify(data))
 
@@ -83,13 +85,13 @@ export class RequestWrapper {
 
 export class AESUtils {
   static save(session: Session, token: Token): void {
-    localStorage.setItem(prefixed('token'), JSON.stringify(token))
-    localStorage.setItem(prefixed('session'), JSON.stringify(session))
+    localStorage.setItem(prefixed(Storage_e.TOKEN), JSON.stringify(token))
+    localStorage.setItem(prefixed(Storage_e.SESSION), JSON.stringify(session))
   }
 
   static read(): { session: Session; token: Token } {
-    const token = localStorage.getItem(prefixed('token'))
-    const session = localStorage.getItem(prefixed('session'))
+    const token = localStorage.getItem(prefixed(Storage_e.TOKEN))
+    const session = localStorage.getItem(prefixed(Storage_e.SESSION))
     if (!token || !session) {
       throw new Error('Session not found')
     }
@@ -135,13 +137,13 @@ export class RSAUtils {
     const keypair = forge.pki.rsa.generateKeyPair({ bits: 2048, e: 0x10001 })
     const publicKeyPem = forge.pki.publicKeyToPem(keypair.publicKey)
     const privateKeyPem = forge.pki.privateKeyToPem(keypair.privateKey)
-    localStorage.setItem(prefixed('public_key'), publicKeyPem)
-    localStorage.setItem(prefixed('private_key'), privateKeyPem)
+    localStorage.setItem(prefixed(Storage_e.PUBLIC_KEY), publicKeyPem)
+    localStorage.setItem(prefixed(Storage_e.PRIVATE_KEY), privateKeyPem)
   }
 
   static read(): { publicKey: string; privateKey: string } {
-    const publicKey = localStorage.getItem(prefixed('public_key'))
-    const privateKey = localStorage.getItem(prefixed('private_key'))
+    const publicKey = localStorage.getItem(prefixed(Storage_e.PUBLIC_KEY))
+    const privateKey = localStorage.getItem(prefixed(Storage_e.PRIVATE_KEY))
     if (!publicKey || !privateKey) {
       throw new Error('RSA keys not found')
     }

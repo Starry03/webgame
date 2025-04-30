@@ -1,4 +1,11 @@
 <template>
+  <div style="color: aliceblue" class="flex flex-row flex-space-between" id="game-header">
+    <Map />
+    <StatusBar
+      :health="player?.health"
+      :max-health="player?.maxHealth"
+    />
+  </div>
   <canvas ref="canvasRef" id="canvas" :width="window_width" :height="window_height / 1.5"></canvas>
 </template>
 <script lang="ts" setup>
@@ -8,7 +15,9 @@ import { Samurai } from '@/internal/Samurai'
 import { Thief } from '@/internal/Thief'
 import { prefixed } from '@/internal/cryptoutils'
 import { GameHandlder } from '@/internal/GameHandler'
-import type { Character } from '@/internal/types'
+import { Storage_e, type Character } from '@/internal/types'
+import Map from '@/components/Map.vue'
+import StatusBar from '@/components/StatusBar.vue'
 
 const window_width = ref(window.innerWidth)
 const window_height = ref(window.innerHeight)
@@ -23,7 +32,7 @@ const handle_resize = () => {
 
 onMounted(() => {
   window.addEventListener('resize', handle_resize)
-  const character = localStorage.getItem(prefixed('character'))
+  const character = localStorage.getItem(prefixed(Storage_e.SELECTED_CHARACTER))
   const characterObject: Character = JSON.parse(character || '{}')
 
   const canvas = canvasRef.value
@@ -38,13 +47,13 @@ onMounted(() => {
   }
   switch (characterObject.name) {
     case 'wizard':
-      player.value = new Mage(canvas, ctx)
+      player.value = new Mage(canvas, ctx, characterObject.speed, characterObject.health)
       break
     case 'warrior':
-      player.value = new Samurai(canvas, ctx)
+      player.value = new Samurai(canvas, ctx, characterObject.speed, characterObject.health)
       break
     case 'thief':
-      player.value = new Thief(canvas, ctx)
+      player.value = new Thief(canvas, ctx, characterObject.speed, characterObject.health)
       break
     default:
       console.error('Invalid character type')
@@ -53,6 +62,9 @@ onMounted(() => {
     console.error('Player is null')
     return
   }
+  window.addEventListener('keydown', (event) => {
+
+  })
   gameHandler.value = new GameHandlder(player.value, canvas, ctx)
   gameHandler.value.gameLoop(performance.now())
 })

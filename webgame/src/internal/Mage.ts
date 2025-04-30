@@ -1,7 +1,7 @@
 import { Player } from '@/internal/Player'
 
 export class Mage extends Player {
-  constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
+  constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, speed: number, health: number) {
     super(canvas, ctx)
     this.framePaths = {
       run: [
