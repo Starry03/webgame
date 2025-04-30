@@ -19,8 +19,8 @@ export class Obj {
   prevAnimation: AnimationType | null
   isIdle: boolean
   ready: boolean
-  canAttack: boolean
   cooldowns: Map<AnimationType, number>
+  isAnimationBlocking: boolean
 
   constructor(
     canvas: HTMLCanvasElement,
@@ -48,8 +48,8 @@ export class Obj {
     this.prevAnimation = null
     this.isIdle = isIdle
     this.ready = false
-    this.canAttack = true
     this.cooldowns = new Map<AnimationType, number>()
+    this.isAnimationBlocking = false
   }
 
   preloadImages() {
@@ -99,20 +99,20 @@ export class Obj {
     ctx.restore()
   }
 
-  animate(timestamp) {
+  animate(timestamp: number) {
     if (timestamp - this.lastUpdateTime <= this.frameDelay) return
     this.currentFrame++
+    this.lastUpdateTime = timestamp
     if (this.currentFrame >= this.selectedFrames.length) {
       this.currentFrame = 0
+      this.isAnimationBlocking = false
       if (
-        this.currentAnimation in
-        [AnimationType.ATTACK_1, AnimationType.ATTACK_2, AnimationType.SPECIAL]
+        this.cooldowns.has(this.currentAnimation) &&
+        this.cooldowns.get(this.currentAnimation) != 0
       ) {
         this.idle()
-        console.log(this.cooldowns)
       }
     }
-    this.lastUpdateTime = timestamp
   }
 
   move(keyPressed: string | Set<string>, deltaTime: number) {}
@@ -121,16 +121,24 @@ export class Obj {
     return this.prevAnimation !== this.currentAnimation
   }
 
-  changeAnimation(animationName: AnimationType, prevAnimation: AnimationType | null = null) {
+  changeAnimation(
+    animationName: AnimationType,
+    isBlocking: boolean = false,
+    prevAnimation: AnimationType | null = null,
+  ) {
     if (prevAnimation) this.prevAnimation = prevAnimation
     else this.prevAnimation = this.currentAnimation
     if (animationName !== AnimationType.IDLE) this.isIdle = false
     this.currentAnimation = animationName
+    if (isBlocking && !this.isAnimationBlocking)
+      this.isAnimationBlocking = true
   }
 
-  update(timestamp) {
+  update(timestamp: number) {
     if (!this.ready) return
-    if (this.isAnimationChanged() && !this.isIdle) this.changeFrames(this.currentAnimation)
+    if (this.isAnimationChanged() && !this.isIdle) {
+      this.changeFrames(this.currentAnimation)
+    }
     this.animate(timestamp)
     this.drawFrame()
   }
