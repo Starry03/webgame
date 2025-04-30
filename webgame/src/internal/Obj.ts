@@ -3,12 +3,12 @@ import { AnimationType, Vector2 } from './types'
 export class Obj {
   canvas: HTMLCanvasElement
   ctx: CanvasRenderingContext2D
-  framePaths
+  framePaths: Record<AnimationType, string[]>
   pos: Vector2
   dim: Vector2
   xPos
   yPos
-  speed
+  speed: number
   frames: Record<AnimationType, HTMLImageElement[]>
   selectedFrames: HTMLImageElement[] = []
   currentFrame
@@ -20,11 +20,11 @@ export class Obj {
   isIdle: boolean
   ready: boolean
   canAttack: boolean
-  cooldowns: Set<AnimationType>
+  cooldowns: Map<AnimationType, number>
 
   constructor(
-    canvas,
-    ctx,
+    canvas: HTMLCanvasElement,
+    ctx: CanvasRenderingContext2D,
     xPos = 50,
     yPos = 50,
     initialAnimation: AnimationType = AnimationType.IDLE,
@@ -37,7 +37,9 @@ export class Obj {
     this.dim = new Vector2(100, 100)
     this.xPos = xPos
     this.yPos = yPos
+    this.speed = 0
     this.frames = {} as Record<AnimationType, HTMLImageElement[]>
+    this.framePaths = {} as Record<AnimationType, string[]>
     this.currentFrame = 0
     this.frameDelay = frameDelay
     this.lastUpdateTime = performance.now()
@@ -47,14 +49,14 @@ export class Obj {
     this.isIdle = isIdle
     this.ready = false
     this.canAttack = true
-    this.cooldowns = new Set<AnimationType>()
+    this.cooldowns = new Map<AnimationType, number>()
   }
 
   preloadImages() {
     for (const animation in this.framePaths) {
       const animType = animation as AnimationType
       this.frames[animType as AnimationType] = []
-      this.framePaths[animType].forEach((path) => {
+      this.framePaths[animType].forEach((path: string) => {
         const img = new Image()
         img.src = path
         img.onerror = () => console.error(`Errore nel caricamento dell'immagine: ${path}`)
@@ -87,7 +89,7 @@ export class Obj {
       console.error('Frame non disponibile o non caricato correttamente.')
       return
     }
-    const frame = this.selectedFrames[this.currentFrame]
+    const frame = this.selectedFrames[this.currentFrame] || this.selectedFrames[0]
     if (frame.complete) {
       ctx.save()
       if (this.facingDirection.x < 0)
@@ -108,13 +110,12 @@ export class Obj {
       ) {
         this.idle()
         console.log(this.cooldowns)
-        this.cooldowns.delete(this.currentAnimation)
       }
     }
     this.lastUpdateTime = timestamp
   }
 
-  move(keyPressed: string | Set<string>) {}
+  move(keyPressed: string | Set<string>, deltaTime: number) {}
 
   isAnimationChanged() {
     return this.prevAnimation !== this.currentAnimation

@@ -2,7 +2,7 @@ import { Player } from '@/internal/Player'
 
 export class Thief extends Player {
   constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, speed: number, health: number) {
-    super(canvas, ctx)
+    super(canvas, ctx, speed, health)
     this.framePaths = {
       run: [
         'assets/Sprite/Giocatore/Karasu_tengu/Run/frame_0_0.png',
