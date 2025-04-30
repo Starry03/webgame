@@ -45,7 +45,11 @@ const router = useRouter()
 async function main_req(path: string): Promise<{ session: Session; token: Token }> {
   const f = await AuthService.login(path, username.value, password.value)
   let res = await f.json()
-  return (await JSON.parse(res)) as { session: Session; token: Token }
+  try {
+    return (await JSON.parse(res)) as { session: Session; token: Token }
+  } catch (error) {
+    throw new Error('Failed to parse response')
+  }
 }
 
 async function process_session(req: { session: Session; token: Token }) {
