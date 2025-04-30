@@ -1,6 +1,6 @@
 <template>
   <audio controls style="display: none" id="music" autoplay loop>
-    <source src="../../../public/assets/audio/Trust_In_Your_Perseverance.wav" type="audio/mpeg" />
+    <source src="/assets/audio/Trust_In_Your_Perseverance.wav" type="audio/mpeg" />
   </audio>
   <div class="master">
     <div class="flex flex-row flex-column flex-center gap-big">
@@ -55,7 +55,7 @@ onUnmounted(() => {
 
 <style scoped>
 .master {
-  background: url('/webgame/public/assets/images/sfondo3.gif');
+  background: url('/assets/images/sfondo3.gif');
   background-size: cover;
   height: 100vh;
 }
