@@ -42,7 +42,7 @@ async def register(request: Request):
         )
     plain_data = RequestUtil.get_plain_data(body)
     email: str | None = plain_data.get("email", None)
-    client_public_key = plain_data.get("client_public_key")
+    client_public_key_pem = plain_data.get("client_public_key")
     if UserManager.user_exists(credentials.username):
         logger.error("User already exists")
         return JSONResponse(
@@ -54,7 +54,8 @@ async def register(request: Request):
             username=credentials.username,
             password=credentials.password,
             email=email,
-            is_active=True,
+            money=0,
+            online=True,
         )
     ):
         logger.error("Failed to create user")
@@ -62,14 +63,38 @@ async def register(request: Request):
             content={"detail": "Failed to create user"},
             status_code=HTTP_500_INTERNAL_SERVER_ERROR,
         )
-    session = AuthManager.generate_session(credentials)
-    string_res = session.to_json()
-    encrypted_res = RSAManager.encrypt(
-        string_res,
-        key=serialization.load_pem_public_key(client_public_key.encode("utf-8")),
-    )
-    encrypted_res_64 = RSAManager.to_base64(encrypted_res)
-    return JSONResponse(content=encrypted_res_64)
+    session: UserSessionResponse = AuthManager.generate_session(credentials)
+    try:
+        client_public_key = serialization.load_pem_public_key(
+            client_public_key_pem.encode()
+        )
+        crypted_token: str = RSAManager.to_base64(
+            RSAManager.encrypt(
+                session.token.access_token.encode("utf-8"),
+                key=client_public_key,
+            )
+        )
+        encrypted_sym_key = RSAManager.to_base64(
+            RSAManager.encrypt(
+                session.session.sym_key.encode("utf-8"),
+                key=client_public_key,
+            )
+        )
+        encrypted_session: UserSessionResponse = UserSessionResponse(
+            token=Token(access_token=crypted_token, token_type="bearer"),
+            session=UserSession(
+                id=session.session.id,
+                sym_key=encrypted_sym_key,
+                expiration_date=session.session.expiration_date,
+            ),
+        )
+        return JSONResponse(content=encrypted_session.to_json())
+    except Exception as e:
+        logger.error(e)
+        return JSONResponse(
+            content={"detail": "client public key is invalid or missing"},
+            status_code=HTTP_500_INTERNAL_SERVER_ERROR,
+        )
 
 
 @router.post("/login")
