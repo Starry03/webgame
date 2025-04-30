@@ -60,8 +60,8 @@ async function process_session(req: { session: Session; token: Token }) {
 
 async function login() {
   isLogging.value = true
-  const req = await main_req(import.meta.env.VITE_LOGIN_PATH)
   try {
+    const req = await main_req(import.meta.env.VITE_LOGIN_PATH)
     process_session(req)
   } catch (error) {
     isLogging.value = false
@@ -144,8 +144,8 @@ h2 {
 .btn-login,
 .btn-regist {
   text-shadow:
-    0 0 1px red,
-    0 0 20px red;
+    0 0 1px rgb(255, 255, 255),
+    0 0 20px rgb(255, 255, 255);
   padding: 8px;
   font-size: var(--font-small);
   border-radius: 4px;

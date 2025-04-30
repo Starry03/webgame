@@ -39,6 +39,7 @@ export class SessionUtils {
 }
 
 export class RequestWrapper {
+  static TIMEOUT: number = 5000
   static async loginFetch(
     url: string,
     options: RequestInit,
@@ -57,6 +58,7 @@ export class RequestWrapper {
         encrypted_data,
       }),
       ...options,
+      signal: AbortSignal.timeout(RequestWrapper.TIMEOUT),
     })
   }
 
@@ -71,7 +73,8 @@ export class RequestWrapper {
     if (options.method !== 'POST') {
       return fetch(url, {
         ...options,
-        headers,
+        headers: headers,
+        signal: AbortSignal.timeout(RequestWrapper.TIMEOUT),
       })
     }
     const encrypted_body = body ? AESUtils.encrypt(body) : null
@@ -79,6 +82,7 @@ export class RequestWrapper {
       ...options,
       headers,
       body: encrypted_body,
+      signal: AbortSignal.timeout(RequestWrapper.TIMEOUT),
     })
   }
 }
