@@ -20,7 +20,7 @@ export class Obj {
   isIdle: boolean
   ready: boolean
   canAttack: boolean
-  isAttacking: boolean
+  cooldowns: Set<AnimationType>
 
   constructor(
     canvas,
@@ -47,6 +47,7 @@ export class Obj {
     this.isIdle = isIdle
     this.ready = false
     this.canAttack = true
+    this.cooldowns = new Set<AnimationType>()
   }
 
   preloadImages() {
@@ -104,9 +105,11 @@ export class Obj {
       if (
         this.currentAnimation in
         [AnimationType.ATTACK_1, AnimationType.ATTACK_2, AnimationType.SPECIAL]
-      )
-        this.canAttack = false
+      ) {
         this.idle()
+        console.log(this.cooldowns)
+        this.cooldowns.delete(this.currentAnimation)
+      }
     }
     this.lastUpdateTime = timestamp
   }

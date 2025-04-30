@@ -9,6 +9,15 @@ export type Character = {
   hp: number
 }
 
+export enum Storage_e {
+  PRIVATE_KEY = 'private_key',
+  PUBLIC_KEY = 'public_key',
+  SELECTED_CHARACTER = 'selectedCharacter',
+  SERVER_PUBLIC_KEY = 'server_public_key',
+  SESSION = 'session',
+  TOKEN = 'token',
+}
+
 export enum AttackType {
   LIGHT = 'light',
   HEAVY = 'heavy',

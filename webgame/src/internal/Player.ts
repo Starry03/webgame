@@ -6,13 +6,21 @@ export class Player extends Obj {
   health: number
   maxHealth: number
 
-  constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, speed: number, health: number) {
+  constructor(
+    canvas: HTMLCanvasElement,
+    ctx: CanvasRenderingContext2D,
+    speed: number,
+    health: number,
+  ) {
     super(canvas, ctx)
     this.currentAnimation = AnimationType.IDLE
     this.canAttack = true
     this.speed = speed
     this.health = health
     this.maxHealth = health
+    this.cooldowns.add(AnimationType.ATTACK_1)
+    this.cooldowns.add(AnimationType.ATTACK_2)
+    this.cooldowns.add(AnimationType.SPECIAL)
   }
 
   handleInput(keys: Set<string>) {
@@ -38,27 +46,23 @@ export class Player extends Obj {
   }
 
   attack(keys: Set<string>) {
-    if (!this.canAttack) return
     let isAttacking: boolean = true
     let cooldownFactor: number = 1
-    if (keys.has('e')) {
+    let usedAnimation: AnimationType = AnimationType.IDLE
+    if (keys.has('e') && this.cooldowns.has(AnimationType.ATTACK_1)) {
       this.changeAnimation(AnimationType.ATTACK_1)
-    } else if (keys.has('q')) {
+      usedAnimation = AnimationType.ATTACK_1
+    } else if (keys.has('q') && this.cooldowns.has(AnimationType.ATTACK_2)) {
       this.changeAnimation(AnimationType.ATTACK_2)
+      usedAnimation = AnimationType.ATTACK_2
       cooldownFactor = 2.5
-    } else if (keys.has('r')) {
+    } else if (keys.has('r') && this.cooldowns.has(AnimationType.SPECIAL)) {
       this.changeAnimation(AnimationType.SPECIAL)
+      usedAnimation = AnimationType.SPECIAL
       cooldownFactor = 10
     } else isAttacking = false
-
     if (isAttacking && this.canAttack) {
-      this.canAttack = false
-      setTimeout(
-        () => {
-          this.canAttack = true
-        },
-        this.speed * 10 * cooldownFactor,
-      )
+      setTimeout(() => this.cooldowns.add(usedAnimation), this.speed * 10 * cooldownFactor)
     }
   }
 }

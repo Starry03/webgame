@@ -26,6 +26,7 @@ import ClassComponent from '@/components/ClassComponent.vue'
 import { prefixed } from '@/internal/cryptoutils.js'
 import { useRouter } from 'vue-router'
 import { GameService } from '@/internal/apiService.js'
+import { Storage_e } from '@/internal/types'
 
 const router = useRouter()
 
@@ -51,9 +52,7 @@ const selectCharacter = (character) => {
 
 const startGame = (character) => {
   if (character) {
-    localStorage.setItem(prefixed('selectedCharacter'), JSON.stringify(character))
-    console.log('Saved character:', character.name)
-    console.log('Starting game...')
+    localStorage.setItem(prefixed(Storage_e.SELECTED_CHARACTER), JSON.stringify(character))
     router.push('/game')
   }
 }

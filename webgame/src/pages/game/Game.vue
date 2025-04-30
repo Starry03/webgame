@@ -4,7 +4,7 @@
   </audio>
   <div class="master">
     <div class="flex flex-row flex-column flex-center gap-big">
-      <button class="button button-home" @click="$router.push('/')">🏠Home</button>
+      <button class="button button-home" @click="goHome">🏠Home</button>
       <h1>Adventuring in the Tower</h1>
       <button class="button button-mute" @click="toggleMute">🔊</button>
     </div>
@@ -17,6 +17,11 @@
 <script setup>
 import { onMounted, onUnmounted } from 'vue'
 import Canvas from '@/components/Canvas.vue'
+import { useRouter } from 'vue-router'
+import { prefixed } from '@/internal/cryptoutils'
+import { Storage_e } from '@/internal/types'
+
+const router = useRouter()
 
 function playAudio() {
   let audio = document.getElementById('music')
@@ -32,6 +37,11 @@ function toggleMute() {
     audio.muted = true
     event.target.innerText = '🔇'
   }
+}
+
+function goHome() {
+  localStorage.removeItem(prefixed(Storage_e.SELECTED_CHARACTER))
+  router.push('/')
 }
 
 onMounted(() => {

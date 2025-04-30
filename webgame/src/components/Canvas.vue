@@ -16,7 +16,7 @@ import { Samurai } from '@/internal/Samurai'
 import { Thief } from '@/internal/Thief'
 import { prefixed } from '@/internal/cryptoutils'
 import { GameHandlder } from '@/internal/GameHandler'
-import type { Character } from '@/internal/types'
+import { Storage_e, type Character } from '@/internal/types'
 import Map from '@/components/Map.vue'
 import StatusBar from '@/components/StatusBar.vue'
 
@@ -33,7 +33,7 @@ const handle_resize = () => {
 
 onMounted(() => {
   window.addEventListener('resize', handle_resize)
-  const character = localStorage.getItem(prefixed('selectedCharacter'))
+  const character = localStorage.getItem(prefixed(Storage_e.SELECTED_CHARACTER))
   const characterObject: Character = JSON.parse(character || '{}')
 
   const canvas = canvasRef.value
