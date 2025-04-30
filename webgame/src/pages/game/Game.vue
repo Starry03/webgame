@@ -9,6 +9,7 @@
       <button class="button button-mute" @click="toggleMute">🔊</button>
     </div>
     <div class="flex flex-column">
+      <StatusBar :health="80" :maxHealth="100" :mana="50" :maxMana="100" :level="5" :canAttack="true" />
       <Canvas />
     </div>
   </div>
