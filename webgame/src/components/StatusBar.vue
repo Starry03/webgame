@@ -1,44 +1,23 @@
 <script setup lang="ts">
 import type { Thief } from '@/internal/Thief';
 import ProgressBar from './ProgressBar.vue';
-import { ref, type Reactive, watch } from 'vue';
+import { ref, computed, watch } from 'vue';
 import type { Samurai } from '@/internal/Samurai';
+//import  player from '@/internal/Canvas.vue';
 
-defineProps({
-  player : Reactive <Thief | Samurai | Mage>(),
-});
-
-
-const cooldownQ = ref(0); // Cooldown per l'attacco Q
-const cooldownR = ref(0); // Cooldown per l'attacco R
-const maxCooldownQ = 3; // Cooldown massimo per Q in secondi
-const maxCooldownR = 5; // Cooldown massimo per R in secondi
-
-// Funzione per avviare il cooldown
-export function startCooldown(ability: 'Q' | 'R') {
-  if (ability === 'Q' && cooldownQ.value === 0) {
-    cooldownQ.value = maxCooldownQ;
-    const interval = setInterval(() => {
-      cooldownQ.value -= 0.1;
-      if (cooldownQ.value <= 0) clearInterval(interval);
-    }, 100);
-  } else if (ability === 'R' && cooldownR.value === 0) {
-    cooldownR.value = maxCooldownR;
-    const interval = setInterval(() => {
-      cooldownR.value -= 0.1;
-      if (cooldownR.value <= 0) clearInterval(interval);
-    }, 100);
-  }
-}
-
-watch([cooldownQ, cooldownR], ([newQ, newR]) => {
-  console.log('Cooldown Q:', newQ);
-  console.log('Cooldown R:', newR);
+const props = defineProps({
+  health: Number,
+  maxHealth: Number,
+  mana: Number,
+  maxMana: Number,
+  level: Number,
+  cooldownQ: Number,
+  cooldownR: Number,
 });
 
 // Percentuali per le barre di progresso
-const healthPercentage = /*computed(() => (health / maxHealth) * */ 100;//);
-const manaPercentage = /*computed(() => (mana / maxMana) * */100;//);
+const healthPercentage = computed(() => (health / maxHealth) * 100);
+const manaPercentage = computed(() => (mana / maxMana) * 100);
 
 
 </script>
@@ -69,13 +48,13 @@ const manaPercentage = /*computed(() => (mana / maxMana) * */100;//);
     <div class="flex items-center gap-large">
       <!-- Cooldown Q -->
       <div class="cooldown-container">
-        <div class="cooldown-circle" :style="{ '--progress': (cooldownQ / maxCooldownQ) * 100 + '%' }"></div>
+        <div class="cooldown-circle" :style="{ '--progress': cooldownQ.toFixed(1) /*/ Player.arguments.maxCooldownQ.toFixed(1)) * 100 + '%'*/ }"></div>
         <span>Q</span>
       </div>
 
       <!-- Cooldown R -->
       <div class="cooldown-container">
-        <div class="cooldown-circle" :style="{ '--progress': (cooldownR / maxCooldownR) * 100 + '%' }"></div>
+        <div class="cooldown-circle" :style="{ '--progress': cooldownR.toFixed(1) /*/ Player.arguments.maxCooldownR.toFixed(1)) * 100 + '%'*/ }"></div>
         <span>R</span>
       </div>
     </div>

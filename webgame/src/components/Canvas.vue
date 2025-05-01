@@ -4,12 +4,18 @@
     <StatusBar
       :health="player?.health"
       :max-health="player?.maxHealth"
+      :mana="player?.mana"
+      :max-mana="player?.maxMana"
+      :level="player?.level"
+      :cooldownQ="cooldownQ"
+      :cooldownR="cooldownR"
     />
   </div>
   <canvas ref="canvasRef" id="canvas" :width="window_width" :height="window_height / 1.5"></canvas>
 </template>
 <script lang="ts" setup>
-import { ref, onMounted, onUnmounted, reactive } from 'vue'
+import { cooldownQ, cooldownR } from '@/internal/Player'
+import { ref, onMounted, onUnmounted, reactive, type Reactive } from 'vue'
 import { Mage } from '@/internal/Mage'
 import { Samurai } from '@/internal/Samurai'
 import { Thief } from '@/internal/Thief'
@@ -23,7 +29,7 @@ const window_width = ref(window.innerWidth)
 const window_height = ref(window.innerHeight)
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 const gameHandler = ref<GameHandlder | null>()
-let player
+let player: Reactive<any> | null = null
 
 const handle_resize = () => {
   window_width.value = window.innerWidth
@@ -58,7 +64,7 @@ onMounted(() => {
     default:
       console.error('Invalid character type')
   }
-  if (!player.value) {
+  if (!player) {
     console.error('Player is null')
     return
   }
