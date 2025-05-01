@@ -1,13 +1,13 @@
 <template>
-  <section class="container">
+  <section class="select-container">
     <h1 id="container-title">Choose your character</h1>
     <div class="character-grid">
       <ClassComponent
-        v-for="character in characters"
+        v-for="(character, index) in characters"
         :key="character.id"
         :character="character"
-        :selected_character_id="selectedCharacter?.id"
-        :onSelect="() => selectCharacter(character)"
+        :selected="selectedCards[index]"
+        :onSelect="() => selectCharacter(index)"
       />
     </div>
     <div class="character-description-block" v-if="selectedCharacter">
@@ -33,6 +33,9 @@ const router = useRouter()
 const characters = ref([])
 const selectedCharacter = ref(null);
 
+// Variabili per tenere traccia delle selezioni delle card
+const selectedCards = ref([false, false, false]);
+
 const fetchCharacters = async () => {
   try {
     const response = await GameService.classes()
@@ -46,8 +49,12 @@ const fetchCharacters = async () => {
   }
 }
 
-const selectCharacter = (character) => {
-  selectedCharacter.value = character
+const selectCharacter = (index) => {
+  selectedCards.value = [false, false, false];    //reset totale delle card
+
+  selectedCards.value[index] = true;          //seleziona la card cliccata
+
+  selectedCharacter.value = characters.value[index];    //imposta il personaggio selezionato
 }
 
 const startGame = (character) => {
@@ -60,19 +67,26 @@ const startGame = (character) => {
 onMounted(() => fetchCharacters())
 </script>
 
+
 <style scoped>
-  .container {
+  body {
+    overflow-x: hidden;
+  }
+
+  .select-container {
     display: flex;
     flex-direction: column;
     padding: 0.5rem;
     font-family: 'Press Start 2P', cursive;
     align-items: center;
-    justify-content: space-betweenW;
+    justify-content: flex-start;
+    gap: 1.5rem;
     height: 100vh;
     background-image: url('assets/images/sfondo1.gif');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+    overflow: hidden;
   }
 
   #container-title {
@@ -99,12 +113,13 @@ onMounted(() => fetchCharacters())
   .character-description-block {
     display: flex;
     background: fixed;
-    padding: 1rem;
+    padding: 0.5rem 1rem 0 1rem;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     max-height: 30vh;
     overflow: auto;
+    margin-top: 0rem;
   }
 
   #character-description-header {
@@ -141,45 +156,86 @@ onMounted(() => fetchCharacters())
   }
 
   @media screen and (orientation: landscape) {
-  .container {
-    padding: 1rem;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    .select-container {
+      padding: 1rem;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #container-title {
+      font-size: 1.2rem;
+    }
+
+    .character-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .character-description-block {
+      min-height: 30vh;
+      max-height: 35vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 0.5rem;
+    }
+
+    .character-description {
+      height: 4rem;
+      font-size: 0.75rem;
+    }
+
+    #start-game-button {
+      padding: 0.5rem;
+      font-size: 0.9rem;
+      width: 120px;
+    }
   }
 
-  #container-title {
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-  }
+  @media screen and (orientation: portrait) {
+    .select-container {
+      padding: 1rem;
+      height: 100vh;
+    }
 
-  .character-grid {
-    flex: 1;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1rem;
-    align-items: center;
-  }
+    #container-title {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
 
-  .character-description-block {
-    max-height: 30vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 0.5rem;
-  }
+    .character-grid {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      align-items: center;
+      overflow-y: auto;
+    }
 
-  .character-description {
-    height: 4rem;
-    font-size: 0.75rem;
-  }
+    .character-description-block {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 1rem;
+      min-height: 32vh;
+      max-height: 35vh;
+      overflow-y: auto;
+    }
 
-  #start-game-button {
-    padding: 0.5rem;
-    font-size: 0.9rem;
-    width: 120px;
+    .character-description {
+      width: 97%;
+      height: 6rem;
+    }
+    
+    #start-game-button {
+      width: 120px;
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+
   }
-  
-}
 </style>
