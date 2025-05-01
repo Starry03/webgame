@@ -1,5 +1,6 @@
 import forge from 'node-forge'
 import { Storage_e } from './types'
+import { buildEndpoint } from './apiService'
 
 export const PREFIX = 'aitdt'
 
@@ -45,7 +46,7 @@ export class RequestWrapper {
     options: RequestInit,
     data: { username: string; password: string },
   ): Promise<Response> {
-    const public_key_request = await fetch('http://127.0.0.1:8000/auth/public-key')
+    const public_key_request = await fetch(buildEndpoint('/public-key'))
     if (public_key_request.status !== 200) throw new Error('Failed to fetch public key')
     const { public_key: serverPublicKey } = await public_key_request.json()
     localStorage.setItem(prefixed(Storage_e.SERVER_PUBLIC_KEY), serverPublicKey)

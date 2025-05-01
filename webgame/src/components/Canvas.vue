@@ -1,12 +1,16 @@
 <template>
-  <div style="color: aliceblue" class="flex flex-row flex-space-between" id="game-header">
-    <Map />
-    <StatusBar
-      :health="player?.health"
-      :max-health="player?.maxHealth"
-    />
+  <div class="flex flex-column">
+    <div style="color: aliceblue" class="flex flex-row flex-space-between" id="game-header">
+      <Map />
+      <StatusBar :health="player?.health" :max-health="player?.maxHealth" />
+    </div>
+    <canvas
+      ref="canvasRef"
+      id="canvas"
+      :width="window_width"
+      :height="window_height / 1.5"
+    ></canvas>
   </div>
-  <canvas ref="canvasRef" id="canvas" :width="window_width" :height="window_height / 1.5"></canvas>
 </template>
 <script lang="ts" setup>
 import { ref, onMounted, onUnmounted } from 'vue'
@@ -62,9 +66,7 @@ onMounted(() => {
     console.error('Player is null')
     return
   }
-  window.addEventListener('keydown', (event) => {
-
-  })
+  window.addEventListener('keydown', (event) => {})
   gameHandler.value = new GameHandlder(player.value, canvas, ctx)
   gameHandler.value.gameLoop(performance.now())
 })

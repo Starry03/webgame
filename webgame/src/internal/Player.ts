@@ -1,7 +1,7 @@
 import { AnimationType, Vector2 } from './types'
 import { Obj } from './Obj'
 
-export class Player extends Obj {
+export class Entity extends Obj {
   speed: number
   health: number
   maxHealth: number

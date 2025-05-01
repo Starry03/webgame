@@ -1,13 +1,13 @@
-import type { Player } from './Player'
+import type { Entity } from './Player'
 
 export class GameHandlder {
-  player: Player
+  player: Entity
   canvas: HTMLCanvasElement
   ctx: CanvasRenderingContext2D
   keys: Set<string>
   lastTimeStamp: number
 
-  constructor(player: Player, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
+  constructor(player: Entity, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
     this.ctx = ctx
     this.canvas = canvas
     this.player = player
