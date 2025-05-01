@@ -6,18 +6,30 @@ import type { Samurai } from '@/internal/Samurai';
 //import  player from '@/internal/Canvas.vue';
 
 const props = defineProps({
-  health: Number,
-  maxHealth: Number,
-  mana: Number,
-  maxMana: Number,
+  health: {
+    type: Number,
+    required: true,
+  },
+  maxHealth: {
+    type: Number,
+    required: true,
+  },
+  mana: {
+    type: Number,
+    required: true,
+  },
+  maxMana: {
+    type: Number,
+    required: true,
+  },
   level: Number,
   cooldownQ: Number,
   cooldownR: Number,
 });
 
 // Percentuali per le barre di progresso
-const healthPercentage = computed(() => (health / maxHealth) * 100);
-const manaPercentage = computed(() => (mana / maxMana) * 100);
+const healthPercentage = computed(() => (props.health / props.maxHealth) * 100);
+const manaPercentage = computed(() => (props.mana / props.maxMana) * 100);
 
 
 </script>
@@ -48,13 +60,13 @@ const manaPercentage = computed(() => (mana / maxMana) * 100);
     <div class="flex items-center gap-large">
       <!-- Cooldown Q -->
       <div class="cooldown-container">
-        <div class="cooldown-circle" :style="{ '--progress': cooldownQ.toFixed(1) /*/ Player.arguments.maxCooldownQ.toFixed(1)) * 100 + '%'*/ }"></div>
+        <div class="cooldown-circle" :style="{ '--progress': cooldownQ?.toFixed(1) /*/ Player.arguments.maxCooldownQ.toFixed(1)) * 100 + '%'*/ }"></div>
         <span>Q</span>
       </div>
 
       <!-- Cooldown R -->
       <div class="cooldown-container">
-        <div class="cooldown-circle" :style="{ '--progress': cooldownR.toFixed(1) /*/ Player.arguments.maxCooldownR.toFixed(1)) * 100 + '%'*/ }"></div>
+        <div class="cooldown-circle" :style="{ '--progress': cooldownR?.toFixed(1) /*/ Player.arguments.maxCooldownR.toFixed(1)) * 100 + '%'*/ }"></div>
         <span>R</span>
       </div>
     </div>
