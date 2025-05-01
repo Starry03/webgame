@@ -3,7 +3,7 @@ import type { Thief } from '@/internal/Thief';
 import ProgressBar from './ProgressBar.vue';
 import { ref, computed, watch } from 'vue';
 import type { Samurai } from '@/internal/Samurai';
-//import  player from '@/internal/Canvas.vue';
+import type { Mage } from '@/internal/Mage';
 
 const props = defineProps({
   health: {
@@ -109,12 +109,4 @@ const manaPercentage = computed(() => (props.mana / props.maxMana) * 100);
   color: white;
 }
 </style>
-<!--
-<template>
-  <div class="flex flex-row gap-mid">
-    <ProgressBar :progress="health" />
-  </div>
-</template>
-
--->
 
