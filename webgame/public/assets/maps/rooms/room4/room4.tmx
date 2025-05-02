@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="25" height="13" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="59">
+ <editorsettings>
+  <export target="room4.json" format="json"/>
+ </editorsettings>
+ <tileset firstgid="1" source="../tilesets/floor.tsx"/>
+ <tileset firstgid="2" source="../tilesets/wall.tsx"/>
+ <tileset firstgid="5" source="../tilesets/final_wall.tsx"/>
+ <tileset firstgid="6" source="../tilesets/finalDoor.tsx"/>
+ <tileset firstgid="11" source="../tilesets/secondFinalDoor.tsx"/>
+ <tileset firstgid="16" source="../tilesets/structure.tsx"/>
+ <tileset firstgid="18" source="../tilesets/entranceDoor.tsx"/>
+ <tileset firstgid="19" source="../tilesets/crystals.tsx"/>
+ <tileset firstgid="27" source="../tilesets/rocks.tsx"/>
+ <tileset firstgid="31" source="../tilesets/bat.tsx"/>
+ <tileset firstgid="32" source="../tilesets/finalStructure.tsx"/>
+ <tileset firstgid="33" source="../tilesets/ladder.tsx"/>
+ <layer id="1" name="background" width="25" height="13">
+  <data encoding="base64" compression="zlib">
+   eJxjYWBgYKEAM+LAlJhJjPnY7CGklhI8aseoHaN2DA47aI0B3fcCOQ==
+  </data>
+ </layer>
+ <objectgroup id="2" name="objects">
+  <properties>
+   <property name="accessDoor" type="object" value="0"/>
+  </properties>
+  <object id="5" name="entranceDoor" type="AnimatedObjects" gid="18" x="577" y="130" width="64" height="64">
+   <properties>
+    <property name="animating" type="bool" value="false"/>
+    <property name="isOpen" type="bool" value="false"/>
+    <property name="type" value="door"/>
+   </properties>
+  </object>
+  <object id="7" name="crystals15" type="NotAnimatedObjects" gid="24" x="230" y="106" width="20" height="20"/>
+  <object id="8" name="crystals14" type="NotAnimatedObjects" gid="24" x="464" y="144" width="20" height="20"/>
+  <object id="9" name="crystals13" type="NotAnimatedObjects" gid="24" x="277" y="270" width="20" height="20"/>
+  <object id="10" name="crystals12" type="NotAnimatedObjects" gid="24" x="718" y="306" width="20" height="20"/>
+  <object id="12" name="rock11" type="NotAnimatedObjects" gid="27" x="459" y="364" width="58" height="29"/>
+  <object id="13" name="rock10" type="NotAnimatedObjects" gid="28" x="314" y="152" width="23" height="14"/>
+  <object id="14" name="rock9" type="NotAnimatedObjects" gid="28" x="113" y="125" width="23" height="14"/>
+  <object id="17" name="rock8" type="NotAnimatedObjects" gid="29" x="291" y="350" width="26" height="20"/>
+  <object id="18" name="rock7" type="NotAnimatedObjects" gid="29" x="233" y="377" width="26" height="20"/>
+  <object id="19" name="rock6" type="NotAnimatedObjects" gid="30" x="467" y="237" width="32" height="28"/>
+  <object id="20" name="crystals11" type="NotAnimatedObjects" gid="21" x="570" y="379" width="33" height="47"/>
+  <object id="21" name="crystals10" type="NotAnimatedObjects" gid="23" x="370" y="212" width="48" height="42"/>
+  <object id="23" name="crystals9" type="NotAnimatedObjects" gid="25" x="461" y="310" width="26" height="26"/>
+  <object id="24" name="crystals8" type="NotAnimatedObjects" gid="25" x="52" y="382" width="26" height="26"/>
+  <object id="25" name="crystals7" type="NotAnimatedObjects" gid="25" x="36" y="276" width="26" height="26"/>
+  <object id="26" name="crystals6" type="NotAnimatedObjects" gid="26" x="361" y="362" width="28" height="28"/>
+  <object id="27" name="rock5" type="NotAnimatedObjects" gid="30" x="365" y="274" width="32" height="28"/>
+  <object id="28" name="rock4" type="NotAnimatedObjects" gid="30" x="578" y="301" width="32" height="28"/>
+  <object id="29" name="rock3" type="NotAnimatedObjects" gid="30" x="719" y="375" width="32" height="28"/>
+  <object id="30" name="crystals5" type="NotAnimatedObjects" gid="25" x="166" y="155" width="26" height="26"/>
+  <object id="31" name="crystals4" type="NotAnimatedObjects" gid="25" x="370" y="119" width="26" height="26"/>
+  <object id="32" name="crystals3" type="NotAnimatedObjects" gid="25" x="370" y="119" width="26" height="26"/>
+  <object id="34" name="bat" type="NotAnimatedObjects" gid="31" x="40" y="139" width="32" height="27"/>
+  <object id="42" name="finalStrcuture" type="NotAnimatedObjects" gid="32" x="64" y="352" width="192" height="192">
+   <properties>
+    <property name="accessDoor" type="object" value="46"/>
+    <property name="ladder" type="object" value="50"/>
+   </properties>
+  </object>
+  <object id="49" name="structure" type="NotAnimatedObjects" gid="17" x="480" y="129" width="256" height="128">
+   <properties>
+    <property name="door" type="object" value="5"/>
+   </properties>
+  </object>
+  <object id="55" name="rock2" type="NotAnimatedObjects" gid="30" x="698" y="194" width="32" height="28"/>
+  <object id="56" name="rock1" type="NotAnimatedObjects" gid="29" x="670" y="257" width="26" height="20"/>
+  <object id="57" name="crystal2" type="NotAnimatedObjects" gid="25" x="564" y="233" width="26" height="26"/>
+  <object id="58" name="crystal1" type="NotAnimatedObjects" gid="22" x="625" y="210" width="52" height="44"/>
+ </objectgroup>
+ <objectgroup id="4" name="objects2">
+  <object id="46" name="accessDoor" type="AnimatedObjects" gid="11" x="128" y="354" width="64" height="64">
+   <properties>
+    <property name="animating" type="bool" value="false"/>
+    <property name="isOpen" type="bool" value="false"/>
+    <property name="type" value="door"/>
+   </properties>
+  </object>
+  <object id="50" name="ladder" type="NotAnimatedObjects" gid="1073741857" x="128" y="242" width="64" height="78"/>
+ </objectgroup>
+</map>
