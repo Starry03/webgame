@@ -1,8 +1,8 @@
 import { Player } from '@/internal/Player'
 
 export class Samurai extends Player {
-  constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, speed: number, health: number) {
-    super(canvas, ctx, speed, health)
+  constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, speed: number, health: number, mana: number) {
+    super(canvas, ctx, speed, health, mana)
     this.framePaths = {
       run: [
         'assets/Sprite/Giocatore/Samurai/Run/frame_0_0.png',

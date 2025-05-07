@@ -28,8 +28,8 @@ const props = defineProps({
 });
 
 // Percentuali per le barre di progresso
-const healthPercentage = computed(() => (props.health / props.maxHealth) * 100);
-const manaPercentage = computed(() => (props.mana / props.maxMana) * 100);
+const healthPercentage = computed(() => (props.health / props.maxHealth) * 100 || 0);
+const manaPercentage = computed(() => (props.mana / props.maxMana) * 100 || 0);
 
 
 </script>

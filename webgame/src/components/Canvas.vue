@@ -2,17 +2,19 @@
   <div style="color: aliceblue" class="flex flex-row flex-space-between" id="game-header">
     <Map />
     <StatusBar
-      :health="player?.health"
-      :max-health="player?.maxHealth"
-      :mana="player?.mana"
-      :max-mana="player?.maxMana"
-      :level="player?.level"
+      v-if="player"
+      :health="player.value.health"
+      :max-health="player.value.maxHealth"
+      :mana="player.value.mana"
+      :max-mana="player.value.maxMana"
+      :level="player.value.level"
       :cooldownQ="cooldownQ"
       :cooldownR="cooldownR"
     />
   </div>
   <canvas ref="canvasRef" id="canvas" :width="window_width" :height="window_height / 1.5"></canvas>
 </template>
+
 <script lang="ts" setup>
 import { cooldownQ, cooldownR } from '@/internal/Player'
 import { ref, onMounted, onUnmounted, reactive, type Reactive } from 'vue'
@@ -29,7 +31,7 @@ const window_width = ref(window.innerWidth)
 const window_height = ref(window.innerHeight)
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 const gameHandler = ref<GameHandlder | null>()
-let player: Reactive<any> | null = null
+const player = ref<any>(null)
 
 const handle_resize = () => {
   window_width.value = window.innerWidth
@@ -51,26 +53,39 @@ onMounted(() => {
     console.error('ctx null')
     return
   }
+
+  console.log('Inizializzazione del player...');
+  console.log('Personaggio selezionato:', characterObject);
+
   switch (characterObject.name) {
     case 'wizard':
-      player = reactive(new Mage(canvas, ctx, characterObject.speed, characterObject.health))
+      player.value = reactive(new Mage(canvas, ctx, characterObject.speed, characterObject.health, characterObject.mana))
       break
     case 'warrior':
-      player = reactive (new Samurai(canvas, ctx, characterObject.speed, characterObject.health))
+      player.value = reactive(new Samurai(canvas, ctx, characterObject.speed, characterObject.health, characterObject.mana))
       break
     case 'thief':
-      player = reactive(new Thief(canvas, ctx, characterObject.speed, characterObject.health))
+      player.value = reactive(new Thief(canvas, ctx, characterObject.speed, characterObject.health, characterObject.mana))
       break
     default:
       console.error('Invalid character type')
   }
-  if (!player) {
+
+  console.log('Player inizializzato:', player.value);
+
+  if (!player.value) {
     console.error('Player is null')
     return
   }
   window.addEventListener('keydown', (event) => {
 
   })
+  
+  /*if (!player) {
+    console.error('Player is null');
+    return;
+  }*/
+
   gameHandler.value = new GameHandlder(player.value, canvas, ctx)
   gameHandler.value.gameLoop(performance.now())
 })
