@@ -1,22 +1,56 @@
 import { AnimationType, Vector2 } from './types'
 import { Obj } from './Obj'
+import { ref } from 'vue'
+
+export const cooldownQ = ref(0); // Cooldown per l'attacco Q
+export const cooldownR = ref(0); // Cooldown per l'attacco R
+export const maxCooldownQ = 2.5; // Cooldown massimo per Q in secondi
+export const maxCooldownR = 10; // Cooldown massimo per R in secondi
+
+// Funzione per avviare il cooldown
+export function startCooldown(ability: 'Q' | 'R') {
+  if (ability === 'Q' && cooldownQ.value === 0) {
+    cooldownQ.value = maxCooldownQ;
+    const interval = setInterval(() => {
+      cooldownQ.value -= 0.1;
+      if (cooldownQ.value <= 0){
+        cooldownQ.value = 0; // Reset cooldown to 0
+        clearInterval(interval);
+      }
+    }, 100);
+  } else if (ability === 'R' && cooldownR.value === 0) {
+    cooldownR.value = maxCooldownR;
+    const interval = setInterval(() => {
+      cooldownR.value -= 0.1;
+      if (cooldownR.value <= 0){
+        cooldownR.value = 0; // Reset cooldown to 0
+        clearInterval(interval);
+      }
+    }, 100);
+  }
+}
 
 export class Entity extends Obj {
   speed: number
   health: number
   maxHealth: number
+  mana: number
+  maxMana: number
 
   constructor(
     canvas: HTMLCanvasElement,
     ctx: CanvasRenderingContext2D,
     speed: number,
     health: number,
+    mana: number,
   ) {
     super(canvas, ctx)
     this.currentAnimation = AnimationType.IDLE
     this.speed = speed
     this.health = health
     this.maxHealth = health
+    this.mana = mana
+    this.maxMana = mana
     this.cooldowns.set(AnimationType.ATTACK_1, 0)
     this.cooldowns.set(AnimationType.ATTACK_2, 0)
     this.cooldowns.set(AnimationType.SPECIAL, 0)
@@ -48,25 +82,29 @@ export class Entity extends Obj {
     let isAttacking: boolean = true
     let cooldownFactor: number = 1
     let usedAnimation: AnimationType = AnimationType.IDLE
+
     if (keys.has('e') && this.cooldowns.get(AnimationType.ATTACK_1) == 0) {
       this.changeAnimation(AnimationType.ATTACK_1, true)
       usedAnimation = AnimationType.ATTACK_1
-    } else if (keys.has('q') && this.cooldowns.get(AnimationType.ATTACK_2) == 0) {
+      console.log('Attacco E')
+    } else if (keys.has('q') && cooldownQ.value === 0) {
       this.changeAnimation(AnimationType.ATTACK_2, true)
       usedAnimation = AnimationType.ATTACK_2
-      cooldownFactor = 2.5
-    } else if (keys.has('r') && this.cooldowns.get(AnimationType.SPECIAL) == 0) {
+      startCooldown('Q')
+      console.log('Attacco Q')
+    } else if (keys.has('r') && cooldownR.value === 0) {
       this.changeAnimation(AnimationType.SPECIAL, true)
       usedAnimation = AnimationType.SPECIAL
-      cooldownFactor = 10
+      startCooldown('R')
+      console.log('Attacco R')
     } else isAttacking = false
+
     if (!isAttacking) return
+
     this.cooldowns.set(usedAnimation, this.speed * 10 * cooldownFactor)
-    setTimeout(
-      () => {
+    setTimeout(() => {
         this.cooldowns.set(usedAnimation, 0)
-      },
-      this.speed * 10 * cooldownFactor,
+      }, this.speed * 10 * cooldownFactor,
     )
   }
 }
