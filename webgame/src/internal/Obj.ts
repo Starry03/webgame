@@ -10,7 +10,6 @@ export class Obj {
   frames: Record<AnimationType, HTMLImageElement[]>
   selectedFrames: HTMLImageElement[] = []
   currentFrame
-  frameDelay
   lastUpdateTime
   facingDirection: Vector2
   currentAnimation: AnimationType
@@ -19,32 +18,26 @@ export class Obj {
   ready: boolean
   cooldowns: Map<AnimationType, number>
   isAnimationBlocking: boolean
-  interactable: boolean
-  x: Number
-  y: Number
-  width: Number
-  height: Number
+  isInteractable: boolean
+  isSolid: boolean
+  frameDelay: number = 1000 / 60 // 60 FPS
 
   constructor(
     canvas: HTMLCanvasElement,
     ctx: CanvasRenderingContext2D,
     initialAnimation: AnimationType = AnimationType.IDLE,
-    frameDelay = 100,
     isIdle = false,
-    x: number,
-    y: number,
-    width: number, 
-    height: number
+    pos: Vector2,
+    dim: Vector2,
   ) {
     this.canvas = canvas
     this.ctx = ctx
-    this.pos = new Vector2(x, y)
-    this.dim = new Vector2(width, height)
+    this.pos = pos
+    this.dim = dim
     this.speed = 0
     this.frames = {} as Record<AnimationType, HTMLImageElement[]>
     this.framePaths = {} as Record<AnimationType, string[]>
     this.currentFrame = 0
-    this.frameDelay = frameDelay
     this.lastUpdateTime = performance.now()
     this.facingDirection = new Vector2(0, 1)
     this.currentAnimation = initialAnimation
@@ -53,11 +46,8 @@ export class Obj {
     this.ready = false
     this.cooldowns = new Map<AnimationType, number>()
     this.isAnimationBlocking = false
-    this.interactable = false
-    this.x = x;
-    this.y = y;
-    this.width = width,
-    this.height = height
+    this.isInteractable = false
+    this.isSolid = true
   }
 
   preloadImages() {
@@ -119,7 +109,7 @@ export class Obj {
         this.drawFlipped(frame, this.pos.x, this.pos.y, this.dim.x, this.dim.y)
       else ctx.drawImage(frame, this.pos.x, this.pos.y, this.dim.x, this.dim.y)
     }
-    ctx.restore() 
+    ctx.restore()
   }
 
   animate(timestamp: number) {

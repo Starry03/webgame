@@ -37,6 +37,10 @@
   box-sizing: border-box;
 }
 
+.h-full {
+  height: 100vh;
+}
+
 .flex {
   display: flex;
 }
