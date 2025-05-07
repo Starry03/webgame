@@ -59,6 +59,10 @@ onMounted(() => {
 
   switch (characterObject.name) {
     case 'wizard':
+      if (!characterObject.speed || !characterObject.health || !characterObject.mana) {
+        console.error('Parametri non validi per il Mage:', characterObject);
+        return;
+      }
       player.value = reactive(new Mage(canvas, ctx, characterObject.speed, characterObject.health, characterObject.mana))
       break
     case 'warrior':
