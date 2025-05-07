@@ -1,5 +1,6 @@
 import forge from 'node-forge'
 import { Storage_e } from './types'
+import { buildEndpoint } from './apiService'
 
 export const PREFIX = 'aitdt'
 
@@ -39,12 +40,14 @@ export class SessionUtils {
 }
 
 export class RequestWrapper {
+  static TIMEOUT: number = 5000
   static async loginFetch(
     url: string,
     options: RequestInit,
     data: { username: string; password: string },
   ): Promise<Response> {
-    const public_key_request = await fetch('http://127.0.0.1:8000/auth/public-key')
+    const _url: string | undefined = import.meta.env.VITE_PUBLIC_KEY_PATH
+    const public_key_request = await fetch(buildEndpoint(_url ?? 'auth/public_key'))
     if (public_key_request.status !== 200) throw new Error('Failed to fetch public key')
     const { public_key: serverPublicKey } = await public_key_request.json()
     localStorage.setItem(prefixed(Storage_e.SERVER_PUBLIC_KEY), serverPublicKey)
@@ -57,6 +60,7 @@ export class RequestWrapper {
         encrypted_data,
       }),
       ...options,
+      signal: AbortSignal.timeout(RequestWrapper.TIMEOUT),
     })
   }
 
@@ -71,7 +75,8 @@ export class RequestWrapper {
     if (options.method !== 'POST') {
       return fetch(url, {
         ...options,
-        headers,
+        headers: headers,
+        signal: AbortSignal.timeout(RequestWrapper.TIMEOUT),
       })
     }
     const encrypted_body = body ? AESUtils.encrypt(body) : null
@@ -79,6 +84,7 @@ export class RequestWrapper {
       ...options,
       headers,
       body: encrypted_body,
+      signal: AbortSignal.timeout(RequestWrapper.TIMEOUT),
     })
   }
 }

@@ -2,8 +2,8 @@
   <audio controls style="display: none" id="music" autoplay loop>
     <source src="/assets/audio/Trust_In_Your_Perseverance.wav" type="audio/mpeg" />
   </audio>
-  <div class="master">
-    <div class="flex flex-row flex-column flex-center gap-big">
+  <div class="master flex flex-column flex-align gap-big">
+    <div class="flex flex-row flex-center gap-big">
       <button class="button button-home" @click="goHome">🏠Home</button>
       <h1>Awakening in the Dark Tower</h1>
       <button class="button button-mute" @click="toggleMute">🔊</button>
@@ -16,13 +16,25 @@
 </template>
 
 <script setup>
-import { onMounted, onUnmounted } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import Canvas from '@/components/Canvas.vue'
 import { useRouter } from 'vue-router'
 import { prefixed } from '@/internal/cryptoutils'
 import { Storage_e } from '@/internal/types'
 
 const router = useRouter()
+const isReady = ref(false)
+
+async function handleFullscreen() {
+  try {
+    await document.documentElement.requestFullscreen()
+    await screen.orientation.lock('portrait')
+    isReady.value = true
+  } catch (error) {
+    console.error(error)
+    isReady.value = true
+  }
+}
 
 function playAudio() {
   let audio = document.getElementById('music')
@@ -45,7 +57,7 @@ function goHome() {
   router.push('/')
 }
 
-onMounted(() => {
+onMounted(async () => {
   document.addEventListener('mousemove', playAudio)
 })
 

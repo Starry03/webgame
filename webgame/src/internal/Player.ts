@@ -30,7 +30,7 @@ export function startCooldown(ability: 'Q' | 'R') {
   }
 }
 
-export class Player extends Obj {
+export class Entity extends Obj {
   speed: number
   health: number
   maxHealth: number
@@ -43,8 +43,10 @@ export class Player extends Obj {
     speed: number,
     health: number,
     mana: number,
+    pos: Vector2 = new Vector2(50, 50),
+    dim: Vector2 = new Vector2(100, 100),
   ) {
-    super(canvas, ctx)
+    super(canvas, ctx, AnimationType.IDLE, true, pos, dim)
     this.currentAnimation = AnimationType.IDLE
     this.speed = speed
     this.health = health
@@ -62,7 +64,7 @@ export class Player extends Obj {
   }
 
   move(keys: Set<string>, deltaTime: number) {
-	if (this.isAnimationBlocking) return
+    if (this.isAnimationBlocking) return
     let dir = new Vector2(
       (keys.has('d') || keys.has('ArrowRight') ? 1 : 0) +
         (keys.has('a') || keys.has('ArrowLeft') ? -1 : 0),
@@ -102,9 +104,11 @@ export class Player extends Obj {
     if (!isAttacking) return
 
     this.cooldowns.set(usedAnimation, this.speed * 10 * cooldownFactor)
-    setTimeout(() => {
+    setTimeout(
+      () => {
         this.cooldowns.set(usedAnimation, 0)
-      }, this.speed * 10 * cooldownFactor,
+      },
+      this.speed * 10 * cooldownFactor,
     )
   }
 }

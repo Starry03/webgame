@@ -1,6 +1,6 @@
-import { Player } from '@/internal/Player'
+import { Entity } from '@/internal/Player'
 
-export class Gorg_purp extends Player {
+export class Gorg_purp extends Entity {
     constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, speed: number, health: number) {
     super(canvas, ctx)
     this.framePaths = {
