@@ -8,6 +8,7 @@ export class GameHandlder {
   lastTimeStamp: number
 
   constructor(player: Entity, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
+    console.log(player)
     this.ctx = ctx
     this.canvas = canvas
     this.player = player
