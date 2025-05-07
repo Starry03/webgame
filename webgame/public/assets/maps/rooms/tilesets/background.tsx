@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset version="1.10" tiledversion="1.11.2" name="tf_darkdimension_sheet" tilewidth="32" tileheight="32" spacing="1" tilecount="140" columns="14">
- <image source="../oggetti/tf_darkdimension_sheet.png" width="464" height="336"/>
+ <image source="../tiled_objects/tf_darkdimension_sheet.png" width="464" height="336"/>
  <wangsets>
   <wangset name="castle" type="mixed" tile="-1">
    <wangcolor name="" color="#ff0000" tile="-1" probability="1"/>

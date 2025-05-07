@@ -2,6 +2,6 @@
 <tileset version="1.10" tiledversion="1.11.2" name="rock" tilewidth="64" tileheight="64" tilecount="1" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0">
-  <image source="../immagini/Rock1_1.png" width="64" height="64"/>
+  <image source="../images/Rock1_1.png" width="64" height="64"/>
  </tile>
 </tileset>
