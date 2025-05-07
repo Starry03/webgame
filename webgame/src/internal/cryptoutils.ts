@@ -46,7 +46,8 @@ export class RequestWrapper {
     options: RequestInit,
     data: { username: string; password: string },
   ): Promise<Response> {
-    const public_key_request = await fetch(buildEndpoint('/public-key'))
+    const _url: string | undefined = import.meta.env.VITE_PUBLIC_KEY_PATH
+    const public_key_request = await fetch(buildEndpoint(_url ?? 'auth/public_key'))
     if (public_key_request.status !== 200) throw new Error('Failed to fetch public key')
     const { public_key: serverPublicKey } = await public_key_request.json()
     localStorage.setItem(prefixed(Storage_e.SERVER_PUBLIC_KEY), serverPublicKey)
