@@ -19,6 +19,11 @@ export class Obj {
   ready: boolean
   cooldowns: Map<AnimationType, number>
   isAnimationBlocking: boolean
+  interactable: boolean
+  x: Number
+  y: Number
+  width: Number
+  height: Number
 
   constructor(
     canvas: HTMLCanvasElement,
@@ -26,11 +31,15 @@ export class Obj {
     initialAnimation: AnimationType = AnimationType.IDLE,
     frameDelay = 100,
     isIdle = false,
+    x: number,
+    y: number,
+    width: number, 
+    height: number
   ) {
     this.canvas = canvas
     this.ctx = ctx
-    this.pos = new Vector2(50, 50)
-    this.dim = new Vector2(100, 100)
+    this.pos = new Vector2(x, y)
+    this.dim = new Vector2(width, height)
     this.speed = 0
     this.frames = {} as Record<AnimationType, HTMLImageElement[]>
     this.framePaths = {} as Record<AnimationType, string[]>
@@ -44,6 +53,11 @@ export class Obj {
     this.ready = false
     this.cooldowns = new Map<AnimationType, number>()
     this.isAnimationBlocking = false
+    this.interactable = false
+    this.x = x;
+    this.y = y;
+    this.width = width,
+    this.height = height
   }
 
   preloadImages() {

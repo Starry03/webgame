@@ -1,10 +1,9 @@
-export class GameObject extends Object {
-    constructor(x, y, width, height) {
-      super();
-      this.x = x;
-      this.y = y;
-      this.width = width;
-      this.height = height;
+import {Obj} from '../../../../src/internal/Obj'
+
+export class GameObject extends Obj {
+    constructor(x, y, width, height, properties = {}, interactable) {
+      super(x,y,width,height,properties, interactable);
+
     }
   
     get position() {

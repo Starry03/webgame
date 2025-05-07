@@ -1,15 +1,6 @@
-export class AnimatedObject extends Object {
-    constructor({ name, x, y, width, height, frames = [], animationSpeed = 1, custom_properties}) {
-      super();
-      this.name = name;
-      this.x = x;
-      this.y = y;
-      this.width = width;
-      this.height = height;
-      this.frames = frames;
-      this.currentFrame = 0;
-      this.animationSpeed = animationSpeed;
-      this.frameTimer = 0;
+export class AnimatedObject extends GameObject {
+    constructor({ name, x, y, width, height, frames, speed, custom_properties, interactable = true}) {
+      super(name, x, y, width, height, frames, speed, interactable);
       this.custom_properties = custom_properties;
     }
   
