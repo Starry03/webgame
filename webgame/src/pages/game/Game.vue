@@ -5,7 +5,7 @@
   <div class="master">
     <div class="flex flex-row flex-column flex-center gap-big">
       <button class="button button-home" @click="goHome">🏠Home</button>
-      <h1>Adventuring in the Tower</h1>
+      <h1>Awakening in the Dark Tower</h1>
       <button class="button button-mute" @click="toggleMute">🔊</button>
     </div>
     <div class="flex flex-column">
