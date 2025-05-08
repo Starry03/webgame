@@ -1,8 +1,8 @@
 import { Entity } from '@/internal/Player'
 
 export class Skele_war extends Entity {
-  constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, speed: number, health: number) {
-    super(canvas, ctx)
+  constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, speed: number, health: number, mana: number) {
+    super(canvas, ctx, speed, health, mana)
     this.framePaths = {
       run: [
         'assets/Sprite/Nemici/Skeleton_Warrior/Run/frame_0_0.png',
@@ -54,6 +54,8 @@ export class Skele_war extends Entity {
         'assets/Sprite/Nemici/Skeleton_Warrior/Dead/frame_0_2.png',
         'assets/Sprite/Nemici/Skeleton_Warrior/Dead/frame_0_3.png',
       ],
+      opening: [],
+      closing: [],
     }
   }
 }

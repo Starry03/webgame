@@ -67,6 +67,9 @@ export class Mage extends Entity {
         'assets/Sprite/Giocatore/Mage/Dead/frame_0_3.png',
         'assets/Sprite/Giocatore/Mage/Dead/frame_0_4.png',
       ],
+      
+      opening: [],
+      closing: [],
     }
   }
 }

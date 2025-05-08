@@ -170,6 +170,7 @@ input {
 }
 
 .button-home:hover {
+  transform: scale(1.1);
   text-shadow:
     0 0 10px black,
     0 0 20px black;

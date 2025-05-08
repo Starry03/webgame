@@ -2,10 +2,12 @@ import { AnimationType, Vector2 } from './types'
 import { Obj } from './Obj'
 import { ref } from 'vue'
 
-export const cooldownQ = ref(0) // Cooldown per l'attacco Q
-export const cooldownR = ref(0) // Cooldown per l'attacco R
-export const maxCooldownQ = 2.5 // Cooldown massimo per Q in secondi
-export const maxCooldownR = 10 // Cooldown massimo per R in secondi
+export const cooldownE = ref(0);
+export const cooldownQ = ref(0); // Cooldown per l'attacco Q
+export const cooldownR = ref(0); // Cooldown per l'attacco R
+export const maxCooldownE = 0.5; // Cooldown massimo per Q in secondi
+export const maxCooldownQ = 2.5; // Cooldown massimo per Q in secondi
+export const maxCooldownR = 10; // Cooldown massimo per R in secondi
 
 // Funzione per avviare il cooldown
 export function startCooldown(ability: 'Q' | 'R') {

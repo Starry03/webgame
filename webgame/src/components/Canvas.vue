@@ -1,15 +1,14 @@
 <template>
   <div style="color: aliceblue" class="flex flex-column flex-space-between" id="game-header">
-    <Map />
     <StatusBar
-      v-if="player"
-      :health="player.value.health"
-      :max-health="player.value.maxHealth"
-      :mana="player.value.mana"
-      :max-mana="player.value.maxMana"
-      :level="player.value.level"
-      :cooldownQ="cooldownQ"
-      :cooldownR="cooldownR"
+      v-if="mappedPlayer"
+      :hp="mappedPlayer.hp"
+      :max-health="mappedPlayer.maxHealth"
+      :mana="mappedPlayer.mana"
+      :max-mana="mappedPlayer.maxMana"
+      :level="mappedPlayer.level"
+      :cooldownQ="mappedPlayer.cooldownQ"
+      :cooldownR="mappedPlayer.cooldownR"
     />
     <canvas ref="canvasRef" id="canvas" :width="window_width" :height="window_height / 1.5" />
   </div>
@@ -17,7 +16,7 @@
 
 <script lang="ts" setup>
 import { cooldownQ, cooldownR } from '@/internal/Player'
-import { ref, onMounted, onUnmounted, reactive } from 'vue'
+import { ref, onMounted, onUnmounted, reactive, computed } from 'vue'
 import { Mage } from '@/internal/Mage'
 import { Samurai } from '@/internal/Samurai'
 import { Thief } from '@/internal/Thief'
@@ -38,10 +37,37 @@ const handle_resize = () => {
   window_height.value = window.innerHeight
 }
 
+const mappedPlayer = computed(() => {
+  if (!player.value) return null;
+
+  return {
+    hp: player.value.hp,
+    maxHealth: player.value.hp,
+    mana: player.value.mana,
+    maxMana: player.value.mana,
+    level: 1, 
+    cooldownQ: cooldownQ.value,
+    cooldownR: cooldownR.value,
+  };
+});
+
+console.log('Dati mappati per StatusBar:', mappedPlayer.value);
+
 onMounted(() => {
   window.addEventListener('resize', handle_resize)
   const character = localStorage.getItem(prefixed(Storage_e.SELECTED_CHARACTER))
   const characterObject: Character = JSON.parse(character || '{}')
+
+  if (
+    !characterObject ||
+    typeof characterObject.name !== 'string' ||
+    typeof characterObject.speed !== 'number' ||
+    typeof characterObject.hp !== 'number' ||
+    typeof characterObject.mana !== 'number'
+  ) {
+    console.error('Dati del personaggio non validi:', characterObject);
+    return;
+  }
 
   const canvas = canvasRef.value
   if (!canvas) {
@@ -59,28 +85,31 @@ onMounted(() => {
 
   switch (characterObject.name) {
     case 'wizard':
+      console.log('Creazione del Mage...')
       player.value = reactive(
-        new Mage(canvas, ctx, characterObject.speed, characterObject.health, characterObject.mana),
+        new Mage(canvas, ctx, characterObject.speed, characterObject.hp, characterObject.mana),
       )
       break
     case 'warrior':
+      console.log('Creazione del Samurai...')
       player.value = reactive(
         new Samurai(
           canvas,
           ctx,
           characterObject.speed,
-          characterObject.health,
+          characterObject.hp,
           characterObject.mana,
         ),
       )
       break
     case 'thief':
+      console.log('Creazione del Thief...')
       player.value = reactive(
-        new Thief(canvas, ctx, characterObject.speed, characterObject.health, characterObject.mana),
+        new Thief(canvas, ctx, characterObject.speed, characterObject.hp, characterObject.mana),
       )
       break
     default:
-      console.error('Invalid character type')
+      console.error('Invalid character type: ', characterObject.name)
   }
 
   console.log('Player inizializzato:', player.value)

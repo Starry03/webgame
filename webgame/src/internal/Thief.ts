@@ -42,11 +42,11 @@ export class Thief extends Entity {
         'assets/Sprite/Giocatore/Karasu_tengu/Idle/frame_0_3.png',
         'assets/Sprite/Giocatore/Karasu_tengu/Idle/frame_0_4.png',
         'assets/Sprite/Giocatore/Karasu_tengu/Idle/frame_0_5.png',
-        'assets/Sprite/Giocatore/Karasu_tengu/Idle/frame_0_6.png',
+        /*'assets/Sprite/Giocatore/Karasu_tengu/Idle/frame_0_6.png',
         'assets/Sprite/Giocatore/Karasu_tengu/Idle/frame_0_7.png',
         'assets/Sprite/Giocatore/Karasu_tengu/Idle/frame_0_8.png',
         'assets/Sprite/Giocatore/Karasu_tengu/Idle/frame_0_9.png',
-        'assets/Sprite/Giocatore/Karasu_tengu/Idle/frame_0_10.png',
+        'assets/Sprite/Giocatore/Karasu_tengu/Idle/frame_0_10.png',*/
       ],
       hurt: [
         'assets/Sprite/Giocatore/Karasu_tengu/Hurt/frame_0_0.png',
@@ -61,6 +61,8 @@ export class Thief extends Entity {
         'assets/Sprite/Giocatore/Karasu_tengu/Dead/frame_0_4.png',
         'assets/Sprite/Giocatore/Karasu_tengu/Dead/frame_0_5.png',
       ],
+      opening: [],
+      closing: [],
     }
   }
 }

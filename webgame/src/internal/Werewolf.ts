@@ -1,8 +1,8 @@
 import { Entity } from '@/internal/Player'
 
 export class Werewolf extends Entity {
-    constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, speed: number, health: number) {
-    super(canvas, ctx)
+  constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, speed: number, health: number, mana: number) {
+    super(canvas, ctx, speed, health, mana)
     this.framePaths = {
       run: [
         'assets/Sprite/Nemici/Werewolf/Run/frame_0_0.png',
@@ -56,6 +56,8 @@ export class Werewolf extends Entity {
         'assets/Sprite/Nemici/Werewolf/Dead/frame_0_0.png',
         'assets/Sprite/Nemici/Werewolf/Dead/frame_0_1.png',
       ],
+      opening: [],
+      closing: [],
     }
   }
 }

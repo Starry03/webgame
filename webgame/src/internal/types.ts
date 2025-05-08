@@ -32,6 +32,8 @@ export enum AnimationType {
   IDLE = 'idle',
   HURT = 'hurt',
   DEAD = 'dead',
+  OPENING = 'opening',
+  CLOSING = 'closing'
 }
 
 export class Vector2 {
