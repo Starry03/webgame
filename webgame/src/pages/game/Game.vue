@@ -4,9 +4,9 @@
   </audio>
   <div class="master flex flex-column flex-align gap-big">
     <div class="flex flex-row flex-center gap-big">
-      <button class="button button-home" @click="goHome">🏠Home</button>
+      <button class="button button-secondary button-home" @click="goHome">Home</button>
       <h1>Awakening in the Dark Tower</h1>
-      <button class="button button-mute" @click="toggleMute">🔊</button>
+      <button class="button button-secondary button-mute" @click="toggleMute">🔊</button>
     </div>
     <div class="flex flex-column">
       <StatusBar :health="80" :maxHealth="100" :mana="50" :maxMana="100" :level="5" :canAttack="true" />
@@ -67,40 +67,71 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+
+@media (max-height: 600px) {
+  .button-mute {
+    width: fit-content;
+    height: fit-content;
+  }
+}
+
+@media (orientation: portrait) {
+  h1 {
+    text-align: center;
+    width: 69%;
+  }
+
+  .button-mute {
+    width: fit-content;
+    height: fit-content;
+    position: absolute;
+    top: 0;
+    left: 85svw;
+  }
+}
+@media (orientation: landscape) {
+  h1 {
+    text-align: center;
+    width: 69%;
+  }
+
+  .button-mute {
+    width: fit-content;
+    height: fit-content;
+    position: absolute;
+    top: 0;
+    left: 85svw;
+  }
+}
+
 .master {
   background: url('/assets/images/sfondo3.gif');
   background-size: cover;
   height: 100vh;
 }
 
-button,
-h1 {
-  font-family: 'Press Start 2P', cursive;
-}
 
 h1 {
-  font-size: 2rem;
+  font-size: var(--font-big);
   text-shadow:
     0 0 10px red,
     0 0 20px red;
-  padding-top: 2%;
+  padding-top: 4%;
   padding-bottom: 2%;
 }
 
 .button-home {
   position: absolute;
-  top: 20px;
+  top: 30px;
   left: 20px;
-  font-size: 1rem;
-  background-color: rgb(148, 20, 60);
+  font-size: var(--font-big);
 }
 
 .button-mute {
   position: absolute;
-  top: 20px;
+  top: 30px;
   right: 20px;
-  font-size: 1.5rem;
-  background-color: rgb(148, 20, 60);
+  font-size: var(--font-big);
 }
 
 .button-home:hover,
