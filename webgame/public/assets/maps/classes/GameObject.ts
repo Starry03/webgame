@@ -1,6 +1,5 @@
 import {Obj} from '../../../../src/internal/Obj'
 import { AnimationType, Vector2 } from '../../../../src/internal/types';
-import { AnimatedObject } from '../classes/AnimatedObject';
 
 export class GameObject extends Obj {
     name: string
@@ -14,6 +13,7 @@ export class GameObject extends Obj {
                 isIdle: boolean,
                 pos: Vector2,
                 dim: Vector2,
+                name: string,
                 x: number,
                 y: number,
                 width: number,
@@ -21,6 +21,7 @@ export class GameObject extends Obj {
       super(canvas, ctx, initialAnimation, isIdle, pos, dim);
       pos = new Vector2(this.x,this.y);
       dim = new Vector2(this.width, this.height);
+      this.name = name;
       this.x = x;
       this.y = y;
       this.width = width;
