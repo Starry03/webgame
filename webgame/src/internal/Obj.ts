@@ -20,7 +20,8 @@ export class Obj {
   isAnimationBlocking: boolean
   isInteractable: boolean
   isSolid: boolean
-  frameDelay: number = 1000 / 60 // 60 FPS
+  frameDelay: number = 1000 / 30
+  collidedObjects: Obj[]
 
   constructor(
     canvas: HTMLCanvasElement,
@@ -48,6 +49,7 @@ export class Obj {
     this.isAnimationBlocking = false
     this.isInteractable = false
     this.isSolid = true
+    this.collidedObjects = []
   }
 
   preloadImages() {
@@ -160,4 +162,17 @@ export class Obj {
     this.changeFrames(this.currentAnimation)
     this.isIdle = true
   }
+
+  resetCollisions() {
+    this.collidedObjects = []
+  }
+
+  onCollision(other: Obj, dir: Vector2) {
+    if (this.isSolid && other.isSolid) {
+      this.collidedObjects.push(other)
+      this.handleCollision(dir)
+    }
+  }
+
+  handleCollision(dir: Vector2) {}
 }
