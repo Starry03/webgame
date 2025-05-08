@@ -6,10 +6,23 @@ export class Door extends Obj {
     y: number
     width: number
     height: number
-    pos: Vector2
-    dim: Vector2
-    constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, speed: number, initialAnimation: AnimationType, isIdle: boolean) {
-       this.pos = new Vector2(this.x,this.y)
-       super(canvas,ctx,initialAnimation, isIdle,); 
+    constructor(canvas: HTMLCanvasElement, 
+                ctx: CanvasRenderingContext2D, 
+                initialAnimation: AnimationType, 
+                isIdle: boolean,
+                pos: Vector2,
+                dim: Vector2) {
+        super(canvas, ctx, initialAnimation, isIdle, pos, dim);
+        pos = new Vector2(this.x,this.y);
+        dim = new Vector2(this.width, this.height);
+        
+        this.framePaths = {
+            opening: [
+                '../'
+            ]
+        }
     }
+
+    
+
 }

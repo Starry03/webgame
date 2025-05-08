@@ -60,6 +60,8 @@ export class Gorg_red extends Entity {
         'assets/Sprite/Nemici/Gorgon_3/Dead/frame_0_1.png',
         'assets/Sprite/Nemici/Gorgon_3/Dead/frame_0_2.png',
       ],
+      opening: [],
+      closing: [],
     }
   }
 }

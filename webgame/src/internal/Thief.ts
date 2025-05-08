@@ -61,6 +61,8 @@ export class Thief extends Entity {
         'assets/Sprite/Giocatore/Karasu_tengu/Dead/frame_0_4.png',
         'assets/Sprite/Giocatore/Karasu_tengu/Dead/frame_0_5.png',
       ],
+      opening: [],
+      closing: [],
     }
   }
 }

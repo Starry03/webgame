@@ -54,6 +54,8 @@ export class Samurai extends Entity {
         'assets/Sprite/Giocatore/Samurai/Dead/frame_0_4.png',
         'assets/Sprite/Giocatore/Samurai/Dead/frame_0_5.png',
       ],
+      opening: [],
+      closing: [],
     }
   }
 }

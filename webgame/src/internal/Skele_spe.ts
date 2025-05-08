@@ -52,6 +52,8 @@ export class Skele_spe extends Entity {
         'assets/Sprite/Nemici/Skeleton_Spearman/Dead/frame_0_3.png',
         'assets/Sprite/Nemici/Skeleton_Spearman/Dead/frame_0_4.png',
       ],
+      opening: [],
+      closing: [],
     }
   }
 }

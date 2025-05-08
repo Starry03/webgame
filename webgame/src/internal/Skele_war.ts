@@ -54,6 +54,8 @@ export class Skele_war extends Entity {
         'assets/Sprite/Nemici/Skeleton_Warrior/Dead/frame_0_2.png',
         'assets/Sprite/Nemici/Skeleton_Warrior/Dead/frame_0_3.png',
       ],
+      opening: [],
+      closing: [],
     }
   }
 }

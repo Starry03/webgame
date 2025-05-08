@@ -74,6 +74,8 @@ export class Skele_arc extends Entity {
         'assets/Sprite/Nemici/Skeleton_Archer/Dead/frame_0_3.png',
         'assets/Sprite/Nemici/Skeleton_Archer/Dead/frame_0_4.png',
       ],
+      opening: [],
+      closing: [],
     }
   }
 }

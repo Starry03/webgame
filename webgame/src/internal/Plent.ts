@@ -61,6 +61,8 @@ export class Plent extends Entity {
         'assets/Sprite/Nemici/Plent/Dead/frame_0_0.png',
         'assets/Sprite/Nemici/Plent/Dead/frame_0_1.png',
       ],
+      opening: [],
+      closing: [],
     }
   }
 }

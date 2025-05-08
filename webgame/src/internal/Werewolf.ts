@@ -56,6 +56,8 @@ export class Werewolf extends Entity {
         'assets/Sprite/Nemici/Werewolf/Dead/frame_0_0.png',
         'assets/Sprite/Nemici/Werewolf/Dead/frame_0_1.png',
       ],
+      opening: [],
+      closing: [],
     }
   }
 }
