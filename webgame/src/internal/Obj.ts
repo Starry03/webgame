@@ -1,4 +1,5 @@
 import { AnimationType, Vector2 } from './types'
+import { type Ref } from 'vue'
 
 export class Obj {
   canvas: HTMLCanvasElement
@@ -16,7 +17,7 @@ export class Obj {
   prevAnimation: AnimationType | null
   isIdle: boolean
   ready: boolean
-  cooldowns: Map<AnimationType, number>
+  cooldowns: Map<AnimationType, Ref<number>>
   isAnimationBlocking: boolean
   isInteractable: boolean
   isSolid: boolean
@@ -45,7 +46,7 @@ export class Obj {
     this.prevAnimation = null
     this.isIdle = isIdle
     this.ready = false
-    this.cooldowns = new Map<AnimationType, number>()
+    this.cooldowns = new Map<AnimationType, Ref>()
     this.isAnimationBlocking = false
     this.isInteractable = false
     this.isSolid = true
@@ -123,7 +124,7 @@ export class Obj {
       this.isAnimationBlocking = false
       if (
         this.cooldowns.has(this.currentAnimation) &&
-        this.cooldowns.get(this.currentAnimation) != 0
+        this.cooldowns.get(this.currentAnimation)?.value != 0
       ) {
         this.idle()
       }
@@ -176,4 +177,8 @@ export class Obj {
   }
 
   handleCollision(dir: Vector2) {}
+
+  onInteract(other: Obj) {}
+
+  interact(target: Obj) {}
 }
