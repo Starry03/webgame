@@ -157,7 +157,8 @@ export class Obj {
     this.drawFrame()
   }
 
-  idle() {
+  idle(forced: boolean = false) {
+    if (this.isIdle && !forced) return
     this.changeAnimation(AnimationType.IDLE)
     this.changeFrames(this.currentAnimation)
     this.isIdle = true
