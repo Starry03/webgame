@@ -59,9 +59,9 @@ h3 {
 
 .button-home {
   position: absolute;
-  top: 20px;
+  top: 30px;
   left: 20px;
-  font-size: var(--font-mid);
+  font-size: var(--font-big);
 }
 
 .button-home:hover {

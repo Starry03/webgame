@@ -1,8 +1,8 @@
 import { Entity } from '@/internal/Player'
 
 export class Plent extends Entity {
-    constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, speed: number, health: number) {
-    super(canvas, ctx)
+  constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, speed: number, health: number, mana: number) {
+    super(canvas, ctx, speed, health, mana)
     this.framePaths = {
       run: [
         'assets/Sprite/Nemici/Plent/Disguise/frame_0_0.png',
