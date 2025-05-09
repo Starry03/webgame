@@ -18,6 +18,4 @@ export class AnimatedObject extends GameObject {
       super(canvas,ctx, initialAnimation, isIdle, pos, dim, name, x, y, width, height);
       this.custom_properties = custom_properties;
     }
-  
   }
-  

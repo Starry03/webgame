@@ -15,32 +15,36 @@ export class Door extends AnimatedObject {
                 width: number,
                 height: number,
                 custom_properties: Record<string,string>) {
-        super(canvas, ctx, initialAnimation, isIdle, pos, dim, name, x, y, width, height, custom_properties);
-                }
+      super(canvas, ctx, initialAnimation, isIdle, pos, dim, name, x, y, width, height, custom_properties);
+    }
 
-        this.framePaths = {
-            run: [],
-            attack1: [],
-            attack2: [],
-            special: [],
-            idle: [],
-            hurt: [],
-            dead: [],
-            opening: [
-                '../rooms/tiled_objects/apertura.png',
-                '../rooms/tiled_objects/apertura1.png',
-                '../rooms/tiled_objects/apertura2.png',
-                '../rooms/tiled_objects/apertura3.png',
-                '../rooms/tiled_objects/apertura4.png',
-                '../rooms/tiled_objects/entrance_door.png'
-            ],
-            closing: [
-                '../rooms/tiled_objects/entrance_door.png',
-                '../rooms/tiled_objects/apertura4.png',
-                '../rooms/tiled_objects/apertura3.png',
-                '../rooms/tiled_objects/apertura2.png',
-                '../rooms/tiled_objects/apertura1.png',
-                '../rooms/tiled_objects/entrance_door.png',
-            ]
-        }
+    setPaths(): Record<AnimationType, string[]> {
+      const frame_paths: Record<AnimationType, string[]> = {
+        run: [],
+        attack1: [],
+        attack2: [],
+        special: [],
+        idle: [],
+        hurt: [],
+        dead: [],
+        opening: [
+          '../rooms/tiled_objects/apertura.png',
+          '../rooms/tiled_objects/apertura1.png',
+          '../rooms/tiled_objects/apertura2.png',
+          '../rooms/tiled_objects/apertura3.png',
+          '../rooms/tiled_objects/apertura4.png',
+          '../rooms/tiled_objects/entrance_door.png'
+        ],
+        closing: [
+          '../rooms/tiled_objects/entrance_door.png',
+          '../rooms/tiled_objects/apertura4.png',
+          '../rooms/tiled_objects/apertura3.png',
+          '../rooms/tiled_objects/apertura2.png',
+          '../rooms/tiled_objects/apertura1.png',
+          '../rooms/tiled_objects/entrance_door.png',
+        ]
+      };
+      this.setFramePaths(frame_paths);
+      return frame_paths;
+    }
 }

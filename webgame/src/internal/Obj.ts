@@ -176,4 +176,12 @@ export class Obj {
   }
 
   handleCollision(dir: Vector2) {}
+
+  getFramePaths(): Record<AnimationType, string[]> {
+    return this.framePaths;
+  }
+
+  setFramePaths(path: Record<AnimationType, string[]>) {
+    this.framePaths = path;
+  }
 }
