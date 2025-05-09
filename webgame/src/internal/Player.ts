@@ -2,31 +2,33 @@ import { AnimationType, Vector2 } from './types'
 import { Obj } from './Obj'
 import { ref } from 'vue'
 
+export const cooldownE = ref(0);
 export const cooldownQ = ref(0); // Cooldown per l'attacco Q
 export const cooldownR = ref(0); // Cooldown per l'attacco R
+export const maxCooldownE = 0.5; // Cooldown massimo per Q in secondi
 export const maxCooldownQ = 2.5; // Cooldown massimo per Q in secondi
 export const maxCooldownR = 10; // Cooldown massimo per R in secondi
 
 // Funzione per avviare il cooldown
 export function startCooldown(ability: 'Q' | 'R') {
   if (ability === 'Q' && cooldownQ.value === 0) {
-    cooldownQ.value = maxCooldownQ;
+    cooldownQ.value = maxCooldownQ
     const interval = setInterval(() => {
-      cooldownQ.value -= 0.1;
-      if (cooldownQ.value <= 0){
-        cooldownQ.value = 0; // Reset cooldown to 0
-        clearInterval(interval);
+      cooldownQ.value -= 0.1
+      if (cooldownQ.value <= 0) {
+        cooldownQ.value = 0 // Reset cooldown to 0
+        clearInterval(interval)
       }
-    }, 100);
+    }, 100)
   } else if (ability === 'R' && cooldownR.value === 0) {
-    cooldownR.value = maxCooldownR;
+    cooldownR.value = maxCooldownR
     const interval = setInterval(() => {
-      cooldownR.value -= 0.1;
-      if (cooldownR.value <= 0){
-        cooldownR.value = 0; // Reset cooldown to 0
-        clearInterval(interval);
+      cooldownR.value -= 0.1
+      if (cooldownR.value <= 0) {
+        cooldownR.value = 0 // Reset cooldown to 0
+        clearInterval(interval)
       }
-    }, 100);
+    }, 100)
   }
 }
 
@@ -74,11 +76,23 @@ export class Entity extends Obj {
     dir.normalize()
     this.pos.x += dir.x * this.speed * deltaTime * 4
     this.pos.y += dir.y * this.speed * deltaTime * 4
-    if (!dir.compare(new Vector2(0, 0))) {
-      this.changeAnimation(AnimationType.RUN)
-      this.facingDirection = dir
+    if (dir.compare(0, 0)) {
+      this.idle()
+      return
+    }
+    this.changeAnimation(AnimationType.RUN)
+    this.facingDirection = dir
+  }
+
+  get_attack(damage: number) {
+    this.health -= damage
+    if (this.health <= 0) {
+      this.health = 0
+      this.die()
     }
   }
+
+  die() {}
 
   attack(keys: Set<string>) {
     let isAttacking: boolean = true

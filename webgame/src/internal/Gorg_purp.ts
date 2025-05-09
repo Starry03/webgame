@@ -1,8 +1,8 @@
 import { Entity } from '@/internal/Player'
 
 export class Gorg_purp extends Entity {
-    constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, speed: number, health: number) {
-    super(canvas, ctx)
+  constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, speed: number, health: number, mana: number) {
+    super(canvas, ctx, speed, health, mana)
     this.framePaths = {
       run: [
         'assets/Sprite/Nemici/Gorgon_2/Run/frame_0_0.png',
@@ -60,6 +60,8 @@ export class Gorg_purp extends Entity {
         'assets/Sprite/Nemici/Gorgon_2/Dead/frame_0_1.png',
         'assets/Sprite/Nemici/Gorgon_2/Dead/frame_0_2.png',
       ],
+      opening: [],
+      closing: [],
     }
   }
 }

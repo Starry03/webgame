@@ -1,36 +1,58 @@
 <script setup lang="ts">
-import type { Thief } from '@/internal/Thief';
-import ProgressBar from './ProgressBar.vue';
-import { ref, computed, watch } from 'vue';
 import type { Samurai } from '@/internal/Samurai';
 import type { Mage } from '@/internal/Mage';
+import type { Thief } from '@/internal/Thief';
+import ProgressBar from './ProgressBar.vue';
+import { computed, defineProps } from 'vue';
 
 const props = defineProps({
-  health: {
+  hp: {
     type: Number,
     required: true,
+    default: 100,
   },
   maxHealth: {
     type: Number,
     required: true,
+    default: 100,
   },
   mana: {
     type: Number,
     required: true,
+    default: 100,
   },
   maxMana: {
     type: Number,
     required: true,
+    default: 100,
   },
-  level: Number,
-  cooldownQ: Number,
-  cooldownR: Number,
+  level: {
+    type: Number,
+    default: 1,
+  },
+  cooldownQ: {
+    type: Number,
+    default: 0,
+  },
+  cooldownR: {
+    type: Number,
+    default: 0,
+  }
 });
 
 // Percentuali per le barre di progresso
-const healthPercentage = computed(() => (props.health / props.maxHealth) * 100 || 0);
-const manaPercentage = computed(() => (props.mana / props.maxMana) * 100 || 0);
+const healthPercentage = computed(() => {
+  const percentage = (props.hp / props.maxHealth) * 100 || 0;
+  return isNaN(percentage) || percentage < 0 ? 0 : percentage;
+});
+const manaPercentage = computed(() => {
+  const percentage = (props.mana / props.maxMana) * 100 || 0;
+  return isNaN(percentage) || percentage < 0 ? 0 : percentage;
+});
 
+console.log('Props ricevute:', props);
+console.log('Health Percentage:', healthPercentage.value);
+console.log('Mana Percentage:', manaPercentage.value);
 
 </script>
 
@@ -40,37 +62,40 @@ const manaPercentage = computed(() => (props.mana / props.maxMana) * 100 || 0);
     <div class="flex items-center gap-small">
       <span>HP:</span>
       <ProgressBar :progress="healthPercentage" color="red" />
-      <span>{{ health }}/{{ maxHealth }}</span>
+      <span>{{ props.hp }}/{{ props.maxHealth }}</span>
     </div>
 
     <!-- Barra del mana -->
     <div class="flex items-center gap-small">
       <span>Mana:</span>
       <ProgressBar :progress="manaPercentage" color="blue" />
-      <span>{{ mana }}/{{ maxMana }}</span>
+      <span>{{ props.mana }}/{{ props.maxMana }}</span>
     </div>
 
     <!-- Livello del personaggio -->
     <div class="flex items-center gap-small">
       <span>Level:</span>
-      <span>{{ level }}</span>
+      <span>{{ props.level }}</span>
     </div>
 
     <!-- Cooldown per Q e R -->
     <div class="flex items-center gap-large">
       <!-- Cooldown Q -->
       <div class="cooldown-container">
-        <div class="cooldown-circle" :style="{ '--progress': cooldownQ?.toFixed(1) /*/ Player.arguments.maxCooldownQ.toFixed(1)) * 100 + '%'*/ }"></div>
+        <div class="cooldown-circle" :style="{ '--progress': (props.cooldownQ / 2.5) * 100 + '%' }"></div>
         <span>Q</span>
       </div>
 
       <!-- Cooldown R -->
       <div class="cooldown-container">
-        <div class="cooldown-circle" :style="{ '--progress': cooldownR?.toFixed(1) /*/ Player.arguments.maxCooldownR.toFixed(1)) * 100 + '%'*/ }"></div>
+        <div class="cooldown-circle" :style="{ '--progress': (props.cooldownR / 10) * 100 + '%' }"></div>
         <span>R</span>
       </div>
     </div>
   </div>
+
+  
+
 </template>
 
 <style scoped>
@@ -79,6 +104,9 @@ const manaPercentage = computed(() => (props.mana / props.maxMana) * 100 || 0);
   background-color: #222;
   border-radius: 8px;
   color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .cooldown-container {
