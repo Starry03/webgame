@@ -11,7 +11,7 @@ export interface TiledObject {
     y: number;
     width: number;
     height: number;
-    custom_properties?: TiledProperty[];
+    properties?: TiledProperty[];
 }
 
 export interface TiledLayer {
