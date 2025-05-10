@@ -1,10 +1,10 @@
 import {NotAnimatedObject} from '../classes/NotAnimatedObject'
 import {AnimatedObject} from '../classes/AnimatedObject';
-import { TiledProperty, TiledObject, TiledLayer, TiledMap } from './interfaces/Interfaces';
+import {TiledMap } from './interfaces/Interfaces';
 import {AnimationType, Vector2} from '../../../../src/internal/types';
 
 
-export function loadObjectsFromMap(jsonMap: TiledMap) {
+export function loadObjectsFromMap(jsonMap: TiledMap): (NotAnimatedObject|AnimatedObject)[] {
     const list_objects: (NotAnimatedObject | AnimatedObject)[] = [];
     jsonMap.layers.forEach(layer => {
         if (layer.type === 'objects' && layer.objects) {
@@ -24,4 +24,20 @@ export function loadObjectsFromMap(jsonMap: TiledMap) {
             })
         }
     })
+    return list_objects;
+}
+
+export async function loadMapObjects(mapUrl: string): Promise<(AnimatedObject|NotAnimatedObject)[]> {
+    try {
+        const response = await fetch(mapUrl);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const map_data = await response.json();
+        return loadObjectsFromMap(map_data);
+    }
+    catch (error) {
+        console.error(`Errore nel caricamento della mappa: ${mapUrl}`, error);
+        return [];
+    }
 }
