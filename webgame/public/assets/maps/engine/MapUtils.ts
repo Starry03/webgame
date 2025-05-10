@@ -17,13 +17,11 @@ export function loadObjectsFromMap(jsonMap: TiledMap): (NotAnimatedObject|Animat
                 const dim: Vector2 = new Vector2(object.width, object.height);
                 if (object.class === 'AnimatedClass') {
                     const custom_properties: Record<string, any> = {} as Record<string, any>;
-
                     if (object.properties) {
                         object.properties.forEach((property: TiledProperty) => {
                             custom_properties[property.name] = property.value;
                         })
                     }
-
                     list_objects.push(new AnimatedObject(canvas,ctx,AnimationType.IDLE,isIdle,pos, dim, object.name, object.x, object.y, object.width, object.height, custom_properties));
                 }
                 else {
