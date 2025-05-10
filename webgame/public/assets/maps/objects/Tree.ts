@@ -1,7 +1,7 @@
-import {NotAnimatedObject} from "../classes/NotAnimatedObject";
+import {AnimatedObject} from "../classes/AnimatedObject";
 import { AnimationType, Vector2 } from '../../../../src/internal/types';
 
-export class Tree extends NotAnimatedObject {
+export class Tree extends AnimatedObject {
     constructor(canvas: HTMLCanvasElement,
                 ctx: CanvasRenderingContext2D,
                 initialAnimation: AnimationType,
@@ -12,7 +12,8 @@ export class Tree extends NotAnimatedObject {
                 x: number,
                 y: number,
                 width: number,
-                height: number) {
-        super(canvas,ctx,initialAnimation,isIdle,pos,dim,name,x,y,width,height);
+                height: number,
+                custom_properties: Record<string,any>) {
+        super(canvas,ctx,initialAnimation,isIdle,pos,dim,name,x,y,width,height,custom_properties);
     }
 }

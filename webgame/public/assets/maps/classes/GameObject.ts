@@ -7,9 +7,9 @@ export class GameObject extends Obj {
     y: number
     width: number
     height: number
-    constructor(canvas: HTMLCanvasElement, 
-                ctx: CanvasRenderingContext2D, 
-                initialAnimation: AnimationType, 
+    constructor(canvas: HTMLCanvasElement,
+                ctx: CanvasRenderingContext2D,
+                initialAnimation: AnimationType,
                 isIdle: boolean,
                 pos: Vector2,
                 dim: Vector2,
@@ -28,4 +28,3 @@ export class GameObject extends Obj {
       this.height = height;
       }
   }
-  
