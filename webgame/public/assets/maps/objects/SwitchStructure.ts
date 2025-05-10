@@ -1,4 +1,4 @@
-import {NotAnimatedObject} from "../classes/NotAnimatedObject";
+import {NotAnimatedObject} from '../classes/NotAnimatedObject';
 import { AnimationType, Vector2 } from '../../../../src/internal/types';
 import {SpecialWall} from './SpecialWall'
 import {SwitchRoomDoor} from './SwitchRoomDoor';
