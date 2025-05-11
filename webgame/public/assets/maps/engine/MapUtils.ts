@@ -58,7 +58,14 @@ const tileSize = 32;
 const background_map_image = new Image();
 background_map_image.src = '../rooms/background_map/background_map.png';
 
-async function loadMapData(): Promise<void> {
+function loadImage(img: HTMLImageElement): Promise<void> {
+    return new Promise( (resolve, reject) => {
+        img.onload = () => resolve();
+        img.onerror = reject;
+    })
+}
+
+export async function loadMapData(): Promise<void> {
     let map_data: any = null;
     try {
         const res =  await fetch('path/to/json_map');
@@ -66,18 +73,22 @@ async function loadMapData(): Promise<void> {
             throw new Error(`HTTP error! status: ${res.status}`);
         }
         map_data = await res.json();
+
+        await loadImage(background_map_image);
+
+        const background_layer = map_data.layers.find(layer => layer.name === 'background');
+        if (background_layer && background_layer.data) {
+            const decoded = decodeTileLayer(background_layer.data);
+            drawTileLayer(decoded, background_layer.width, background_layer.height);
+        }
     }
     catch (err) {
         console.error(err);
         return;
     }
-    const background_layer = map_data.layers.find(
-        l => l.name === 'background');
-    const decoded = decodeTileLayer(background_layer.data);
-    drawTileLayer(decoded, map_data.width, map_data.height);
 }
 
-function decodeTileLayer(encoded_data: string): number[] {
+export function decodeTileLayer(encoded_data: string): number[] {
     const binary = atob(encoded_data);
     const len = binary.length;
     const bytes = new Uint8Array(len);
@@ -100,7 +111,7 @@ function decodeTileLayer(encoded_data: string): number[] {
     return tileData;
 }
 
-function drawTileLayer(tileData: number[], width: number, height: number) {
+export function drawTileLayer(tileData: number[], width: number, height: number) {
     background_map_image.onload = () => {
        const row_tiles = background_map_image.width /tileSize;
 

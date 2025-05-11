@@ -18,6 +18,7 @@ export interface TiledLayer {
     name: string;
     type: string;
     objects?: TiledObject[];
+    data?: string;
 }
 
 export interface TiledMap {
