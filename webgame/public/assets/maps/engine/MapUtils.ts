@@ -65,10 +65,10 @@ function loadImage(img: HTMLImageElement): Promise<void> {
     })
 }
 
-export async function loadMapData(): Promise<void> {
+export async function loadMapData(path: string): Promise<void> {
     let map_data: any = null;
     try {
-        const res =  await fetch('path/to/json_map');
+        const res =  await fetch(path);
         if (!res.ok) {
             throw new Error(`HTTP error! status: ${res.status}`);
         }
@@ -138,3 +138,25 @@ export function drawTileLayer(tileData: number[], width: number, height: number)
        }
     }
 }
+
+const roomsPaths: Record<string, string> = {
+    'room1': '../../rooms/room1/rooms1.json',
+    'room2': '../../rooms/room2/rooms2.json',
+    'room3': '../../rooms/room3/rooms3.json',
+    'room4': '../../rooms/room4/rooms4.json',
+    'boss_room': '../../rooms/boss_room/boss_room.json',
+};
+
+export async function loadRoomByName(roomName: string): Promise<(NotAnimatedObject|AnimatedObject)[]> {
+    const path = roomsPaths[roomName];
+    if (!path) {
+        throw new Error(`Room ${roomName} not found`);
+    }
+    return await loadRoom(path);
+}
+
+export async function loadRoom(path: string): Promise<(NotAnimatedObject|AnimatedObject)[]> {
+    await loadMapData(path);
+    return await loadMapObjects(path);
+}
+
