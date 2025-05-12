@@ -8,7 +8,7 @@ import * as pako from 'pako';
 export function loadObjectsFromMap(jsonMap: TiledMap): (NotAnimatedObject|AnimatedObject)[] {
     const list_objects: (NotAnimatedObject | AnimatedObject)[] = [];
     jsonMap.layers.forEach(layer => {
-        if (layer.type === 'objectgroup' && layer.objects) {
+        if (layer.type === 'objects' && layer.objects) {
             layer.objects.forEach(object => {
                 /*verificare se "canvas" e "ctx" sono corretti: le alternative sono:
                 * const canvas = document.createElement('canvas');
