@@ -4,7 +4,7 @@ import { defineProps } from 'vue'
 defineProps({
   progress: {
     type: Number,
-    required: false,
+    required: true,
   },
 })
 </script>

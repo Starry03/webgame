@@ -15,7 +15,7 @@ export class GameHandlder {
     this.keys = new Set<string>()
     this.lastTimeStamp = 0
     this.player.preloadImages()
-    this.player.idle()
+    this.player.idle(true)
     this.gameLoop = this.gameLoop.bind(this)
 
     window.addEventListener('keydown', (e) => {

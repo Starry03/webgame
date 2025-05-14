@@ -1,4 +1,5 @@
 import { AnimationType, Vector2 } from './types'
+import { type Ref } from 'vue'
 
 export class Obj {
   canvas: HTMLCanvasElement
@@ -16,11 +17,12 @@ export class Obj {
   prevAnimation: AnimationType | null
   isIdle: boolean
   ready: boolean
-  cooldowns: Map<AnimationType, number>
+  cooldowns: Map<AnimationType, Ref<number>>
   isAnimationBlocking: boolean
   isInteractable: boolean
   isSolid: boolean
-  frameDelay: number = 6000 / 60 // 60 FPS
+  frameDelay: number = 1000 / 30
+  collidedObjects: Obj[]
 
   constructor(
     canvas: HTMLCanvasElement,
@@ -44,10 +46,11 @@ export class Obj {
     this.prevAnimation = null
     this.isIdle = isIdle
     this.ready = false
-    this.cooldowns = new Map<AnimationType, number>()
+    this.cooldowns = new Map<AnimationType, Ref>()
     this.isAnimationBlocking = false
     this.isInteractable = false
     this.isSolid = true
+    this.collidedObjects = []
   }
 
   preloadImages() {
@@ -121,7 +124,7 @@ export class Obj {
       this.isAnimationBlocking = false
       if (
         this.cooldowns.has(this.currentAnimation) &&
-        this.cooldowns.get(this.currentAnimation) != 0
+        this.cooldowns.get(this.currentAnimation)?.value != 0
       ) {
         this.idle()
       }
@@ -155,9 +158,35 @@ export class Obj {
     this.drawFrame()
   }
 
-  idle() {
+  idle(forced: boolean = false) {
+    if (this.isIdle && !forced) return
     this.changeAnimation(AnimationType.IDLE)
     this.changeFrames(this.currentAnimation)
     this.isIdle = true
+  }
+
+  resetCollisions() {
+    this.collidedObjects = []
+  }
+
+  onCollision(other: Obj, dir: Vector2) {
+    if (this.isSolid && other.isSolid) {
+      this.collidedObjects.push(other)
+      this.handleCollision(dir)
+    }
+  }
+
+  handleCollision(dir: Vector2) {}
+
+  onInteract(other: Obj) {}
+
+  interact(target: Obj) {}
+  
+  getFramePaths(): Record<AnimationType, string[]> {
+    return this.framePaths;
+  }
+
+  setFramePaths(path: Record<AnimationType, string[]>) {
+    this.framePaths = path;
   }
 }
