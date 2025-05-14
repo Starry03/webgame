@@ -38,7 +38,15 @@
   box-sizing: border-box;
 }
 
+.w-full {
+  width: 100%;
+}
+
 .h-full {
+  height: 100%;
+}
+
+.h-fullvh {
   height: 100vh;
 }
 
