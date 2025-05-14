@@ -15,16 +15,15 @@
 </template>
 
 <script lang="ts" setup>
-import { cooldownQ, cooldownR } from '@/internal/Player'
-import { ref, onMounted, onUnmounted, reactive, computed } from 'vue'
+import { ref, onMounted, onUnmounted, reactive, computed, type Reactive, type Ref } from 'vue'
 import { Mage } from '@/internal/Mage'
 import { Samurai } from '@/internal/Samurai'
 import { Thief } from '@/internal/Thief'
 import { prefixed } from '@/internal/cryptoutils'
 import { GameHandlder } from '@/internal/GameHandler'
-import { Storage_e, type Character } from '@/internal/types'
-import Map from '@/components/Map.vue'
+import { AnimationType, Storage_e, type Character } from '@/internal/types'
 import StatusBar from '@/components/StatusBar.vue'
+import type { Entity } from '@/internal/Player'
 
 const window_width = ref(window.innerWidth)
 const window_height = ref(window.innerHeight)
@@ -40,14 +39,16 @@ const handle_resize = () => {
 const mappedPlayer = computed(() => {
   if (!player.value) return null;
 
+  const player_value: Reactive<Entity> = player.value
+
   return {
     hp: player.value.hp,
     maxHealth: player.value.hp,
     mana: player.value.mana,
     maxMana: player.value.mana,
     level: 1, 
-    cooldownQ: cooldownQ.value,
-    cooldownR: cooldownR.value,
+    cooldownQ: player_value.cooldowns.get(AnimationType.ATTACK_2),
+    cooldownR: player_value.cooldowns.get(AnimationType.SPECIAL),
   };
 });
 

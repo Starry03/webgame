@@ -3,104 +3,100 @@ import { Obj } from './Obj'
 import { type Ref, ref } from 'vue'
 
 export class Entity extends Obj {
-  speed: number
-  health: number
-  maxHealth: number
-  mana: number
-  maxMana: number
+    speed: number
+    health: number
+    maxHealth: number
+    mana: number
+    maxMana: number
 
-  constructor(
-    canvas: HTMLCanvasElement,
-    ctx: CanvasRenderingContext2D,
-    speed: number,
-    health: number,
-    mana: number,
-    pos: Vector2 = new Vector2(50, 50),
-    dim: Vector2 = new Vector2(100, 100),
-  ) {
-    super(canvas, ctx, AnimationType.IDLE, true, pos, dim)
-    this.currentAnimation = AnimationType.IDLE
-    this.speed = speed
-    this.health = health
-    this.maxHealth = health
-    this.mana = mana
-    this.maxMana = mana
-    this.cooldowns.set(AnimationType.ATTACK_1, ref(0))
-    this.cooldowns.set(AnimationType.ATTACK_2, ref(0))
-    this.cooldowns.set(AnimationType.SPECIAL, ref(0))
-  }
-
-  handleInput(keys: Set<string>, deltaTime: number) {
-    this.move(keys, deltaTime)
-    this.attack(keys)
-  }
-
-  move(keys: Set<string>, deltaTime: number) {
-    if (this.isAnimationBlocking) return
-    let dir = new Vector2(
-      (keys.has('d') || keys.has('ArrowRight') ? 1 : 0) +
-        (keys.has('a') || keys.has('ArrowLeft') ? -1 : 0),
-      (keys.has('s') || keys.has('ArrowDown') ? 1 : 0) +
-        (keys.has('w') || keys.has('ArrowUp') ? -1 : 0),
-    )
-    dir.normalize()
-    this.pos.x += dir.x * this.speed * deltaTime * 4
-    this.pos.y += dir.y * this.speed * deltaTime * 4
-    if (dir.compare(0, 0)) {
-      this.idle()
-      return
+    constructor(
+        canvas: HTMLCanvasElement,
+        ctx: CanvasRenderingContext2D,
+        speed: number,
+        health: number,
+        mana: number,
+        pos: Vector2 = new Vector2(50, 50),
+        dim: Vector2 = new Vector2(100, 100),
+    ) {
+        super(canvas, ctx, AnimationType.IDLE, true, pos, dim)
+        this.currentAnimation = AnimationType.IDLE
+        this.speed = speed
+        this.health = health
+        this.maxHealth = health
+        this.mana = mana
+        this.maxMana = mana
+        this.cooldowns.set(AnimationType.ATTACK_1, ref(0))
+        this.cooldowns.set(AnimationType.ATTACK_2, ref(0))
+        this.cooldowns.set(AnimationType.SPECIAL, ref(0))
     }
-    this.changeAnimation(AnimationType.RUN)
-    this.facingDirection = dir
-  }
 
-  get_damage(damage: number) {
-    this.health -= damage
-    if (this.health <= 0) {
-      this.health = 0
-      this.die()
+    handleInput(keys: Set<string>, deltaTime: number) {
+        this.move(keys, deltaTime)
+        this.attack(keys)
     }
-  }
 
-  die() {}
+    move(keys: Set<string>, deltaTime: number) {
+        if (this.isAnimationBlocking) return
+        let dir = new Vector2(
+            (keys.has('d') || keys.has('ArrowRight') ? 1 : 0) +
+                (keys.has('a') || keys.has('ArrowLeft') ? -1 : 0),
+            (keys.has('s') || keys.has('ArrowDown') ? 1 : 0) +
+                (keys.has('w') || keys.has('ArrowUp') ? -1 : 0),
+        )
+        dir.normalize()
+        this.pos.x += dir.x * this.speed * deltaTime * 4
+        this.pos.y += dir.y * this.speed * deltaTime * 4
+        if (dir.compare(0, 0)) {
+            this.idle()
+            return
+        }
+        this.changeAnimation(AnimationType.RUN)
+        this.facingDirection = dir
+    }
 
-  attack(keys: Set<string>) {
-    let isAttacking: boolean = true
-    let cooldownFactor: number = 1
-    let attackFactor: number = 1
-    let usedAnimation: AnimationType = AnimationType.IDLE
+    get_damage(damage: number) {
+        this.health -= damage
+        if (this.health <= 0) {
+            this.health = 0
+            this.die()
+        }
+    }
 
-    if (keys.has('e') && this.cooldowns.get(AnimationType.ATTACK_1)?.value == 0) {
-      this.changeAnimation(AnimationType.ATTACK_1, true)
-      usedAnimation = AnimationType.ATTACK_1
-      cooldownFactor = 0.5
-    } else if (keys.has('q') && this.cooldowns.get(AnimationType.ATTACK_2)?.value == 0) {
-      this.changeAnimation(AnimationType.ATTACK_2, true)
-      usedAnimation = AnimationType.ATTACK_2
-      cooldownFactor = 2.5
-    } else if (keys.has('r') && this.cooldowns.get(AnimationType.SPECIAL)?.value == 0) {
-      this.changeAnimation(AnimationType.SPECIAL, true)
-      usedAnimation = AnimationType.SPECIAL
-      cooldownFactor = 5
-    } else isAttacking = false
-    if (!isAttacking) return
+    die() {}
 
-    attackFactor = cooldownFactor
-    let refCooldown: Ref<number> | undefined = this.cooldowns.get(usedAnimation)
-    if (!refCooldown) return
+    attack(keys: Set<string>) {
+        let isAttacking: boolean = true
+        let cooldownFactor: number = 1
+        let attackFactor: number = 1
+        let usedAnimation: AnimationType = AnimationType.IDLE
 
-    const damage: number = this.attack * attackFactor
+        if (keys.has('e') && this.cooldowns.get(AnimationType.ATTACK_1)?.value == 0) {
+            this.changeAnimation(AnimationType.ATTACK_1, true)
+            usedAnimation = AnimationType.ATTACK_1
+            cooldownFactor = 1
+        } else if (keys.has('q') && this.cooldowns.get(AnimationType.ATTACK_2)?.value == 0) {
+            this.changeAnimation(AnimationType.ATTACK_2, true)
+            usedAnimation = AnimationType.ATTACK_2
+            cooldownFactor = 2.5
+        } else if (keys.has('r') && this.cooldowns.get(AnimationType.SPECIAL)?.value == 0) {
+            this.changeAnimation(AnimationType.SPECIAL, true)
+            usedAnimation = AnimationType.SPECIAL
+            cooldownFactor = 5
+        } else isAttacking = false
+        if (!isAttacking) return
 
-    refCooldown.value = this.speed * 10 * cooldownFactor
-    setTimeout(
-      () => {
-        refCooldown.value = 0
-      },
-      this.speed * 10 * cooldownFactor,
-    )
-  }
+        attackFactor = cooldownFactor
+        let refCooldown: Ref<number> | undefined = this.cooldowns.get(usedAnimation)
+        if (!refCooldown) return
 
-  handleAttack() {
+        refCooldown.value = this.speed * 10 * cooldownFactor
+        setTimeout(
+            () => {
+                refCooldown.value = 0
+            },
+            this.speed * 10 * cooldownFactor,
+        )
+    }
 
-  }
+    handleAttack() {}
 }
