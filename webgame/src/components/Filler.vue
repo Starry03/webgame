@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Ref } from 'vue';
 
-defineProps({
+const props = defineProps({
     percentage: {
         type: Object as () => Ref<number>,
         required: true,
@@ -10,13 +10,17 @@ defineProps({
         type: String,
         required: true,
     },
+    max: {
+        type: Number,
+        required: true,
+    },
 })
 </script>
 
 <template>
     <div class="cooldown-container">
-        <div class="cooldown-circle" :style="{ '--progress': percentage + '%' }"></div>
-        <span>{{ text }} {{ percentage.value }}</span>
+        <div class="cooldown-circle" :style="{ '--progress': percentage.value / max * 100 + '%' }"></div>
+        <span>{{ text }} {{ percentage.value / max * 100  }}</span>
     </div>
 </template>
 

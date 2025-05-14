@@ -90,6 +90,17 @@ export class Entity extends Obj {
         if (!refCooldown) return
 
         refCooldown.value = this.speed * 10 * cooldownFactor
+
+        const intervalId = setInterval(() => {
+            if (refCooldown.value > 0) {
+                refCooldown.value -= this.speed * 10
+            }
+            if (refCooldown.value <= 0) {
+                refCooldown.value = 0
+                clearInterval(intervalId)
+            }
+        }, 100)
+
         setTimeout(
             () => {
                 refCooldown.value = 0
