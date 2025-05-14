@@ -1,7 +1,7 @@
 import {NotAnimatedObject} from "../classes/NotAnimatedObject";
 import { AnimationType, Vector2 } from '../../../../src/internal/types';
 
-export class Ladder extends NotAnimatedObject {
+export class Bush extends NotAnimatedObject {
     constructor(canvas: HTMLCanvasElement,
                 ctx: CanvasRenderingContext2D,
                 initialAnimation: AnimationType,

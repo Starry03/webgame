@@ -181,4 +181,12 @@ export class Obj {
   onInteract(other: Obj) {}
 
   interact(target: Obj) {}
+  
+  getFramePaths(): Record<AnimationType, string[]> {
+    return this.framePaths;
+  }
+
+  setFramePaths(path: Record<AnimationType, string[]>) {
+    this.framePaths = path;
+  }
 }

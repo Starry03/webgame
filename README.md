@@ -148,3 +148,24 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
 - responsive
 - altro
+
+## Debug mappe
+Accesso ai tileset delle stanze: modificare settings.json relativo alle impostazioni utente
+```sh
+"files.associations": {
+  "*.tsx": "xml"
+}
+```
+
+Decoding di zlib+base64, usato nella creazione delle stanze
+```sh
+npm install pako
+```
+
+Se TypeScript continua a non riconoscere pako, è possibile installare i tipi: 
+```sh
+npm install @types/pako
+
+```
+
+
