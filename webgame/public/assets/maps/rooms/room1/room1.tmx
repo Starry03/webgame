@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="25" height="13" tilewidth="32" tileheight="32" infinite="0" nextlayerid="16" nextobjectid="76">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="25" height="13" tilewidth="32" tileheight="32" infinite="0" nextlayerid="16" nextobjectid="77">
+ <editorsettings>
+  <export target="room1.json" format="json"/>
+ </editorsettings>
  <tileset firstgid="1" source="../tilesets/background.tsx"/>
  <tileset firstgid="141" source="../tilesets/wall.tsx"/>
  <tileset firstgid="144" source="../tilesets/structure.tsx"/>
@@ -8,11 +11,11 @@
  <tileset firstgid="148" source="../tilesets/rocks.tsx"/>
  <tileset firstgid="152" source="../tilesets/crystals.tsx"/>
  <tileset firstgid="160" source="../tilesets/switchRoomDoor.tsx"/>
- <tileset firstgid="161" source="../tilesets/entrance.tsx"/>
- <tileset firstgid="164" source="../tilesets/floor.tsx"/>
+ <tileset firstgid="162" source="../tilesets/entrance.tsx"/>
+ <tileset firstgid="165" source="../tilesets/floor.tsx"/>
  <layer id="1" name="background" width="25" height="13">
   <data encoding="base64" compression="zlib">
-   eJzrZ2Bg6B8meAkN8agdo3aM2jE47KA1BgDeyshq
+   eJzrZ2Bg6B8meCkN8agdo3aM2jE47KA1BgD7xMlQ
   </data>
  </layer>
  <objectgroup id="2" name="objects">
@@ -36,13 +39,6 @@
   <object id="45" name="crystal7" type="NotAnimatedObject" gid="158" x="133" y="336" width="26" height="26"/>
   <object id="46" name="crystal6" type="NotAnimatedObject" gid="158" x="193" y="146" width="26" height="26"/>
   <object id="49" name="crystal5" type="NotAnimatedObject" gid="159" x="500" y="239" width="28" height="28"/>
-  <object id="63" name="switchRoomDoor" type="AnimatedObject" gid="160" x="577" y="130" width="64" height="64">
-   <properties>
-    <property name="animating" type="bool" value="false"/>
-    <property name="isOpen" type="bool" value="false"/>
-    <property name="type" value="door"/>
-   </properties>
-  </object>
   <object id="65" name="bat" type="NotAnimatedObject" gid="147" x="690" y="377" width="32" height="27"/>
   <object id="69" name="crystal4" type="NotAnimatedObject" gid="159" x="600" y="370" width="28" height="28"/>
   <object id="70" name="crystal3" type="NotAnimatedObject" gid="154" x="38" y="281" width="33" height="47"/>
@@ -52,7 +48,15 @@
   <object id="74" name="rock1" type="NotAnimatedObject" gid="149" x="164" y="205" width="23" height="14"/>
   <object id="75" name="structure" type="NotAnimatedObject" gid="145" x="480" y="129" width="256" height="128">
    <properties>
-    <property name="door" type="object" value="63"/>
+    <property name="collidable" type="bool" value="true"/>
+    <property name="door" type="object" value="76"/>
+   </properties>
+  </object>
+  <object id="76" name="switchRoomDoor" type="AnimatedObject" gid="161" x="576" y="129" width="64" height="64">
+   <properties>
+    <property name="animating" type="bool" value="false"/>
+    <property name="isOpen" type="bool" value="false"/>
+    <property name="type" value="door"/>
    </properties>
   </object>
  </objectgroup>
