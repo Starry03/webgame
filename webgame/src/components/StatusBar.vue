@@ -31,12 +31,20 @@ const props = defineProps({
     cooldownQ: {
         type: Object as () => Ref<number>,
         required: true,
-		default: 0,
+        default: 0,
+    },
+    maxCooldownQ: {
+        type: Number,
+        required: true,
     },
     cooldownR: {
         type: Object as () => Ref<number>,
         required: true,
-		default: 0,
+        default: 0,
+    },
+    maxCooldownR: {
+        type: Number,
+        required: true,
     },
 })
 
@@ -67,8 +75,8 @@ const manaPercentage = computed(() => {
             <span>{{ props.level }}</span>
         </div>
         <div class="flex items-center gap-large">
-			<Filler :text="'Q'" :percentage="props.cooldownQ"/>
-			<Filler :text="'R'" :percentage="props.cooldownR"/>
+            <Filler :text="'Q'" :percentage="props.cooldownQ" :max="props.maxCooldownQ"/>
+            <Filler :text="'R'" :percentage="props.cooldownR" :max="props.maxCooldownR"/>
         </div>
     </div>
 </template>

@@ -20,15 +20,15 @@ const props = defineProps({
 <template>
     <div class="cooldown-container">
         <div class="cooldown-circle" :style="{ '--progress': percentage.value / max * 100 + '%' }"></div>
-        <span>{{ text }} {{ percentage.value / max * 100  }}</span>
+        <span>{{ text }}</span>
     </div>
 </template>
 
 <style scoped>
 .cooldown-container {
     position: relative;
-    width: 50px;
-    height: 50px;
+    width: 3rem;
+    height: 3rem;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -8,6 +8,8 @@ export class Entity extends Obj {
     maxHealth: number
     mana: number
     maxMana: number
+    maxCooldownQ: number
+    maxCooldownR: number
 
     constructor(
         canvas: HTMLCanvasElement,
@@ -28,6 +30,8 @@ export class Entity extends Obj {
         this.cooldowns.set(AnimationType.ATTACK_1, ref(0))
         this.cooldowns.set(AnimationType.ATTACK_2, ref(0))
         this.cooldowns.set(AnimationType.SPECIAL, ref(0))
+        this.maxCooldownQ = this.speed * 10 * 2.5
+        this.maxCooldownR = this.speed * 10 * 5
     }
 
     handleInput(keys: Set<string>, deltaTime: number) {
@@ -93,21 +97,17 @@ export class Entity extends Obj {
 
         const intervalId = setInterval(() => {
             if (refCooldown.value > 0) {
-                refCooldown.value -= this.speed * 10
-            }
-            if (refCooldown.value <= 0) {
-                refCooldown.value = 0
-                clearInterval(intervalId)
+                refCooldown.value *= 0.9
             }
         }, 100)
 
         setTimeout(
             () => {
                 refCooldown.value = 0
+                clearInterval(intervalId)
             },
             this.speed * 10 * cooldownFactor,
         )
     }
-
     handleAttack() {}
 }
