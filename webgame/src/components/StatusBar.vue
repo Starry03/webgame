@@ -30,6 +30,10 @@ const props = defineProps({
     type: Number,
     default: 1,
   },
+  cooldownE: {
+    type: Number,
+    default: 0,
+  },
   cooldownQ: {
     type: Number,
     default: 0,
@@ -80,6 +84,12 @@ console.log('Mana Percentage:', manaPercentage.value);
 
     <!-- Cooldown per Q e R -->
     <div class="flex items-center gap-large">
+      <!-- Cooldown E -->
+      <div class="cooldown-container">
+        <div class="cooldown-circle" :style="{ '--progress': (props.cooldownE / 0.5) * 100 + '%' }"></div>
+        <span>E</span>
+      </div>
+      
       <!-- Cooldown Q -->
       <div class="cooldown-container">
         <div class="cooldown-circle" :style="{ '--progress': (props.cooldownQ / 2.5) * 100 + '%' }"></div>
@@ -88,7 +98,7 @@ console.log('Mana Percentage:', manaPercentage.value);
 
       <!-- Cooldown R -->
       <div class="cooldown-container">
-        <div class="cooldown-circle" :style="{ '--progress': (props.cooldownR / 10) * 100 + '%' }"></div>
+        <div class="cooldown-circle" :style="{ '--progress': (props.cooldownR / 7) * 100 + '%' }"></div>
         <span>R</span>
       </div>
     </div>
@@ -135,6 +145,24 @@ console.log('Mana Percentage:', manaPercentage.value);
   font-size: 14px;
   font-weight: bold;
   color: white;
+}
+
+#game-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+@media (max-width: 768px) {
+  #canvas {
+    width: 80%;
+    height: auto;
+  }
+
+  .status-bar {
+    font-size: 14px;
+  }
 }
 </style>
 

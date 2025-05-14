@@ -7,15 +7,23 @@
       :mana="mappedPlayer.mana"
       :max-mana="mappedPlayer.maxMana"
       :level="mappedPlayer.level"
+      :cooldownE="mappedPlayer.cooldownE"
       :cooldownQ="mappedPlayer.cooldownQ"
       :cooldownR="mappedPlayer.cooldownR"
     />
-    <canvas ref="canvasRef" id="canvas" :width="window_width" :height="window_height / 1.5" />
+    <hr style="border: 1px solid #ccc; margin: 10px 0;" />
+    <canvas
+      ref="canvasRef"
+      id="canvas"
+      :width="canvasWidth"
+      :height="canvasHeight"
+      style="border: 1px solid #ccc;"
+    />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { cooldownQ, cooldownR } from '@/internal/Player'
+import { cooldownE, cooldownQ, cooldownR } from '@/internal/Player'
 import { ref, onMounted, onUnmounted, reactive, computed } from 'vue'
 import { Mage } from '@/internal/Mage'
 import { Samurai } from '@/internal/Samurai'
@@ -23,12 +31,13 @@ import { Thief } from '@/internal/Thief'
 import { prefixed } from '@/internal/cryptoutils'
 import { GameHandlder } from '@/internal/GameHandler'
 import { Storage_e, type Character } from '@/internal/types'
-import Map from '@/components/Map.vue'
 import StatusBar from '@/components/StatusBar.vue'
+import { AnimationType } from '@/internal/types'
 
 const window_width = ref(window.innerWidth)
 const window_height = ref(window.innerHeight)
 const canvasRef = ref<HTMLCanvasElement | null>(null)
+const canvasHeight = ref(600) // Define a default height for the canvas
 const gameHandler = ref<GameHandlder | null>()
 const player = ref<any>(null)
 
@@ -46,8 +55,9 @@ const mappedPlayer = computed(() => {
     mana: player.value.mana,
     maxMana: player.value.mana,
     level: 1, 
-    cooldownQ: cooldownQ.value,
-    cooldownR: cooldownR.value,
+    cooldownE: player.value.cooldowns.get(AnimationType.ATTACK_1) || 0, // Cooldown per E
+    cooldownQ: player.value.cooldowns.get(AnimationType.ATTACK_2) || 0, // Cooldown per Q
+    cooldownR: player.value.cooldowns.get(AnimationType.SPECIAL) || 0, // Cooldown per R
   };
 });
 

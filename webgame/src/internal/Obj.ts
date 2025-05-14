@@ -20,7 +20,7 @@ export class Obj {
   isAnimationBlocking: boolean
   isInteractable: boolean
   isSolid: boolean
-  frameDelay: number = 1000 / 60 // 60 FPS
+  frameDelay: number = 6000 / 60 // 60 FPS
 
   constructor(
     canvas: HTMLCanvasElement,
