@@ -67,8 +67,8 @@ const manaPercentage = computed(() => {
             <span>{{ props.level }}</span>
         </div>
         <div class="flex items-center gap-large">
-			<Filler :text="'Q'" :percentage="(props.cooldownQ.value / 2.5) * 100"/>
-			<Filler :text="'R'" :percentage="(props.cooldownR.value / 10) * 100"/>
+			<Filler :text="'Q'" :percentage="props.cooldownQ"/>
+			<Filler :text="'R'" :percentage="props.cooldownR"/>
         </div>
     </div>
 </template>

@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import type { Ref } from 'vue';
+
 defineProps({
     percentage: {
-        type: Number,
+        type: Object as () => Ref<number>,
         required: true,
     },
     text: {
@@ -14,7 +16,7 @@ defineProps({
 <template>
     <div class="cooldown-container">
         <div class="cooldown-circle" :style="{ '--progress': percentage + '%' }"></div>
-        <span>{{ text }}</span>
+        <span>{{ text }} {{ percentage.value }}</span>
     </div>
 </template>
 
