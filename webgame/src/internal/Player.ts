@@ -8,6 +8,7 @@ export class Entity extends Obj {
     maxHealth: number
     mana: number
     maxMana: number
+    maxCooldownE: number
     maxCooldownQ: number
     maxCooldownR: number
 
@@ -30,6 +31,7 @@ export class Entity extends Obj {
         this.cooldowns.set(AnimationType.ATTACK_1, ref(0))
         this.cooldowns.set(AnimationType.ATTACK_2, ref(0))
         this.cooldowns.set(AnimationType.SPECIAL, ref(0))
+        this.maxCooldownE = this.speed * 10
         this.maxCooldownQ = this.speed * 10 * 2.5
         this.maxCooldownR = this.speed * 10 * 5
     }
