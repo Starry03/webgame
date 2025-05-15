@@ -40,4 +40,3 @@ power shell
 ```shell
 psql -U postgres -d webgame_database -f "C:\Users\ivanv\Desktop\TERZO_ANNO\secondo_semestre\SISTEMI_WEB\progetto\webgame\backend\sql\db.sql"
 ```
->>>>>>> 73cfda6170f43e068e747257e5d0c58cf6417bba
