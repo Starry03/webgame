@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="25" height="13" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="36">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="25" height="13" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="49">
+ <editorsettings>
+  <export target="room2.json" format="json"/>
+ </editorsettings>
  <tileset firstgid="1" source="../tilesets/floor.tsx"/>
  <tileset firstgid="2" source="../tilesets/background.tsx"/>
  <tileset firstgid="142" source="../tilesets/bat.tsx"/>
@@ -9,21 +12,19 @@
  <tileset firstgid="155" source="../tilesets/rocks.tsx"/>
  <tileset firstgid="159" source="../tilesets/structure.tsx"/>
  <tileset firstgid="161" source="../tilesets/switchRoomDoor.tsx"/>
- <tileset firstgid="162" source="../tilesets/wall.tsx"/>
+ <tileset firstgid="163" source="../tilesets/wall.tsx"/>
+ <tileset firstgid="166" source="../tilesets/hpPotion.tsx"/>
+ <tileset firstgid="170" source="../tilesets/manaPotion.tsx"/>
+ <tileset firstgid="171" source="../tilesets/rug.tsx"/>
+ <tileset firstgid="172" source="../tilesets/defenseEnhancement.tsx"/>
+ <tileset firstgid="175" source="../tilesets/attackEnhancement.tsx"/>
  <layer id="1" name="background" width="25" height="13">
   <data encoding="base64" compression="zlib">
-   eJxbwsDAsGQIYhhAFmOkIR61Y9SOUTsGhx20xgBgrDx7
+   eJxbysDAsHQIYhhAFmOkISbVjtVomBZ20MMfo3aM2jHY7KA1BgBS7T+A
   </data>
  </layer>
  <objectgroup id="2" name="objects">
   <object id="1" name="entranceDoor" type="AnimatedObject" gid="154" x="672" y="64" width="64" height="64">
-   <properties>
-    <property name="animating" type="bool" value="false"/>
-    <property name="isOpen" type="bool" value="false"/>
-    <property name="type" value="door"/>
-   </properties>
-  </object>
-  <object id="3" name="switchRoomDoor" type="AnimatedObject" gid="161" x="161" y="130" width="64" height="64">
    <properties>
     <property name="animating" type="bool" value="false"/>
     <property name="isOpen" type="bool" value="false"/>
@@ -42,7 +43,7 @@
   <object id="15" name="crystal10" type="NotAnimatedObject" gid="150" x="484" y="182" width="28" height="28"/>
   <object id="16" name="crystal9" type="NotAnimatedObject" gid="149" x="628" y="343" width="26" height="26"/>
   <object id="17" name="crystal8" type="NotAnimatedObject" gid="145" x="433" y="321" width="33" height="47"/>
-  <object id="18" name="crystal7" type="NotAnimatedObject" gid="147" x="322" y="163" width="48" height="42"/>
+  <object id="18" name="crystal7" type="NotAnimatedObject" gid="147" x="322" y="186" width="48" height="42"/>
   <object id="19" name="rock7" type="NotAnimatedObject" gid="158" x="522" y="250" width="32" height="28"/>
   <object id="20" name="rock6" type="NotAnimatedObject" gid="155" x="613" y="144" width="58" height="29"/>
   <object id="21" name="crystal6" type="NotAnimatedObject" gid="146" x="688" y="269" width="44" height="37"/>
@@ -55,12 +56,44 @@
   <object id="29" name="crystal3" type="NotAnimatedObject" gid="150" x="723" y="133" width="28" height="28"/>
   <object id="30" name="structure" type="NotAnimatedObject" gid="160" x="64" y="129" width="256" height="128">
    <properties>
-    <property name="door" type="object" value="3"/>
+    <property name="collidable" type="bool" value="true"/>
+    <property name="door" type="object" value="48"/>
    </properties>
   </object>
   <object id="31" name="crystal2" type="NotAnimatedObject" gid="145" x="88" y="203" width="33" height="47"/>
   <object id="33" name="crystal1" type="NotAnimatedObject" gid="150" x="243" y="237" width="28" height="28"/>
   <object id="34" name="rock2" type="NotAnimatedObject" gid="158" x="173" y="221" width="32" height="28"/>
   <object id="35" name="rock1" type="NotAnimatedObject" gid="157" x="259" y="163" width="26" height="20"/>
+  <object id="41" name="hpPotion" type="AnimatedObject" gid="169" x="358" y="128" width="21" height="32">
+   <properties>
+    <property name="collidable" type="bool" value="false"/>
+    <property name="takeable" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="42" name="manaPotion" type="AnimatedObjects" gid="170" x="422" y="128" width="21" height="32">
+   <properties>
+    <property name="collidable" type="bool" value="false"/>
+    <property name="takeable" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="46" name="attackEnhancement" type="AnimatedObject" gid="177" x="384" y="128" width="32" height="32">
+   <properties>
+    <property name="collidable" type="bool" value="false"/>
+    <property name="takeable" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="47" name="defenseEnhancement" type="AnimatedObject" gid="174" x="448" y="128" width="32" height="32">
+   <properties>
+    <property name="collidable" type="bool" value="false"/>
+    <property name="takeable" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="48" name="switchRoomDoor" type="AnimatedObject" gid="162" x="160" y="129" width="64" height="64">
+   <properties>
+    <property name="animating" type="bool" value="false"/>
+    <property name="isOpen" type="bool" value="false"/>
+    <property name="type" value="door"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

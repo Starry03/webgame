@@ -7,12 +7,10 @@ const props = defineProps({
     hp: {
         type: Number,
         required: true,
-        default: 100,
     },
     maxHealth: {
         type: Number,
         required: true,
-        default: 100,
     },
     mana: {
         type: Number,
@@ -97,5 +95,23 @@ const manaPercentage = computed(() => {
     font-size: 14px;
     font-weight: bold;
     color: white;
+}
+
+#game-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+@media (max-width: 768px) {
+  #canvas {
+    width: 80%;
+    height: auto;
+  }
+
+  .status-bar {
+    font-size: 14px;
+  }
 }
 </style>

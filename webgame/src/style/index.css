@@ -179,3 +179,16 @@ h1 {
   color: white;
   width: fit-content;
 }
+
+#canvas-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+#game-canvas {
+  border: 1px solid #ccc;
+  background-color: #222;
+}

@@ -26,10 +26,19 @@ import { GameHandlder } from '@/internal/GameHandler'
 import { AnimationType, Storage_e, type Character } from '@/internal/types'
 import StatusBar from '@/components/StatusBar.vue'
 import type { Entity } from '@/internal/Player'
+import { startGame } from '@/game_func';
+
+onMounted(() => {
+  const canvas = canvasRef.value;
+  if (!canvas) return;
+
+  startGame(canvas);
+});
 
 const window_width = ref(window.innerWidth)
 const window_height = ref(window.innerHeight)
 const canvasRef = ref<HTMLCanvasElement | null>(null)
+const canvasHeight = ref(600) // Define a default height for the canvas
 const gameHandler = ref<GameHandlder | null>()
 const player = ref<any>(null)
 

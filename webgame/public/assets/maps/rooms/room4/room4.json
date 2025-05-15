@@ -4,7 +4,7 @@
  "layers":[
         {
          "compression":"zlib",
-         "data":"eJxjYWBgYKEAM+LAlJhJjPnY7CGklhI8aseoHaN2DA47aI0B3fcCOQ==",
+         "data":"eJxjYWBgYKEAM+LAlJhJjPnY7CGklhI8asfgtkMJB3uo2TFc4oOWdtAaAwDwVgK9",
          "encoding":"base64",
          "height":13,
          "id":1,
@@ -337,6 +337,11 @@
                          "value":46
                         }, 
                         {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"ladder",
                          "type":"object",
                          "value":50
@@ -355,6 +360,11 @@
                  "id":49,
                  "name":"structure",
                  "properties":[
+                        {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
                         {
                          "name":"door",
                          "type":"object",
@@ -414,6 +424,98 @@
                  "width":52,
                  "x":625,
                  "y":210
+                }, 
+                {
+                 "gid":38,
+                 "height":32,
+                 "id":59,
+                 "name":"hpPotion",
+                 "properties":[
+                        {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"takeable",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"AnimatedObject",
+                 "visible":true,
+                 "width":21,
+                 "x":104,
+                 "y":256
+                }, 
+                {
+                 "gid":39,
+                 "height":32,
+                 "id":61,
+                 "name":"manaPotion",
+                 "properties":[
+                        {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"takeable",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"AnimatedObject",
+                 "visible":true,
+                 "width":21,
+                 "x":200,
+                 "y":288
+                }, 
+                {
+                 "gid":42,
+                 "height":32,
+                 "id":62,
+                 "name":"defenseEnhancement",
+                 "properties":[
+                        {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"takeable",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"AnimatedObject",
+                 "visible":true,
+                 "width":32,
+                 "x":96,
+                 "y":288
+                }, 
+                {
+                 "gid":45,
+                 "height":32,
+                 "id":63,
+                 "name":"attackEnhancement",
+                 "properties":[
+                        {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"takeable",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"AnimatedObject",
+                 "visible":true,
+                 "width":32,
+                 "x":192,
+                 "y":256
                 }],
          "opacity":1,
          "properties":[
@@ -479,7 +581,7 @@
          "y":0
         }],
  "nextlayerid":5,
- "nextobjectid":59,
+ "nextobjectid":64,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
@@ -532,6 +634,26 @@
         {
          "firstgid":33,
          "source":"..\/tilesets\/ladder.tsx"
+        }, 
+        {
+         "firstgid":34,
+         "source":"..\/tilesets\/rug.tsx"
+        }, 
+        {
+         "firstgid":35,
+         "source":"..\/tilesets\/hpPotion.tsx"
+        }, 
+        {
+         "firstgid":39,
+         "source":"..\/tilesets\/manaPotion.tsx"
+        }, 
+        {
+         "firstgid":40,
+         "source":"..\/tilesets\/defenseEnhancement.tsx"
+        }, 
+        {
+         "firstgid":43,
+         "source":"..\/tilesets\/attackEnhancement.tsx"
         }],
  "tilewidth":32,
  "type":"map",
