@@ -102,7 +102,7 @@ export function decodeTileLayer(encoded_data: string): number[] {
     return tileData;
 }
 
-export function drawTiles(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
+export function drawTiles(tileData: number[], width: number, height: number, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
     background_map_image.onload = () => {
         const row_tiles = background_map_image.width /tileSize;
 
@@ -132,11 +132,11 @@ export function drawTiles(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext
 
 export function drawTileLayer(tileData: number[], width: number, height: number, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
     if (background_map_image.complete) {
-        drawTiles(canvas, ctx);
+        drawTiles(tileData, width, height, canvas, ctx);
     }
     else {
         background_map_image.onload = () => {
-            drawTiles(canvas, ctx);
+            drawTiles(tileData, width, height, canvas, ctx);
         }
     }
 
