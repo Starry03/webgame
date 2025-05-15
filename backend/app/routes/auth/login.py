@@ -9,6 +9,7 @@ from fastapi.responses import JSONResponse
 from jwt import InvalidTokenError
 from starlette.status import (
     HTTP_401_UNAUTHORIZED,
+    HTTP_409_CONFLICT,
     HTTP_500_INTERNAL_SERVER_ERROR,
 )
 from cryptography.hazmat.primitives import serialization
@@ -47,7 +48,7 @@ async def register(request: Request):
         logger.error("User already exists")
         return JSONResponse(
             content={"detail": "User already exists"},
-            status_code=HTTP_401_UNAUTHORIZED,
+            status_code=HTTP_409_CONFLICT,
         )
     if not UserManager.create_user(
         User(
