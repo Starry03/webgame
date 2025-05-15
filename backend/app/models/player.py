@@ -11,6 +11,7 @@ class PlayerClass(BaseModel):
     mana: int
     hp: int
     description: str | None = None
+    playable: bool
 
 
 class Player(BaseModel):

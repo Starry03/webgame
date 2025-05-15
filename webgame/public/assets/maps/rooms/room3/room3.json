@@ -4,7 +4,7 @@
  "layers":[
         {
          "compression":"zlib",
-         "data":"eJxjYWBgYEHC2AALFTEuQA2zGWmIR+0YtWPUjsFhB60xAMubAjc=",
+         "data":"eJxjYWBgYEHC2AALFTEuQA2zGWmIR+0YtWPUDlQsC8X0toPWGAATagKn",
          "encoding":"base64",
          "height":13,
          "id":1,
@@ -22,7 +22,7 @@
          "name":"objects",
          "objects":[
                 {
-                 "gid":13,
+                 "gid":14,
                  "height":20,
                  "id":9,
                  "name":"crystal15",
@@ -34,7 +34,7 @@
                  "y":357
                 }, 
                 {
-                 "gid":13,
+                 "gid":14,
                  "height":20,
                  "id":10,
                  "name":"crystal14",
@@ -46,7 +46,7 @@
                  "y":280
                 }, 
                 {
-                 "gid":13,
+                 "gid":14,
                  "height":20,
                  "id":11,
                  "name":"crystal13",
@@ -58,7 +58,7 @@
                  "y":91
                 }, 
                 {
-                 "gid":15,
+                 "gid":16,
                  "height":28,
                  "id":12,
                  "name":"crystal12",
@@ -70,7 +70,7 @@
                  "y":155
                 }, 
                 {
-                 "gid":15,
+                 "gid":16,
                  "height":28,
                  "id":13,
                  "name":"crystal11",
@@ -82,7 +82,7 @@
                  "y":285
                 }, 
                 {
-                 "gid":14,
+                 "gid":15,
                  "height":26,
                  "id":14,
                  "name":"crystal10",
@@ -94,7 +94,7 @@
                  "y":250
                 }, 
                 {
-                 "gid":14,
+                 "gid":15,
                  "height":26,
                  "id":15,
                  "name":"crystal9",
@@ -106,7 +106,7 @@
                  "y":149
                 }, 
                 {
-                 "gid":14,
+                 "gid":15,
                  "height":26,
                  "id":16,
                  "name":"crystal8",
@@ -118,7 +118,7 @@
                  "y":366
                 }, 
                 {
-                 "gid":14,
+                 "gid":15,
                  "height":26,
                  "id":17,
                  "name":"crystal7",
@@ -130,7 +130,7 @@
                  "y":347
                 }, 
                 {
-                 "gid":14,
+                 "gid":15,
                  "height":26,
                  "id":18,
                  "name":"crystal6",
@@ -142,7 +142,7 @@
                  "y":359
                 }, 
                 {
-                 "gid":19,
+                 "gid":20,
                  "height":28,
                  "id":19,
                  "name":"rock10",
@@ -154,7 +154,7 @@
                  "y":132
                 }, 
                 {
-                 "gid":16,
+                 "gid":17,
                  "height":29,
                  "id":21,
                  "name":"rock9",
@@ -166,7 +166,7 @@
                  "y":200
                 }, 
                 {
-                 "gid":17,
+                 "gid":18,
                  "height":14,
                  "id":22,
                  "name":"rock8",
@@ -178,7 +178,7 @@
                  "y":172
                 }, 
                 {
-                 "gid":17,
+                 "gid":18,
                  "height":14,
                  "id":23,
                  "name":"rock7",
@@ -190,7 +190,7 @@
                  "y":315
                 }, 
                 {
-                 "gid":19,
+                 "gid":20,
                  "height":28,
                  "id":25,
                  "name":"rock6",
@@ -202,7 +202,7 @@
                  "y":236
                 }, 
                 {
-                 "gid":10,
+                 "gid":11,
                  "height":47,
                  "id":27,
                  "name":"crystal5",
@@ -214,7 +214,7 @@
                  "y":201
                 }, 
                 {
-                 "gid":12,
+                 "gid":13,
                  "height":42,
                  "id":28,
                  "name":"crystal4",
@@ -226,7 +226,7 @@
                  "y":144
                 }, 
                 {
-                 "gid":11,
+                 "gid":12,
                  "height":44,
                  "id":29,
                  "name":"crystal3",
@@ -238,7 +238,7 @@
                  "y":312
                 }, 
                 {
-                 "gid":18,
+                 "gid":19,
                  "height":20,
                  "id":30,
                  "name":"rock5",
@@ -250,7 +250,7 @@
                  "y":289
                 }, 
                 {
-                 "gid":18,
+                 "gid":19,
                  "height":20,
                  "id":31,
                  "name":"rock4",
@@ -262,7 +262,7 @@
                  "y":366
                 }, 
                 {
-                 "gid":19,
+                 "gid":20,
                  "height":28,
                  "id":32,
                  "name":"rock3",
@@ -274,7 +274,7 @@
                  "y":220
                 }, 
                 {
-                 "gid":19,
+                 "gid":20,
                  "height":28,
                  "id":33,
                  "name":"rock2",
@@ -286,7 +286,7 @@
                  "y":221
                 }, 
                 {
-                 "gid":20,
+                 "gid":21,
                  "height":64,
                  "id":34,
                  "name":"entranceDoor",
@@ -314,7 +314,7 @@
                  "y":130
                 }, 
                 {
-                 "gid":21,
+                 "gid":22,
                  "height":160,
                  "id":42,
                  "name":"switchStructure",
@@ -323,6 +323,11 @@
                          "name":"accessWall",
                          "type":"object",
                          "value":45
+                        }, 
+                        {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":true
                         }, 
                         {
                          "name":"door",
@@ -337,11 +342,16 @@
                  "y":384
                 }, 
                 {
-                 "gid":7,
+                 "gid":8,
                  "height":128,
                  "id":47,
                  "name":"structure",
                  "properties":[
+                        {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
                         {
                          "name":"door",
                          "type":"object",
@@ -356,7 +366,7 @@
                 },
             
                 {
-                 "gid":10,
+                 "gid":11,
                  "height":47,
                  "id":48,
                  "name":"crystal2",
@@ -368,7 +378,7 @@
                  "y":291
                 }, 
                 {
-                 "gid":10,
+                 "gid":11,
                  "height":47,
                  "id":49,
                  "name":"crystal1",
@@ -380,7 +390,7 @@
                  "y":291
                 }, 
                 {
-                 "gid":19,
+                 "gid":20,
                  "height":28,
                  "id":50,
                  "name":"rock1",
@@ -390,6 +400,98 @@
                  "width":32,
                  "x":154,
                  "y":300
+                }, 
+                {
+                 "gid":27,
+                 "height":32,
+                 "id":52,
+                 "name":"hpPotion",
+                 "properties":[
+                        {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"takeable",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"AnimatedObject",
+                 "visible":true,
+                 "width":21,
+                 "x":676,
+                 "y":352
+                }, 
+                {
+                 "gid":28,
+                 "height":32,
+                 "id":53,
+                 "name":"manaPotion",
+                 "properties":[
+                        {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"takeable",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"AnimatedObject",
+                 "visible":true,
+                 "width":21,
+                 "x":712,
+                 "y":384
+                }, 
+                {
+                 "gid":32,
+                 "height":32,
+                 "id":54,
+                 "name":"attackEnhancement",
+                 "properties":[
+                        {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"takeable",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"AnimatedObject",
+                 "visible":true,
+                 "width":32,
+                 "x":704,
+                 "y":352
+                }, 
+                {
+                 "gid":35,
+                 "height":32,
+                 "id":55,
+                 "name":"defense_enhancement",
+                 "properties":[
+                        {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"takeable",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":672,
+                 "y":384
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -403,35 +505,7 @@
          "name":"objects2",
          "objects":[
                 {
-                 "gid":5,
-                 "height":64,
-                 "id":44,
-                 "name":"switchRoomDoor",
-                 "properties":[
-                        {
-                         "name":"animating",
-                         "type":"bool",
-                         "value":false
-                        }, 
-                        {
-                         "name":"isOpen",
-                         "type":"bool",
-                         "value":false
-                        }, 
-                        {
-                         "name":"type",
-                         "type":"string",
-                         "value":"door"
-                        }],
-                 "rotation":0,
-                 "type":"NotAnimatedObject",
-                 "visible":true,
-                 "width":64,
-                 "x":672,
-                 "y":288
-                }, 
-                {
-                 "gid":2147483670,
+                 "gid":2147483671,
                  "height":32,
                  "id":45,
                  "name":"specialWall",
@@ -477,6 +551,34 @@
                  "width":32,
                  "x":608,
                  "y":352
+                }, 
+                {
+                 "gid":6,
+                 "height":64,
+                 "id":57,
+                 "name":"switchRoomDoor",
+                 "properties":[
+                        {
+                         "name":"animating",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"isOpen",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"door"
+                        }],
+                 "rotation":0,
+                 "type":"AnimatedObject",
+                 "visible":true,
+                 "width":64,
+                 "x":672,
+                 "y":288
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -485,7 +587,7 @@
          "y":0
         }],
  "nextlayerid":4,
- "nextobjectid":51,
+ "nextobjectid":59,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
@@ -504,28 +606,48 @@
          "source":"..\/tilesets\/switchRoomDoor.tsx"
         }, 
         {
-         "firstgid":6,
+         "firstgid":7,
          "source":"..\/tilesets\/structure.tsx"
         }, 
         {
-         "firstgid":8,
+         "firstgid":9,
          "source":"..\/tilesets\/crystals.tsx"
         }, 
         {
-         "firstgid":16,
+         "firstgid":17,
          "source":"..\/tilesets\/rocks.tsx"
         }, 
         {
-         "firstgid":20,
+         "firstgid":21,
          "source":"..\/tilesets\/entranceDoor.tsx"
         }, 
         {
-         "firstgid":21,
+         "firstgid":22,
          "source":"..\/tilesets\/specialExit.tsx"
         }, 
         {
-         "firstgid":22,
+         "firstgid":23,
          "source":"..\/tilesets\/specialWall.tsx"
+        }, 
+        {
+         "firstgid":24,
+         "source":"..\/tilesets\/hpPotion.tsx"
+        }, 
+        {
+         "firstgid":28,
+         "source":"..\/tilesets\/manaPotion.tsx"
+        }, 
+        {
+         "firstgid":29,
+         "source":"..\/tilesets\/rug.tsx"
+        }, 
+        {
+         "firstgid":30,
+         "source":"..\/tilesets\/attackEnhancement.tsx"
+        }, 
+        {
+         "firstgid":33,
+         "source":"..\/tilesets\/defenseEnhancement.tsx"
         }],
  "tilewidth":32,
  "type":"map",

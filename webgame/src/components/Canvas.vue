@@ -72,17 +72,6 @@ onMounted(() => {
     const character = localStorage.getItem(prefixed(Storage_e.SELECTED_CHARACTER))
     const characterObject: Character = JSON.parse(character || '{}')
 
-    if (
-        !characterObject ||
-        typeof characterObject.name !== 'string' ||
-        typeof characterObject.speed !== 'number' ||
-        typeof characterObject.hp !== 'number' ||
-        typeof characterObject.mana !== 'number'
-    ) {
-        console.error('Dati del personaggio non validi:', characterObject)
-        return
-    }
-
     const canvas = canvasRef.value
     if (!canvas) {
         console.error('canvas null')
@@ -93,9 +82,6 @@ onMounted(() => {
         console.error('ctx null')
         return
     }
-
-    console.log('Inizializzazione del player...')
-    console.log('Personaggio selezionato:', characterObject)
 
     switch (characterObject.name) {
         case 'wizard':

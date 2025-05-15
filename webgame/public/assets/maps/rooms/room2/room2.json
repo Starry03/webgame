@@ -4,7 +4,7 @@
  "layers":[
         {
          "compression":"zlib",
-         "data":"eJxbwsDAsGQIYhhAFmOkIR61Y9SOUTsGhx20xgBgrDx7",
+         "data":"eJxbysDAsHQIYhhAFmOkISbVjtVomBZ20MMfo3aM2jHY7KA1BgBS7T+A",
          "encoding":"base64",
          "height":13,
          "id":1,
@@ -48,34 +48,6 @@
                  "width":64,
                  "x":672,
                  "y":64
-                }, 
-                {
-                 "gid":161,
-                 "height":64,
-                 "id":3,
-                 "name":"switchRoomDoor",
-                 "properties":[
-                        {
-                         "name":"animating",
-                         "type":"bool",
-                         "value":false
-                        }, 
-                        {
-                         "name":"isOpen",
-                         "type":"bool",
-                         "value":false
-                        }, 
-                        {
-                         "name":"type",
-                         "type":"string",
-                         "value":"door"
-                        }],
-                 "rotation":0,
-                 "type":"AnimatedObject",
-                 "visible":true,
-                 "width":64,
-                 "x":161,
-                 "y":130
                 }, 
                 {
                  "gid":142,
@@ -231,7 +203,7 @@
                  "visible":true,
                  "width":48,
                  "x":322,
-                 "y":163
+                 "y":186
                 }, 
                 {
                  "gid":158,
@@ -352,8 +324,7 @@
                  "width":28,
                  "x":723,
                  "y":133
-                },
-            
+                }, 
                 {
                  "gid":160,
                  "height":128,
@@ -361,9 +332,14 @@
                  "name":"structure",
                  "properties":[
                         {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"door",
                          "type":"object",
-                         "value":3
+                         "value":48
                         }],
                  "rotation":0,
                  "type":"NotAnimatedObject",
@@ -371,7 +347,8 @@
                  "width":256,
                  "x":64,
                  "y":129
-                }, 
+                },
+            
                 {
                  "gid":145,
                  "height":47,
@@ -419,6 +396,126 @@
                  "width":26,
                  "x":259,
                  "y":163
+                }, 
+                {
+                 "gid":169,
+                 "height":32,
+                 "id":41,
+                 "name":"hpPotion",
+                 "properties":[
+                        {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"takeable",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"AnimatedObject",
+                 "visible":true,
+                 "width":21,
+                 "x":358,
+                 "y":128
+                }, 
+                {
+                 "gid":170,
+                 "height":32,
+                 "id":42,
+                 "name":"manaPotion",
+                 "properties":[
+                        {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"takeable",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"AnimatedObjects",
+                 "visible":true,
+                 "width":21,
+                 "x":422,
+                 "y":128
+                }, 
+                {
+                 "gid":177,
+                 "height":32,
+                 "id":46,
+                 "name":"attackEnhancement",
+                 "properties":[
+                        {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"takeable",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"AnimatedObject",
+                 "visible":true,
+                 "width":32,
+                 "x":384,
+                 "y":128
+                }, 
+                {
+                 "gid":174,
+                 "height":32,
+                 "id":47,
+                 "name":"defenseEnhancement",
+                 "properties":[
+                        {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"takeable",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"AnimatedObject",
+                 "visible":true,
+                 "width":32,
+                 "x":448,
+                 "y":128
+                }, 
+                {
+                 "gid":162,
+                 "height":64,
+                 "id":48,
+                 "name":"switchRoomDoor",
+                 "properties":[
+                        {
+                         "name":"animating",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"isOpen",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"door"
+                        }],
+                 "rotation":0,
+                 "type":"AnimatedObject",
+                 "visible":true,
+                 "width":64,
+                 "x":160,
+                 "y":129
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -427,7 +524,7 @@
          "y":0
         }],
  "nextlayerid":3,
- "nextobjectid":36,
+ "nextobjectid":49,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
@@ -470,8 +567,28 @@
          "source":"..\/tilesets\/switchRoomDoor.tsx"
         }, 
         {
-         "firstgid":162,
+         "firstgid":163,
          "source":"..\/tilesets\/wall.tsx"
+        }, 
+        {
+         "firstgid":166,
+         "source":"..\/tilesets\/hpPotion.tsx"
+        }, 
+        {
+         "firstgid":170,
+         "source":"..\/tilesets\/manaPotion.tsx"
+        }, 
+        {
+         "firstgid":171,
+         "source":"..\/tilesets\/rug.tsx"
+        }, 
+        {
+         "firstgid":172,
+         "source":"..\/tilesets\/defenseEnhancement.tsx"
+        }, 
+        {
+         "firstgid":175,
+         "source":"..\/tilesets\/attackEnhancement.tsx"
         }],
  "tilewidth":32,
  "type":"map",
