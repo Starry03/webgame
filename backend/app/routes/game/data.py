@@ -29,7 +29,6 @@ async def get_classes(__: Request, _=Depends(AuthManager.get_user)):
             ).model_dump()
             for cls in classes
         ]
-        print(classes_models)
         return JSONResponse(
             content=classes_models,
             status_code=HTTP_200_OK,

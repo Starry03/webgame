@@ -35,7 +35,7 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { SessionUtils, prefixed, AESUtils } from '@/internal/cryptoutils'
 import { useRouter } from 'vue-router'
 import { onMounted, onUnmounted, ref } from 'vue'
@@ -76,8 +76,8 @@ function playAudio() {
 }
 
 onMounted(() => {
-    document.addEventListener('mousemove', playAudio)
     if (AESUtils.isExpired()) router.push('/login')
+    document.addEventListener('mousemove', playAudio)
 })
 
 onUnmounted(() => {
