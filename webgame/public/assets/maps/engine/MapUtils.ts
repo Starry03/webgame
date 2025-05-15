@@ -1,6 +1,6 @@
 import {NotAnimatedObject} from '../classes/NotAnimatedObject'
 import {AnimatedObject} from '../classes/AnimatedObject';
-import {TiledMap, TiledProperty } from './interfaces/Interfaces';
+import type {TiledMap, TiledProperty } from './interfaces/Interfaces';
 import {AnimationType, Vector2} from '../../../../src/internal/types';
 import * as pako from 'pako';
 
@@ -58,7 +58,7 @@ const tileSize = 32;
 const background_map_image = new Image();
 background_map_image.src = '../rooms/background_map/background_map.png';
 
-function loadImage(img: HTMLImageElement): Promise<void> {
+export function loadImage(img: HTMLImageElement): Promise<void> {
     return new Promise( (resolve, reject) => {
         img.onload = () => resolve();
         img.onerror = reject;

@@ -1,4 +1,7 @@
 import type { Entity } from './Player'
+import {loadRoomByName} from "../../public/assets/maps/engine/MapUtils.ts";
+import type {AnimatedObject} from "../../public/assets/maps/classes/AnimatedObject.ts";
+import type {NotAnimatedObject} from "../../public/assets/maps/classes/NotAnimatedObject.ts";
 
 export class GameHandlder {
   player: Entity
@@ -6,6 +9,7 @@ export class GameHandlder {
   ctx: CanvasRenderingContext2D
   keys: Set<string>
   lastTimeStamp: number
+    currentRoomObjects: (AnimatedObject|NotAnimatedObject)[] = []
 
   constructor(player: Entity, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
     console.log(player)
@@ -16,6 +20,7 @@ export class GameHandlder {
     this.lastTimeStamp = 0
     this.player.preloadImages()
     this.player.idle(true)
+      this.loadRoom('room1')
     this.gameLoop = this.gameLoop.bind(this)
 
     window.addEventListener('keydown', (e) => {
@@ -34,8 +39,23 @@ export class GameHandlder {
     const deltaTime = (timestamp - this.lastTimeStamp) / 1000
     this.lastTimeStamp = timestamp
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+
+      this.currentRoomObjects.forEach(obj => {
+          obj.drawFrame?.()
+      })
     this.player.handleInput(this.keys, deltaTime)
     this.player.update(timestamp)
     requestAnimationFrame(this.gameLoop)
   }
+
+  async loadRoom(roomName: string): Promise<void> {
+      try {
+          this.currentRoomObjects = await loadRoomByName(roomName)
+      }
+      catch (error) {
+          console.error(`error during ${roomName} loading:`, error);
+      }
+  }
+
 }
+
