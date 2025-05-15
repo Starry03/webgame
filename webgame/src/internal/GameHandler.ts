@@ -41,7 +41,7 @@ export class GameHandlder {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
 
       this.currentRoomObjects.forEach(obj => {
-          obj.drawFrame?.()
+          obj.update(timestamp);
       })
     this.player.handleInput(this.keys, deltaTime)
     this.player.update(timestamp)

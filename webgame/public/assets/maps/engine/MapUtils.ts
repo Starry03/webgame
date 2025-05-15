@@ -1,6 +1,6 @@
 import {NotAnimatedObject} from '../classes/NotAnimatedObject'
 import {AnimatedObject} from '../classes/AnimatedObject';
-import type {TiledMap, TiledProperty } from './interfaces/Interfaces';
+import type {TiledMap, TiledProperty, TiledLayer } from './interfaces/Interfaces';
 import {AnimationType, Vector2} from '../../../../src/internal/types';
 import * as pako from 'pako';
 
@@ -76,7 +76,7 @@ export async function loadMapData(path: string): Promise<void> {
 
         await loadImage(background_map_image);
 
-        const background_layer = map_data.layers.find(layer => layer.name === 'background');
+        const background_layer = map_data.layers.find((layer: TiledLayer) => layer.name === 'background');
         if (background_layer && background_layer.data) {
             const decoded = decodeTileLayer(background_layer.data);
             drawTileLayer(decoded, background_layer.width, background_layer.height);
@@ -124,7 +124,7 @@ export function drawTileLayer(tileData: number[], width: number, height: number)
                const tileX = ((gid-1) % row_tiles)* tileSize;
                const tileY = Math.floor((gid-1) / row_tiles)* tileSize;
 
-               ctx.drawImage(
+               ctx?.drawImage(
                    background_map_image,
                    tileX,
                    tileY,
