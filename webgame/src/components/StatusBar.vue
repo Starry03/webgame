@@ -7,12 +7,10 @@ const props = defineProps({
     hp: {
         type: Number,
         required: true,
-        default: 100,
     },
     maxHealth: {
         type: Number,
         required: true,
-        default: 100,
     },
     mana: {
         type: Number,
