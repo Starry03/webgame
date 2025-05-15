@@ -50,7 +50,7 @@ export class GameHandlder {
 
   async loadRoom(roomName: string): Promise<void> {
       try {
-          this.currentRoomObjects = await loadRoomByName(roomName)
+          this.currentRoomObjects = await loadRoomByName(roomName, this.canvas, this.ctx)
       }
       catch (error) {
           console.error(`error during ${roomName} loading:`, error);

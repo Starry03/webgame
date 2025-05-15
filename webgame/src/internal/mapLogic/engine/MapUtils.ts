@@ -4,17 +4,11 @@ import type {TiledMap, TiledProperty, TiledLayer } from './interfaces/Interfaces
 import {AnimationType, Vector2} from '../../types';
 import * as pako from 'pako';
 
-
-export function loadObjectsFromMap(jsonMap: TiledMap): (NotAnimatedObject|AnimatedObject)[] {
+export function loadObjectsFromMap(jsonMap: TiledMap, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D): (NotAnimatedObject|AnimatedObject)[] {
     const list_objects: (NotAnimatedObject | AnimatedObject)[] = [];
     jsonMap.layers.forEach(layer => {
         if (layer.type === 'objects' && layer.objects) {
             layer.objects.forEach(object => {
-                /*verificare se "canvas" e "ctx" sono corretti: le alternative sono:
-                * const canvas = document.createElement('canvas');
-                  const ctx = canvas.getContext('2d');*/
-                const canvas = new HTMLCanvasElement();
-                const ctx = new CanvasRenderingContext2D();
                 const isIdle: boolean = true;
                 const pos = new Vector2(object.x, object.y);
                 const dim: Vector2 = new Vector2(object.width, object.height);
@@ -36,23 +30,20 @@ export function loadObjectsFromMap(jsonMap: TiledMap): (NotAnimatedObject|Animat
     return list_objects;
 }
 
-export async function loadMapObjects(mapUrl: string): Promise<(AnimatedObject|NotAnimatedObject)[]> {
+export async function loadMapObjects(mapUrl: string, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D): Promise<(AnimatedObject|NotAnimatedObject)[]> {
     try {
         const response = await fetch(mapUrl);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const map_data = await response.json();
-        return loadObjectsFromMap(map_data);
+        return loadObjectsFromMap(map_data, canvas, ctx);
     }
     catch (error) {
         console.error(`Errore nel caricamento della mappa: ${mapUrl}`, error);
         return [];
     }
 }
-
-const canvas = document.getElementById('game-canvas') as HTMLCanvasElement;
-const ctx = canvas.getContext('2d');
 
 const tileSize = 32;
 const background_map_image = new Image();
@@ -65,7 +56,7 @@ export function loadImage(img: HTMLImageElement): Promise<void> {
     })
 }
 
-export async function loadMapData(path: string): Promise<void> {
+export async function loadMapData(path: string, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D): Promise<void> {
     let map_data: any = null;
     try {
         const res =  await fetch(path);
@@ -79,7 +70,7 @@ export async function loadMapData(path: string): Promise<void> {
         const background_layer = map_data.layers.find((layer: TiledLayer) => layer.name === 'background');
         if (background_layer && background_layer.data) {
             const decoded = decodeTileLayer(background_layer.data);
-            drawTileLayer(decoded, background_layer.width, background_layer.height);
+            drawTileLayer(decoded, background_layer.width, background_layer.height, canvas, ctx);
         }
     }
     catch (err) {
@@ -111,7 +102,7 @@ export function decodeTileLayer(encoded_data: string): number[] {
     return tileData;
 }
 
-export function drawTileLayer(tileData: number[], width: number, height: number) {
+export function drawTileLayer(tileData: number[], width: number, height: number, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
     background_map_image.onload = () => {
        const row_tiles = background_map_image.width /tileSize;
 
@@ -147,16 +138,16 @@ const roomsPaths: Record<string, string> = {
     'boss_room': '../../rooms/boss_room/boss_room.json',
 };
 
-export async function loadRoomByName(roomName: string): Promise<(NotAnimatedObject|AnimatedObject)[]> {
+export async function loadRoomByName(roomName: string, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D): Promise<(NotAnimatedObject|AnimatedObject)[]> {
     const path = roomsPaths[roomName];
     if (!path) {
         throw new Error(`Room ${roomName} not found`);
     }
-    return await loadRoom(path);
+    return await loadRoom(path, canvas, ctx);
 }
 
-export async function loadRoom(path: string): Promise<(NotAnimatedObject|AnimatedObject)[]> {
-    await loadMapData(path);
-    return await loadMapObjects(path);
+export async function loadRoom(path: string, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D): Promise<(NotAnimatedObject|AnimatedObject)[]> {
+    await loadMapData(path, canvas, ctx);
+    return await loadMapObjects(path, canvas, ctx);
 }
 
