@@ -1,7 +1,7 @@
-import { AnimationType, Vector2 } from '../../../../src/internal/types';
-import {Door} from './Door';
+import {Door} from "./Door";
+import {AnimationType, Vector2} from "../../types";
 
-export class EntranceDoor extends Door {
+export class SwitchRoomDoor extends Door {
     constructor(
         canvas: HTMLCanvasElement,
         ctx: CanvasRenderingContext2D,
@@ -28,15 +28,15 @@ export class EntranceDoor extends Door {
             idle: [],
             hurt: [],
             dead: [],
-            opening: [
-                '../rooms/tiled_objects/apertura.png',
-                '../rooms/tiled_objects/apertura1.png',
-                '../rooms/tiled_objects/apertura2.png',
-                '../rooms/tiled_objects/apertura3.png',
+            opening: [],
+            closing: [
+                '../rooms/tiled_objects/apertura5.png',
                 '../rooms/tiled_objects/apertura4.png',
-                '../rooms/tiled_objects/entrance_door.png'
-            ],
-            closing: []
+                '../rooms/tiled_objects/apertura3.png',
+                '../rooms/tiled_objects/apertura2.png',
+                '../rooms/tiled_objects/apertura1.png',
+                '../rooms/tiled_objects/entrance_door.png',
+            ]
         };
         this.setFramePaths(frame_paths);
         return frame_paths;

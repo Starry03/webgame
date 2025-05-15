@@ -1,4 +1,4 @@
-import { AnimationType, Vector2 } from '../../../../src/internal/types';
+import { AnimationType, Vector2 } from '../../types';
 import { AnimatedObject } from '../classes/AnimatedObject';
 
 export class Door extends AnimatedObject {

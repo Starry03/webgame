@@ -1,7 +1,7 @@
 import type { Entity } from './Player'
-import {loadRoomByName} from "../../public/assets/maps/engine/MapUtils.ts";
-import type {AnimatedObject} from "../../public/assets/maps/classes/AnimatedObject.ts";
-import type {NotAnimatedObject} from "../../public/assets/maps/classes/NotAnimatedObject.ts";
+import {loadRoomByName} from '@/internal/mapLogic/engine/MapUtils.ts'
+import {AnimatedObject} from '@/internal/mapLogic/classes/AnimatedObject.ts'
+import {NotAnimatedObject} from '@/internal/mapLogic/classes/NotAnimatedObject.ts'
 
 export class GameHandlder {
   player: Entity
