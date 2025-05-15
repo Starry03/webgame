@@ -16,7 +16,7 @@ class UserManager:
             user = res.fetchone()
             if user is None:
                 return None
-            return User(id=user[0], username=user[1], password=user[2], email=user[3])
+            return User(username=user[1], password=user[2], email=user[3])
 
     @staticmethod
     def user_exists(username: str) -> bool:
