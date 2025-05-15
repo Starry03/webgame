@@ -7,7 +7,7 @@ import * as pako from 'pako';
 export function loadObjectsFromMap(jsonMap: TiledMap, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D): (NotAnimatedObject|AnimatedObject)[] {
     const list_objects: (NotAnimatedObject | AnimatedObject)[] = [];
     jsonMap.layers.forEach(layer => {
-        if (layer.type === 'objects' && layer.objects) {
+        if ((layer.type === 'objects' || layer.type === 'objects2') && layer.objects) {
             layer.objects.forEach(object => {
                 const isIdle: boolean = true;
                 const pos = new Vector2(object.x, object.y);
@@ -143,23 +143,26 @@ export function drawTileLayer(tileData: number[], width: number, height: number,
 }
 
 const roomsPaths: Record<string, string> = {
-    'room1': '../../../public/assets/maps/rooms/room1/room1.json',
-    'room2': '../../../public/assets/maps/rooms/room2/room2.json',
-    'room3': '../../../public/assets/maps/rooms/room3/room3.json',
-    'room4': '../../../public/assets/maps/rooms/room4/room4.json',
-    'boss_room': '../../../public/assets/maps/rooms/boss_room/boss_room.json'
+    'room1': '/assets/maps/rooms/room1/room1.json',
+    'room2': '/assets/maps/rooms/room2/room2.json',
+    'room3': '/assets/maps/rooms/room3/room3.json',
+    'room4': '/assets/maps/rooms/room4/room4.json',
+    'boss_room': '/assets/maps/rooms/boss_room/boss_room.json'
 };
 
 export async function loadRoomByName(roomName: string, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D): Promise<(NotAnimatedObject|AnimatedObject)[]> {
-    const path = roomsPaths[roomName];
+    console.log("inizio caricamento room1")
+    const path = roomsPaths["room1"];
     if (!path) {
-        throw new Error(`Room ${roomName} not found`);
+        throw new Error(`Room not found`);
     }
     return await loadRoom(path, canvas, ctx);
 }
 
 export async function loadRoom(path: string, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D): Promise<(NotAnimatedObject|AnimatedObject)[]> {
+    console.log("caricamento livello di background")
     await loadMapData(path, canvas, ctx);
+    console.log("caricamento livello oggetto")
     return await loadMapObjects(path, canvas, ctx);
 }
 
