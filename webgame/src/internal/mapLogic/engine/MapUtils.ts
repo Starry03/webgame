@@ -102,39 +102,51 @@ export function decodeTileLayer(encoded_data: string): number[] {
     return tileData;
 }
 
-export function drawTileLayer(tileData: number[], width: number, height: number, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
+export function drawTiles(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
     background_map_image.onload = () => {
-       const row_tiles = background_map_image.width /tileSize;
+        const row_tiles = background_map_image.width /tileSize;
 
-       for (let row = 0; row < height; row++) {
-           for (let col = 0; col < width; col++) {
-               const tile_index = row*width + col;
-               const gid = tileData[tile_index];
-               if (gid === 0) continue;
+        for (let row = 0; row < height; row++) {
+            for (let col = 0; col < width; col++) {
+                const tile_index = row*width + col;
+                const gid = tileData[tile_index];
+                if (gid === 0) continue;
 
-               const tileX = ((gid-1) % row_tiles)* tileSize;
-               const tileY = Math.floor((gid-1) / row_tiles)* tileSize;
+                const tileX = ((gid-1) % row_tiles)* tileSize;
+                const tileY = Math.floor((gid-1) / row_tiles)* tileSize;
 
-               ctx?.drawImage(
-                   background_map_image,
-                   tileX,
-                   tileY,
-                   tileSize,
-                   tileSize,
-                   col*tileSize,
-                   row*tileSize,
-                   tileSize,
-                   tileSize);
-           }
-       }
+                ctx?.drawImage(
+                    background_map_image,
+                    tileX,
+                    tileY,
+                    tileSize,
+                    tileSize,
+                    col*tileSize,
+                    row*tileSize,
+                    tileSize,
+                    tileSize);
+            }
+        }
     }
+}
+
+export function drawTileLayer(tileData: number[], width: number, height: number, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
+    if (background_map_image.complete) {
+        drawTiles(canvas, ctx);
+    }
+    else {
+        background_map_image.onload = () => {
+            drawTiles(canvas, ctx);
+        }
+    }
+
 }
 
 const roomsPaths: Record<string, string> = {
     'room1': '../../../public/assets/maps/rooms/room1/room1.json',
-    'room2': '../../../public/assets/maps/rooms/rooms/room2.json',
-    'room3': '../../../public/assets/maps/rooms/rooms/room3.json',
-    'room4': '../../../public/assets/maps/rooms/room4.json',
+    'room2': '../../../public/assets/maps/rooms/room2/room2.json',
+    'room3': '../../../public/assets/maps/rooms/room3/room3.json',
+    'room4': '../../../public/assets/maps/rooms/room4/room4.json',
     'boss_room': '../../../public/assets/maps/rooms/boss_room/boss_room.json'
 };
 
