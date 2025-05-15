@@ -131,11 +131,11 @@ export function drawTileLayer(tileData: number[], width: number, height: number,
 }
 
 const roomsPaths: Record<string, string> = {
-    'room1': '../../rooms/room1/rooms1.json',
-    'room2': '../../rooms/room2/rooms2.json',
-    'room3': '../../rooms/room3/rooms3.json',
-    'room4': '../../rooms/room4/rooms4.json',
-    'boss_room': '../../rooms/boss_room/boss_room.json',
+    'room1': '../../../public/assets/maps/rooms/room1/room1.json',
+    'room2': '../../../public/assets/maps/rooms/rooms/room2.json',
+    'room3': '../../../public/assets/maps/rooms/rooms/room3.json',
+    'room4': '../../../public/assets/maps/rooms/room4.json',
+    'boss_room': '../../../public/assets/maps/rooms/boss_room/boss_room.json'
 };
 
 export async function loadRoomByName(roomName: string, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D): Promise<(NotAnimatedObject|AnimatedObject)[]> {
