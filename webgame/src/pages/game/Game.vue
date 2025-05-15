@@ -15,7 +15,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
 import Canvas from '@/components/Canvas.vue'
 import { useRouter } from 'vue-router'
@@ -37,12 +37,12 @@ async function handleFullscreen() {
 }
 
 function playAudio() {
-  let audio = document.getElementById('music')
+  const audio = document.getElementById('music')
   audio?.play().catch((error) => console.log('Riproduzione bloccata:', error))
 }
 
 function toggleMute() {
-  let audio = document.getElementById('music')
+  const audio = document.getElementById('music')
   if (audio.muted) {
     audio.muted = false
     event.target.innerText = '🔊'

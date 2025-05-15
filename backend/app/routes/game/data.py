@@ -25,9 +25,11 @@ async def get_classes(__: Request, _=Depends(AuthManager.get_user)):
                 mana=cls[4],
                 hp=cls[5],
                 description=cls[6],
+                playable=cls[7]
             ).model_dump()
             for cls in classes
         ]
+        print(classes_models)
         return JSONResponse(
             content=classes_models,
             status_code=HTTP_200_OK,

@@ -37,18 +37,18 @@ import { AuthService } from '@/internal/apiService'
 import type { Token, Session } from '@/internal/cryptoutils'
 import Loader from '@/components/Loader.vue'
 
-const isLogging = ref<Boolean>(false)
+const isLogging = ref<boolean>(false)
 const username = ref<string>('')
 const password = ref<string>('')
 const router = useRouter()
 
 async function main_req(path: string): Promise<{ session: Session; token: Token }> {
   const f = await AuthService.login(path, username.value, password.value)
-  let res = await f.json()
+  const res = await f.json()
   try {
     return (await JSON.parse(res)) as { session: Session; token: Token }
-  } catch (error) {
-    throw new Error('Failed to parse response')
+  } catch (err) {
+    throw new Error('Failed to parse response' + err)
   }
 }
 
@@ -59,14 +59,14 @@ async function process_session(req: { session: Session; token: Token }) {
   session.sym_key = RSAUtils.decrypt(session.sym_key)
   AESUtils.save(session, token)
   isLogging.value = false
-  router.push('/')
+  await router.push('/')
 }
 
 async function login() {
   isLogging.value = true
   try {
     const req = await main_req(import.meta.env.VITE_LOGIN_PATH)
-    process_session(req)
+    await process_session(req)
   } catch (error) {
     isLogging.value = false
     console.log(error)
@@ -77,7 +77,7 @@ async function register() {
   isLogging.value = true
   const req = await main_req(import.meta.env.VITE_REGISTER_PATH)
   try {
-    process_session(req)
+    await process_session(req)
   } catch (error) {
     isLogging.value = false
     console.log(error)
@@ -87,9 +87,8 @@ async function register() {
 
 <style scoped>
 .master {
-  background: linear-gradient(135deg, #8a0576, #120446);
-  background-color: blueviolet;
-  height: 100svh;
+    background: blueviolet linear-gradient(135deg, #8a0576, #120446);
+    height: 100svh;
   width: 100svw;
 }
 
