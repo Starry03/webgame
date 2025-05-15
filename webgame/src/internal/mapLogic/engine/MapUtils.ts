@@ -57,16 +57,20 @@ export function loadImage(img: HTMLImageElement): Promise<void> {
 }
 
 export async function loadMapData(path: string, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D): Promise<void> {
+    console.log("loadMapData(): begin")
     let map_data: any = null;
     try {
+        console.log("dentro il try")
         const res =  await fetch(path);
+        console.log("dopo fetch(path)")
         if (!res.ok) {
             throw new Error(`HTTP error! status: ${res.status}`);
         }
+
         map_data = await res.json();
-
+        console.log("popolazione di map_data avvenuta con successo!")
         await loadImage(background_map_image);
-
+        console.log("caricamento immagine di background avvenuta con successo!")
         const background_layer = map_data.layers.find((layer: TiledLayer) => layer.name === 'background');
         if (background_layer && background_layer.data) {
             const decoded = decodeTileLayer(background_layer.data);
@@ -77,6 +81,7 @@ export async function loadMapData(path: string, canvas: HTMLCanvasElement, ctx: 
         console.error(err);
         return;
     }
+    console.log("loadMapData(): end")
 }
 
 export function decodeTileLayer(encoded_data: string): number[] {
@@ -151,10 +156,9 @@ const roomsPaths: Record<string, string> = {
 };
 
 export async function loadRoomByName(roomName: string, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D): Promise<(NotAnimatedObject|AnimatedObject)[]> {
-    console.log("inizio caricamento room1")
-    const path = roomsPaths["room1"];
+    const path = roomsPaths[roomName];
     if (!path) {
-        throw new Error(`Room not found`);
+        throw new Error(`Room ${roomName} not found`);
     }
     return await loadRoom(path, canvas, ctx);
 }

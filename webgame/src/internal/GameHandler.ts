@@ -20,8 +20,9 @@ export class GameHandlder {
     this.lastTimeStamp = 0
     this.player.preloadImages()
     this.player.idle(true)
-      this.loadRoom('room1')
     this.gameLoop = this.gameLoop.bind(this)
+
+      this.loadInitialRoom()
 
     window.addEventListener('keydown', (e) => {
       e.preventDefault()
@@ -47,6 +48,15 @@ export class GameHandlder {
     this.player.update(timestamp)
     requestAnimationFrame(this.gameLoop)
   }
+
+    async loadInitialRoom() {
+        try {
+            this.currentRoomObjects = await loadRoomByName('room1', this.canvas, this.ctx);
+            requestAnimationFrame(this.gameLoop);
+        } catch (error) {
+            console.error('Errore nel caricamento della stanza iniziale:', error);
+        }
+    }
 
   async loadRoom(roomName: string): Promise<void> {
       try {
