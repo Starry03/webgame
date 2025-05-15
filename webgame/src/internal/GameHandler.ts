@@ -10,6 +10,7 @@ export class GameHandlder {
   keys: Set<string>
   lastTimeStamp: number
     currentRoomObjects: (AnimatedObject|NotAnimatedObject)[] = []
+    background_result: any
 
   constructor(player: Entity, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
     console.log(player)
@@ -22,7 +23,7 @@ export class GameHandlder {
     this.player.idle(true)
     this.gameLoop = this.gameLoop.bind(this)
 
-      this.loadInitialRoom()
+      this.background_result =
 
     window.addEventListener('keydown', (e) => {
       e.preventDefault()
@@ -40,6 +41,8 @@ export class GameHandlder {
     const deltaTime = (timestamp - this.lastTimeStamp) / 1000
     this.lastTimeStamp = timestamp
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+
+      this.loadInitialRoom();
 
       this.currentRoomObjects.forEach(obj => {
           obj.update(timestamp);

@@ -46,18 +46,26 @@ export async function loadMapObjects(mapUrl: string, canvas: HTMLCanvasElement, 
 }
 
 const tileSize = 32;
-const background_map_image = new Image();
-background_map_image.src = '../rooms/background_map/background_map.png';
 
-export function loadImage(img: HTMLImageElement): Promise<void> {
+export function loadImage(): Promise<HTMLImageElement> {
+    const background_map_image = new Image()
+    background_map_image.src = '/assets/maps/rooms/background_map/background_map.png';
+
     return new Promise( (resolve, reject) => {
-        img.onload = () => resolve();
-        img.onerror = reject;
+        background_map_image.onload = () => {
+            console.log('Loaded image');
+            return background_map_image;
+        }
+        background_map_image.onerror = (err) => {
+            console.log('Error during loading image', err);
+            reject(err)
+        }
     })
 }
 
 export async function loadMapData(path: string, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D): Promise<void> {
     console.log("loadMapData(): begin")
+    let results = {}
     let map_data: any = null;
     try {
         console.log("dentro il try")
@@ -69,12 +77,13 @@ export async function loadMapData(path: string, canvas: HTMLCanvasElement, ctx: 
 
         map_data = await res.json();
         console.log("popolazione di map_data avvenuta con successo!")
-        await loadImage(background_map_image);
+        const image = await loadImage();
         console.log("caricamento immagine di background avvenuta con successo!")
         const background_layer = map_data.layers.find((layer: TiledLayer) => layer.name === 'background');
         if (background_layer && background_layer.data) {
             const decoded = decodeTileLayer(background_layer.data);
-            drawTileLayer(decoded, background_layer.width, background_layer.height, canvas, ctx);
+
+            results = drawTileLayer(decoded, background_layer.width, background_layer.height, canvas, ctx, image);
         }
     }
     catch (err) {
@@ -107,7 +116,7 @@ export function decodeTileLayer(encoded_data: string): number[] {
     return tileData;
 }
 
-export function drawTiles(tileData: number[], width: number, height: number, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
+export function drawTiles(background_map_image: HTMLImageElement, tileData: number[], width: number, height: number, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
     background_map_image.onload = () => {
         const row_tiles = background_map_image.width /tileSize;
 
@@ -119,32 +128,43 @@ export function drawTiles(tileData: number[], width: number, height: number, can
 
                 const tileX = ((gid-1) % row_tiles)* tileSize;
                 const tileY = Math.floor((gid-1) / row_tiles)* tileSize;
-
-                ctx?.drawImage(
-                    background_map_image,
-                    tileX,
-                    tileY,
-                    tileSize,
-                    tileSize,
-                    col*tileSize,
-                    row*tileSize,
-                    tileSize,
-                    tileSize);
+                try {
+                    ctx?.drawImage(
+                        background_map_image,
+                        tileX,
+                        tileY,
+                        tileSize,
+                        tileSize,
+                        col * tileSize,
+                        row * tileSize,
+                        tileSize,
+                        tileSize);
+                }
+                catch (error) {
+                    console.error("catch error ctx", error);
+                }
             }
         }
     }
+    return {
+        "image": background_map_image,
+        "tile_data": tileData,
+        "width": width,
+        "height": height,
+    }
 }
 
-export function drawTileLayer(tileData: number[], width: number, height: number, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
+export function drawTileLayer(tileData: number[], width: number, height: number, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, background_map_image: HTMLImageElement): JSON {
+    let result = {};
     if (background_map_image.complete) {
-        drawTiles(tileData, width, height, canvas, ctx);
+        result = drawTiles(background_map_image, tileData, width, height, canvas, ctx);
     }
     else {
         background_map_image.onload = () => {
-            drawTiles(tileData, width, height, canvas, ctx);
+            result = drawTiles(background_map_image, tileData, width, height, canvas, ctx);
         }
     }
-
+    return result;
 }
 
 const roomsPaths: Record<string, string> = {
