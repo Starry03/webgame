@@ -111,6 +111,13 @@ const manaPercentage = computed(() => {
 .mana-bar {
     width: 50%;
 }
+
+.cooldown-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
 @media (max-width: 768px) {
   #canvas {
     width: 80%;
