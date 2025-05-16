@@ -28,7 +28,7 @@ export class GameHandler {
     this.gameLoop = this.gameLoop.bind(this);
     this.currentRoomPath = getRoomPath("room1")
     this.currentBackgroundRoom = {}
-    this.currentRoomObjects =  {}
+    this.currentRoomObjects =  []
 
     window.addEventListener('keydown', (e) => {
       e.preventDefault()
@@ -45,16 +45,20 @@ export class GameHandler {
   gameLoop(timestamp: number) {
     const deltaTime = (timestamp - this.lastTimeStamp) / 1000
     this.lastTimeStamp = timestamp
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-      this.currentBackgroundRoom = loadMapData(this.currentBackgroundRoom, this.canvas, this.ctx)
-    this.currentRoomObjects = await loadMapObjects(this.currentRoomPath, this.canvas, this.ctx);
-      this.currentRoomObjects.forEach(obj => {
+    this.currentRoomObjects.forEach(obj => {
           obj.update(timestamp);
       })
     this.player.handleInput(this.keys, deltaTime)
     this.player.update(timestamp)
     requestAnimationFrame(this.gameLoop)
+  }
+
+  async initialize() {
+      this.currentRoomPath = getRoomPath("room1");
+      await loadMapData(this.currentRoomPath, this.canvas, this.ctx);
+      this.currentRoomObjects = await loadMapObjects(this.currentBackgroundRoom, this.canvas, this.ctx);
   }
 }
 

@@ -13,7 +13,8 @@ export function loadImage(): Promise<HTMLImageElement> {
     return new Promise( (resolve, reject) => {
         background_map_image.onload = () => {
             console.log('Loaded image');
-            return background_map_image;
+            resolve(background_map_image);
+            //return background_map_image;
         }
         background_map_image.onerror = (err) => {
             console.log('Error during loading image', err);
@@ -41,8 +42,7 @@ export async function loadMapData(path: string, canvas: HTMLCanvasElement, ctx: 
         const background_layer = map_data.layers.find((layer: TiledLayer) => layer.name === 'background');
         if (background_layer && background_layer.data) {
             const decoded = decodeTileLayer(background_layer.data);
-
-            results = drawTileLayer(decoded, background_layer.width, background_layer.height, canvas, ctx, image);
+            results = drawTiles(decoded, background_layer.width, background_layer.height, canvas, ctx, image);
         }
     }
     catch (err) {
@@ -76,53 +76,43 @@ export function decodeTileLayer(encoded_data: string): number[] {
     return tileData;
 }
 
-export function drawTiles(background_map_image: HTMLImageElement, tileData: number[], width: number, height: number, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
-    background_map_image.onload = () => {
-        const row_tiles = background_map_image.width /tileSize;
+export function drawTiles(decoded: number[], width: number, height: number, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, background_map_image: HTMLImageElement) {
+    const row_tiles = background_map_image.width /tileSize;
 
-        for (let row = 0; row < height; row++) {
-            for (let col = 0; col < width; col++) {
-                const tile_index = row*width + col;
-                const gid = tileData[tile_index];
-                if (gid === 0) continue;
+    for (let row = 0; row < height; row++) {
+        for (let col = 0; col < width; col++) {
+            const tile_index = row*width + col;
+            const gid = decoded[tile_index];
+            if (gid === 0) continue;
 
-                const tileX = ((gid-1) % row_tiles)* tileSize;
-                const tileY = Math.floor((gid-1) / row_tiles)* tileSize;
-                try {
-                    ctx?.drawImage(
-                        background_map_image,
-                        tileX,
-                        tileY,
-                        tileSize,
-                        tileSize,
-                        col * tileSize,
-                        row * tileSize,
-                        tileSize,
-                        tileSize);
-                }
-                catch (error) {
-                    console.error("catch error ctx", error);
-                }
+            const tileX = ((gid-1) % row_tiles)* tileSize;
+            const tileY = Math.floor((gid-1) / row_tiles)* tileSize;
+            try {
+                ctx?.drawImage(
+                    background_map_image,
+                    tileX,
+                    tileY,
+                    tileSize,
+                    tileSize,
+                    col * tileSize,
+                    row * tileSize,
+                    tileSize,
+                    tileSize);
+            }
+            catch (error) {
+                console.error("catch error ctx", error);
             }
         }
     }
     return {
         "image": background_map_image,
-        "tile_data": tileData,
+        "tile_data": decoded,
         "width": width,
         "height": height,
     }
 }
 
-export function drawTileLayer(tileData: number[], width: number, height: number, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, background_map_image: HTMLImageElement): JSON {
-    let result = {};
-    if (background_map_image.complete) {
-        result = drawTiles(background_map_image, tileData, width, height, canvas, ctx);
-    }
-    else {
-        background_map_image.onload = () => {
-            result = drawTiles(background_map_image, tileData, width, height, canvas, ctx);
-        }
-    }
-    return <JSON>result;
-}
+/*export function drawTileLayer(tileData: number[], width: number, height: number, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, background_map_image: HTMLImageElement): {} {
+    const result = drawTiles(background_map_image,tileData, width, height, canvas, ctx);
+    return result;
+}*/

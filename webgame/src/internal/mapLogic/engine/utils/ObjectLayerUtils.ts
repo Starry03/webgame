@@ -35,7 +35,7 @@ export async function loadMapObjects(mapUrl: string, canvas: HTMLCanvasElement, 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const map_data = await response.json();
+        const map_data: TiledMap = await response.json();
         return loadObjectsFromMap(map_data, canvas, ctx);
     }
     catch (error) {

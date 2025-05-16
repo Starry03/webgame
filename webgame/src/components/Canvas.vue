@@ -22,7 +22,7 @@ import { Mage } from '@/internal/Mage'
 import { Samurai } from '@/internal/Samurai'
 import { Thief } from '@/internal/Thief'
 import { prefixed } from '@/internal/cryptoutils'
-import { GameHandlder } from '@/internal/GameHandler'
+import { GameHandler } from '@/internal/GameHandler'
 import { AnimationType, Storage_e, type Character } from '@/internal/types'
 import StatusBar from '@/components/StatusBar.vue'
 import type { Entity } from '@/internal/Player'
@@ -30,7 +30,7 @@ import type { Entity } from '@/internal/Player'
 const window_width = ref(window.innerWidth)
 const window_height = ref(window.innerHeight)
 const canvasRef = ref<HTMLCanvasElement | null>(null)
-const gameHandler = ref<GameHandlder | null>()
+const gameHandler = ref<GameHandler | null>()
 const player = ref<any>(null)
 
 const handle_resize = () => {
@@ -58,7 +58,7 @@ const mappedPlayer = computed(() => {
 
 console.log('Dati mappati per StatusBar:', mappedPlayer.value)
 
-onMounted(() => {
+onMounted(async () => {
     window.addEventListener('resize', handle_resize)
     const character = localStorage.getItem(prefixed(Storage_e.SELECTED_CHARACTER))
     const characterObject: Character = JSON.parse(character || '{}')
@@ -121,8 +121,9 @@ onMounted(() => {
         console.error('Player is null')
         return
     }
-    gameHandler.value = new GameHandlder(player.value, canvas, ctx)
-    gameHandler.value.gameLoop(performance.now())
+    gameHandler.value = new GameHandler(player.value, canvas, ctx)
+    gameHandler.value.gameLoop(performance.now());
+    await gameHandler.value.initialize()
 })
 
 onUnmounted(() => {
