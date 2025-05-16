@@ -14,7 +14,7 @@
                 :max-cooldown-r="mappedPlayer.maxCooldownR"
             />
         </div>
-        
+
         <div id="boss-status" v-if="isBossRoom">
             <StatusBar
                 v-if="mappedBoss"
@@ -40,7 +40,7 @@ import { Mage } from '@/internal/Mage'
 import { Samurai } from '@/internal/Samurai'
 import { Thief } from '@/internal/Thief'
 import { prefixed } from '@/internal/cryptoutils'
-import { GameHandlder } from '@/internal/GameHandler'
+import { GameHandler } from '@/internal/GameHandler'
 import { AnimationType, Storage_e, type Character } from '@/internal/types'
 import StatusBar from '@/components/StatusBar.vue'
 import type { Entity } from '@/internal/Player'
@@ -226,7 +226,7 @@ function initializeBoss() {
     border: 1px solid #ccc;
     width: 99svw;
     height: 60svh;
-    
+
 }
 
 @media (max-height: 500px) and (orientation: landscape) {
