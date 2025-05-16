@@ -2,6 +2,7 @@ import {NotAnimatedObject} from '../../classes/NotAnimatedObject'
 import {AnimatedObject} from '../../classes/AnimatedObject';
 import type {TiledMap, TiledProperty, TiledLayer } from '../interfaces/Interfaces';
 import {AnimationType, Vector2} from '../../../types';
+import { Rock } from '../../objects/Rock';
 
 export function loadObjectsFromMap(jsonMap: TiledMap, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D): (NotAnimatedObject|AnimatedObject)[] {
     const list_objects: (NotAnimatedObject | AnimatedObject)[] = [];
@@ -21,12 +22,11 @@ export function loadObjectsFromMap(jsonMap: TiledMap, canvas: HTMLCanvasElement,
                     list_objects.push(new AnimatedObject(canvas,ctx,AnimationType.IDLE,isIdle,pos, dim, object.name, object.x, object.y, object.width, object.height, custom_properties));
                 }
                 else {
-                    list_objects.push(new NotAnimatedObject(canvas, ctx,AnimationType.IDLE,isIdle,pos, dim, object.name, object.x, object.y, object.width, object.height))
+                    list_objects.push(new Rock(canvas, ctx,AnimationType.IDLE,isIdle,pos, dim, object.name, object.x, object.y, object.width, object.height))
                 }
             })
         }
     })
-    console.log('Objects loaded from map:', list_objects);
     return list_objects;
 }
 

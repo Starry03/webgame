@@ -4,6 +4,8 @@ import { AnimatedObject } from '@/internal/mapLogic/classes/AnimatedObject.ts'
 import { NotAnimatedObject } from '@/internal/mapLogic/classes/NotAnimatedObject.ts'
 import { loadMapData } from '@/internal/mapLogic/engine/utils/BackgroundLayerUtils.ts'
 import { loadMapObjects } from '@/internal/mapLogic/engine/utils/ObjectLayerUtils.ts'
+import type { Obj } from './Obj'
+import { Rock } from './mapLogic/objects/Rock'
 
 export class GameHandler {
     player: Entity
@@ -54,7 +56,7 @@ export class GameHandler {
             this.ctx.drawImage(this.bg_image, 0, 0, this.canvas.width, this.canvas.height)
 
         this.ctx.restore()
-        this.currentRoomObjects.forEach((obj) => {
+        this.currentRoomObjects.forEach((obj: Obj) => {
             obj.update(timestamp)
         })
         this.player.handleInput(this.keys, deltaTime)
@@ -66,5 +68,9 @@ export class GameHandler {
         this.currentRoomPath = getRoomPath('room1')
         this.bg_image = await loadMapData(this.currentRoomPath, this.canvas, this.ctx)
         this.currentRoomObjects = await loadMapObjects(this.currentRoomPath, this.canvas, this.ctx)
+        this.currentRoomObjects.forEach((obj: Obj) => {
+            obj.preloadImages()
+            obj.idle(true)
+        })
     }
 }

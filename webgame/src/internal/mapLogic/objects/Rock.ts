@@ -1,18 +1,31 @@
-import {NotAnimatedObject} from "../classes/NotAnimatedObject";
-import { AnimationType, Vector2 } from '../../types';
+import { NotAnimatedObject } from '../classes/NotAnimatedObject'
+import { AnimationType, Vector2 } from '../../types'
 
 export class Rock extends NotAnimatedObject {
-    constructor(canvas: HTMLCanvasElement,
-                ctx: CanvasRenderingContext2D,
-                initialAnimation: AnimationType,
-                isIdle: boolean,
-                pos: Vector2,
-                dim: Vector2,
-                name: string,
-                x: number,
-                y: number,
-                width: number,
-                height: number) {
-        super(canvas,ctx,initialAnimation,isIdle,pos,dim,name,x,y,width,height);
+    constructor(
+        canvas: HTMLCanvasElement,
+        ctx: CanvasRenderingContext2D,
+        initialAnimation: AnimationType,
+        isIdle: boolean,
+        pos: Vector2,
+        dim: Vector2,
+        name: string,
+        x: number,
+        y: number,
+        width: number,
+        height: number,
+    ) {
+        super(canvas, ctx, initialAnimation, isIdle, pos, dim, name, x, y, width, height)
+        this.setFramePaths({
+            run: [],
+            attack1: [],
+            attack2: [],
+            special: [],
+            idle: ['/assets/maps/rooms/tiled_objects/rocks/rock1.png'],
+            hurt: [],
+            dead: [],
+            opening: [],
+            closing: [],
+        })
     }
 }
