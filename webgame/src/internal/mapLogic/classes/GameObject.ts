@@ -18,9 +18,7 @@ export class GameObject extends Obj {
                 y: number,
                 width: number,
                 height: number) {
-      super(canvas, ctx, initialAnimation, isIdle, pos, dim);
-      /*pos = new Vector2(this.x,this.y);
-      dim = new Vector2(this.width, this.height);*/
+      super(canvas, ctx, initialAnimation, isIdle, new Vector2(x, y), new Vector2(width, height));
       this.name = name;
       this.x = x;
       this.y = y;
