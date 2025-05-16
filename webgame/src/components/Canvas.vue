@@ -57,7 +57,7 @@ const window_width = ref(window.innerWidth)
 const window_height = ref(window.innerHeight)
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 const canvasHeight = ref(600) // Define a default height for the canvas
-const gameHandler = ref<GameHandlder | null>()
+const gameHandler = ref<GameHandler | null>()
 const player = ref<any>(null)
 
 const handle_resize = () => {
@@ -148,7 +148,7 @@ onMounted(() => {
         console.error('Player is null')
         return
     }
-    gameHandler.value = new GameHandlder(player.value, canvas, ctx)
+    gameHandler.value = new GameHandler(player.value, canvas, ctx)
     gameHandler.value.gameLoop(performance.now())
 })
 
