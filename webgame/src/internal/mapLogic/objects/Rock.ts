@@ -21,7 +21,7 @@ export class Rock extends NotAnimatedObject {
             attack1: [],
             attack2: [],
             special: [],
-            idle: ['/assets/maps/rooms/tiled_objects/rocks/rock1.png'],
+            idle: [],
             hurt: [],
             dead: [],
             opening: [],
