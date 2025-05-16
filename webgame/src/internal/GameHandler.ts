@@ -1,16 +1,20 @@
 import type { Entity } from './Player'
-import {loadRoomByName} from '@/internal/mapLogic/engine/MapUtils.ts'
+import {getRoomPath} from '@/internal/mapLogic/engine/MapUtils.ts'
 import {AnimatedObject} from '@/internal/mapLogic/classes/AnimatedObject.ts'
 import {NotAnimatedObject} from '@/internal/mapLogic/classes/NotAnimatedObject.ts'
+import {loadMapData} from "@/internal/mapLogic/engine/utils/BackgroundLayerUtils.ts";
+import {loadMapObjects} from "@/internal/mapLogic/engine/utils/ObjectLayerUtils.ts";
 
-export class GameHandlder {
+export class GameHandler {
   player: Entity
   canvas: HTMLCanvasElement
   ctx: CanvasRenderingContext2D
   keys: Set<string>
   lastTimeStamp: number
-    currentRoomObjects: (AnimatedObject|NotAnimatedObject)[] = []
-    background_result: any
+    currentRoomPath: string
+    currentBackgroundRoom: any
+    currentRoomObjects: (NotAnimatedObject|AnimatedObject)[]
+
 
   constructor(player: Entity, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
     console.log(player)
@@ -21,9 +25,10 @@ export class GameHandlder {
     this.lastTimeStamp = 0
     this.player.preloadImages()
     this.player.idle(true)
-    this.gameLoop = this.gameLoop.bind(this)
-
-      this.background_result =
+    this.gameLoop = this.gameLoop.bind(this);
+    this.currentRoomPath = getRoomPath("room1")
+    this.currentBackgroundRoom = {}
+    this.currentRoomObjects =  {}
 
     window.addEventListener('keydown', (e) => {
       e.preventDefault()
@@ -42,8 +47,8 @@ export class GameHandlder {
     this.lastTimeStamp = timestamp
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
 
-      this.loadInitialRoom();
-
+      this.currentBackgroundRoom = loadMapData(this.currentBackgroundRoom, this.canvas, this.ctx)
+    this.currentRoomObjects = await loadMapObjects(this.currentRoomPath, this.canvas, this.ctx);
       this.currentRoomObjects.forEach(obj => {
           obj.update(timestamp);
       })
@@ -51,24 +56,5 @@ export class GameHandlder {
     this.player.update(timestamp)
     requestAnimationFrame(this.gameLoop)
   }
-
-    async loadInitialRoom() {
-        try {
-            this.currentRoomObjects = await loadRoomByName('room1', this.canvas, this.ctx);
-            requestAnimationFrame(this.gameLoop);
-        } catch (error) {
-            console.error('Errore nel caricamento della stanza iniziale:', error);
-        }
-    }
-
-  async loadRoom(roomName: string): Promise<void> {
-      try {
-          this.currentRoomObjects = await loadRoomByName(roomName, this.canvas, this.ctx)
-      }
-      catch (error) {
-          console.error(`error during ${roomName} loading:`, error);
-      }
-  }
-
 }
 
