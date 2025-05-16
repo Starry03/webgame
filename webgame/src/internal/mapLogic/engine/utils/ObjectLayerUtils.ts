@@ -6,7 +6,7 @@ import {AnimationType, Vector2} from '../../../types';
 export function loadObjectsFromMap(jsonMap: TiledMap, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D): (NotAnimatedObject|AnimatedObject)[] {
     const list_objects: (NotAnimatedObject | AnimatedObject)[] = [];
     jsonMap.layers.forEach(layer => {
-        if ((layer.type === 'objectgroup') && layer.objects) {
+        if (layer.type === 'objectgroup' && layer.objects) {
             layer.objects.forEach(object => {
                 const isIdle: boolean = true;
                 const pos = new Vector2(object.x, object.y);
