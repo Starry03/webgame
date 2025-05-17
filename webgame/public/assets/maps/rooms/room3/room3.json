@@ -54,8 +54,8 @@
                  "type":"NotAnimatedObject",
                  "visible":true,
                  "width":20,
-                 "x":295,
-                 "y":91
+                 "x":130,
+                 "y":152
                 }, 
                 {
                  "gid":16,
@@ -103,7 +103,7 @@
                  "visible":true,
                  "width":26,
                  "x":706,
-                 "y":149
+                 "y":122.883
                 }, 
                 {
                  "gid":15,
@@ -381,13 +381,13 @@
                  "gid":11,
                  "height":47,
                  "id":49,
-                 "name":"crystal1",
+                 "name":"crystal16",
                  "rotation":0,
                  "type":"NotAnimatedObject",
                  "visible":true,
                  "width":33,
-                 "x":74,
-                 "y":291
+                 "x":667.726,
+                 "y":211.778
                 }, 
                 {
                  "gid":20,

@@ -25,11 +25,11 @@
  <objectgroup id="2" name="objects">
   <object id="9" name="crystal15" type="NotAnimatedObject" gid="14" x="43" y="357" width="20" height="20"/>
   <object id="10" name="crystal14" type="NotAnimatedObject" gid="14" x="220" y="280" width="20" height="20"/>
-  <object id="11" name="crystal13" type="NotAnimatedObject" gid="14" x="295" y="91" width="20" height="20"/>
+  <object id="11" name="crystal13" type="NotAnimatedObject" gid="14" x="130" y="152" width="20" height="20"/>
   <object id="12" name="crystal12" type="NotAnimatedObject" gid="16" x="448" y="155" width="28" height="28"/>
   <object id="13" name="crystal11" type="NotAnimatedObject" gid="16" x="540" y="285" width="28" height="28"/>
   <object id="14" name="crystal10" type="NotAnimatedObject" gid="15" x="358" y="250" width="26" height="26"/>
-  <object id="15" name="crystal9" type="NotAnimatedObject" gid="15" x="706" y="149" width="26" height="26"/>
+  <object id="15" name="crystal9" type="NotAnimatedObject" gid="15" x="706" y="122.883" width="26" height="26"/>
   <object id="16" name="crystal8" type="NotAnimatedObject" gid="15" x="311" y="366" width="26" height="26"/>
   <object id="17" name="crystal7" type="NotAnimatedObject" gid="15" x="183" y="347" width="26" height="26"/>
   <object id="18" name="crystal6" type="NotAnimatedObject" gid="15" x="467" y="359" width="26" height="26"/>
@@ -66,7 +66,7 @@
    </properties>
   </object>
   <object id="48" name="crystal2" type="NotAnimatedObject" gid="11" x="74" y="291" width="33" height="47"/>
-  <object id="49" name="crystal1" type="NotAnimatedObject" gid="11" x="74" y="291" width="33" height="47"/>
+  <object id="49" name="crystal16" type="NotAnimatedObject" gid="11" x="667.726" y="211.778" width="33" height="47"/>
   <object id="50" name="rock1" type="NotAnimatedObject" gid="20" x="154" y="300" width="32" height="28"/>
   <object id="52" name="hpPotion" type="AnimatedObject" gid="27" x="676" y="352" width="21" height="32">
    <properties>

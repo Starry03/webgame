@@ -39,7 +39,7 @@ const IMAGES_PATHS: Record<string, string> = {
     'bat': '/assets/maps/rooms/tiled_objects/bat.png',
     'manaPotion':  '/assets/maps/rooms/tiled_objects/mana_potion.png',
     'hpPotion':   '/assets/maps/rooms/tiled_objects/hp_potion.png',
-    'attackEnhancement': '/assets/maps/rooms/tiled_objects/attack_enchantment.png',
+    'attackEnhancement': '/assets/maps/rooms/tiled_objects/attack_enhancement.png',
     'defenseEnhancement': '/assets/maps/rooms/tiled_objects/defense_enhancement.png',
 }
 
@@ -472,4 +472,227 @@ export function populateRoom2 (tiled_objects: (NotAnimatedObject|AnimatedObject)
         }*/
     }
 }
+
+export function populateRoom3 (list_objects: (NotAnimatedObject|AnimatedObject)[]) {
+    for (const obj of list_objects) {
+        let frame_paths: Record<AnimationType, string[]>;
+        if (obj.name == 'rock9') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['rock1']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (['rock7', 'rock8'].includes(obj.name)) {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['rock2']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (['rock4', 'rock5'].includes(obj.name)) {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['rock3']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (['rock1', 'rock2', 'rock3', 'rock6', 'rock10'].includes(obj.name)) {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['rock4']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (['crystal1', 'crystal5', 'crystal16'].includes(obj.name)) {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['crystal3']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (obj.name == 'crystal3') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['crystal4']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (obj.name == 'crystal4') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['crystal5']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (['crystal13', 'crystal14', 'crystal15'].includes(obj.name)) {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['crystal6']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (['crystal6', 'crystal7',  'crystal8', 'crystal9', 'crystal10' ].includes(obj.name)) {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['crystal7']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (['crystal11', 'crystal12'].includes(obj.name)) {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['crystal8']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (obj.name == 'structure') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['structure']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (obj.name == 'manaPotion') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['manaPotion']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (obj.name == 'hpPotion') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['hpPotion']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (obj.name == 'attackEnhancement') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['attackEnhancement']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (obj.name == 'defenseEnhancement') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['defenseEnhancement']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        /*else {
+            console.log(obj.name);
+            throw new Error('path not found');
+            return;
+        }*/
+    }
+}
+
+
 

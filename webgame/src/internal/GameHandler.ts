@@ -65,10 +65,10 @@ export class GameHandler {
     }
 
     async initialize() {
-        this.currentRoomPath = getRoomPath('room2')
+        this.currentRoomPath = getRoomPath('room3')
         this.bg_image = await loadMapData(this.currentRoomPath, this.canvas, this.ctx)
         console.log(this.bg_image)
-        this.currentRoomObjects = await loadMapObjects('room1',this.currentRoomPath, this.canvas, this.ctx)
+        this.currentRoomObjects = await loadMapObjects('room3',this.currentRoomPath, this.canvas, this.ctx)
         this.currentRoomObjects.forEach((obj: Obj) => {
             obj.preloadImages()
             obj.idle(true)
