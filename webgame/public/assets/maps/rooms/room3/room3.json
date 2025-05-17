@@ -448,30 +448,7 @@
                  "y":384
                 }, 
                 {
-                 "gid":32,
-                 "height":32,
-                 "id":54,
-                 "name":"attackEnhancement",
-                 "properties":[
-                        {
-                         "name":"collidable",
-                         "type":"bool",
-                         "value":false
-                        }, 
-                        {
-                         "name":"takeable",
-                         "type":"bool",
-                         "value":true
-                        }],
-                 "rotation":0,
-                 "type":"AnimatedObject",
-                 "visible":true,
-                 "width":32,
-                 "x":704,
-                 "y":352
-                }, 
-                {
-                 "gid":35,
+                 "gid":36,
                  "height":32,
                  "id":55,
                  "name":"defenseEnhancement",
@@ -579,6 +556,29 @@
                  "width":64,
                  "x":672,
                  "y":288
+                }, 
+                {
+                 "gid":33,
+                 "height":32,
+                 "id":59,
+                 "name":"attackEnhancement",
+                 "properties":[
+                        {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"takeable",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"AnimatedObject",
+                 "visible":true,
+                 "width":32,
+                 "x":704,
+                 "y":352
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -587,7 +587,7 @@
          "y":0
         }],
  "nextlayerid":4,
- "nextobjectid":59,
+ "nextobjectid":60,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
@@ -646,7 +646,7 @@
          "source":"..\/tilesets\/attackEnhancement.tsx"
         }, 
         {
-         "firstgid":33,
+         "firstgid":34,
          "source":"..\/tilesets\/defenseEnhancement.tsx"
         }],
  "tilewidth":32,

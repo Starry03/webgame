@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="25" height="13" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="59">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="25" height="13" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="60">
  <editorsettings>
   <export target="room3.js" format="js"/>
  </editorsettings>
@@ -80,12 +80,6 @@
     <property name="takeable" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="54" name="attackEnhancement" type="AnimatedObject" gid="32" x="704" y="352" width="32" height="32">
-   <properties>
-    <property name="collidable" type="bool" value="false"/>
-    <property name="takeable" type="bool" value="true"/>
-   </properties>
-  </object>
   <object id="55" name="defenseEnhancement" type="AnimatedObject" gid="36" x="672" y="384" width="32" height="32">
    <properties>
     <property name="collidable" type="bool" value="false"/>
@@ -110,6 +104,12 @@
     <property name="animating" type="bool" value="false"/>
     <property name="isOpen" type="bool" value="false"/>
     <property name="type" value="door"/>
+   </properties>
+  </object>
+  <object id="59" name="attackEnhancement" type="AnimatedObject" gid="33" x="704" y="352" width="32" height="32">
+   <properties>
+    <property name="collidable" type="bool" value="false"/>
+    <property name="takeable" type="bool" value="true"/>
    </properties>
   </object>
  </objectgroup>

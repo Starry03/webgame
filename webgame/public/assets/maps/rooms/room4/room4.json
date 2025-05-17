@@ -495,9 +495,9 @@
                  "y":288
                 }, 
                 {
-                 "gid":45,
+                 "gid":46,
                  "height":32,
-                 "id":63,
+                 "id":64,
                  "name":"attackEnhancement",
                  "properties":[
                         {
@@ -581,7 +581,7 @@
          "y":0
         }],
  "nextlayerid":5,
- "nextobjectid":64,
+ "nextobjectid":65,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
