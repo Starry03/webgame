@@ -4,7 +4,7 @@
  "layers":[
         {
          "compression":"zlib",
-         "data":"eJxbysDAsHQIYhhAFmOkISbVjtVomBZ20MMfo3aM2jHY7KA1BgBS7T+A",
+         "data":"eJxbysDAsHSYYEYaYlLtWI2GaWEHPfwxaseoHYPNDlpjAO88QMo=",
          "encoding":"base64",
          "height":13,
          "id":1,
@@ -257,7 +257,7 @@
                  "gid":147,
                  "height":42,
                  "id":23,
-                 "name":"rock6",
+                 "name":"crystal12",
                  "rotation":0,
                  "type":"NotAnimatedObject",
                  "visible":true,
