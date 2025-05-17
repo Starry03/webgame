@@ -57,7 +57,8 @@ export class GameHandler {
 
         this.ctx.restore()
         this.currentRoomObjects.forEach((obj: Obj) => {
-            obj.update(timestamp)
+            // if da togliere prima o poi
+            if (obj.selectedFrames !== undefined) obj.update(timestamp)
         })
         this.player.handleInput(this.keys, deltaTime)
         this.player.update(timestamp)
@@ -67,6 +68,7 @@ export class GameHandler {
     async initialize() {
         this.currentRoomPath = getRoomPath('room1')
         this.bg_image = await loadMapData(this.currentRoomPath, this.canvas, this.ctx)
+        console.log(this.bg_image)
         this.currentRoomObjects = await loadMapObjects(this.currentRoomPath, this.canvas, this.ctx)
         this.currentRoomObjects.forEach((obj: Obj) => {
             obj.preloadImages()
