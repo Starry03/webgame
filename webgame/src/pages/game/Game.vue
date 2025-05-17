@@ -79,6 +79,7 @@ onUnmounted(() => {
   h1 {
     text-align: center;
     width: 69%;
+    font-size: var(--font-medium);
   }
 
   .button-mute {
@@ -87,6 +88,10 @@ onUnmounted(() => {
     position: absolute;
     top: 0;
     left: 85svw;
+  }
+
+  .button-home {
+    text-size-adjust: var(--font-small);
   }
 }
 @media (orientation: landscape) {
@@ -112,7 +117,7 @@ onUnmounted(() => {
 
 
 h1 {
-  font-size: var(--font-big);
+  font-size: var(--font-medium);
   text-shadow:
     0 0 10px red,
     0 0 20px red;
@@ -124,7 +129,7 @@ h1 {
   position: absolute;
   top: 30px;
   left: 20px;
-  font-size: var(--font-big);
+  font-size: var(--font-small);
 }
 
 .button-mute {
