@@ -2,6 +2,7 @@ import {NotAnimatedObject} from '../../classes/NotAnimatedObject'
 import {AnimatedObject} from '../../classes/AnimatedObject';
 import {AnimationType, Vector2} from '../../../types';
 import type { TiledMap, TiledProperty } from '../interfaces/Interfaces'
+import {populateRoom1} from '@/internal/mapLogic/engine/MapUtils.ts'
 
 export function loadObjectsFromMap(jsonMap: TiledMap, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D): (NotAnimatedObject|AnimatedObject)[] {
     const list_objects: (NotAnimatedObject | AnimatedObject)[] = [];
@@ -29,14 +30,16 @@ export function loadObjectsFromMap(jsonMap: TiledMap, canvas: HTMLCanvasElement,
     return list_objects;
 }
 
-export async function loadMapObjects(mapUrl: string, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D): Promise<(AnimatedObject|NotAnimatedObject)[]> {
+export async function loadMapObjects(room_name: string, mapUrl: string, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D): Promise<(AnimatedObject|NotAnimatedObject)[]> {
     try {
         const response = await fetch(mapUrl);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const map_data: TiledMap = await response.json();
-        return loadObjectsFromMap(map_data, canvas, ctx);
+        const list_objects: (NotAnimatedObject|AnimatedObject)[] = loadObjectsFromMap(map_data, canvas, ctx);
+        populateRoom1(list_objects);
+        return list_objects;
     }
     catch (error) {
         console.error(`Errore nel caricamento della mappa: ${mapUrl}`, error);
