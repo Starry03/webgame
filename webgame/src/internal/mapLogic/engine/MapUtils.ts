@@ -8,13 +8,13 @@ export function getRoomPath(room: string): string {
         return '/assets/maps/rooms/room1/room1.json';
     }
     else if (room == 'room2') {
-        return '/assets/maps/rooms/rooms/room2.json';
+        return '/assets/maps/rooms/room2/room2.json';
     }
     else if (room == 'room3') {
-        return '/assets/maps/rooms/rooms/room3.json';
+        return '/assets/maps/rooms/room3/room3.json';
     }
     else if (room == 'room4') {
-        return '/assets/maps/rooms/rooms/room4.json';
+        return '/assets/maps/rooms/room4/room4.json';
     }
     else if (room == 'boss_room') {
         return '/assets/maps/rooms/boss_room/boss_room.json';
@@ -24,15 +24,22 @@ export function getRoomPath(room: string): string {
     }
 }
 
-/*const roomsPaths: Record<string, string> = {
-    'room1': '/assets/maps/rooms/room1/room1.json',
-    'room2': '/assets/maps/rooms/room2/room2.json',
-    'room3': '/assets/maps/rooms/room3/room3.json',
-    'room4': '/assets/maps/rooms/room4/room4.json',
-    'boss_room': '/assets/maps/rooms/boss_room/boss_room.json'
-};
+const IMAGES_PATHS: Record<string, string> = {
+    'rock1': '/assets/maps/rooms/tiled_objects/rocks/rock1.png',
+    'rock2': '/assets/maps/rooms/tiled_objects/rocks/rock2.png',
+    'rock3':  '/assets/maps/rooms/tiled_objects/rocks/rock3.png',
+    'rock4':  '/assets/maps/rooms/tiled_objects/rocks/rock4.png',
+    'crystal3': '/assets/maps/rooms/tiled_objects/crystals/crystals3.png',
+    'crystal4': '/assets/maps/rooms/tiled_objects/crystals/crystals4.png',
+    'crystal5': '/assets/maps/rooms/tiled_objects/crystals/crystals5.png',
+    'crystal6': '/assets/maps/rooms/tiled_objects/crystals/crystals6.png',
+    'crystal7': '/assets/maps/rooms/tiled_objects/crystals/crystals7.png',
+    'crystal8': '/assets/maps/rooms/tiled_objects/crystals/crystals8.png',
+    'structure': '/assets/maps/rooms/tiled_objects/structure.png',
+    'bat': '/assets/maps/rooms/tiled_objects/bat.png'
+}
 
-export async function loadRoomByName(roomName: string, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D): Promise<(NotAnimatedObject|AnimatedObject)[]> {
+/*export async function loadRoomByName(roomName: string, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D): Promise<(NotAnimatedObject|AnimatedObject)[]> {
     const path = roomsPaths[roomName];
     if (!path) {
         throw new Error(`Room ${roomName} not found`);
@@ -56,7 +63,7 @@ export function populateRoom1(list_objects: (NotAnimatedObject|AnimatedObject)[]
                 attack1: [],
                 attack2: [],
                 special: [],
-                idle: ['/assets/maps/rooms/tiled_objects/rocks/rock1.png'],
+                idle: [IMAGES_PATHS['rock1']],
                 hurt: [],
                 dead: [],
                 opening: [],
@@ -70,7 +77,7 @@ export function populateRoom1(list_objects: (NotAnimatedObject|AnimatedObject)[]
                 attack1: [],
                 attack2: [],
                 special: [],
-                idle: ['/assets/maps/rooms/tiled_objects/rocks/rock2.png'],
+                idle: [IMAGES_PATHS['rock2']],
                 hurt: [],
                 dead: [],
                 opening: [],
@@ -84,7 +91,7 @@ export function populateRoom1(list_objects: (NotAnimatedObject|AnimatedObject)[]
                 attack1: [],
                 attack2: [],
                 special: [],
-                idle: ['/assets/maps/rooms/tiled_objects/rocks/rock4.png'],
+                idle: [IMAGES_PATHS['rock4']],
                 hurt: [],
                 dead: [],
                 opening: [],
@@ -98,7 +105,7 @@ export function populateRoom1(list_objects: (NotAnimatedObject|AnimatedObject)[]
                 attack1: [],
                 attack2: [],
                 special: [],
-                idle: ['/assets/maps/rooms/tiled_objects/rocks/rock3.png'],
+                idle: [IMAGES_PATHS['rock3']],
                 hurt: [],
                 dead: [],
                 opening: [],
@@ -112,12 +119,13 @@ export function populateRoom1(list_objects: (NotAnimatedObject|AnimatedObject)[]
                 attack1: [],
                 attack2: [],
                 special: [],
-                idle: ['/assets/maps/rooms/tiled_objects/crystals/crystal3.png'],
+                idle: [IMAGES_PATHS['crystal3']],
                 hurt: [],
                 dead: [],
                 opening: [],
                 closing: []
             }
+            console.log(obj.name);
             obj.setFramePaths(frame_paths);
         }
         else if (obj.name == 'crystal1') {
@@ -126,12 +134,13 @@ export function populateRoom1(list_objects: (NotAnimatedObject|AnimatedObject)[]
                 attack1: [],
                 attack2: [],
                 special: [],
-                idle: ['/assets/maps/rooms/tiled_objects/crystals/crystal4.png'],
+                idle: [IMAGES_PATHS['crystal4']],
                 hurt: [],
                 dead: [],
                 opening: [],
                 closing: []
             }
+            console.log(obj.name);
             obj.setFramePaths(frame_paths);
         }
         else if (obj.name == 'crystal2') {
@@ -140,12 +149,13 @@ export function populateRoom1(list_objects: (NotAnimatedObject|AnimatedObject)[]
                 attack1: [],
                 attack2: [],
                 special: [],
-                idle: ['/assets/maps/rooms/tiled_objects/crystals/crystal5.png'],
+                idle: [IMAGES_PATHS['crystal5']],
                 hurt: [],
                 dead: [],
                 opening: [],
                 closing: []
             }
+            console.log(obj.name);
             obj.setFramePaths(frame_paths);
         }
         else if (['crystal4', 'crystal5'].includes(obj.name)) {
@@ -154,12 +164,13 @@ export function populateRoom1(list_objects: (NotAnimatedObject|AnimatedObject)[]
                 attack1: [],
                 attack2: [],
                 special: [],
-                idle: ['/assets/maps/rooms/tiled_objects/crystals/crystal8.png'],
+                idle: [IMAGES_PATHS['crystal8']],
                 hurt: [],
                 dead: [],
                 opening: [],
                 closing: []
             }
+            console.log(obj.name);
             obj.setFramePaths(frame_paths);
         }
         else if (['crystal8', 'crystal9'].includes(obj.name)) {
@@ -168,12 +179,13 @@ export function populateRoom1(list_objects: (NotAnimatedObject|AnimatedObject)[]
                 attack1: [],
                 attack2: [],
                 special: [],
-                idle: ['/assets/maps/rooms/tiled_objects/crystals/crystal6.png'],
+                idle: [IMAGES_PATHS['crystal6']],
                 hurt: [],
                 dead: [],
                 opening: [],
                 closing: []
             }
+            console.log(obj.name);
             obj.setFramePaths(frame_paths);
         }
         else if (['crystal7', 'crystal8'].includes(obj.name)) {
@@ -182,12 +194,13 @@ export function populateRoom1(list_objects: (NotAnimatedObject|AnimatedObject)[]
                 attack1: [],
                 attack2: [],
                 special: [],
-                idle: ['/assets/maps/rooms/tiled_objects/crystals/crystal7.png'],
+                idle: [IMAGES_PATHS['crystal7']],
                 hurt: [],
                 dead: [],
                 opening: [],
                 closing: []
             }
+            console.log(obj.name);
             obj.setFramePaths(frame_paths);
         }
         else if (obj.name == 'structure') {
@@ -196,7 +209,7 @@ export function populateRoom1(list_objects: (NotAnimatedObject|AnimatedObject)[]
                 attack1: [],
                 attack2: [],
                 special: [],
-                idle: ['/assets/maps/rooms/tiled_objects/structure.png'],
+                idle: [IMAGES_PATHS['structure']],
                 hurt: [],
                 dead: [],
                 opening: [],
@@ -210,7 +223,7 @@ export function populateRoom1(list_objects: (NotAnimatedObject|AnimatedObject)[]
                 attack1: [],
                 attack2: [],
                 special: [],
-                idle: ['/assets/maps/rooms/tiled_objects/bat.png'],
+                idle: [IMAGES_PATHS['bat']],
                 hurt: [],
                 dead: [],
                 opening: [],
