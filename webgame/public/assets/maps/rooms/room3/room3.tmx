@@ -16,7 +16,7 @@
  <tileset firstgid="28" source="../tilesets/manaPotion.tsx"/>
  <tileset firstgid="29" source="../tilesets/rug.tsx"/>
  <tileset firstgid="30" source="../tilesets/attackEnhancement.tsx"/>
- <tileset firstgid="33" source="../tilesets/defenseEnhancement.tsx"/>
+ <tileset firstgid="34" source="../tilesets/defenseEnhancement.tsx"/>
  <layer id="1" name="background" width="25" height="13">
   <data encoding="base64" compression="zlib">
    eJxjYWBgYEHC2AALFTEuQA2zGWmIR+0YtWPUDlQsC8X0toPWGAATagKn
@@ -86,7 +86,7 @@
     <property name="takeable" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="55" name="defense_enhancement" gid="35" x="672" y="384" width="32" height="32">
+  <object id="55" name="defenseEnhancement" type="AnimatedObject" gid="36" x="672" y="384" width="32" height="32">
    <properties>
     <property name="collidable" type="bool" value="false"/>
     <property name="takeable" type="bool" value="true"/>

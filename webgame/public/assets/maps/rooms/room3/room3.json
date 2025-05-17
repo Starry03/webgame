@@ -474,7 +474,7 @@
                  "gid":35,
                  "height":32,
                  "id":55,
-                 "name":"defense_enhancement",
+                 "name":"defenseEnhancement",
                  "properties":[
                         {
                          "name":"collidable",
@@ -487,7 +487,7 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"",
+                 "type":"AnimatedObject",
                  "visible":true,
                  "width":32,
                  "x":672,
