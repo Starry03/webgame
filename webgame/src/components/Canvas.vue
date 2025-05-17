@@ -85,7 +85,7 @@ const mappedPlayer = computed(() => {
 
 console.log('Dati mappati per StatusBar:', mappedPlayer.value)
 
-onMounted(() => {
+onMounted(async () => {
     window.addEventListener('resize', handle_resize)
     const character = localStorage.getItem(prefixed(Storage_e.SELECTED_CHARACTER))
     const characterObject: Character = JSON.parse(character || '{}')
