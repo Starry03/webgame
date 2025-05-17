@@ -5,7 +5,6 @@ import { NotAnimatedObject } from '@/internal/mapLogic/classes/NotAnimatedObject
 import { loadMapData } from '@/internal/mapLogic/engine/utils/BackgroundLayerUtils.ts'
 import { loadMapObjects } from '@/internal/mapLogic/engine/utils/ObjectLayerUtils.ts'
 import type { Obj } from './Obj'
-import { Rock } from './mapLogic/objects/Rock'
 
 export class GameHandler {
     player: Entity

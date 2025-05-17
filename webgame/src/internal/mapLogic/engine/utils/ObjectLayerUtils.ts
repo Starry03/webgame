@@ -1,8 +1,7 @@
 import {NotAnimatedObject} from '../../classes/NotAnimatedObject'
 import {AnimatedObject} from '../../classes/AnimatedObject';
-import type {TiledMap, TiledProperty, TiledLayer } from '../interfaces/Interfaces';
 import {AnimationType, Vector2} from '../../../types';
-import { Rock } from '../../objects/Rock';
+import type { TiledMap, TiledProperty } from '../interfaces/Interfaces'
 
 export function loadObjectsFromMap(jsonMap: TiledMap, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D): (NotAnimatedObject|AnimatedObject)[] {
     const list_objects: (NotAnimatedObject | AnimatedObject)[] = [];

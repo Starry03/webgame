@@ -1,7 +1,5 @@
 import { NotAnimatedObject } from '../../classes/NotAnimatedObject'
 import { AnimatedObject } from '../../classes/AnimatedObject'
-import type { TiledMap, TiledProperty, TiledLayer } from '../interfaces/Interfaces'
-import { AnimationType, Vector2 } from '../../../types'
 import * as pako from 'pako'
 
 const tileSize = 32

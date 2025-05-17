@@ -1,8 +1,6 @@
 import {NotAnimatedObject} from '../classes/NotAnimatedObject'
 import {AnimatedObject} from '../classes/AnimatedObject';
-import type {TiledMap, TiledProperty, TiledLayer } from './interfaces/Interfaces';
 import {AnimationType, Vector2} from '../../types';
-import {loadMapData} from './utils/BackgroundLayerUtils'
 import * as pako from 'pako';
 
 export function getRoomPath(room: string): string {
