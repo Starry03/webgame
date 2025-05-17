@@ -100,6 +100,8 @@ const manaPercentage = computed(() => {
     background-color: #333;
     border-radius: 8px;
     color: white;
+    font-size: 10px;
+    height: 100%;
 }
 
 .bar-container {

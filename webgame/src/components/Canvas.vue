@@ -226,8 +226,8 @@ function initializeBoss() {
     margin: 0 auto;
     border: 1px solid #ccc;
     width: 99svw;
-    height: 60svh;
-
+    height: 50svh;
+    
 }
 
 @media (max-height: 500px) and (orientation: landscape) {
