@@ -17,7 +17,7 @@ export interface TiledObject {
 export interface TiledLayer {
     name: string;
     type: string;
-    objects?: TiledObject[];
+    objects: TiledObject[];
     data?: string;
 }
 
