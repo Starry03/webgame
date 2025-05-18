@@ -22,7 +22,7 @@
  <tileset firstgid="44" source="../tilesets/attackEnhancement.tsx"/>
  <layer id="1" name="background" width="25" height="13">
   <data encoding="base64" compression="zlib">
-   eJxjYWBgYKEAM+LAlJhJjPnY7CGklhI8asfgtkMZB3uo2TFc4oOWdtAaAwD4pgLB
+   eJxjYWBgYBkmmJGGeNSOwW2HMg72ULNjuMQHLe2gNQYAuHkC6w==
   </data>
  </layer>
  <objectgroup id="2" name="objects">

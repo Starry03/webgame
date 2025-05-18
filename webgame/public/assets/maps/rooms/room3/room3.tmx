@@ -19,7 +19,7 @@
  <tileset firstgid="34" source="../tilesets/defenseEnhancement.tsx"/>
  <layer id="1" name="background" width="25" height="13">
   <data encoding="base64" compression="zlib">
-   eJxjYWBgYEHC2AALFTEuQA2zGWmIR+0YtWPUDlQsC8X0toPWGAATagKn
+   eJxjYWBgYBkmmJGGeNSOUTtG7UDFslBMbztojQHligLT
   </data>
  </layer>
  <objectgroup id="2" name="objects">
