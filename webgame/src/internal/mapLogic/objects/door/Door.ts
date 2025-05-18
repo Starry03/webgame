@@ -1,5 +1,5 @@
-import { AnimationType, Vector2 } from '../../types'
-import { AnimatedObject } from '../classes/AnimatedObject'
+import { AnimationType, Vector2 } from '../../../types.ts'
+import { AnimatedObject } from '../../classes/AnimatedObject.ts'
 
 export class Door extends AnimatedObject {
     constructor(
@@ -32,7 +32,7 @@ export class Door extends AnimatedObject {
         )
     }
     /*verificare se nelle sottoclassi va messa l'animazione contraria al nome stesso della classe*/
-    setPaths(): Record<AnimationType, string[]> {
+    setPaths(obj: AnimatedObject): void{
         const frame_paths: Record<AnimationType, string[]> = {
             run: [],
             attack1: [],
@@ -48,19 +48,20 @@ export class Door extends AnimatedObject {
                 '../rooms/tiled_objects/apertura1.png',
                 '../rooms/tiled_objects/apertura2.png',
                 '../rooms/tiled_objects/apertura3.png',
-                '../rooms/tiled_objects/apertura4.png',
                 '../rooms/tiled_objects/entrance_door.png',
             ],
             closing: [
                 '../rooms/tiled_objects/entrance_door.png',
-                '../rooms/tiled_objects/apertura4.png',
                 '../rooms/tiled_objects/apertura3.png',
                 '../rooms/tiled_objects/apertura2.png',
                 '../rooms/tiled_objects/apertura1.png',
-                '../rooms/tiled_objects/entrance_door.png',
+                '../rooms/tiled_objects/apertura.png',
             ],
         }
         this.setFramePaths(frame_paths)
-        return frame_paths
+    }
+
+    handleDoor (obj: AnimatedObject): void {
+
     }
 }

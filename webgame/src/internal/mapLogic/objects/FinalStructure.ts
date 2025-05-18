@@ -1,7 +1,7 @@
 import {NotAnimatedObject} from '../classes/NotAnimatedObject';
 import {AnimationType, Vector2 } from '../../types';
 import {Ladder} from './Ladder';
-import {SwitchRoomDoor} from './SwitchRoomDoor';
+import {SwitchRoomDoor} from './door/SwitchRoomDoor.ts';
 
 export class FinalStructure extends NotAnimatedObject {
     ladder: Ladder;

@@ -1,7 +1,7 @@
 import {NotAnimatedObject} from '../classes/NotAnimatedObject';
 import { AnimationType, Vector2 } from '../../types';
 import {SpecialWall} from './SpecialWall'
-import {SwitchRoomDoor} from './SwitchRoomDoor';
+import {SwitchRoomDoor} from './door/SwitchRoomDoor.ts';
 
 export class SwitchStructure extends NotAnimatedObject {
     special_wall:  SpecialWall;
