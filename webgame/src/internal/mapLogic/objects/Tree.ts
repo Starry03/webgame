@@ -1,5 +1,5 @@
 import {AnimatedObject} from "../classes/AnimatedObject";
-import { AnimationType, Vector2 } from '../../types';
+import {AnimationType, Vector2} from '@/internal/types.ts';
 
 export class Tree extends AnimatedObject {
     constructor(canvas: HTMLCanvasElement,
@@ -16,7 +16,4 @@ export class Tree extends AnimatedObject {
                 custom_properties: Record<string,any>) {
         super(canvas,ctx,initialAnimation,isIdle,pos,dim,name,x,y,width,height,custom_properties);
     }
-
-
-
 }

@@ -1,10 +1,8 @@
 import {NotAnimatedObject} from '../classes/NotAnimatedObject'
 import {AnimatedObject} from '../classes/AnimatedObject';
-import {AnimationType, Vector2} from '../../types';
+import {AnimationType, Vector2} from "@/internal/types.ts";
 import * as pako from 'pako';
 import {Door} from '@/internal/mapLogic/objects/door/Door'
-import { SwitchRoomDoor } from '@/internal/mapLogic/objects/door/SwitchRoomDoor'
-import {EntranceDoor} from '@/internal/mapLogic/objects/door/EntranceDoor'
 
 export function getRoomPath(room: string): string {
     if (room == 'room1') {

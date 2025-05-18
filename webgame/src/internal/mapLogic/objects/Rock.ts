@@ -1,5 +1,5 @@
-import { NotAnimatedObject } from '../classes/NotAnimatedObject'
-import { AnimationType, Vector2 } from '../../types'
+import { NotAnimatedObject } from '@/internal/mapLogic/classes/NotAnimatedObject'
+import {AnimationType, Vector2} from '@/internal/types.ts'
 
 export class Rock extends NotAnimatedObject {
     constructor(

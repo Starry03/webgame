@@ -1,5 +1,5 @@
-import { AnimationType, Vector2 } from '../../../types'
-import { AnimatedObject } from '../../classes/AnimatedObject.ts'
+import {AnimationType, Vector2} from '@/internal/types.ts';
+import { AnimatedObject } from '@/internal/mapLogic/classes/AnimatedObject'
 
 export class Door extends AnimatedObject {
     constructor(

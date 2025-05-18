@@ -1,11 +1,11 @@
-import { NotAnimatedObject } from '../../classes/NotAnimatedObject'
-import { AnimatedObject } from '../../classes/AnimatedObject'
-import { AnimationType, Vector2 } from '../../../types'
-import type { TiledMap, TiledProperty, TiledObject } from '../interfaces/Interfaces'
+import { NotAnimatedObject } from '@/internal/mapLogic/classes/NotAnimatedObject'
+import { AnimatedObject } from '@/internal/mapLogic/classes/AnimatedObject'
+import {AnimationType, Vector2} from '@/internal/types.ts'
+import type {TiledMap, TiledProperty} from '@/internal/mapLogic/engine/interfaces/Interfaces'
 import { populateRoom1, populateBossRoom } from '@/internal/mapLogic/engine/MapUtils.ts'
-import { EntranceDoor } from '@/internal/mapLogic/objects/door/EntranceDoor.ts'
-import { SwitchRoomDoor } from '@/internal/mapLogic/objects/door/SwitchRoomDoor.ts'
-import {AccessDoor} from '@/internal/mapLogic/objects/door/AccessDoor.ts'
+import {EntranceDoor} from '@/internal/mapLogic/objects/door/EntranceDoor'
+import { SwitchRoomDoor } from '@/internal/mapLogic/objects/door/SwitchRoomDoor'
+import {AccessDoor} from '@/internal/mapLogic/objects/door/AccessDoor'
 
 export function loadObjectsFromMap(jsonMap: TiledMap, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D): (NotAnimatedObject | AnimatedObject)[] {
     const list_objects: (NotAnimatedObject | AnimatedObject)[] = []

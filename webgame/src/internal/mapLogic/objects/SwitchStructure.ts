@@ -1,5 +1,5 @@
 import {NotAnimatedObject} from '../classes/NotAnimatedObject';
-import { AnimationType, Vector2 } from '../../types';
+import {AnimationType, Vector2} from "@/internal/types.ts";
 import {SpecialWall} from './SpecialWall'
 import {SwitchRoomDoor} from './door/SwitchRoomDoor.ts';
 

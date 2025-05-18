@@ -1,5 +1,5 @@
-import {Door} from './Door'
-import {AnimationType, Vector2} from "../../../types.ts";
+import {Door} from '@/internal/mapLogic/objects/door/Door.ts'
+import {AnimationType, Vector2} from '@/internal/types.ts'
 
 export class SwitchRoomDoor extends Door {
     constructor(
