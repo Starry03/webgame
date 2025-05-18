@@ -4,7 +4,7 @@
  "layers":[
         {
          "compression":"zlib",
-         "data":"eJxjYWBgYKEAM+LAlJhJjPnY7CGklhI8asfgtkMJB3uo2TFc4oOWdtAaAwDwVgK9",
+         "data":"eJxjYWBgYKEAM+LAlJhJjPnY7CGklhI8asfgtkMZB3uo2TFc4oOWdtAaAwD4pgLB",
          "encoding":"base64",
          "height":13,
          "id":1,
@@ -426,7 +426,7 @@
                  "y":210
                 }, 
                 {
-                 "gid":38,
+                 "gid":39,
                  "height":32,
                  "id":59,
                  "name":"hpPotion",
@@ -449,7 +449,7 @@
                  "y":256
                 }, 
                 {
-                 "gid":39,
+                 "gid":40,
                  "height":32,
                  "id":61,
                  "name":"manaPotion",
@@ -472,7 +472,7 @@
                  "y":288
                 }, 
                 {
-                 "gid":42,
+                 "gid":43,
                  "height":32,
                  "id":62,
                  "name":"defenseEnhancement",
@@ -495,7 +495,7 @@
                  "y":288
                 }, 
                 {
-                 "gid":46,
+                 "gid":47,
                  "height":32,
                  "id":64,
                  "name":"attackEnhancement",
@@ -563,9 +563,9 @@
                  "y":354
                 }, 
                 {
-                 "gid":1073741857,
+                 "gid":34,
                  "height":78,
-                 "id":50,
+                 "id":65,
                  "name":"ladder",
                  "rotation":0,
                  "type":"NotAnimatedObject",
@@ -581,7 +581,7 @@
          "y":0
         }],
  "nextlayerid":5,
- "nextobjectid":65,
+ "nextobjectid":66,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
@@ -636,23 +636,23 @@
          "source":"..\/tilesets\/ladder.tsx"
         }, 
         {
-         "firstgid":34,
+         "firstgid":35,
          "source":"..\/tilesets\/rug.tsx"
         }, 
         {
-         "firstgid":35,
+         "firstgid":36,
          "source":"..\/tilesets\/hpPotion.tsx"
         }, 
         {
-         "firstgid":39,
+         "firstgid":40,
          "source":"..\/tilesets\/manaPotion.tsx"
         }, 
         {
-         "firstgid":40,
+         "firstgid":41,
          "source":"..\/tilesets\/defenseEnhancement.tsx"
         }, 
         {
-         "firstgid":43,
+         "firstgid":44,
          "source":"..\/tilesets\/attackEnhancement.tsx"
         }],
  "tilewidth":32,

@@ -43,6 +43,26 @@ const IMAGES_PATHS: Record<string, string> = {
     'defenseEnhancement': '/assets/maps/rooms/tiled_objects/defense_enhancement.png',
     'switchStructure': '/assets/maps/rooms/tiled_objects/exit_room3.png',
     'finalStructure': '/assets/maps/rooms/tiled_objects/exit_room4.png',
+    'ladder': '/assets/maps/rooms/tiled_objects/ladder.png',
+    'bossLadder': '/assets/maps/rooms/boss_room/tiled_objects/images/boss_ladder.png',
+    'bush': '/assets/maps/rooms/boss_room/tiled_objects/images/bushes/bush.png',
+    'bush1': '/assets/maps/rooms/boss_room/tiled_objects/images/bushes/Bush_simple1_1.png',
+    'bush2': '/assets/maps/rooms/boss_room/tiled_objects/images/bushes/Bush_simple1_2.png',
+    'bush3': '/assets/maps/rooms/boss_room/tiled_objects/images/bushes/Bush_simple1_3.png',
+    'fruit_tree1': '/assets/maps/rooms/boss_room/tiled_objects/images/fruit_trees/Fruit_tree1.png',
+    'fruit_tree2': '/assets/maps/rooms/boss_room/tiled_objects/images/fruit_trees/Fruit_tree2.png',
+    'fruit_tree3': '/assets/maps/rooms/boss_room/tiled_objects/images/fruit_trees/Fruit_tree3.png',
+    'palm_tree1': '/assets/maps/rooms/boss_room/tiled_objects/images/palm_trees/Palm_tree2_1.png',
+    'palm_tree2': '/assets/maps/rooms/boss_room/tiled_objects/images/palm_trees/Palm_tree2_2.png',
+    'palm_tree3': '/assets/maps/rooms/boss_room/tiled_objects/images/palm_trees/Palm_tree2_3.png',
+    'christmas_tree1': '/assets/maps/rooms/boss_room/tiled_objects/images/trees/Christmas_tree1.png',
+    'christmas_tree2': '/assets/maps/rooms/boss_room/tiled_objects/images/trees/Christmas_tree2.png',
+    'christmas_tree3': '/assets/maps/rooms/boss_room/tiled_objects/images/trees/Christmas_tree3.png',
+    'tree1': '/assets/maps/rooms/boss_room/tiled_objects/images/trees1/Tree1.png',
+    'tree2': '/assets/maps/rooms/boss_room/tiled_objects/images/trees1/Tree2.png',
+    'tree3': '/assets/maps/rooms/boss_room/tiled_objects/images/trees1/Tree3.png',
+    'bossRock': '/assets/maps/rooms/boss_room/tiled_objects/images/Rock1_1.png'
+
 }
 
 /*export async function loadRoomByName(roomName: string, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D): Promise<(NotAnimatedObject|AnimatedObject)[]> {
@@ -944,6 +964,227 @@ export function populateRoom4 (list_objects: (NotAnimatedObject|AnimatedObject)[
                 attack2: [],
                 special: [],
                 idle: [IMAGES_PATHS['finalStructure']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (obj.name == 'ladder') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['ladder']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        /*else {
+            console.log(obj.name);
+            throw new Error('path not found');
+            return;
+        }*/
+    }
+}
+
+export function populateBossRoom(list_objects: (NotAnimatedObject|AnimatedObject)[]) {
+    for (const obj of list_objects) {
+        let frame_paths: Record<AnimationType, string[]>;
+        if (['bush6', 'bush7', 'bush16', 'bush17', 'bush18'].includes(obj.name)) {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['bush']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (['bush5', 'bush14', 'bush15'].includes(obj.name)) {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['bush1']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (['bush3', 'bush4', 'bush11', 'bush12', 'bush13' ].includes(obj.name)) {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['bush2']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (['bush1', 'bush2', 'bush8', 'bush9', 'bush10'].includes(obj.name)) {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['bush3']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (['tree1', 'tree11'].includes(obj.name)) {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['tree2']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (['tree2', 'tree6'].includes(obj.name)) {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['palm_tree2']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (obj.name == 'tree3') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['tree1']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (['tree4', 'tree9'].includes(obj.name)) {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['fruit_tree3']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (obj.name == 'tree5') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['christmas_tree3']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (obj.name == 'tree7') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['christmas_tree2']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (obj.name == 'tree8') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['tree3']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (obj.name == 'tree10') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['christmas_tree1']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (obj.name == 'bossLadder') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['bossLadder']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (obj.name == 'bossRock') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['bossRock']],
                 hurt: [],
                 dead: [],
                 opening: [],

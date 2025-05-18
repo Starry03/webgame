@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="25" height="13" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="65">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="25" height="13" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="66">
  <editorsettings>
   <export target="room4.json" format="json"/>
  </editorsettings>
@@ -15,14 +15,14 @@
  <tileset firstgid="31" source="../tilesets/bat.tsx"/>
  <tileset firstgid="32" source="../tilesets/finalStructure.tsx"/>
  <tileset firstgid="33" source="../tilesets/ladder.tsx"/>
- <tileset firstgid="34" source="../tilesets/rug.tsx"/>
- <tileset firstgid="35" source="../tilesets/hpPotion.tsx"/>
- <tileset firstgid="39" source="../tilesets/manaPotion.tsx"/>
- <tileset firstgid="40" source="../tilesets/defenseEnhancement.tsx"/>
- <tileset firstgid="43" source="../tilesets/attackEnhancement.tsx"/>
+ <tileset firstgid="35" source="../tilesets/rug.tsx"/>
+ <tileset firstgid="36" source="../tilesets/hpPotion.tsx"/>
+ <tileset firstgid="40" source="../tilesets/manaPotion.tsx"/>
+ <tileset firstgid="41" source="../tilesets/defenseEnhancement.tsx"/>
+ <tileset firstgid="44" source="../tilesets/attackEnhancement.tsx"/>
  <layer id="1" name="background" width="25" height="13">
   <data encoding="base64" compression="zlib">
-   eJxjYWBgYKEAM+LAlJhJjPnY7CGklhI8asfgtkMJB3uo2TFc4oOWdtAaAwDwVgK9
+   eJxjYWBgYKEAM+LAlJhJjPnY7CGklhI8asfgtkMZB3uo2TFc4oOWdtAaAwD4pgLB
   </data>
  </layer>
  <objectgroup id="2" name="objects">
@@ -76,25 +76,25 @@
   <object id="56" name="rock1" type="NotAnimatedObject" gid="29" x="670" y="257" width="26" height="20"/>
   <object id="57" name="crystal2" type="NotAnimatedObject" gid="25" x="564" y="233" width="26" height="26"/>
   <object id="58" name="crystal1" type="NotAnimatedObject" gid="22" x="625" y="210" width="52" height="44"/>
-  <object id="59" name="hpPotion" type="AnimatedObject" gid="38" x="104" y="256" width="21" height="32">
+  <object id="59" name="hpPotion" type="AnimatedObject" gid="39" x="104" y="256" width="21" height="32">
    <properties>
     <property name="collidable" type="bool" value="false"/>
     <property name="takeable" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="61" name="manaPotion" type="AnimatedObject" gid="39" x="200" y="288" width="21" height="32">
+  <object id="61" name="manaPotion" type="AnimatedObject" gid="40" x="200" y="288" width="21" height="32">
    <properties>
     <property name="collidable" type="bool" value="false"/>
     <property name="takeable" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="62" name="defenseEnhancement" type="AnimatedObject" gid="42" x="96" y="288" width="32" height="32">
+  <object id="62" name="defenseEnhancement" type="AnimatedObject" gid="43" x="96" y="288" width="32" height="32">
    <properties>
     <property name="collidable" type="bool" value="false"/>
     <property name="takeable" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="64" name="attackEnhancement" type="AnimatedObject" gid="46" x="192" y="256" width="32" height="32">
+  <object id="64" name="attackEnhancement" type="AnimatedObject" gid="47" x="192" y="256" width="32" height="32">
    <properties>
     <property name="collidable" type="bool" value="false"/>
     <property name="takeable" type="bool" value="true"/>
@@ -109,6 +109,6 @@
     <property name="type" value="door"/>
    </properties>
   </object>
-  <object id="50" name="ladder" type="NotAnimatedObject" gid="1073741857" x="141" y="255" width="40" height="78"/>
+  <object id="65" name="ladder" type="NotAnimatedObject" gid="34" x="141" y="255" width="40" height="78"/>
  </objectgroup>
 </map>

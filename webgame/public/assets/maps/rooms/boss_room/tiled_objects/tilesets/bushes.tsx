@@ -11,6 +11,6 @@
   <image source="../images/bushes/Bush_simple1_3.png" width="16" height="16"/>
  </tile>
  <tile id="7">
-  <image source="../images/bush.png" width="32" height="32"/>
+  <image source="../images/bushes/bush.png" width="32" height="32"/>
  </tile>
 </tileset>
