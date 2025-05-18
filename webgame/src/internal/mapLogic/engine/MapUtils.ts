@@ -2,6 +2,9 @@ import {NotAnimatedObject} from '../classes/NotAnimatedObject'
 import {AnimatedObject} from '../classes/AnimatedObject';
 import {AnimationType, Vector2} from '../../types';
 import * as pako from 'pako';
+import {Door} from '@/internal/mapLogic/objects/door/Door'
+import { SwitchRoomDoor } from '@/internal/mapLogic/objects/door/SwitchRoomDoor'
+import {EntranceDoor} from '@/internal/mapLogic/objects/door/EntranceDoor'
 
 export function getRoomPath(room: string): string {
     if (room == 'room1') {
@@ -83,7 +86,7 @@ export async function loadRoom(path: string, canvas: HTMLCanvasElement, ctx: Can
 export function populateRoom1(list_objects: (NotAnimatedObject|AnimatedObject)[]) {
     for (const obj of list_objects) {
         let frame_paths: Record<AnimationType, string[]>;
-        if (['rock14', 'rock15', 'rock16', 'rock17' ].includes(obj.name) ) {
+        if (['rock14', 'rock15', 'rock16', 'rock17'].includes(obj.name) ) {
             frame_paths = {
                 run: [],
                 attack1: [],
@@ -251,11 +254,17 @@ export function populateRoom1(list_objects: (NotAnimatedObject|AnimatedObject)[]
             }
             obj.setFramePaths(frame_paths);
         }
-        /*else {
-            console.log(obj.name);
+        else if (obj instanceof Door) {
+            obj.setPaths();
+        }
+        else {
+            /*console.log(obj instanceof Door);
+            console.log(obj instanceof SwitchRoomDoor);
+            console.log(obj instanceof EntranceDoor);*/
+            //console.log(obj);
             throw new Error('path not found');
             return;
-        }*/
+        }
     }
 }
 
@@ -429,6 +438,9 @@ export function populateRoom2 (tiled_objects: (NotAnimatedObject|AnimatedObject)
                 closing: []
             }
             obj.setFramePaths(frame_paths);
+        }
+        else if (obj instanceof Door) {
+            obj.setPaths();
         }
         else if (obj.name == 'manaPotion') {
             frame_paths = {
@@ -651,6 +663,9 @@ export function populateRoom3 (list_objects: (NotAnimatedObject|AnimatedObject)[
                 closing: []
             }
             obj.setFramePaths(frame_paths);
+        }
+        else if (obj instanceof Door) {
+            obj.setPaths();
         }
         else if (obj.name == 'manaPotion') {
             frame_paths = {
@@ -900,6 +915,9 @@ export function populateRoom4 (list_objects: (NotAnimatedObject|AnimatedObject)[
                 closing: []
             }
             obj.setFramePaths(frame_paths);
+        }
+        else if (obj instanceof Door) {
+            obj.setPaths();
         }
         else if (obj.name == 'manaPotion') {
             frame_paths = {

@@ -16,6 +16,46 @@ export class AccessDoor extends Door {
         height: number,
         custom_properties: Record<string, string>,
     ) {
-        super(canvas, ctx, initialAnimation, isIdle, pos, dim, name, x, y, width, height, custom_properties);
+        super(
+            canvas,
+            ctx,
+            initialAnimation,
+            isIdle,
+            pos,
+            dim,
+            name,
+            x,
+            y,
+            width,
+            height,
+            custom_properties,
+        )
+    }
+
+    setPaths() {
+        const frame_paths: Record<AnimationType, string[]> = {
+            run: [],
+            attack1: [],
+            attack2: [],
+            special: [],
+            idle: ['/assets/maps/rooms/tiled_objects/finalDoor/second_final_door1.png'],
+            hurt: [],
+            dead: [],
+            opening: [
+                '/assets/maps/rooms/tiled_objects/finalDoor/second_final_door1.png',
+                '/assets/maps/rooms/tiled_objects/finalDoor/second_final_door2.png',
+                '/assets/maps/rooms/tiled_objects/finalDoor/second_final_door3.png',
+                '/assets/maps/rooms/tiled_objects/finalDoor/second_final_door4.png',
+                '/assets/maps/rooms/tiled_objects/finalDoor/second_final_door5.png'
+            ],
+            closing: [
+                '/assets/maps/rooms/tiled_objects/finalDoor/second_final_door5.png',
+                '/assets/maps/rooms/tiled_objects/finalDoor/second_final_door4.png',
+                '/assets/maps/rooms/tiled_objects/finalDoor/second_final_door3.png',
+                '/assets/maps/rooms/tiled_objects/finalDoor/second_final_door2.png',
+                '/assets/maps/rooms/tiled_objects/finalDoor/second_final_door1.png'
+            ]
+        }
+        this.setFramePaths(frame_paths);
     }
 }

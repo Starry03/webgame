@@ -6,7 +6,7 @@ export interface TiledProperty {
 
 export interface TiledObject {
     name: string;
-    class: string;
+    type: string;
     x: number;
     y: number;
     width: number;

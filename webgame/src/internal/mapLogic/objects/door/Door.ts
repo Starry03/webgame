@@ -1,4 +1,4 @@
-import { AnimationType, Vector2 } from '../../../types.ts'
+import { AnimationType, Vector2 } from '../../../types'
 import { AnimatedObject } from '../../classes/AnimatedObject.ts'
 
 export class Door extends AnimatedObject {
@@ -32,7 +32,7 @@ export class Door extends AnimatedObject {
         )
     }
     /*verificare se nelle sottoclassi va messa l'animazione contraria al nome stesso della classe*/
-    setPaths(obj: AnimatedObject): void{
+    setPaths(): void{
         const frame_paths: Record<AnimationType, string[]> = {
             run: [],
             attack1: [],
@@ -44,24 +44,21 @@ export class Door extends AnimatedObject {
             hurt: [],
             dead: [],
             opening: [
-                '../rooms/tiled_objects/apertura.png',
-                '../rooms/tiled_objects/apertura1.png',
-                '../rooms/tiled_objects/apertura2.png',
-                '../rooms/tiled_objects/apertura3.png',
-                '../rooms/tiled_objects/entrance_door.png',
+                '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura.png',
+                '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura1.png',
+                '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura2.png',
+                '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura3.png',
+                '/assets/maps/rooms/tiled_objects/switchRoomDoors/entrance_door.png',
+
             ],
             closing: [
-                '../rooms/tiled_objects/entrance_door.png',
-                '../rooms/tiled_objects/apertura3.png',
-                '../rooms/tiled_objects/apertura2.png',
-                '../rooms/tiled_objects/apertura1.png',
-                '../rooms/tiled_objects/apertura.png',
+                '/assets/maps/rooms/tiled_objects/switchRoomDoors/entrance_door.png',
+                '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura3.png',
+                '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura2.png',
+                '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura1.png',
+                '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura.png',
             ],
         }
         this.setFramePaths(frame_paths)
-    }
-
-    handleDoor (obj: AnimatedObject): void {
-
     }
 }

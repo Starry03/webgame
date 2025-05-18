@@ -1,8 +1,8 @@
 import { NotAnimatedObject } from '../../classes/NotAnimatedObject'
 import { AnimatedObject } from '../../classes/AnimatedObject'
 import { AnimationType, Vector2 } from '../../../types'
-import type { TiledMap, TiledProperty } from '../interfaces/Interfaces'
-import { populateBossRoom } from '@/internal/mapLogic/engine/MapUtils.ts'
+import type { TiledMap, TiledProperty, TiledObject } from '../interfaces/Interfaces'
+import { populateRoom1, populateBossRoom } from '@/internal/mapLogic/engine/MapUtils.ts'
 import { EntranceDoor } from '@/internal/mapLogic/objects/door/EntranceDoor.ts'
 import { SwitchRoomDoor } from '@/internal/mapLogic/objects/door/SwitchRoomDoor.ts'
 import {AccessDoor} from '@/internal/mapLogic/objects/door/AccessDoor.ts'
@@ -12,24 +12,32 @@ export function loadObjectsFromMap(jsonMap: TiledMap, canvas: HTMLCanvasElement,
     jsonMap.layers.forEach((layer) => {
         if (layer.type === 'objectgroup' && layer.objects) {
             layer.objects.forEach((object) => {
+                console.log(object)
                 const isIdle: boolean = true
                 const pos = new Vector2(object.x, object.y)
                 const dim: Vector2 = new Vector2(object.width, object.height)
-                if (object.class === 'AnimatedClass') {
+                if (object.type === 'AnimatedObject') {
+                    console.log("AnimatedObject")
                     const custom_properties: Record<string, any> = {} as Record<string, any>
                     if (object.properties) {
                         object.properties.forEach((property: TiledProperty) => {
                             custom_properties[property.name] = property.value
                         })
                     }
+                    console.log("loadObject - AnimatedClass")
                     if (object.name == 'entranceDoor') {
+                        console.log("loadObjects - entranceDoor");
                         list_objects.push(new EntranceDoor(canvas, ctx, AnimationType.IDLE, isIdle, pos, dim, object.name, object.x, object.y, object.width, object.height, custom_properties))
-                    } else if (object.name == 'switchRoomDoor') {
+                    }
+                    else if (object.name == 'switchRoomDoor') {
+                        console.log("loadObjects - switchRoomDoor");
                         list_objects.push(new SwitchRoomDoor(canvas, ctx, AnimationType.IDLE, isIdle, pos, dim, object.name, object.x, object.y, object.width, object.height, custom_properties))
-                    } else if (object.name == 'accessDoor') {
+                    }
+                    else if (object.name == 'accessDoor') {
+                        console.log("loadObjects - accessDoor");
                         list_objects.push(new AccessDoor(canvas, ctx, AnimationType.IDLE, isIdle, pos, dim, object.name, object.x, object.y, object.width, object.height, custom_properties))
-                    } else (object.class == 'AnimatedClass')
-                    {
+                    }
+                    else {
                         list_objects.push(new AnimatedObject(canvas, ctx, AnimationType.IDLE, isIdle, pos, dim, object.name, object.x, object.y, object.width, object.height, custom_properties))
                     }
                 }
@@ -54,12 +62,8 @@ export async function loadMapObjects(
             throw new Error(`HTTP error! status: ${response.status}`)
         }
         const map_data: TiledMap = await response.json()
-        const list_objects: (NotAnimatedObject | AnimatedObject)[] = loadObjectsFromMap(
-            map_data,
-            canvas,
-            ctx,
-        )
-        populateBossRoom(list_objects)
+        const list_objects: (NotAnimatedObject | AnimatedObject)[] = loadObjectsFromMap(map_data, canvas, ctx);
+        populateRoom1(list_objects);
         return list_objects
     } catch (error) {
         console.error(`Errore nel caricamento della mappa: ${mapUrl}`, error)

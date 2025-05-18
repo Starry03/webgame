@@ -19,7 +19,7 @@
   </data>
  </layer>
  <objectgroup id="2" name="objects">
-  <object id="17" name="rock17" type="NotAnimatedObjects" gid="148" x="64" y="128" width="58" height="29"/>
+  <object id="17" name="rock17" type="NotAnimatedObject" gid="148" x="64" y="128" width="58" height="29"/>
   <object id="18" name="rock16" type="NotAnimatedObject" gid="148" x="433" y="368" width="58" height="29"/>
   <object id="20" name="rock15" type="NotAnimatedObject" gid="148" x="640" y="256" width="58" height="29"/>
   <object id="21" name="rock14" type="NotAnimatedObject" gid="148" x="349" y="207" width="58" height="29"/>

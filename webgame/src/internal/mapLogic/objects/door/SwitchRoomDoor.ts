@@ -16,6 +16,23 @@ export class SwitchRoomDoor extends Door {
         height: number,
         custom_properties: Record<string, string>,
     ) {
-        super(canvas, ctx, initialAnimation, isIdle, pos, dim, name, x, y, width, height, custom_properties);
+        super(
+            canvas,
+            ctx,
+            initialAnimation,
+            isIdle,
+            pos,
+            dim,
+            name,
+            x,
+            y,
+            width,
+            height,
+            custom_properties,
+        )
+    }
+
+    setPaths() {
+        super.setPaths();
     }
 }
