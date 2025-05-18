@@ -1,6 +1,6 @@
-import {NotAnimatedObject} from '../classes/NotAnimatedObject'
-import {AnimatedObject} from '../classes/AnimatedObject';
-import {AnimationType, Vector2} from "@/internal/types.ts";
+import { AnimatedObject } from '@/internal/mapLogic/classes/AnimatedObject'
+import { NotAnimatedObject } from '@/internal/mapLogic/classes/NotAnimatedObject'
+import {AnimationType, Vector2} from '@/internal/types.ts';
 import * as pako from 'pako';
 import {Door} from '@/internal/mapLogic/objects/door/Door'
 
@@ -256,10 +256,6 @@ export function populateRoom1(list_objects: (NotAnimatedObject|AnimatedObject)[]
             obj.setPaths();
         }
         else {
-            /*console.log(obj instanceof Door);
-            console.log(obj instanceof SwitchRoomDoor);
-            console.log(obj instanceof EntranceDoor);*/
-            //console.log(obj);
             throw new Error('path not found');
             return;
         }
@@ -496,12 +492,11 @@ export function populateRoom2 (tiled_objects: (NotAnimatedObject|AnimatedObject)
             }
             obj.setFramePaths(frame_paths);
         }
-        console.log(obj.name);
-        /*else {
+        else {
             console.log(obj.name);
             throw new Error('path not found');
             return;
-        }*/
+        }
     }
 }
 
@@ -734,6 +729,9 @@ export function populateRoom3 (list_objects: (NotAnimatedObject|AnimatedObject)[
                 closing: []
             }
             obj.setFramePaths(frame_paths);
+        }
+        else if (obj instanceof Door) {
+            obj.setPaths();
         }
         /*else {
             console.log(obj.name);

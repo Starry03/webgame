@@ -1,5 +1,5 @@
-import {AnimatedObject} from "../classes/AnimatedObject";
-import {AnimationType, Vector2} from "@/internal/types.ts";
+import {AnimatedObject} from '@/internal/mapLogic/classes/AnimatedObject.ts'
+import {AnimationType, Vector2} from '@/internal/types.ts'
 
 export class SpecialWall extends AnimatedObject {
     constructor(canvas: HTMLCanvasElement,
