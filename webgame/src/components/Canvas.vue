@@ -1,5 +1,5 @@
 <template>
-    <div class="flex  flex-space-between" id="game-header">
+    <div class="flex flex-space-between" id="game-header">
         <div id="player-status">
             <StatusBar
                 v-if="mappedPlayer"
@@ -31,7 +31,7 @@
         </div>
     </div>
 
-    <canvas ref="canvasRef" id="canvas" :width="window_width" :height="window_height / 1.5" />
+    <canvas ref="canvasRef" id="canvas" :width="800" :height="416" />
 </template>
 
 <script lang="ts" setup>
@@ -44,14 +44,14 @@ import { GameHandler } from '@/internal/GameHandler'
 import { AnimationType, Storage_e, type Character } from '@/internal/types'
 import StatusBar from '@/components/StatusBar.vue'
 import type { Entity } from '@/internal/Player'
-import { startGame } from '@/game_func';
+import { startGame } from '@/game_func'
 
 onMounted(() => {
-  const canvas = canvasRef.value;
-  if (!canvas) return;
+    const canvas = canvasRef.value
+    if (!canvas) return
 
-  startGame(canvas);
-});
+    startGame(canvas)
+})
 
 const window_width = ref(window.innerWidth)
 const window_height = ref(window.innerHeight)
@@ -157,11 +157,11 @@ onUnmounted(() => {
     window.removeEventListener('resize', handle_resize)
 })
 
-const isBossRoom = ref(false); // Cambia a `true` quando il giocatore entra nella stanza del boss
-const boss = ref<any>(null);
+const isBossRoom = ref(false) // Cambia a `true` quando il giocatore entra nella stanza del boss
+const boss = ref<any>(null)
 
 const mappedBoss = computed(() => {
-    if (!boss.value) return null;
+    if (!boss.value) return null
 
     return {
         hp: boss.value.hp,
@@ -173,8 +173,8 @@ const mappedBoss = computed(() => {
         maxCooldownQ: boss.value.maxCooldownQ,
         cooldownR: boss.value.cooldowns.get(AnimationType.SPECIAL),
         maxCooldownR: boss.value.maxCooldownR,
-    };
-});
+    }
+})
 
 // Inizializza il boss quando il giocatore entra nella stanza del boss
 function initializeBoss() {
@@ -190,8 +190,8 @@ function initializeBoss() {
         ]),
         maxCooldownQ: 5,
         maxCooldownR: 10,
-    });
-    isBossRoom.value = true;
+    })
+    isBossRoom.value = true
 }
 </script>
 
@@ -225,9 +225,6 @@ function initializeBoss() {
     display: block;
     margin: 0 auto;
     border: 1px solid #ccc;
-    width: 99svw;
-    height: 50svh;
-    
 }
 
 @media (max-height: 500px) and (orientation: landscape) {
@@ -330,5 +327,4 @@ function initializeBoss() {
         font-size: 10px; /* Riduce la dimensione del testo */
     }
 }
-
 </style>

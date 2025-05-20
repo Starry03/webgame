@@ -17,5 +17,6 @@ class RequestUtil:
             raise ValueError("Invalid credentials")
         return Credentials(username=username, password=password)
 
-    def get_plain_data(body: CoroutineType[Any, Any, Any]) -> dict[str, str]:
+    @staticmethod
+    def get_plain_data(body: CoroutineType[Any, Any, Any]) -> dict[str, str] | None:
         return body.get("plain_data")
