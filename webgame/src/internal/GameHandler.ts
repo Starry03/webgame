@@ -5,6 +5,8 @@ import { NotAnimatedObject } from '@/internal/mapLogic/classes/NotAnimatedObject
 import { loadMapData } from '@/internal/mapLogic/engine/utils/BackgroundLayerUtils.ts'
 import { loadMapObjects } from '@/internal/mapLogic/engine/utils/ObjectLayerUtils.ts'
 import type { Obj } from './Obj'
+import { Vector2 } from './types'
+import { Collider } from './collision'
 
 export class GameHandler {
     player: Entity
@@ -15,10 +17,10 @@ export class GameHandler {
     lastTimeStamp: number
     currentRoomPath: string
     currentBackgroundRoom: any
-    currentRoomObjects: (NotAnimatedObject | AnimatedObject)[]
+    currentRoomObjects: (Obj)[]
+    baseMapDim: Vector2 = new Vector2(800, 416);
 
     constructor(player: Entity, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
-        console.log(player)
         this.ctx = ctx
         this.canvas = canvas
         this.player = player
@@ -59,6 +61,7 @@ export class GameHandler {
             // if da togliere prima o poi
             if (obj.selectedFrames !== undefined) obj.update(timestamp, deltaTime)
         })
+        Collider.update_collisions([...this.currentRoomObjects, this.player as Obj])
         this.player.handleInput(this.keys, deltaTime)
         this.player.update(timestamp, deltaTime)
         requestAnimationFrame(this.gameLoop)

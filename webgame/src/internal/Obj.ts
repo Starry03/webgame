@@ -21,7 +21,7 @@ export class Obj {
     isAnimationBlocking: boolean
     isInteractable: boolean
     isSolid: boolean
-	FPS = 60
+    FPS = 60
     frameDelay: number = 1000 / this.FPS
     collidedObjects: Obj[]
     time: number
@@ -69,6 +69,10 @@ export class Obj {
                         reject(`${path} failed to load`)
                     }
                     img.onload = () => {
+                        const rateo = img.height / img.width
+                        img.width = this.dim.x
+                        img.height = this.dim.x * rateo
+                        this.dim.y = img.height
                         this.frames[animType].push(img)
                         resolve()
                     }
@@ -114,6 +118,10 @@ export class Obj {
             if (this.facingDirection.x < 0)
                 this.drawFlipped(frame, this.pos.x, this.pos.y, this.dim.x, this.dim.y)
             else ctx.drawImage(frame, this.pos.x, this.pos.y, this.dim.x, this.dim.y)
+            ctx.rect(this.pos.x, this.pos.y, this.dim.x, this.dim.y)
+            ctx.strokeStyle = 'red'
+            ctx.lineWidth = 2
+            ctx.stroke()
         }
         ctx.restore()
     }
