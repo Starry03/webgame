@@ -56,4 +56,8 @@ export class Vector2 {
         this.x /= length
         this.y /= length
     }
+
+    toString(): string {
+        return `(${this.x}, ${this.y})`
+    }
 }
