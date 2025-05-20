@@ -342,7 +342,7 @@
                          "value":48
                         }],
                  "rotation":0,
-                 "type":"NotAnimatedObject",
+                 "type":"AnimatedObject",
                  "visible":true,
                  "width":256,
                  "x":64,
@@ -437,7 +437,7 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"AnimatedObjects",
+                 "type":"AnimatedObject",
                  "visible":true,
                  "width":21,
                  "x":422,

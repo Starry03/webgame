@@ -75,6 +75,7 @@ export class FinalStructure extends NotAnimatedObject {
     ): AccessDoor {
         for (const obj of layer_objects) {
             if (obj.name === 'accessDoor') {
+                console.log("access_door trovata")
                 obj.y = obj.y - obj.height
                 const custom_properties: Record<string, any> = extractCustomProperties(obj)
                 const isIdle: boolean = true
@@ -96,6 +97,7 @@ export class FinalStructure extends NotAnimatedObject {
                 return access_door
             }
         }
+        console.log("access_door non trovata")
         return new AccessDoor(canvas, ctx, AnimationType.IDLE, true, new Vector2(0,0), new Vector2(0,0), '', 0,0,0,0, {});
     }
 }

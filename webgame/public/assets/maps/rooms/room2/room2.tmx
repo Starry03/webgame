@@ -54,7 +54,7 @@
   <object id="26" name="rock3" type="NotAnimatedObject" gid="158" x="68" y="380" width="32" height="28"/>
   <object id="27" name="crystal4" type="NotAnimatedObject" gid="148" x="188" y="382" width="20" height="20"/>
   <object id="29" name="crystal3" type="NotAnimatedObject" gid="150" x="723" y="133" width="28" height="28"/>
-  <object id="30" name="structure" type="NotAnimatedObject" gid="160" x="64" y="129" width="256" height="128">
+  <object id="30" name="structure" type="AnimatedObject" gid="160" x="64" y="129" width="256" height="128">
    <properties>
     <property name="collidable" type="bool" value="true"/>
     <property name="door" type="object" value="48"/>
@@ -70,7 +70,7 @@
     <property name="takeable" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="42" name="manaPotion" type="AnimatedObjects" gid="170" x="422" y="128" width="21" height="32">
+  <object id="42" name="manaPotion" type="AnimatedObject" gid="170" x="422" y="128" width="21" height="32">
    <properties>
     <property name="collidable" type="bool" value="false"/>
     <property name="takeable" type="bool" value="true"/>
