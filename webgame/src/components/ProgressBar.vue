@@ -6,11 +6,15 @@ defineProps({
     type: Number,
     required: true,
   },
+  color: {
+    type: String,
+    required: true,
+  }
 })
 </script>
 <template>
   <div class="progress-bar">
-    <div class="progress" :style="{ width: `${progress}%` }"></div>
+    <div class="progress" :style="{ width: `${progress}%`, backgroundColor: color }"></div>
   </div>
 </template>
 

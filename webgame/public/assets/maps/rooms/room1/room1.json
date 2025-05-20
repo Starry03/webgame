@@ -27,7 +27,7 @@
                  "id":17,
                  "name":"rock17",
                  "rotation":0,
-                 "type":"NotAnimatedObjects",
+                 "type":"NotAnimatedObject",
                  "visible":true,
                  "width":58,
                  "x":64,

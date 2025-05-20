@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="25" height="13" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="49">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="25" height="13" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="51">
  <editorsettings>
   <export target="room2.json" format="json"/>
  </editorsettings>
@@ -20,7 +20,7 @@
  <tileset firstgid="175" source="../tilesets/attackEnhancement.tsx"/>
  <layer id="1" name="background" width="25" height="13">
   <data encoding="base64" compression="zlib">
-   eJxbysDAsHQIYhhAFmOkISbVjtVomBZ20MMfo3aM2jHY7KA1BgBS7T+A
+   eJxbysDAsHSYYEYaYlLtWI2GaWEHPfwxaseoHYPNDlpjAO88QMo=
   </data>
  </layer>
  <objectgroup id="2" name="objects">
@@ -48,7 +48,7 @@
   <object id="20" name="rock6" type="NotAnimatedObject" gid="155" x="613" y="144" width="58" height="29"/>
   <object id="21" name="crystal6" type="NotAnimatedObject" gid="146" x="688" y="269" width="44" height="37"/>
   <object id="22" name="crystal5" type="NotAnimatedObject" gid="148" x="624" y="197" width="20" height="20"/>
-  <object id="23" name="rock6" type="NotAnimatedObject" gid="147" x="293" y="356" width="48" height="42"/>
+  <object id="23" name="crystal12" type="NotAnimatedObject" gid="147" x="293" y="356" width="48" height="42"/>
   <object id="24" name="rock5" type="NotAnimatedObject" gid="157" x="374" y="329" width="26" height="20"/>
   <object id="25" name="rock4" type="NotAnimatedObject" gid="156" x="568" y="300" width="23" height="14"/>
   <object id="26" name="rock3" type="NotAnimatedObject" gid="158" x="68" y="380" width="32" height="28"/>
@@ -76,12 +76,6 @@
     <property name="takeable" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="46" name="attackEnhancement" type="AnimatedObject" gid="177" x="384" y="128" width="32" height="32">
-   <properties>
-    <property name="collidable" type="bool" value="false"/>
-    <property name="takeable" type="bool" value="true"/>
-   </properties>
-  </object>
   <object id="47" name="defenseEnhancement" type="AnimatedObject" gid="174" x="448" y="128" width="32" height="32">
    <properties>
     <property name="collidable" type="bool" value="false"/>
@@ -93,6 +87,12 @@
     <property name="animating" type="bool" value="false"/>
     <property name="isOpen" type="bool" value="false"/>
     <property name="type" value="door"/>
+   </properties>
+  </object>
+  <object id="50" name="attackEnhancement" type="AnimatedObject" gid="178" x="384" y="128" width="32" height="32">
+   <properties>
+    <property name="collidable" type="bool" value="false"/>
+    <property name="takeable" type="bool" value="true"/>
    </properties>
   </object>
  </objectgroup>

@@ -7,10 +7,12 @@ const props = defineProps({
     hp: {
         type: Number,
         required: true,
+        default: 1000,
     },
     maxHealth: {
         type: Number,
         required: true,
+        default: 1000,
     },
     mana: {
         type: Number,
@@ -58,50 +60,64 @@ const manaPercentage = computed(() => {
 
 <template>
     <div class="status-bar flex flex-col gap-mid">
-        <div class="flex items-center gap-small">
+        <div class="player-name">
+            <span>Player Name</span> 
+
+
+        </div>
+        <div class="bar-container flex items-center gap-small">
             <span>HP:</span>
-            <ProgressBar :progress="healthPercentage" color="red" />
+            <ProgressBar :progress="healthPercentage" color="crimson" />
             <span>{{ props.hp }}/{{ props.maxHealth }}</span>
         </div>
-        <div class="flex items-center gap-small">
+        <div class="bar-container flex items-center gap-small">
             <span>Mana:</span>
-            <ProgressBar :progress="manaPercentage" color="blue" />
+            <ProgressBar :progress="manaPercentage" color="cyan" class="mana-bar" />
             <span>{{ props.mana }}/{{ props.maxMana }}</span>
         </div>
         <div class="flex items-center gap-small">
             <span>Level:</span>
             <span>{{ props.level }}</span>
         </div>
-        <div class="flex items-center gap-large">
-            <Filler :text="'Q'" :percentage="props.cooldownQ" :max="props.maxCooldownQ"/>
-            <Filler :text="'R'" :percentage="props.cooldownR" :max="props.maxCooldownR"/>
+        <div class="cooldown-container flex items-center gap-large">
+            <div class="cooldown-bar">
+                <Filler :text="'Q'" :percentage="props.cooldownQ" :max="props.maxCooldownQ"/>
+            </div>
+            <div class="cooldown-bar">
+                <Filler :text="'R'" :percentage="props.cooldownR" :max="props.maxCooldownR"/>
+            </div>
         </div>
     </div>
 </template>
 
 <style scoped>
+
 .status-bar {
-    padding: 10px;
-    background-color: #222;
-    border-radius: 8px;
-    color: white;
     display: flex;
     flex-direction: column;
     gap: 10px;
-}
-
-.cooldown-container span {
-    position: absolute;
-    font-size: 14px;
-    font-weight: bold;
+    padding: 10px;
+    background-color: #333;
+    border-radius: 8px;
     color: white;
+    font-size: 10px;
+    height: 100%;
 }
 
-#game-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
+.bar-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mana-bar {
+    width: 50%;
+}
+
+.cooldown-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }
 
 @media (max-width: 768px) {
@@ -113,5 +129,30 @@ const manaPercentage = computed(() => {
   .status-bar {
     font-size: 14px;
   }
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+    .status-bar {
+        font-size: 10px;
+        width: 50%;
+        height: 100%
+    }
+    .bar-container {
+        gap: 5px;
+    }
+    .cooldown-container {
+        width: 30%;
+        height: 90%;
+    }
+    .cooldown-bar {
+        width: 50%;
+        height: 150%;
+    }
+
+    #canvas {
+        width: 100%;
+        height: 100%;
+    }
+
 }
 </style>
