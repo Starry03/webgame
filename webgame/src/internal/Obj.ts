@@ -21,7 +21,8 @@ export class Obj {
     isAnimationBlocking: boolean
     isInteractable: boolean
     isSolid: boolean
-    frameDelay: number = 100 / 60
+	FPS = 60
+    frameDelay: number = 1000 / this.FPS
     collidedObjects: Obj[]
     time: number
 
