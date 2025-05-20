@@ -1,11 +1,11 @@
-import { NotAnimatedObject } from '../classes/NotAnimatedObject'
+import { AnimatedObject } from '../classes/AnimatedObject'
 import { AnimationType, Vector2 } from '@/internal/types.ts'
 import { SpecialWall } from '@/internal/mapLogic/objects/SpecialWall.ts'
 import { SwitchRoomDoor } from './door/SwitchRoomDoor.ts'
 import type { TiledObject } from '@/internal/mapLogic/engine/interfaces/Interfaces.ts'
 import {extractCustomProperties} from '@/internal/mapLogic/engine/utils/ObjectLayerUtils.ts';
 
-export class SwitchStructure extends NotAnimatedObject {
+export class SwitchStructure extends AnimatedObject {
     special_wall: SpecialWall
     switch_room_door: SwitchRoomDoor
     constructor(
@@ -20,10 +20,11 @@ export class SwitchStructure extends NotAnimatedObject {
         y: number,
         width: number,
         height: number,
+        custom_properties: Record<string, string>,
         special_wall: SpecialWall,
         switch_room_door: SwitchRoomDoor,
     ) {
-        super(canvas, ctx, initialAnimation, isIdle, pos, dim, name, x, y, width, height)
+        super(canvas, ctx, initialAnimation, isIdle, pos, dim, name, x, y, width, height, custom_properties)
         this.special_wall = special_wall
         this.switch_room_door = switch_room_door
     }
