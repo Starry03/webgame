@@ -87,7 +87,7 @@ export class FinalStructure extends AnimatedObject {
             if (obj.name === 'accessDoor') {
                 console.log("access_door trovata")
                 obj.y = obj.y - obj.height
-                const custom_properties: Record<string, any> = extractCustomProperties(obj)
+                const custom_properties: Record<string, string> = extractCustomProperties(obj)
                 const isIdle: boolean = true
                 const access_door = new AccessDoor(
                     canvas,
