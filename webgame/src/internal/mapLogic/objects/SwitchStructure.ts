@@ -35,7 +35,7 @@ export class SwitchStructure extends NotAnimatedObject {
     ): SpecialWall {
         for (const obj of layer_objects) {
             if (obj.name == 'specialWall') {
-                //inventare metodo
+                obj.y = obj.y - obj.height;
                 const custom_properties: Record<string, string> = extractCustomProperties(obj)
                 const isIdle: boolean = true
                 return new SpecialWall(
@@ -64,7 +64,7 @@ export class SwitchStructure extends NotAnimatedObject {
     ): SwitchRoomDoor {
         for (const obj of layer_objects) {
             if (obj.name == 'switchRoomDoor') {
-                //inventare metodo
+                obj.y = obj.y - obj.height;
                 const custom_properties: Record<string, string> = extractCustomProperties(obj)
                 const isIdle: boolean = true
                 return new SwitchRoomDoor(
