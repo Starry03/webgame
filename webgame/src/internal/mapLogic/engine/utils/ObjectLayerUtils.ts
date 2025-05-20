@@ -1,7 +1,7 @@
 import { NotAnimatedObject } from '@/internal/mapLogic/classes/NotAnimatedObject'
 import { AnimatedObject } from '@/internal/mapLogic/classes/AnimatedObject'
 import { AnimationType, Vector2 } from '@/internal/types.ts'
-import type { TiledMap, TiledProperty } from '@/internal/mapLogic/engine/interfaces/Interfaces'
+import type { TiledMap, TiledProperty, TiledObject } from '@/internal/mapLogic/engine/interfaces/Interfaces'
 import { populateRoom3, populateRoom4 } from '@/internal/mapLogic/engine/MapUtils.ts'
 import { EntranceDoor } from '@/internal/mapLogic/objects/door/EntranceDoor'
 import { SwitchRoomDoor } from '@/internal/mapLogic/objects/door/SwitchRoomDoor'
@@ -25,13 +25,9 @@ export function loadObjectsFromMap(
                 const pos = new Vector2(object.x, object.y)
                 const dim: Vector2 = new Vector2(object.width, object.height)
                 if (object.type === 'AnimatedObject') {
-                    const custom_properties: Record<string, any> = {} as Record<string, any>
-                    if (object.properties) {
-                        object.properties.forEach((property: TiledProperty) => {
-                            custom_properties[property.name] = property.value
-                        })
-                    }
+                    let custom_properties: Record<string, string>;
                     if (object.name == 'entranceDoor') {
+                        custom_properties = extractCustomProperties(object)
                         console.log('loadObjects - entranceDoor')
                         list_objects.push(
                             new EntranceDoor(
@@ -50,8 +46,9 @@ export function loadObjectsFromMap(
                             ),
                         )
                     }
-                    else if (object.name == 'switchRoomDoor' && !['room3', 'room4'].includes(object.name)) {
+                    else if (object.name == 'switchRoomDoor' && !['room3', 'room4'].includes(room_name)) {
                         console.log('loadObjects - switchRoomDoor')
+                        custom_properties = extractCustomProperties(object)
                         list_objects.push(
                             new SwitchRoomDoor(
                                 canvas,
@@ -106,6 +103,7 @@ export function loadObjectsFromMap(
                     }
                     else {
                         if (!['specialWall', 'switchRoomDoor', 'accessDoor', 'ladder'].includes(object.name)) {
+                            custom_properties = extractCustomProperties(object)
                             list_objects.push(
                                 new AnimatedObject(
                                     canvas,
@@ -162,8 +160,19 @@ export async function loadMapObjects(
         const list_objects: (NotAnimatedObject | AnimatedObject)[] = loadObjectsFromMap(map_data, canvas, ctx, 'room4')
         populateRoom4(list_objects)
         return list_objects
-    } catch (error) {
+    }
+    catch (error) {
         console.error(`Errore nel caricamento della mappa: ${mapUrl}`, error)
         return []
     }
+}
+
+export function extractCustomProperties(object: TiledObject): Record<string, string> {
+    const custom_properties: Record<string, any> = {} as Record<string, any>
+    if (object.properties) {
+        object.properties.forEach((property: TiledProperty) => {
+            custom_properties[property.name] = property.value
+        })
+    }
+    return custom_properties
 }

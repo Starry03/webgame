@@ -3,6 +3,7 @@ import { AnimationType, Vector2 } from '@/internal/types.ts'
 import { SpecialWall } from '@/internal/mapLogic/objects/SpecialWall.ts'
 import { SwitchRoomDoor } from './door/SwitchRoomDoor.ts'
 import type { TiledObject } from '@/internal/mapLogic/engine/interfaces/Interfaces.ts'
+import {extractCustomProperties} from '@/internal/mapLogic/engine/utils/ObjectLayerUtils.ts';
 
 export class SwitchStructure extends NotAnimatedObject {
     special_wall: SpecialWall
@@ -35,7 +36,7 @@ export class SwitchStructure extends NotAnimatedObject {
         for (const obj of layer_objects) {
             if (obj.name == 'specialWall') {
                 //inventare metodo
-                const custom_properties: Record<string, string> = {}
+                const custom_properties: Record<string, string> = extractCustomProperties(obj)
                 const isIdle: boolean = true
                 return new SpecialWall(
                     canvas,
@@ -64,7 +65,7 @@ export class SwitchStructure extends NotAnimatedObject {
         for (const obj of layer_objects) {
             if (obj.name == 'switchRoomDoor') {
                 //inventare metodo
-                const custom_properties: Record<string, string> = {}
+                const custom_properties: Record<string, string> = extractCustomProperties(obj)
                 const isIdle: boolean = true
                 return new SwitchRoomDoor(
                     canvas,

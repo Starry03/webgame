@@ -3,6 +3,7 @@ import { AnimationType, Vector2 } from '@/internal/types.ts'
 import { Ladder } from '@/internal/mapLogic/objects/Ladder'
 import { AccessDoor } from '@/internal/mapLogic/objects/door/AccessDoor'
 import type { TiledObject } from '@/internal/mapLogic/engine/interfaces/Interfaces.ts'
+import {extractCustomProperties} from "@/internal/mapLogic/engine/utils/ObjectLayerUtils.ts";
 
 export class FinalStructure extends NotAnimatedObject {
     ladder: Ladder
@@ -73,7 +74,7 @@ export class FinalStructure extends NotAnimatedObject {
     ): AccessDoor {
         for (const obj of layer_objects) {
             if (obj.name === 'accessDoor') {
-                const custom_properties: Record<string, any> = {}
+                const custom_properties: Record<string, any> = extractCustomProperties(obj)
                 const isIdle: boolean = true
                 const access_door = new AccessDoor(
                     canvas,
