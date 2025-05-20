@@ -3,9 +3,9 @@
     <source src="/assets/audio/Trust_In_Your_Perseverance.wav" type="audio/mpeg" />
   </audio>
   <div class="master flex flex-column flex-align gap-big">
-    <div class="flex flex-row flex-center gap-big">
+    <div class="flex flex-row flex-center header-bar flex-space-between gap-big">
       <button class="button button-secondary button-home" @click="goHome">Home</button>
-      <h1>Awakening in the Dark Tower</h1>
+      <h1 class="title">Awakening in the Dark Tower</h1>
       <button class="button button-secondary button-mute" @click="toggleMute">🔊</button>
     </div>
     <div class="flex flex-column">
@@ -85,13 +85,11 @@ onUnmounted(() => {
   .button-mute {
     width: fit-content;
     height: fit-content;
-    position: absolute;
-    top: 0;
-    left: 85svw;
+    font-size: var(--font-small);
   }
 
   .button-home {
-    text-size-adjust: var(--font-small);
+    text-size-adjust: var(--font-small); 
   }
 }
 @media (orientation: landscape) {
@@ -100,12 +98,13 @@ onUnmounted(() => {
     width: 69%;
   }
 
+  .button-home {
+    text-size-adjust: var(--font-small); 
+  }
+
   .button-mute {
     width: fit-content;
     height: fit-content;
-    position: absolute;
-    top: 0;
-    left: 85svw;
   }
 }
 
@@ -115,28 +114,34 @@ onUnmounted(() => {
   height: 100vh;
 }
 
-
-h1 {
-  font-size: var(--font-medium);
+.title {
+  font-size: var(--font-big);
   text-shadow:
-    0 0 10px red,
-    0 0 20px red;
-  padding-top: 4%;
-  padding-bottom: 2%;
+    0 0 10px black,
+    0 0 20px black;
+  color: darkred;
+}
+
+.header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.5rem 1.5rem;
+  position: relative;
+  min-height: 48px;
+  z-index: 10;
+  background: transparent;
 }
 
 .button-home {
-  position: absolute;
-  top: 30px;
-  left: 20px;
-  font-size: var(--font-small);
+  font-size: var(--font-medium);
+  align-self: flex-start;
 }
 
 .button-mute {
-  position: absolute;
-  top: 30px;
-  right: 20px;
   font-size: var(--font-big);
+  align-self: flex-end;
 }
 
 .button-home:hover,
