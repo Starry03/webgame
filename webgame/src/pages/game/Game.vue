@@ -5,6 +5,7 @@
   <div class="master flex flex-column flex-align gap-big">
     <div class="flex flex-row flex-center header-bar flex-space-between gap-big">
       <button class="button button-secondary button-home" @click="goHome">Home</button>
+      <h1 class="title">Awakening in the Dark Tower</h1>
       <button class="button button-secondary button-mute" @click="toggleMute">🔊</button>
     </div>
     <div class="flex flex-column">
@@ -75,6 +76,11 @@ onUnmounted(() => {
 }
 
 @media (orientation: portrait) {
+  h1 {
+    text-align: center;
+    width: 69%;
+    font-size: var(--font-medium);
+  }
 
   .button-mute {
     width: fit-content;
@@ -108,14 +114,12 @@ onUnmounted(() => {
   height: 100vh;
 }
 
-
-h1 {
-  font-size: var(--font-medium);
+.title {
+  font-size: var(--font-big);
   text-shadow:
-    0 0 10px red,
-    0 0 20px red;
-  padding-top: 4%;
-  padding-bottom: 2%;
+    0 0 10px black,
+    0 0 20px black;
+  color: darkred;
 }
 
 .header-bar {
