@@ -60,32 +60,32 @@ const manaPercentage = computed(() => {
 
 <template>
     <div class="status-bar flex flex-col gap-mid">
-        <div class="player-name">
-            <span>Player Name</span> 
-
-
+        <div class="player-header">
+            <span class="player-name">Player Name</span>
+            <span class="player-level">Level:</span>
+            <span class="player-level-value">{{ props.level }}</span>
         </div>
-        <div class="bar-container flex items-center gap-small">
+        <div class="bars-and-cooldowns">
+        <div class="bars">
+            <div class="bar-container flex items-center gap-small">
             <span>HP:</span>
             <ProgressBar :progress="healthPercentage" color="crimson" />
             <span>{{ props.hp }}/{{ props.maxHealth }}</span>
-        </div>
-        <div class="bar-container flex items-center gap-small">
+            </div>
+            <div class="bar-container flex items-center gap-small">
             <span>Mana:</span>
             <ProgressBar :progress="manaPercentage" color="cyan" class="mana-bar" />
             <span>{{ props.mana }}/{{ props.maxMana }}</span>
+            </div>
         </div>
-        <div class="flex items-center gap-small">
-            <span>Level:</span>
-            <span>{{ props.level }}</span>
-        </div>
-        <div class="cooldown-container flex items-center gap-large">
+        <div class="cooldown-container">
             <div class="cooldown-bar">
-                <Filler :text="'Q'" :percentage="props.cooldownQ" :max="props.maxCooldownQ"/>
+            <Filler :text="'Q'" :percentage="props.cooldownQ" :max="props.maxCooldownQ"/>
             </div>
             <div class="cooldown-bar">
-                <Filler :text="'R'" :percentage="props.cooldownR" :max="props.maxCooldownR"/>
+            <Filler :text="'R'" :percentage="props.cooldownR" :max="props.maxCooldownR"/>
             </div>
+        </div>
         </div>
     </div>
 </template>
