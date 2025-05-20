@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, Request
 from fastapi.responses import JSONResponse
 from starlette.status import HTTP_200_OK
 from sqlalchemy import text
+from typing import Any
 
 from app.auth.auth_manager import AuthManager
 from app.db.session import get_db_session
@@ -15,8 +16,8 @@ router = APIRouter(
 @router.get("/classes", response_class=JSONResponse)
 async def get_classes(__: Request, _=Depends(AuthManager.get_user)):
     with get_db_session() as session:
-        classes: list[tuple] = session.execute(text("SELECT * FROM public.classe")).fetchall()
-        classes_models: list[PlayerClass] = [
+        classes = session.execute(text("SELECT * FROM public.classe")).fetchall()
+        classes_models: list[dict[str, Any]] = [
             PlayerClass(
                 name=cls[0],
                 speed=cls[1],

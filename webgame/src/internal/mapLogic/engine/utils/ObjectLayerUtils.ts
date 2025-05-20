@@ -1,7 +1,11 @@
 import { NotAnimatedObject } from '@/internal/mapLogic/classes/NotAnimatedObject'
 import { AnimatedObject } from '@/internal/mapLogic/classes/AnimatedObject'
 import { AnimationType, Vector2 } from '@/internal/types.ts'
-import type { TiledMap, TiledProperty, TiledObject } from '@/internal/mapLogic/engine/interfaces/Interfaces'
+import type {
+    TiledMap,
+    TiledProperty,
+    TiledObject,
+} from '@/internal/mapLogic/engine/interfaces/Interfaces'
 import { populateRoom3, populateRoom4 } from '@/internal/mapLogic/engine/MapUtils.ts'
 import { EntranceDoor } from '@/internal/mapLogic/objects/door/EntranceDoor'
 import { SwitchRoomDoor } from '@/internal/mapLogic/objects/door/SwitchRoomDoor'
@@ -15,20 +19,21 @@ export function loadObjectsFromMap(
     jsonMap: TiledMap,
     canvas: HTMLCanvasElement,
     ctx: CanvasRenderingContext2D,
-    room_name: string): (NotAnimatedObject | AnimatedObject)[] {
+    room_name: string,
+): (NotAnimatedObject | AnimatedObject)[] {
     const list_objects: (NotAnimatedObject | AnimatedObject)[] = []
     jsonMap.layers.forEach((layer) => {
         if (layer.type === 'objectgroup' && layer.objects) {
             layer.objects.forEach((object) => {
-                console.log(object)
+                object.y = object.y - object.height;
                 const isIdle: boolean = true
                 const pos = new Vector2(object.x, object.y)
                 const dim: Vector2 = new Vector2(object.width, object.height)
                 if (object.type === 'AnimatedObject') {
-                    let custom_properties: Record<string, string>;
+                    let custom_properties: Record<string, string>
                     if (object.name == 'entranceDoor') {
                         custom_properties = extractCustomProperties(object)
-                        console.log('loadObjects - entranceDoor')
+                        // console.log('loadObjects - entranceDoor')
                         list_objects.push(
                             new EntranceDoor(
                                 canvas,
@@ -45,9 +50,11 @@ export function loadObjectsFromMap(
                                 custom_properties,
                             ),
                         )
-                    }
-                    else if (object.name == 'switchRoomDoor' && !['room3', 'room4'].includes(room_name)) {
-                        console.log('loadObjects - switchRoomDoor')
+                    } else if (
+                        object.name == 'switchRoomDoor' &&
+                        !['room3', 'room4'].includes(room_name)
+                    ) {
+                        // console.log('loadObjects - switchRoomDoor')
                         custom_properties = extractCustomProperties(object)
                         list_objects.push(
                             new SwitchRoomDoor(
@@ -66,7 +73,7 @@ export function loadObjectsFromMap(
                             ),
                         )
                     } else if (object.name == 'switchStructure') {
-                        console.log('switchStructure')
+                        // console.log('switchStructure')
                         const special_wall: SpecialWall = SwitchStructure.getSpecialWall(
                             layer.objects,
                             canvas,
@@ -94,15 +101,35 @@ export function loadObjectsFromMap(
                                 switch_room_door,
                             ),
                         )
-                    }
-                    else if (object.name == 'finalStructure') {
-                        console.log('finalStructure')
+                    } else if (object.name == 'finalStructure') {
+                        // console.log('finalStructure')
                         const ladder: Ladder = FinalStructure.getLadder(layer.objects, canvas, ctx)
-                        const access_door: AccessDoor = FinalStructure.getAccessDoor(layer.objects, canvas, ctx)
-                        return new FinalStructure(canvas, ctx, AnimationType.IDLE, isIdle, pos, dim, object.name, object.x, object.y, object.width, object.height,ladder, access_door)
-                    }
-                    else {
-                        if (!['specialWall', 'switchRoomDoor', 'accessDoor', 'ladder'].includes(object.name)) {
+                        const access_door: AccessDoor = FinalStructure.getAccessDoor(
+                            layer.objects,
+                            canvas,
+                            ctx,
+                        )
+                        return new FinalStructure(
+                            canvas,
+                            ctx,
+                            AnimationType.IDLE,
+                            isIdle,
+                            pos,
+                            dim,
+                            object.name,
+                            object.x,
+                            object.y,
+                            object.width,
+                            object.height,
+                            ladder,
+                            access_door,
+                        )
+                    } else {
+                        if (
+                            !['specialWall', 'switchRoomDoor', 'accessDoor', 'ladder'].includes(
+                                object.name,
+                            )
+                        ) {
                             custom_properties = extractCustomProperties(object)
                             list_objects.push(
                                 new AnimatedObject(
@@ -157,11 +184,15 @@ export async function loadMapObjects(
             throw new Error(`HTTP error! status: ${response.status}`)
         }
         const map_data: TiledMap = await response.json()
-        const list_objects: (NotAnimatedObject | AnimatedObject)[] = loadObjectsFromMap(map_data, canvas, ctx, 'room4')
+        const list_objects: (NotAnimatedObject | AnimatedObject)[] = loadObjectsFromMap(
+            map_data,
+            canvas,
+            ctx,
+            'room4',
+        )
         populateRoom4(list_objects)
         return list_objects
-    }
-    catch (error) {
+    } catch (error) {
         console.error(`Errore nel caricamento della mappa: ${mapUrl}`, error)
         return []
     }

@@ -57,10 +57,10 @@ export class GameHandler {
         this.ctx.restore()
         this.currentRoomObjects.forEach((obj: Obj) => {
             // if da togliere prima o poi
-            if (obj.selectedFrames !== undefined) obj.update(timestamp)
+            if (obj.selectedFrames !== undefined) obj.update(timestamp, deltaTime)
         })
         this.player.handleInput(this.keys, deltaTime)
-        this.player.update(timestamp)
+        this.player.update(timestamp, deltaTime)
         requestAnimationFrame(this.gameLoop)
     }
 

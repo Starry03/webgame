@@ -25,7 +25,7 @@ router = APIRouter(prefix="/auth")
 
 
 @router.get("/public-key", response_class=JSONResponse)
-def public_key() -> dict:
+def public_key() -> JSONResponse:
     public_key: str = RSAManager.get_public_key()
     return JSONResponse(content={"public_key": public_key})
 
@@ -42,8 +42,20 @@ async def register(request: Request):
             status_code=HTTP_401_UNAUTHORIZED,
         )
     plain_data = RequestUtil.get_plain_data(body)
+    if plain_data is None:
+        logger.error("data is missing")
+        return JSONResponse(
+            content={"detail": "data is missing"},
+            status_code=HTTP_401_UNAUTHORIZED,
+        )
     email: str | None = plain_data.get("email", None)
-    client_public_key_pem = plain_data.get("client_public_key")
+    client_public_key_pem: str | None = plain_data.get("client_public_key")
+    if client_public_key_pem is None:
+        logger.error("client public key is missing")
+        return JSONResponse(
+            content={"detail": "client public key is missing"},
+            status_code=HTTP_401_UNAUTHORIZED,
+        )
     if UserManager.user_exists(credentials.username):
         logger.error("User already exists")
         return JSONResponse(
@@ -103,7 +115,19 @@ async def login(request: Request):
     body: CoroutineType[Any, Any, Any] = await request.json()
     credentials: Credentials = RequestUtil.get_credentials(body)
     plain_data = RequestUtil.get_plain_data(body)
+    if plain_data is None:
+        logger.error("data is missing")
+        return JSONResponse(
+            content={"detail": "data is missing"},
+            status_code=HTTP_401_UNAUTHORIZED,
+        )
     client_public_key_pem = plain_data.get("client_public_key")
+    if client_public_key_pem is None:
+        logger.error("client public key is missing")
+        return JSONResponse(
+            content={"detail": "client public key is missing"},
+            status_code=HTTP_401_UNAUTHORIZED,
+        )
     current_user = AuthManager.get_user_from_credentials(credentials)
     if current_user is None:
         return JSONResponse(
