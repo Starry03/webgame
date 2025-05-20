@@ -65,27 +65,27 @@ const manaPercentage = computed(() => {
             <span class="player-level">Level:</span>
             <span class="player-level-value">{{ props.level }}</span>
         </div>
-        <div class="bars-and-cooldowns">
         <div class="bars">
             <div class="bar-container flex items-center gap-small">
-            <span>HP:</span>
-            <ProgressBar :progress="healthPercentage" color="crimson" />
-            <span>{{ props.hp }}/{{ props.maxHealth }}</span>
+                <span>HP:</span>
+                <ProgressBar :progress="healthPercentage" color="crimson" />
+                <span>{{ props.hp }}/{{ props.maxHealth }}</span>
             </div>
             <div class="bar-container flex items-center gap-small">
-            <span>Mana:</span>
-            <ProgressBar :progress="manaPercentage" color="cyan" class="mana-bar" />
-            <span>{{ props.mana }}/{{ props.maxMana }}</span>
+                <span>Mana:</span>
+                <ProgressBar :progress="manaPercentage" color="cyan" class="mana-bar" />
+                <span>{{ props.mana }}/{{ props.maxMana }}</span>
             </div>
         </div>
         <div class="cooldown-container">
-            <div class="cooldown-bar">
-            <Filler :text="'Q'" :percentage="props.cooldownQ" :max="props.maxCooldownQ"/>
+            <div class="cooldown-container flex items-center gap-large">
+                <div class="cooldown-bar">
+                    <Filler :text="'Q'" :percentage="props.cooldownQ" :max="props.maxCooldownQ"/>
+                </div>
+                <div class="cooldown-bar">
+                    <Filler :text="'R'" :percentage="props.cooldownR" :max="props.maxCooldownR"/>
+                </div>
             </div>
-            <div class="cooldown-bar">
-            <Filler :text="'R'" :percentage="props.cooldownR" :max="props.maxCooldownR"/>
-            </div>
-        </div>
         </div>
     </div>
 </template>
