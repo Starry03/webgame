@@ -1,7 +1,7 @@
-import {NotAnimatedObject} from '../classes/NotAnimatedObject';
-import {AnimationType, Vector2 } from '../../../../src/internal/types';
+import { NotAnimatedObject } from '@/internal/mapLogic/classes/NotAnimatedObject'
+import {AnimationType, Vector2} from '@/internal/types.ts'
 
-export class BossRock extends NotAnimatedObject {
+export class Ladder extends NotAnimatedObject {
     constructor(canvas: HTMLCanvasElement,
                 ctx: CanvasRenderingContext2D,
                 initialAnimation: AnimationType,
@@ -13,6 +13,6 @@ export class BossRock extends NotAnimatedObject {
                 y: number,
                 width: number,
                 height: number) {
-        super(canvas, ctx, initialAnimation, isIdle, pos, dim, name, x, y, width, height);
+        super(canvas,ctx,initialAnimation,isIdle,pos,dim,name,x,y,width,height);
     }
 }

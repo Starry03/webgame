@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="25" height="13" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="59">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="25" height="13" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="60">
  <editorsettings>
   <export target="room3.js" format="js"/>
  </editorsettings>
@@ -16,20 +16,20 @@
  <tileset firstgid="28" source="../tilesets/manaPotion.tsx"/>
  <tileset firstgid="29" source="../tilesets/rug.tsx"/>
  <tileset firstgid="30" source="../tilesets/attackEnhancement.tsx"/>
- <tileset firstgid="33" source="../tilesets/defenseEnhancement.tsx"/>
+ <tileset firstgid="34" source="../tilesets/defenseEnhancement.tsx"/>
  <layer id="1" name="background" width="25" height="13">
   <data encoding="base64" compression="zlib">
-   eJxjYWBgYEHC2AALFTEuQA2zGWmIR+0YtWPUDlQsC8X0toPWGAATagKn
+   eJxjYWBgYBkmmJGGeNSOUTtG7UDFslBMbztojQHligLT
   </data>
  </layer>
  <objectgroup id="2" name="objects">
   <object id="9" name="crystal15" type="NotAnimatedObject" gid="14" x="43" y="357" width="20" height="20"/>
   <object id="10" name="crystal14" type="NotAnimatedObject" gid="14" x="220" y="280" width="20" height="20"/>
-  <object id="11" name="crystal13" type="NotAnimatedObject" gid="14" x="295" y="91" width="20" height="20"/>
+  <object id="11" name="crystal13" type="NotAnimatedObject" gid="14" x="130" y="152" width="20" height="20"/>
   <object id="12" name="crystal12" type="NotAnimatedObject" gid="16" x="448" y="155" width="28" height="28"/>
   <object id="13" name="crystal11" type="NotAnimatedObject" gid="16" x="540" y="285" width="28" height="28"/>
   <object id="14" name="crystal10" type="NotAnimatedObject" gid="15" x="358" y="250" width="26" height="26"/>
-  <object id="15" name="crystal9" type="NotAnimatedObject" gid="15" x="706" y="149" width="26" height="26"/>
+  <object id="15" name="crystal9" type="NotAnimatedObject" gid="15" x="706" y="122.883" width="26" height="26"/>
   <object id="16" name="crystal8" type="NotAnimatedObject" gid="15" x="311" y="366" width="26" height="26"/>
   <object id="17" name="crystal7" type="NotAnimatedObject" gid="15" x="183" y="347" width="26" height="26"/>
   <object id="18" name="crystal6" type="NotAnimatedObject" gid="15" x="467" y="359" width="26" height="26"/>
@@ -66,7 +66,7 @@
    </properties>
   </object>
   <object id="48" name="crystal2" type="NotAnimatedObject" gid="11" x="74" y="291" width="33" height="47"/>
-  <object id="49" name="crystal1" type="NotAnimatedObject" gid="11" x="74" y="291" width="33" height="47"/>
+  <object id="49" name="crystal16" type="NotAnimatedObject" gid="11" x="667.726" y="211.778" width="33" height="47"/>
   <object id="50" name="rock1" type="NotAnimatedObject" gid="20" x="154" y="300" width="32" height="28"/>
   <object id="52" name="hpPotion" type="AnimatedObject" gid="27" x="676" y="352" width="21" height="32">
    <properties>
@@ -80,13 +80,7 @@
     <property name="takeable" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="54" name="attackEnhancement" type="AnimatedObject" gid="32" x="704" y="352" width="32" height="32">
-   <properties>
-    <property name="collidable" type="bool" value="false"/>
-    <property name="takeable" type="bool" value="true"/>
-   </properties>
-  </object>
-  <object id="55" name="defense_enhancement" gid="35" x="672" y="384" width="32" height="32">
+  <object id="55" name="defenseEnhancement" type="AnimatedObject" gid="36" x="672" y="384" width="32" height="32">
    <properties>
     <property name="collidable" type="bool" value="false"/>
     <property name="takeable" type="bool" value="true"/>
@@ -110,6 +104,12 @@
     <property name="animating" type="bool" value="false"/>
     <property name="isOpen" type="bool" value="false"/>
     <property name="type" value="door"/>
+   </properties>
+  </object>
+  <object id="59" name="attackEnhancement" type="AnimatedObject" gid="33" x="704" y="352" width="32" height="32">
+   <properties>
+    <property name="collidable" type="bool" value="false"/>
+    <property name="takeable" type="bool" value="true"/>
    </properties>
   </object>
  </objectgroup>

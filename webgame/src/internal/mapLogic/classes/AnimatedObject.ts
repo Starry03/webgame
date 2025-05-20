@@ -1,7 +1,8 @@
-import {AnimatedObject} from "../classes/AnimatedObject";
-import { AnimationType, Vector2 } from '../../../../src/internal/types';
+import { GameObject } from "./GameObject";
+import { AnimationType, Vector2 } from '../../types';
 
-export class Tree extends AnimatedObject {
+export class AnimatedObject extends GameObject {
+    custom_properties: Record<string,any> = {}
     constructor(canvas: HTMLCanvasElement,
                 ctx: CanvasRenderingContext2D,
                 initialAnimation: AnimationType,
@@ -14,9 +15,7 @@ export class Tree extends AnimatedObject {
                 width: number,
                 height: number,
                 custom_properties: Record<string,any>) {
-        super(canvas,ctx,initialAnimation,isIdle,pos,dim,name,x,y,width,height,custom_properties);
+      super(canvas,ctx, initialAnimation, isIdle, pos, dim, name, x, y, width, height);
+      this.custom_properties = custom_properties;
     }
-
-
-
-}
+  }

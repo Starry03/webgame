@@ -4,7 +4,7 @@
  "layers":[
         {
          "compression":"zlib",
-         "data":"eJxjYWBgYEHC2AALFTEuQA2zGWmIR+0YtWPUDlQsC8X0toPWGAATagKn",
+         "data":"eJxjYWBgYBkmmJGGeNSOUTtG7UDFslBMbztojQHligLT",
          "encoding":"base64",
          "height":13,
          "id":1,
@@ -54,8 +54,8 @@
                  "type":"NotAnimatedObject",
                  "visible":true,
                  "width":20,
-                 "x":295,
-                 "y":91
+                 "x":130,
+                 "y":152
                 }, 
                 {
                  "gid":16,
@@ -103,7 +103,7 @@
                  "visible":true,
                  "width":26,
                  "x":706,
-                 "y":149
+                 "y":122.883
                 }, 
                 {
                  "gid":15,
@@ -381,13 +381,13 @@
                  "gid":11,
                  "height":47,
                  "id":49,
-                 "name":"crystal1",
+                 "name":"crystal16",
                  "rotation":0,
                  "type":"NotAnimatedObject",
                  "visible":true,
                  "width":33,
-                 "x":74,
-                 "y":291
+                 "x":667.726,
+                 "y":211.778
                 }, 
                 {
                  "gid":20,
@@ -448,10 +448,10 @@
                  "y":384
                 }, 
                 {
-                 "gid":32,
+                 "gid":36,
                  "height":32,
-                 "id":54,
-                 "name":"attackEnhancement",
+                 "id":55,
+                 "name":"defenseEnhancement",
                  "properties":[
                         {
                          "name":"collidable",
@@ -465,29 +465,6 @@
                         }],
                  "rotation":0,
                  "type":"AnimatedObject",
-                 "visible":true,
-                 "width":32,
-                 "x":704,
-                 "y":352
-                }, 
-                {
-                 "gid":35,
-                 "height":32,
-                 "id":55,
-                 "name":"defense_enhancement",
-                 "properties":[
-                        {
-                         "name":"collidable",
-                         "type":"bool",
-                         "value":false
-                        }, 
-                        {
-                         "name":"takeable",
-                         "type":"bool",
-                         "value":true
-                        }],
-                 "rotation":0,
-                 "type":"",
                  "visible":true,
                  "width":32,
                  "x":672,
@@ -579,6 +556,29 @@
                  "width":64,
                  "x":672,
                  "y":288
+                }, 
+                {
+                 "gid":33,
+                 "height":32,
+                 "id":59,
+                 "name":"attackEnhancement",
+                 "properties":[
+                        {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"takeable",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"AnimatedObject",
+                 "visible":true,
+                 "width":32,
+                 "x":704,
+                 "y":352
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -587,7 +587,7 @@
          "y":0
         }],
  "nextlayerid":4,
- "nextobjectid":59,
+ "nextobjectid":60,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
@@ -646,7 +646,7 @@
          "source":"..\/tilesets\/attackEnhancement.tsx"
         }, 
         {
-         "firstgid":33,
+         "firstgid":34,
          "source":"..\/tilesets\/defenseEnhancement.tsx"
         }],
  "tilewidth":32,
