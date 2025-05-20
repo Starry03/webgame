@@ -1,3 +1,4 @@
+import type { CollisionInfo } from './collision'
 import { AnimationType, Vector2 } from './types'
 import { type Ref } from 'vue'
 
@@ -21,9 +22,9 @@ export class Obj {
     isAnimationBlocking: boolean
     isInteractable: boolean
     isSolid: boolean
-    FPS = 60
+    FPS = 200
     frameDelay: number = 1000 / this.FPS
-    collidedObjects: Obj[]
+    collidedObjects: Set<CollisionInfo>
     time: number
 
     constructor(
@@ -53,7 +54,7 @@ export class Obj {
         this.isAnimationBlocking = false
         this.isInteractable = false
         this.isSolid = true
-        this.collidedObjects = []
+        this.collidedObjects = new Set<CollisionInfo>()
     }
 
     preloadImages() {
@@ -119,11 +120,11 @@ export class Obj {
                 this.drawFlipped(frame, this.pos.x, this.pos.y, this.dim.x, this.dim.y)
             else ctx.drawImage(frame, this.pos.x, this.pos.y, this.dim.x, this.dim.y)
             ctx.rect(this.pos.x, this.pos.y, this.dim.x, this.dim.y)
-            ctx.strokeStyle = 'red'
-            ctx.lineWidth = 2
+            ctx.strokeStyle = this.collidedObjects.size > 0 ? 'red' : 'blue'
+            ctx.lineWidth = 1
             ctx.stroke()
+            ctx.restore()
         }
-        ctx.restore()
     }
 
     animate(timestamp: number, deltaTime: number) {
@@ -178,17 +179,29 @@ export class Obj {
     }
 
     resetCollisions() {
-        this.collidedObjects = []
+        this.collidedObjects.clear()
     }
 
-    onCollision(other: Obj, dir: Vector2) {
-        if (this.isSolid && other.isSolid) {
-            this.collidedObjects.push(other)
-            this.handleCollision(dir)
-        }
+    enterCollision(collision: CollisionInfo) {
+        if (!collision.other?.isSolid) return
+        for (const col of this.collidedObjects)
+            if (col.other === collision.other) {
+                col.dir = collision.dir
+                return
+            }
+        this.collidedObjects.add(collision)
+        this.handleCollision(collision)
     }
 
-    handleCollision(dir: Vector2) {}
+    exitCollision(collision: CollisionInfo) {
+        for (const col of this.collidedObjects)
+            if (col.other === collision.other) {
+                this.collidedObjects.delete(col)
+                return
+            }
+    }
+
+    handleCollision(collision: CollisionInfo) {}
 
     onInteract(other: Obj) {}
 

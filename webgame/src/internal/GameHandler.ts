@@ -19,6 +19,7 @@ export class GameHandler {
     currentBackgroundRoom: any
     currentRoomObjects: (Obj)[]
     baseMapDim: Vector2 = new Vector2(800, 416);
+    gameObjects: Obj[]
 
     constructor(player: Entity, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
         this.ctx = ctx
@@ -33,6 +34,7 @@ export class GameHandler {
         this.currentBackgroundRoom = {}
         this.currentRoomObjects = []
         this.bg_image = null
+        this.gameObjects = []
 
         // dati mappa = loadMapData(this.currentRoomPath, this.canvas, this.ctx)
 
@@ -57,24 +59,23 @@ export class GameHandler {
             this.ctx.drawImage(this.bg_image, 0, 0, this.canvas.width, this.canvas.height)
 
         this.ctx.restore()
-        this.currentRoomObjects.forEach((obj: Obj) => {
-            // if da togliere prima o poi
-            if (obj.selectedFrames !== undefined) obj.update(timestamp, deltaTime)
-        })
-        Collider.update_collisions([...this.currentRoomObjects, this.player as Obj])
         this.player.handleInput(this.keys, deltaTime)
-        this.player.update(timestamp, deltaTime)
+        Collider.update_collisions(this.gameObjects)
+        this.gameObjects.forEach((obj: Obj) => {
+            if (obj.selectedFrames == undefined) return
+            obj.update(timestamp, deltaTime)
+        })
         requestAnimationFrame(this.gameLoop)
     }
 
     async initialize() {
         this.currentRoomPath = getRoomPath('room4')
         this.bg_image = await loadMapData(this.currentRoomPath, this.canvas, this.ctx)
-        console.log(this.bg_image)
         this.currentRoomObjects = await loadMapObjects('room4',this.currentRoomPath, this.canvas, this.ctx)
         this.currentRoomObjects.forEach((obj: Obj) => {
             obj.preloadImages()
             obj.idle(true)
         })
+        this.gameObjects = [...this.currentRoomObjects, this.player]
     }
 }
