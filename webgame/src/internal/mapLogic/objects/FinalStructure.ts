@@ -36,6 +36,7 @@ export class FinalStructure extends NotAnimatedObject {
     ): Ladder {
         for (const obj of layer_objects) {
             if (obj.name === 'ladder') {
+                obj.y = obj.y - obj.height
                 const isIdle: boolean = true
                 return new Ladder(
                     canvas,
@@ -74,6 +75,7 @@ export class FinalStructure extends NotAnimatedObject {
     ): AccessDoor {
         for (const obj of layer_objects) {
             if (obj.name === 'accessDoor') {
+                obj.y = obj.y - obj.height
                 const custom_properties: Record<string, any> = extractCustomProperties(obj)
                 const isIdle: boolean = true
                 const access_door = new AccessDoor(
