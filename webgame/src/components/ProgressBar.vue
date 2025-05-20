@@ -24,12 +24,12 @@ defineProps({
   min-width: 60px;
   max-width: 100%;
   background-color: #e0e0e0;
-  border-radius: 5px;
+  border-radius: 2px;
   overflow: hidden;
   flex: 1 1 0;
 }
 .progress {
-  height: 20px;
+  height: 10px;
   background-color: #76c7c0;
   transition: width 0.3s ease;
 }

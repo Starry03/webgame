@@ -3,7 +3,7 @@
     <source src="/assets/audio/Trust_In_Your_Perseverance.wav" type="audio/mpeg" />
   </audio>
   <div class="master flex flex-column flex-align gap-big">
-    <div class="flex flex-row flex-center flex-space-between gap-big">
+    <div class="flex flex-row flex-center header-bar flex-space-between gap-big">
       <button class="button button-secondary button-home" @click="goHome">Home</button>
       <button class="button button-secondary button-mute" @click="toggleMute">🔊</button>
     </div>
@@ -75,20 +75,15 @@ onUnmounted(() => {
 }
 
 @media (orientation: portrait) {
-  h1 {
-    text-align: center;
-    width: 69%;
-    font-size: var(--font-medium);
-  }
 
   .button-mute {
     width: fit-content;
     height: fit-content;
-    position: absolute;
+    font-size: var(--font-small);
   }
 
   .button-home {
-    text-size-adjust: var(--font-small);
+    text-size-adjust: var(--font-small); 
   }
 }
 @media (orientation: landscape) {
@@ -97,12 +92,13 @@ onUnmounted(() => {
     width: 69%;
   }
 
+  .button-home {
+    text-size-adjust: var(--font-small); 
+  }
+
   .button-mute {
     width: fit-content;
     height: fit-content;
-    position: absolute;
-    top: 0;
-    left: 85svw;
   }
 }
 
@@ -122,12 +118,26 @@ h1 {
   padding-bottom: 2%;
 }
 
+.header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.5rem 1.5rem;
+  position: relative;
+  min-height: 48px;
+  z-index: 10;
+  background: transparent;
+}
+
 .button-home {
-  font-size: var(--font-small);
+  font-size: var(--font-medium);
+  align-self: flex-start;
 }
 
 .button-mute {
   font-size: var(--font-big);
+  align-self: flex-end;
 }
 
 .button-home:hover,

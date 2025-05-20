@@ -35,7 +35,6 @@ const props = defineProps({
   min-width: 120px;         
 }
 
-/* Filler.vue */
 .cooldown-bar {
   display: flex;
   flex-direction: column;
