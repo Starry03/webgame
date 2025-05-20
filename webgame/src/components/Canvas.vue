@@ -224,8 +224,8 @@ function initializeBoss() {
     display: block;
     margin: 0 auto;
     border: 1px solid #ccc;
-    width: 99svw;
-    height: 50svh;
+    width: 800px;
+    height: 413px;
     
 }
 
