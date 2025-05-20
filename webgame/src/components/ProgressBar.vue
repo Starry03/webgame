@@ -21,9 +21,12 @@ defineProps({
 <style scoped>
 .progress-bar {
   width: 100%;
+  min-width: 60px;
+  max-width: 100%;
   background-color: #e0e0e0;
   border-radius: 5px;
   overflow: hidden;
+  flex: 1 1 0;
 }
 .progress {
   height: 20px;

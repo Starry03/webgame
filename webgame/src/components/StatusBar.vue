@@ -62,29 +62,24 @@ const manaPercentage = computed(() => {
     <div class="status-bar flex flex-col gap-mid">
         <div class="player-header">
             <span class="player-name">Player Name</span>
-            <span class="player-level">Level:</span>
-            <span class="player-level-value">{{ props.level }}</span>
+            <span class="player-level">Level: {{ props.level }}</span>
         </div>
-        <div class="bars">
-            <div class="bar-container flex items-center gap-small">
-                <span>HP:</span>
-                <ProgressBar :progress="healthPercentage" color="crimson" />
-                <span>{{ props.hp }}/{{ props.maxHealth }}</span>
-            </div>
-            <div class="bar-container flex items-center gap-small">
-                <span>Mana:</span>
-                <ProgressBar :progress="manaPercentage" color="cyan" class="mana-bar" />
-                <span>{{ props.mana }}/{{ props.maxMana }}</span>
-            </div>
-        </div>
-        <div class="cooldown-container">
-            <div class="cooldown-container flex items-center gap-large">
-                <div class="cooldown-bar">
-                    <Filler :text="'Q'" :percentage="props.cooldownQ" :max="props.maxCooldownQ"/>
+        <div class="bars-and-cooldowns">
+            <div class="bars">
+                <div class="bar-container flex items-center gap-small">
+                    <span>HP:</span>
+                    <ProgressBar :progress="healthPercentage" color="crimson" />
+                    <span>{{ props.hp }}/{{ props.maxHealth }}</span>
                 </div>
-                <div class="cooldown-bar">
-                    <Filler :text="'R'" :percentage="props.cooldownR" :max="props.maxCooldownR"/>
+                <div class="bar-container flex items-center gap-small">
+                    <span>MP:</span>
+                    <ProgressBar :progress="manaPercentage" color="cyan" class="mana-bar" />
+                    <span>{{ props.mana }}/{{ props.maxMana }}</span>
                 </div>
+            </div>
+            <div class="cooldown-container">
+                <Filler :text="'Q'" :percentage="props.cooldownQ" :max="props.maxCooldownQ"/>
+                <Filler :text="'R'" :percentage="props.cooldownR" :max="props.maxCooldownR"/>
             </div>
         </div>
     </div>
@@ -100,35 +95,95 @@ const manaPercentage = computed(() => {
     background-color: #333;
     border-radius: 8px;
     color: white;
-    font-size: 10px;
+    font-size: 14px;
     height: 100%;
+    max-width: 600px;
+}
+
+.player-header {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.bars-and-cooldowns {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    width: 100%;
+    gap: 1rem;
+}
+
+.bars {
+    flex: 3 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .bar-container {
     display: flex;
     align-items: center;
     gap: 10px;
+    width: 100%;
+}
+
+.progress-bar {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 100%;
 }
 
 .mana-bar {
-    width: 50%;
+    width: 40%;
+    max-width: 50%;
 }
 
 .cooldown-container {
     display: flex;
+    flex-direction: row;
+    gap: 0.25rem;
     align-items: center;
-    gap: 20px;
+    justify-content: flex-end;
+    min-width: 0;
+    width: auto;
+    padding-right: 4px;
 }
 
 @media (max-width: 768px) {
-  #canvas {
-    width: 80%;
-    height: auto;
-  }
+    .status-bar {
+        font-size: 12px;
+        max-width: 100vw;
+        padding: 5px;
+    }
+    .bars-and-cooldowns {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .cooldown-container {
+        flex-direction: row;
+        gap: 1rem;
+        align-items: center;
+        justify-content: flex-start;
+    }
+    .player-header {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: flex-start;
+    }
+}
 
-  .status-bar {
-    font-size: 14px;
-  }
+@media (max-width: 768px) {
+    #canvas {
+        width: 80%;
+        height: auto;
+    }
+
+    .status-bar {
+        font-size: 14px;
+    }
 }
 
 @media (orientation: landscape) and (max-height: 500px) {

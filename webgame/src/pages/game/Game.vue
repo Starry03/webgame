@@ -3,9 +3,8 @@
     <source src="/assets/audio/Trust_In_Your_Perseverance.wav" type="audio/mpeg" />
   </audio>
   <div class="master flex flex-column flex-align gap-big">
-    <div class="flex flex-row flex-center gap-big">
+    <div class="flex flex-row flex-center flex-space-between gap-big">
       <button class="button button-secondary button-home" @click="goHome">Home</button>
-      <h1>Awakening in the Dark Tower</h1>
       <button class="button button-secondary button-mute" @click="toggleMute">🔊</button>
     </div>
     <div class="flex flex-column">
@@ -86,8 +85,6 @@ onUnmounted(() => {
     width: fit-content;
     height: fit-content;
     position: absolute;
-    top: 0;
-    left: 85svw;
   }
 
   .button-home {
@@ -126,16 +123,10 @@ h1 {
 }
 
 .button-home {
-  position: absolute;
-  top: 30px;
-  left: 20px;
   font-size: var(--font-small);
 }
 
 .button-mute {
-  position: absolute;
-  top: 30px;
-  right: 20px;
   font-size: var(--font-big);
 }
 
