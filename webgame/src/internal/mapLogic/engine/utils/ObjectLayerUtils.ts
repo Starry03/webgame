@@ -20,7 +20,7 @@ export function loadObjectsFromMap(
     jsonMap.layers.forEach((layer) => {
         if (layer.type === 'objectgroup' && layer.objects) {
             layer.objects.forEach((object) => {
-                console.log(object)
+                object.y = object.y - object.height;
                 const isIdle: boolean = true
                 const pos = new Vector2(object.x, object.y)
                 const dim: Vector2 = new Vector2(object.width, object.height)
