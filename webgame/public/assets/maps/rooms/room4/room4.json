@@ -351,7 +351,7 @@
                  "visible":true,
                  "width":192,
                  "x":64,
-                 "y":352
+                 "y":351
                 },
             
                 {
@@ -516,28 +516,11 @@
                  "width":32,
                  "x":192,
                  "y":256
-                }],
-         "opacity":1,
-         "properties":[
-                {
-                 "name":"accessDoor",
-                 "type":"object",
-                 "value":0
-                }],
-         "type":"objectgroup",
-         "visible":true,
-         "x":0,
-         "y":0
-        }, 
-        {
-         "draworder":"topdown",
-         "id":4,
-         "name":"objects2",
-         "objects":[
+                }, 
                 {
                  "gid":11,
                  "height":64,
-                 "id":46,
+                 "id":69,
                  "name":"accessDoor",
                  "properties":[
                         {
@@ -560,8 +543,25 @@
                  "visible":true,
                  "width":64,
                  "x":128,
-                 "y":354
-                }, 
+                 "y":352
+                }],
+         "opacity":1,
+         "properties":[
+                {
+                 "name":"accessDoor",
+                 "type":"object",
+                 "value":0
+                }],
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":4,
+         "name":"objects2",
+         "objects":[
                 {
                  "gid":34,
                  "height":78,
@@ -581,7 +581,7 @@
          "y":0
         }],
  "nextlayerid":5,
- "nextobjectid":66,
+ "nextobjectid":70,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",

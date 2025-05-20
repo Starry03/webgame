@@ -122,7 +122,7 @@ export function loadObjectsFromMap(
                             access_door))
                 }
                 else {
-                        if (!['specialWall', 'switchRoomDoor', 'ladder'].includes(object.name)) {
+                        if (!['specialWall', 'switchRoomDoor', 'accessDoor', 'ladder'].includes(object.name)) {
                             custom_properties = extractCustomProperties(object)
                             list_objects.push(
                                 new AnimatedObject(
