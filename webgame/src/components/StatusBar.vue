@@ -60,6 +60,19 @@ const manaPercentage = computed(() => {
 
 const storedUser = localStorage.getItem(Storage_e.USER)
 const username = storedUser ? JSON.parse(storedUser)?.username ?? 'Player' : 'Player'
+
+const getHealthPercentage = () => {
+    return healthPercentage.value
+}
+
+const getManaPercentage = () => {
+    return manaPercentage.value
+}
+
+const getLevel = () => {
+    return props.level;
+}
+
 </script>
 
 <template>
