@@ -363,7 +363,7 @@
                          "value":76
                         }],
                  "rotation":0,
-                 "type":"NotAnimatedObject",
+                 "type":"AnimatedObject",
                  "visible":true,
                  "width":256,
                  "x":480,

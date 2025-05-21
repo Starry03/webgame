@@ -101,8 +101,9 @@ export function loadObjectsFromMap(
                                 switch_room_door,
                             ),
                         )
-                    } else if (object.name == 'finalStructure') {
-                        // console.log('finalStructure')
+                    }
+                    else if (object.name == 'finalStructure') {
+                        console.log('finalStructure')
                         const ladder: Ladder = FinalStructure.getLadder(layer.objects, canvas, ctx)
                         const access_door: AccessDoor = FinalStructure.getAccessDoor(
                             layer.objects,
@@ -150,6 +151,7 @@ export function loadObjectsFromMap(
                         }
                     }
                 } else {
+
                     list_objects.push(
                         new NotAnimatedObject(
                             canvas,

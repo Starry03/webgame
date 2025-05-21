@@ -19,27 +19,53 @@ const props = defineProps({
 
 <template>
     <div class="cooldown-container">
-        <div class="cooldown-circle" :style="{ '--progress': percentage.value / max * 100 + '%' }"></div>
-        <span>{{ text }}</span>
+        <div class="cooldown-circle" :style="{ '--progress': percentage.value / max * 100 + '%' }">
+            <span>{{ text }}</span>
+        </div>
     </div>
 </template>
 
 <style scoped>
 .cooldown-container {
-    position: relative;
-    width: 3rem;
-    height: 3rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: row;      
+  gap: 1rem;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 120px;         
+}
+
+.cooldown-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .cooldown-circle {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background: conic-gradient(rgba(255, 255, 255, 0.5) var(--progress, 0), transparent 0);
-    border: 2px solid rgba(255, 255, 255, 0.2);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid #aaa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: conic-gradient(
+    rgba(255,255,255,0.5) var(--progress, 0),
+    transparent var(--progress, 0)
+  );
+  margin-bottom: 4px;
+  box-sizing: border-box;
+}
+
+.cooldown-circle span {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
+  line-height: 1;
+  z-index: 1;
+  user-select: none;
 }
 </style>

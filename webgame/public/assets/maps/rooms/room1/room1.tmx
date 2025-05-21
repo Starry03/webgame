@@ -46,7 +46,7 @@
   <object id="72" name="crystal1" type="NotAnimatedObject" gid="155" x="264" y="314" width="52" height="44"/>
   <object id="73" name="rock2" type="NotAnimatedObject" gid="149" x="108" y="167" width="23" height="14"/>
   <object id="74" name="rock1" type="NotAnimatedObject" gid="149" x="164" y="205" width="23" height="14"/>
-  <object id="75" name="structure" type="NotAnimatedObject" gid="145" x="480" y="129" width="256" height="128">
+  <object id="75" name="structure" type="AnimatedObject" gid="145" x="480" y="129" width="256" height="128">
    <properties>
     <property name="collidable" type="bool" value="true"/>
     <property name="door" type="object" value="76"/>

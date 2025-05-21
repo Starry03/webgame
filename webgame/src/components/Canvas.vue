@@ -30,8 +30,9 @@
             />
         </div>
     </div>
-
-    <canvas ref="canvasRef" id="canvas" :width="800" :height="416" />
+    <div class="canvas-wrapper">
+        <canvas ref="canvasRef" id="canvas" :width="800" :height="416" />
+    </div>
 </template>
 
 <script lang="ts" setup>
@@ -142,7 +143,7 @@ onUnmounted(() => {
     // window.removeEventListener('resize', handle_resize)
 })
 
-const isBossRoom = ref(false) // Cambia a `true` quando il giocatore entra nella stanza del boss
+const isBossRoom = ref(false) 
 const boss = ref<any>(null)
 
 const mappedBoss = computed(() => {
@@ -161,7 +162,6 @@ const mappedBoss = computed(() => {
     }
 })
 
-// Inizializza il boss quando il giocatore entra nella stanza del boss
 function initializeBoss() {
     boss.value = reactive({
         hp: 1000,
@@ -183,7 +183,7 @@ function initializeBoss() {
 <style scoped>
 #game-header {
     display: flex;
-    justify-content: flex-start; /* Allinea gli elementi a sinistra */
+    justify-content: flex-start; 
     align-items: center;
     width: 100%;
     padding: 10px;
@@ -192,24 +192,52 @@ function initializeBoss() {
 }
 
 #player-status {
-    width: 50%; /* Occupa la metà sinistra */
+    width: 50%; 
     display: flex;
     flex-direction: column;
-    gap: 10px; /* Spaziatura tra le barre */
+    gap: 10px; 
 }
 
 #boss-status {
-    width: 50%; /* Occupa la metà destra */
+    width: 50%; 
     display: flex;
     flex-direction: column;
-    gap: 10px; /* Spaziatura tra le barre */
-    align-items: flex-end; /* Allinea le barre del boss a destra */
+    gap: 10px; 
+    align-items: flex-end; 
+}
+
+.canvas-wrapper {
+    width: 100%;
+    max-width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 70svh; 
+    overflow: hidden;
 }
 
 #canvas {
+    width: 100%;
+    height: auto;
+    max-width: 800px;
+    max-height: 416px;
+    aspect-ratio: 800 / 416;
     display: block;
-    margin: 0 auto;
     border: 1px solid #ccc;
+    background: #111;
+    object-fit: contain;
+}
+
+@media (max-width: 900px), (max-height: 500px) {
+    .canvas-wrapper {
+        max-height: 60vh;
+    }
+    #canvas {
+        width: 100vw;
+        height: auto;
+        max-width: 100vw;
+        max-height: 60vh;
+    }
 }
 
 @media (max-height: 500px) and (orientation: landscape) {
@@ -218,38 +246,38 @@ function initializeBoss() {
         justify-content: flex-start;
         align-items: center;
         width: 100%;
-        padding: 5px; /* Riduce il padding */
+        padding: 5px;
         background-color: #222;
         border-bottom: 2px solid #444;
     }
 
     #player-status {
-        width: 50%; /* Occupa la metà sinistra */
+        width: 50%; 
         display: flex;
         flex-direction: column;
-        gap: 5px; /* Riduce la spaziatura tra le barre */
+        gap: 5px; 
     }
 
     #boss-status {
-        width: 50%; /* Occupa la metà destra */
+        width: 50%;
         display: flex;
         flex-direction: column;
-        gap: 5px; /* Riduce la spaziatura tra le barre */
+        gap: 5px; 
         align-items: flex-end;
     }
 
     .status-bar {
-        padding: 5px; /* Riduce il padding interno */
+        padding: 5px; 
         background-color: #333;
         border-radius: 8px;
         color: white;
-        font-size: 0.9rem; /* Riduce la dimensione del testo */
+        font-size: 0.9rem;
     }
 
     .bar-container {
         display: flex;
         align-items: center;
-        gap: 5px; /* Riduce la spaziatura tra gli elementi */
+        gap: 5px; 
     }
 
     .cooldown-container {
@@ -262,11 +290,11 @@ function initializeBoss() {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 3px; /* Riduce la spaziatura tra il cerchio e il testo */
+        gap: 3px; 
     }
 
     .cooldown-circle {
-        width: 40px; /* Riduce la dimensione del cerchio */
+        width: 40px;
         height: 40px;
         border-radius: 50%;
         background-color: rgba(255, 255, 255, 0.1);
@@ -277,40 +305,33 @@ function initializeBoss() {
     }
 
     .cooldown-circle span {
-        font-size: 12px; /* Riduce la dimensione del testo */
+        font-size: 12px;
         font-weight: bold;
         color: white;
     }
 
     #game-header {
-        flex-direction: column; /* Dispone gli elementi in colonna */
+        flex-direction: column; 
         align-items: flex-start;
-        gap: 5px; /* Riduce la spaziatura tra gli elementi */
+        gap: 5px; 
     }
 
-    #player-status,
-    #boss-status {
-        width: 100%; /* Occupano tutta la larghezza */
-    }
-
-    #canvas {
-        width: 400px;
-        height: 30svh; /* Riduce ulteriormente l'altezza del canvas */
-        min-height: 208px;
+    #player-status,#boss-status {
+        width: 100%;
     }
 
     .status-bar {
-        padding: 5px; /* Riduce il padding interno */
-        font-size: 0.8rem; /* Riduce la dimensione del testo */
+        padding: 5px; 
+        font-size: 0.8rem; 
     }
 
     .cooldown-circle {
-        width: 30px; /* Riduce ulteriormente la dimensione del cerchio */
+        width: 30px; 
         height: 30px;
     }
 
     .cooldown-circle span {
-        font-size: 10px; /* Riduce la dimensione del testo */
+        font-size: 10px; 
     }
 }
 </style>

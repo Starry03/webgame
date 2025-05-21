@@ -59,14 +59,14 @@
   <object id="31" name="crystal4" type="NotAnimatedObject" gid="25" x="370" y="119" width="26" height="26"/>
   <object id="32" name="crystal3" type="NotAnimatedObject" gid="25" x="370" y="119" width="26" height="26"/>
   <object id="34" name="bat" type="NotAnimatedObject" gid="31" x="40" y="139" width="32" height="27"/>
-  <object id="42" name="finalStructure" type="NotAnimatedObject" gid="32" x="64" y="352" width="192" height="192">
+  <object id="42" name="finalStructure" type="AnimatedObject" gid="32" x="64" y="352" width="192" height="192">
    <properties>
     <property name="accessDoor" type="object" value="46"/>
     <property name="collidable" type="bool" value="true"/>
     <property name="ladder" type="object" value="50"/>
    </properties>
   </object>
-  <object id="49" name="structure" type="NotAnimatedObject" gid="17" x="480" y="129" width="256" height="128">
+  <object id="49" name="structure" type="AnimatedObject" gid="17" x="480" y="129" width="256" height="128">
    <properties>
     <property name="collidable" type="bool" value="true"/>
     <property name="door" type="object" value="5"/>
