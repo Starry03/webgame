@@ -13,7 +13,6 @@
                 <button class="button button-secondary b-play" @click="redirectGameButton">
                     Play
                 </button>
-                <!--⚙️-->
                 <button
                     class="button button-secondary b-settings"
                     @click="$router.push('/settings')"

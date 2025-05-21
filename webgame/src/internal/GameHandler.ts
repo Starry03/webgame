@@ -1,5 +1,5 @@
 import type { Entity } from './Entity'
-import { getRoomPath } from '@/internal/mapLogic/engine/MapUtils.ts'
+import { getRoomPath, populateRoom4 } from '@/internal/mapLogic/engine/MapUtils.ts'
 import { AnimatedObject } from '@/internal/mapLogic/classes/AnimatedObject'
 import { NotAnimatedObject } from '@/internal/mapLogic/classes/NotAnimatedObject'
 import { loadMapData } from '@/internal/mapLogic/engine/utils/BackgroundLayerUtils.ts'
@@ -20,6 +20,7 @@ export class GameHandler {
     currentRoomObjects: Obj[]
     baseMapDim: Vector2 = new Vector2(800, 416)
     gameObjects: Obj[]
+    currentRoom: number = 4
 
     constructor(player: Entity, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
         this.ctx = ctx
@@ -62,7 +63,9 @@ export class GameHandler {
         this.player.handleInput(this.keys, deltaTime)
         Collider.update_collisions(this.gameObjects)
         this.gameObjects.forEach((obj: Obj) => {
-            if (obj.selectedFrames == undefined) return
+            if (obj.selectedFrames == undefined) {
+                return
+            }
             obj.update(timestamp, deltaTime)
         })
         requestAnimationFrame(this.gameLoop)
@@ -71,22 +74,50 @@ export class GameHandler {
     async initialize() {
         this.currentRoomPath = getRoomPath('room4')
         this.bg_image = await loadMapData(this.currentRoomPath, this.canvas, this.ctx)
-        this.currentRoomObjects = (await loadMapObjects(
+        const objs = (await loadMapObjects(
             'room4',
             this.currentRoomPath,
             this.canvas,
             this.ctx,
         )) as Obj[]
-        this.currentRoomObjects.sort((a: Obj, b: Obj) => {
-            const customA = a.custom_properties
-            const customB = b.custom_properties
-            if (customA['type'] === 'door') return 1
-            else if (customB['type'] === 'door') return -1
-            return 0
+        // unpack
+        objs.forEach((obj: Obj) => {
+            if (obj.name === 'finalStructure') {
+                const accessDoor = obj.custom_properties['accessDoor']
+                const ladder = obj.custom_properties['ladder']
+                this.currentRoomObjects.push(accessDoor)
+                this.currentRoomObjects.push(ladder)
+                this.currentRoomObjects.push(obj)
+            } else if (obj.name === 'switchStructure') {
+                const switchDoor = obj.custom_properties['switchRoomDoor']
+                const specialWall = obj.custom_properties['specialWall']
+                this.currentRoomObjects.push(switchDoor)
+                this.currentRoomObjects.push(specialWall)
+                this.currentRoomObjects.push(obj)
+            } else {
+                this.currentRoomObjects.push(obj)
+            }
         })
+
+        switch (this.currentRoom) {
+            case 4:
+                populateRoom4(this.currentRoomObjects)
+                break
+
+            default:
+                break
+        }
         this.currentRoomObjects.forEach((obj: Obj) => {
             obj.preloadImages()
             obj.idle(true)
+        })
+        this.currentRoomObjects.sort((a: Obj, b: Obj) => {
+            const exotic_peppe = a.name
+            if (['accessDoor', 'ladder', 'switchRoomDoor', 'specialWall'].includes(exotic_peppe))
+                return 1
+            const customA = a.custom_properties
+            if (customA['type'] === 'door' || customA['type'] == 'ladder') return 1
+            return -1
         })
         this.gameObjects = [...this.currentRoomObjects, this.player]
     }

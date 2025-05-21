@@ -2,7 +2,6 @@ import { Obj } from '../../Obj'
 import { AnimationType, Vector2 } from '../../types'
 
 export class GameObject extends Obj {
-    name: string
     x: number
     y: number
     width: number
@@ -29,8 +28,8 @@ export class GameObject extends Obj {
             new Vector2(x, y),
             new Vector2(width, height),
             custom_properties,
+            name
         )
-        this.name = name
         this.x = x
         this.y = y
         this.width = width
