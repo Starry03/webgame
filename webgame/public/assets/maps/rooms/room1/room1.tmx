@@ -55,6 +55,7 @@
   <object id="76" name="switchRoomDoor" type="AnimatedObject" gid="161" x="576" y="129" width="64" height="64">
    <properties>
     <property name="animating" type="bool" value="false"/>
+    <property name="interactable" type="bool" value="true"/>
     <property name="isOpen" type="bool" value="false"/>
     <property name="type" value="door"/>
    </properties>

@@ -79,9 +79,8 @@ export function loadObjectsFromMap(
                 }
                 else if (object.name == 'switchStructure') {
                     // console.log('switchStructure')
-                    const special_wall: SpecialWall = SwitchStructure.getSpecialWall(all_tiledObjects, canvas, ctx)
-                    const switch_room_door: SwitchRoomDoor = SwitchStructure.getSwitchRoomDoor(all_tiledObjects, canvas, ctx)
                     custom_properties = extractCustomProperties(object)
+                    SwitchStructure.populateCustomProperties(custom_properties, all_tiledObjects, canvas, ctx)
                     list_objects.push(
                         new SwitchStructure(
                             canvas,
@@ -95,16 +94,12 @@ export function loadObjectsFromMap(
                             object.y,
                             object.width,
                             object.height,
-                            custom_properties,
-                            special_wall,
-                            switch_room_door),
-                        )
+                            custom_properties))
                 }
                 else if (object.name == 'finalStructure') {
                     console.log('finalStructure')
-                    const ladder: Ladder = FinalStructure.getLadder(all_tiledObjects, canvas, ctx)
-                    const access_door: AccessDoor = FinalStructure.getAccessDoor(all_tiledObjects, canvas, ctx)
                     custom_properties = extractCustomProperties(object)
+                    FinalStructure.populateCustomProperties(custom_properties, all_tiledObjects, canvas, ctx)
                     list_objects.push(new FinalStructure(
                             canvas,
                             ctx,
@@ -117,9 +112,7 @@ export function loadObjectsFromMap(
                             object.y,
                             object.width,
                             object.height,
-                            custom_properties,
-                            ladder,
-                            access_door))
+                            custom_properties))
                 }
                 else {
                         if (!['specialWall', 'switchRoomDoor', 'accessDoor', 'ladder'].includes(object.name)) {
@@ -189,7 +182,7 @@ export async function loadMapObjects(
     }
 }
 
-export function extractCustomProperties(object: TiledObject): Record<string, string> {
+export function extractCustomProperties(object: TiledObject): Record<string, any> {
     const custom_properties: Record<string, any> = {} as Record<string, any>
     if (object.properties) {
         object.properties.forEach((property: TiledProperty) => {

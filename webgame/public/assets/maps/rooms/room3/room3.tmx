@@ -48,6 +48,7 @@
   <object id="34" name="entranceDoor" type="AnimatedObject" gid="21" x="161" y="130" width="64" height="64">
    <properties>
     <property name="animating" type="bool" value="false"/>
+    <property name="interactable" type="bool" value="false"/>
     <property name="isOpen" type="bool" value="false"/>
     <property name="type" value="door"/>
    </properties>
@@ -99,8 +100,8 @@
     <property name="activationDelay" type="int" value="500"/>
     <property name="animating" type="bool" value="false"/>
     <property name="disappearsWhen" value="enemiesCleared"/>
+    <property name="interactable" type="bool" value="true"/>
     <property name="opensWhat" value="switchRoomStructure"/>
-    <property name="spriteName" value="[percorsoAnimazione}"/>
     <property name="type" value="brick_wall"/>
     <property name="visibleInitially" type="bool" value="false"/>
    </properties>
@@ -108,6 +109,7 @@
   <object id="57" name="switchRoomDoor" type="AnimatedObject" gid="6" x="672" y="288" width="64" height="64">
    <properties>
     <property name="animating" type="bool" value="false"/>
+    <property name="interactable" type="bool" value="true"/>
     <property name="isOpen" type="bool" value="false"/>
     <property name="type" value="door"/>
    </properties>

@@ -1,13 +1,11 @@
 import { AnimatedObject } from '../classes/AnimatedObject'
 import { AnimationType, Vector2 } from '@/internal/types.ts'
 import { SpecialWall } from '@/internal/mapLogic/objects/SpecialWall.ts'
-import { SwitchRoomDoor } from './door/SwitchRoomDoor.ts'
 import type { TiledObject } from '@/internal/mapLogic/engine/interfaces/Interfaces.ts'
-import {extractCustomProperties} from '@/internal/mapLogic/engine/utils/ObjectLayerUtils.ts';
+import { extractCustomProperties } from '@/internal/mapLogic/engine/utils/ObjectLayerUtils.ts'
+import { SwitchRoomDoor } from '@/internal/mapLogic/objects/door/SwitchRoomDoor.ts'
 
 export class SwitchStructure extends AnimatedObject {
-    special_wall: SpecialWall
-    switch_room_door: SwitchRoomDoor
     constructor(
         canvas: HTMLCanvasElement,
         ctx: CanvasRenderingContext2D,
@@ -21,82 +19,67 @@ export class SwitchStructure extends AnimatedObject {
         width: number,
         height: number,
         custom_properties: Record<string, string>,
-        special_wall: SpecialWall,
-        switch_room_door: SwitchRoomDoor,
     ) {
-        super(canvas, ctx, initialAnimation, isIdle, pos, dim, name, x, y, width, height, custom_properties)
-        this.special_wall = special_wall
-        this.switch_room_door = switch_room_door
-    }
-
-    static getSpecialWall(
-        layer_objects: TiledObject[],
-        canvas: HTMLCanvasElement,
-        ctx: CanvasRenderingContext2D,
-    ): SpecialWall {
-        for (const obj of layer_objects) {
-            if (obj.name == 'specialWall') {
-                obj.y = obj.y - obj.height;
-                const custom_properties: Record<string, string> = extractCustomProperties(obj)
-                const isIdle: boolean = true
-                return new SpecialWall(
-                    canvas,
-                    ctx,
-                    AnimationType.IDLE,
-                    isIdle,
-                    new Vector2(obj.x, obj.y),
-                    new Vector2(obj.width, obj.height),
-                    obj.name,
-                    obj.x,
-                    obj.y,
-                    obj.width,
-                    obj.height,
-                    custom_properties,
-                )
-            }
-        }
-        return new SpecialWall(canvas, ctx, AnimationType.IDLE, true, new Vector2(0,0), new Vector2(0,0),'',0,0,0,0, {});
-    }
-
-    static getSwitchRoomDoor(
-        layer_objects: TiledObject[],
-        canvas: HTMLCanvasElement,
-        ctx: CanvasRenderingContext2D,
-    ): SwitchRoomDoor {
-        for (const obj of layer_objects) {
-            if (obj.name == 'switchRoomDoor') {
-                obj.y = obj.y - obj.height;
-                const custom_properties: Record<string, string> = extractCustomProperties(obj)
-                const isIdle: boolean = true
-                return new SwitchRoomDoor(
-                    canvas,
-                    ctx,
-                    AnimationType.IDLE,
-                    isIdle,
-                    new Vector2(obj.x, obj.y),
-                    new Vector2(obj.width, obj.height),
-                    obj.name,
-                    obj.x,
-                    obj.y,
-                    obj.width,
-                    obj.height,
-                    custom_properties,
-                )
-            }
-        }
-        return new SwitchRoomDoor(
+        super(
             canvas,
             ctx,
-            AnimationType.IDLE,
-            true,
-            new Vector2(0, 0),
-            new Vector2(0, 0),
-            '',
-            0,
-            0,
-            0,
-            0,
-            {},
+            initialAnimation,
+            isIdle,
+            pos,
+            dim,
+            name,
+            x,
+            y,
+            width,
+            height,
+            custom_properties,
         )
+    }
+
+    static populateCustomProperties(
+        custom_properties: Record<string, any>,
+        objects: TiledObject[],
+        canvas: HTMLCanvasElement,
+        ctx: CanvasRenderingContext2D,
+    ): void {
+        for (const object of objects) {
+            if (object.name === 'specialWall') {
+                const custom_properties_special_wall: Record<string, any> =
+                    extractCustomProperties(object)
+                const special_wall: SpecialWall = new SpecialWall(
+                    canvas,
+                    ctx,
+                    AnimationType.IDLE,
+                    true,
+                    new Vector2(object.x, object.y),
+                    new Vector2(object.width, object.height),
+                    object.name,
+                    object.x,
+                    object.y,
+                    object.width,
+                    object.height,
+                    custom_properties_special_wall,
+                )
+                custom_properties['specialWall'] = special_wall
+            }
+
+            if (object.name == 'switchRoomDoor') {
+                const custom_properties_door: Record<string, any> = extractCustomProperties(object)
+                const switch_room_door: SwitchRoomDoor = new SwitchRoomDoor(
+                    canvas,
+                    ctx,
+                    AnimationType.IDLE,
+                    true,
+                    new Vector2(object.x, object.y),
+                    new Vector2(object.width, object.height),
+                    object.name,
+                    object.x,
+                    object.y,
+                    object.width,
+                    object.height,
+                    custom_properties_door)
+                custom_properties['specialWall'] = switch_room_door
+            }
+        }
     }
 }

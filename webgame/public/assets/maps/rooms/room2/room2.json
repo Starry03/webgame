@@ -33,6 +33,11 @@
                          "value":false
                         }, 
                         {
+                         "name":"interactable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isOpen",
                          "type":"bool",
                          "value":false
@@ -474,6 +479,11 @@
                  "properties":[
                         {
                          "name":"animating",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"interactable",
                          "type":"bool",
                          "value":false
                         }, 
