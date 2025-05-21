@@ -4,35 +4,43 @@
         rel="stylesheet"
     />
     <section id="level-stats">
-        <h1>Statistiche del livello</h1>
+        <h1>Game Stats</h1>
         <div class="item-stats">
             <h2>Tempo impiegato</h2>
-            <p id="time-taken">00:00</p>
+            <p id="time-taken"> "{{ timeTaken }}" </p>
         </div>
         <div class="item-stats">
-            <h2>Punti guadagnati</h2>
-            <p id="gained-points">0</p>
+            <h2>Level</h2>
+            <p id="level">"{{level}}"</p>
         </div>
         <div class="item-stats">
-            <h2>Livello attuale personaggio</h2>
-            <p id="current-level">0</p>
-        </div>
-        <div class="item-stats">
-            <label for="esp">Esperienza</label>
+            <label for="esp">Experience</label>
             <input type="range" id="esp" name="esp" min="0" max="100" value="50" />
-            <span id="value">50</span>
+            <span id="value">1250</span>
         </div>
         <div class="item-stats">
-            <label for="remained-xp-points">Punti vita rimanenti</label>
+            <label for="health-percentage">Health Percentage</label>
             <input
                 type="range"
-                id="remained-xp-points"
-                name="remained-xp-points"
+                id="health-percentage"
+                name="healthPercentage"
                 min="400"
                 max="1000"
                 value="700"
             />
-            <span id="value">700</span>
+            <span id="value">{{healthPercentage}}</span>
+        </div>
+        <div class="item-stats">
+            <label for="mana-percentage">Mana Percentage</label>
+            <input
+                type="range"
+                id="mana-percentage"
+                name="manaPercentage"
+                min="400"
+                max="1200"
+                value="700"
+            />
+            <span id="value">{{manaPercentage}}</span>
         </div>
         <div class="item-stats">
             <h2>Potenziamenti usati</h2>
@@ -48,10 +56,10 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { getHealthPercentage, getManaPercentage, getLevel } from '@/components/StatusBar.vue'
+import { getHealthPercentage, getManaPercentage, getLevel, getTime } from '@/components/StatusBar.vue'
 
-var timeTaken = ref('')
-var currentLevel = getLevel()
+var timeTaken = getTime()
+var level = getLevel()
 var esp = ref('')
 var healthPercentage = getHealthPercentage()
 var manaPercentage = getManaPercentage()
@@ -59,7 +67,7 @@ var usedEnchantments = ref('')
 var defeatedEnemies = ref('')
 
 const showStats = (time, espPoints, hpPoints, enchantments, enemies) => {
-    timeTaken = getTime()
+    timeTaken = time
     esp = espPoints
     usedEnchantments = enchantments
     defeatedEnemies = enemies
@@ -176,8 +184,13 @@ body {
     cursor: not-allowed;
 }
 
-#remained-xp-points:disabled {
-    background-color: red;
+#health-percentage:disabled {
+    background-color: crimson;
+    cursor: not-allowed;
+}
+
+#mana-percentage:disabled {
+    background-color: cyan;
     cursor: not-allowed;
 }
 </style>

@@ -94,6 +94,10 @@ const getLevel = () => {
     return props.level;
 }
 
+const getTime = () => {
+    return intervalId
+}
+
 </script>
 
 <template>
