@@ -95,6 +95,10 @@
   flex-wrap: wrap;
 }
 
+.flex-fit {
+  flex: 1
+}
+
 .grid {
   display: grid;
 }
