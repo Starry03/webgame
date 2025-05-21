@@ -62,6 +62,15 @@ export class Vector2 {
         this.y /= mod
     }
 
+    direction(): Vector2 {
+        let newVector = new Vector2(this.x, this.y)
+        if (newVector.x < 0.5) newVector.x = 0
+        if (newVector.x > 0.5) newVector.x = 1
+        if (newVector.y < 0.5) newVector.y = 0
+        if (newVector.y > 0.5) newVector.y = 1
+        return newVector
+    }
+
     toString(): string {
         return `(${this.x}, ${this.y})`
     }

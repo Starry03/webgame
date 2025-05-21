@@ -44,7 +44,7 @@ import { prefixed } from '@/internal/cryptoutils'
 import { GameHandler } from '@/internal/GameHandler'
 import { AnimationType, Storage_e, type Character } from '@/internal/types'
 import StatusBar from '@/components/StatusBar.vue'
-import type { Entity } from '@/internal/Player'
+import type { Entity } from '@/internal/Entity'
 import { startGame } from '@/game_func'
 
 onMounted(() => {

@@ -1,4 +1,4 @@
-import type { Entity } from './Player'
+import type { Entity } from './Entity'
 import { getRoomPath } from '@/internal/mapLogic/engine/MapUtils.ts'
 import { AnimatedObject } from '@/internal/mapLogic/classes/AnimatedObject'
 import { NotAnimatedObject } from '@/internal/mapLogic/classes/NotAnimatedObject'

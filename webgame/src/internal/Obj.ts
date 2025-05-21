@@ -26,7 +26,7 @@ export class Obj {
     frameDelay: number = 1000 / this.FPS
     collidedObjects: Set<CollisionInfo>
     time: number
-    custom_properties: Record<string,any>
+    custom_properties: Record<string, any>
 
     constructor(
         canvas: HTMLCanvasElement,
@@ -35,7 +35,7 @@ export class Obj {
         isIdle = false,
         pos: Vector2,
         dim: Vector2,
-        custom_properties: Record<string,any> = {}
+        custom_properties: Record<string, any> = {},
     ) {
         this.canvas = canvas
         this.ctx = ctx
@@ -150,6 +150,14 @@ export class Obj {
 
     move(keyPressed: string | Set<string>, deltaTime: number) {}
 
+    canMove(dir: Vector2): boolean {
+        this.collidedObjects.forEach((collisionInfo: CollisionInfo) => {
+            const abs_dir = dir.direction()
+            if (collisionInfo.dir?.compare(abs_dir.x, abs_dir.y)) return false
+        })
+        return true
+    }
+
     isAnimationChanged() {
         return this.prevAnimation !== this.currentAnimation
     }
@@ -187,7 +195,6 @@ export class Obj {
     }
 
     enterCollision(collision: CollisionInfo) {
-        if (!collision.other?.isSolid) return
         for (const col of this.collidedObjects)
             if (col.other === collision.other) {
                 col.dir = collision.dir
@@ -198,11 +205,14 @@ export class Obj {
     }
 
     exitCollision(collision: CollisionInfo) {
-        for (const col of this.collidedObjects)
+        if (this.collidedObjects.size === 0) return
+        for (const col of this.collidedObjects) {
             if (col.other === collision.other) {
+                console.log("ciao")
                 this.collidedObjects.delete(col)
                 return
             }
+        }
     }
 
     handleCollision(collision: CollisionInfo) {}

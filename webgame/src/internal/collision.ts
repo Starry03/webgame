@@ -15,12 +15,11 @@ export class Collider {
                 const obj = objects[i]
                 const other = objects[j]
                 const collision_info: CollisionInfo | null = Collider.get_collision(obj, other)
-                if (collision_info) {
-                    console.log('Collision detected', collision_info.dir)
+                if (collision_info !== null) {
                     obj.enterCollision(collision_info)
                     other.enterCollision(collision_info)
                 } else {
-                    obj.exitCollision({ other, dir: null })
+                    obj.exitCollision({ other: other, dir: null })
                     other.exitCollision({ other: obj, dir: null })
                 }
             }

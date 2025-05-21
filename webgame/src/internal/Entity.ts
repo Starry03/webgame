@@ -49,7 +49,8 @@ export class Entity extends Obj {
             (keys.has('s') || keys.has('ArrowDown') ? 1 : 0) +
                 (keys.has('w') || keys.has('ArrowUp') ? -1 : 0),
         )
-        dir.normalize()
+        dir.normalize()        
+
         this.pos.x += dir.x * this.speed * deltaTime * 4
         this.pos.y += dir.y * this.speed * deltaTime * 4
         if (dir.compare(0, 0)) {

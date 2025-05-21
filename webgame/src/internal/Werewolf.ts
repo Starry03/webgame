@@ -1,4 +1,4 @@
-import { Entity } from '@/internal/Player'
+import { Entity } from '@/internal/Entity'
 
 export class Werewolf extends Entity {
   constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, speed: number, health: number, mana: number) {
