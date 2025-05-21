@@ -7,7 +7,7 @@ export type CollisionInfo = {
 }
 
 export class Collider {
-    static collision_treshold: number = 30
+    static collision_treshold: number = 10
 
     static update_collisions(objects: Obj[]) {
         for (let i = 0; i < objects.length - 1; i++) {
@@ -15,13 +15,11 @@ export class Collider {
                 const obj = objects[i]
                 const other = objects[j]
                 const collision_info: CollisionInfo | null = Collider.get_collision(obj, other)
-                if (collision_info !== null) {
+                if (collision_info !== null && collision_info.dir !== null) {
                     obj.enterCollision({ other: other, dir: collision_info.dir })
                     other.enterCollision({
                         other: obj,
-                        dir: collision_info.dir
-                            ? new Vector2(-collision_info.dir.x, -collision_info.dir.y)
-                            : null,
+                        dir: new Vector2(-collision_info.dir.x, -collision_info.dir.y),
                     })
                 } else {
                     obj.exitCollision({ other: other, dir: null })
@@ -54,12 +52,11 @@ export class Collider {
         if (!obj || !other) return null
         if (!obj.custom_properties['collidable'] || !other.custom_properties['collidable'])
             return null
-
         const pos_obj = obj.pos
         const dim_obj = obj.dim
         const pos_other = other.pos
         const dim_other = other.dim
-        const isCollision = this.collides(pos_obj, dim_obj, pos_other, dim_other, 0)
+        const isCollision = this.collides(pos_obj, dim_obj, pos_other, dim_other)
         if (!isCollision) return null
         const dir = new Vector2(
             pos_other.x + dim_other.x / 2 - (pos_obj.x + dim_obj.x / 2),

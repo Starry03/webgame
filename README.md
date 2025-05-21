@@ -35,7 +35,7 @@ npm run dev
 # temporary
 cd ./backend
 # .venv/bin/uvicorn
-uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+uvicorn app.main:app --reload --host=0.0.0.0
 ```
 
 ## Info
@@ -67,12 +67,6 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
   - atk 3%
   - def 3%
 - compass (default)
-
-### Shop
-
-- enchanments
-  - poisoning ( x seconds )
-  - paralysis ( 2 seconds )
 
 ### Enemies
 
@@ -150,7 +144,9 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 - altro
 
 ## Debug mappe
+
 Accesso ai tileset delle stanze: modificare settings.json relativo alle impostazioni utente
+
 ```sh
 "files.associations": {
   "*.tsx": "xml"
@@ -158,14 +154,14 @@ Accesso ai tileset delle stanze: modificare settings.json relativo alle impostaz
 ```
 
 Decoding di zlib+base64, usato nella creazione delle stanze
+
 ```sh
 npm install pako
 ```
 
-Se TypeScript continua a non riconoscere pako, è possibile installare i tipi: 
+Se TypeScript continua a non riconoscere pako, è possibile installare i tipi:
+
 ```sh
 npm install @types/pako
 
 ```
-
-

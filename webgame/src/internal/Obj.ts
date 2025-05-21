@@ -151,23 +151,26 @@ export class Obj {
     move(keyPressed: string | Set<string>, deltaTime: number) {}
 
     canMove(possible_position: Vector2, direction: Vector2): boolean {
+        let res = true
         const abs_dir = direction.direction()
-        const blocking_collisions = Array.from(this.collidedObjects.values()).filter(
-            (collision: CollisionInfo) => {
-                const isCollision = Collider.collides(
-                    possible_position,
-                    this.dim,
-                    collision.other.pos,
-                    collision.other.dim,
-                )
-                const abs_collision_dir = collision.dir?.direction()
-                if (abs_collision_dir === undefined) return false
-                const dir_match =
-                    abs_collision_dir.x !== abs_dir.x || abs_collision_dir.y !== abs_dir.y
-                return isCollision && dir_match
-            },
-        )
-        return blocking_collisions.length === 0
+
+        this.collidedObjects.forEach((collision: CollisionInfo) => {
+            const isCollision = Collider.collides(
+                possible_position,
+                this.dim,
+                collision.other.pos,
+                collision.other.dim,
+                0,
+            )
+            const abs_collision_dir = collision.dir?.direction()
+            const dir_match =
+                abs_collision_dir?.x === abs_dir.x || abs_collision_dir?.y === abs_dir.y
+            if (isCollision && dir_match) {
+                res = false
+                return
+            }
+        })
+        return res
     }
 
     isAnimationChanged() {
@@ -208,7 +211,7 @@ export class Obj {
 
     enterCollision(collision: CollisionInfo) {
         for (const col of this.collidedObjects)
-            if (col.other === collision.other) {
+            if (col.other === collision.other && col.dir !== collision.dir) {
                 col.dir = collision.dir
                 return
             }

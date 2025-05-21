@@ -72,6 +72,10 @@ export class Vector2 {
         return 0
     }
 
+    scalar(vector: Vector2): number {
+        return this.x * vector.x + this.y * vector.y
+    }
+
     direction(): Vector2 {
         let newVector = new Vector2(this.x, this.y)
         newVector.x = this.getDir(this.x)
