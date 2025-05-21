@@ -1,5 +1,5 @@
 import forge from 'node-forge'
-import { Storage_e } from './types'
+import { Storage_e, type User } from './types'
 import { buildEndpoint } from './apiService'
 
 export const PREFIX = 'aitdt'
@@ -20,14 +20,8 @@ export type Session = {
 }
 
 export class SessionUtils {
-    static isLogged(): boolean {
-        try {
-            AESUtils.read()
-            return !AESUtils.isExpired()
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        } catch (err) {
-            return false
-        }
+    static saveUser(user: User): void {
+        localStorage.setItem(prefixed(Storage_e.USER), JSON.stringify(user))
     }
 
     static logout(): void {
@@ -37,6 +31,7 @@ export class SessionUtils {
         localStorage.removeItem(prefixed(Storage_e.PRIVATE_KEY))
         localStorage.removeItem(prefixed(Storage_e.SERVER_PUBLIC_KEY))
         localStorage.removeItem(prefixed(Storage_e.SELECTED_CHARACTER))
+        localStorage.removeItem(prefixed(Storage_e.USER))
     }
 }
 
@@ -98,29 +93,25 @@ export class AESUtils {
         localStorage.setItem(prefixed(Storage_e.SESSION), JSON.stringify(session))
     }
 
-    static read(): { session: Session; token: Token } {
+    static read(): { token: Token; session: Session } {
         const token = localStorage.getItem(prefixed(Storage_e.TOKEN))
         const session = localStorage.getItem(prefixed(Storage_e.SESSION))
         if (!token || !session) {
             throw new Error('Session not found')
         }
-        return {
+        const session_ret: { token: Token; session: Session } = {
             token: JSON.parse(token),
             session: JSON.parse(session),
         }
+        AESUtils.isExpired(session_ret)
+        return session_ret
     }
 
-    static isExpired(): boolean {
-        try {
-            const session = AESUtils.read()
-            const expirationDate = new Date(session.session.expiration_date)
-            const currentDate = new Date()
-            return expirationDate < currentDate
-        }
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        catch (err) {
-            return false
-        }
+    /* TODO: check*/
+    static isExpired(session: { token: Token; session: Session }): void {
+        const expirationDate = new Date(session.session.expiration_date)
+        const currentDate = new Date()
+        if (expirationDate < currentDate) throw new Error('Session expired')
     }
 
     static encrypt(data: string): string {

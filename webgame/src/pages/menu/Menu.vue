@@ -20,14 +20,7 @@
                 >
                     Settings
                 </button>
-                <button
-                    v-if="!SessionUtils.isLogged()"
-                    class="button button-secondary b-shop"
-                    @click="$router.push('/login')"
-                >
-                    Login
-                </button>
-                <button v-else class="button button-secondary button-logout" @click="logout">
+                <button class="button button-secondary button-logout" @click="logout">
                     Logout
                 </button>
             </div>
@@ -58,7 +51,9 @@ function toggleMute() {
 }
 
 function redirectGameButton() {
-    if (!SessionUtils.isLogged()) {
+    try {
+        AESUtils.read()
+    } catch (e) {
         router.push('/login')
         return
     }
@@ -72,11 +67,15 @@ function redirectGameButton() {
 
 function playAudio() {
     const audio = document.getElementById('music')
-    audio?.play().catch((error) => console.log('Riproduzione bloccata:', error))
+    audio?.play().catch((error: any) => console.log('Riproduzione bloccata:', error))
 }
 
 onMounted(() => {
-    if (AESUtils.isExpired()) router.push('/login')
+    try {
+        AESUtils.read()
+    } catch (e) {
+        router.push('/login')
+    }
     document.addEventListener('mousemove', playAudio)
 })
 

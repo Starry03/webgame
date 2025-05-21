@@ -37,7 +37,9 @@
                         </button>
                     </div>
                     <Loader v-else />
-                    <p v-if="login_error !== null" class="font-small">{{ (login_error as Error).message }}</p>
+                    <p v-if="login_error !== null" class="font-small">
+                        {{ (login_error as Error).message }}
+                    </p>
                 </form>
             </div>
         </div>
@@ -47,10 +49,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { RSAUtils, AESUtils } from '@/internal/cryptoutils'
+import { RSAUtils, AESUtils, prefixed, SessionUtils } from '@/internal/cryptoutils'
 import { AuthService } from '@/internal/apiService'
 import type { Token, Session } from '@/internal/cryptoutils'
 import Loader from '@/components/Loader.vue'
+import type { User } from '@/internal/types'
 
 const isLogging = ref<boolean>(false)
 const username = ref<string>('')
@@ -82,6 +85,7 @@ async function login() {
     try {
         const req = await main_req(import.meta.env.VITE_LOGIN_PATH)
         await process_session(req)
+        SessionUtils.saveUser({ username: username.value } as User)
     } catch (error) {
         isLogging.value = false
         login_error.value = error as Error
@@ -95,6 +99,7 @@ async function register() {
     try {
         const req = await main_req(import.meta.env.VITE_REGISTER_PATH)
         await process_session(req)
+        SessionUtils.saveUser({ username: username.value } as User)
     } catch (error) {
         isLogging.value = false
         login_error.value = error as Error

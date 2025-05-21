@@ -10,6 +10,10 @@ export type Character = {
     playable: boolean
 }
 
+export type User = {
+    username: string
+}
+
 export enum Storage_e {
     PRIVATE_KEY = 'private_key',
     PUBLIC_KEY = 'public_key',
@@ -17,6 +21,7 @@ export enum Storage_e {
     SERVER_PUBLIC_KEY = 'server_public_key',
     SESSION = 'session',
     TOKEN = 'token',
+    USER = 'user',
 }
 
 export enum AttackType {

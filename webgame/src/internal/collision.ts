@@ -15,7 +15,7 @@ export class Collider {
                 const obj = objects[i]
                 const other = objects[j]
                 const collision_info: CollisionInfo = Collider.get_collision(obj, other)
-                if (collision_info.other || collision_info.dir) {
+                if ( collision_info.other || collision_info.dir) {
                     obj.enterCollision({ other: other, dir: collision_info.dir })
                     other.enterCollision({ other: obj, dir: collision_info.dir })
                 } else {
