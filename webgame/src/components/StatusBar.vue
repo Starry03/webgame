@@ -2,6 +2,7 @@
 import ProgressBar from './ProgressBar.vue'
 import { computed, defineProps, type Ref } from 'vue'
 import Filler from './Filler.vue'
+import { Storage_e } from '@/internal/types'
 
 const props = defineProps({
     hp: {
@@ -56,12 +57,15 @@ const manaPercentage = computed(() => {
     const percentage = (props.mana / props.maxMana) * 100 || 0
     return isNaN(percentage) || percentage < 0 ? 0 : percentage
 })
+
+const storedUser = localStorage.getItem(Storage_e.USER)
+const username = storedUser ? JSON.parse(storedUser)?.username ?? 'Player' : 'Player'
 </script>
 
 <template>
     <div class="status-bar flex flex-col gap-mid">
         <div class="player-header">
-            <span class="player-name">Player Name</span>
+            <span class="player-name">{{ username }}</span>
             <span class="player-level">Level: {{ props.level }}</span>
         </div>
         <div class="bars-and-cooldowns">
@@ -69,12 +73,12 @@ const manaPercentage = computed(() => {
                 <div class="bar-container flex items-center gap-small">
                     <span>HP:</span>
                     <ProgressBar :progress="healthPercentage" color="crimson" />
-                    <span>{{ props.hp }}/{{ props.maxHealth }}</span>
+                    <span class="hp-value">{{ props.hp }}/{{ props.maxHealth }}</span>
                 </div>
                 <div class="bar-container flex items-center gap-small">
                     <span>MP:</span>
                     <ProgressBar :progress="manaPercentage" color="cyan" class="mana-bar" />
-                    <span>{{ props.mana }}/{{ props.maxMana }}</span>
+                    <span class="mp-value">{{ props.mana }}/{{ props.maxMana }}</span>
                 </div>
             </div>
             <div class="cooldown-container">
@@ -107,12 +111,27 @@ const manaPercentage = computed(() => {
     margin-bottom: 0.5rem;
 }
 
+.player-name {
+    color: orange;
+}
+
 .bars-and-cooldowns {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
     width: 100%;
     gap: 1rem;
+}
+
+span{
+    font-family: 'Press Start 2P', cursive;
+    font-size: var(--font-small);
+}
+
+.hp-value,
+.mp-value {
+    font-size: 0.5rem;
+    color: #ccc;
 }
 
 .bars {

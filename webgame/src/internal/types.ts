@@ -21,7 +21,7 @@ export enum Storage_e {
     SERVER_PUBLIC_KEY = 'server_public_key',
     SESSION = 'session',
     TOKEN = 'token',
-    USER = 'user',
+    USER = 'aitdt_user',
 }
 
 export enum AttackType {
