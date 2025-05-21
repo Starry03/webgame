@@ -3,6 +3,7 @@ import { NotAnimatedObject } from '@/internal/mapLogic/classes/NotAnimatedObject
 import {AnimationType, Vector2} from '@/internal/types.ts';
 import * as pako from 'pako';
 import {Door} from '@/internal/mapLogic/objects/door/Door'
+import type { Obj } from '@/internal/Obj';
 
 export function getRoomPath(room: string): string {
     if (room == 'room1') {
@@ -741,7 +742,7 @@ export function populateRoom3 (list_objects: (NotAnimatedObject|AnimatedObject)[
     }
 }
 
-export function populateRoom4 (list_objects: (NotAnimatedObject|AnimatedObject)[]) {
+export function populateRoom4 (list_objects: (Obj)[]) {
     for (const obj of list_objects) {
         let frame_paths: Record<AnimationType, string[]>;
         if (obj.name == 'rock11') {
@@ -997,6 +998,7 @@ export function populateRoom4 (list_objects: (NotAnimatedObject|AnimatedObject)[
                 opening: [],
                 closing: []
             }
+            console.log(frame_paths)
             obj.setFramePaths(frame_paths);
         }
         /*else {

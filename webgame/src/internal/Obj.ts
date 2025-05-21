@@ -27,6 +27,7 @@ export class Obj {
     collidedObjects: Set<CollisionInfo>
     time: number
     custom_properties: Record<string, any>
+    name: string
 
     constructor(
         canvas: HTMLCanvasElement,
@@ -36,6 +37,7 @@ export class Obj {
         pos: Vector2,
         dim: Vector2,
         custom_properties: Record<string, any> = {},
+        name: string,
     ) {
         this.canvas = canvas
         this.ctx = ctx
@@ -58,7 +60,8 @@ export class Obj {
         this.isSolid = true
         this.collidedObjects = new Set<CollisionInfo>()
         this.custom_properties = custom_properties
-        console.log(this.custom_properties)
+        this.name = name
+        if (this.name == 'finalStructure') console.log(this)
     }
 
     preloadImages() {
@@ -71,6 +74,7 @@ export class Obj {
                 const promise = new Promise<void>((resolve, reject) => {
                     img.src = path
                     img.onerror = () => {
+                        console.debug('preload', this.name)
                         reject(`${path} failed to load`)
                     }
                     img.onload = () => {
@@ -216,7 +220,6 @@ export class Obj {
                 return
             }
         this.collidedObjects.add(collision)
-        this.handleCollision(collision)
     }
 
     exitCollision(collision: CollisionInfo) {
@@ -228,8 +231,6 @@ export class Obj {
             }
         }
     }
-
-    handleCollision(collision: CollisionInfo) {}
 
     onInteract(other: Obj) {}
 

@@ -50,6 +50,8 @@ export class Collider {
         raycast: boolean = false,
     ): CollisionInfo | null {
         if (!obj || !other) return null
+        if (obj.custom_properties === undefined || other.custom_properties === undefined)
+            return null
         if (!obj.custom_properties['collidable'] || !other.custom_properties['collidable'])
             return null
         const pos_obj = obj.pos

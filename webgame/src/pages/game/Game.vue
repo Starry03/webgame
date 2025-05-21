@@ -8,7 +8,7 @@
             <h1 class="title">Awakening in the Dark Tower</h1>
             <button class="button button-secondary button-mute" @click="toggleMute">🔊</button>
         </div>
-        <div v-if="isReady" class="flex flex-column">
+        <div v-if="isReady" class="flex flex-column flex-fit">
             <StatusBar
                 :health="80"
                 :maxHealth="100"
