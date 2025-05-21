@@ -40,7 +40,6 @@ export class FinalStructure extends AnimatedObject {
         for (const obj of layer_objects) {
             console.log(obj.name)
             if (obj.name === 'ladder') {
-                obj.y = obj.y - obj.height
                 const isIdle: boolean = true
                 console.log("ladder trovata")
                 return new Ladder(
@@ -86,7 +85,7 @@ export class FinalStructure extends AnimatedObject {
             console.log(obj.name)
             if (obj.name === 'accessDoor') {
                 console.log("access_door trovata")
-                obj.y = obj.y - obj.height
+                //obj.y = obj.y - obj.height
                 const custom_properties: Record<string, string> = extractCustomProperties(obj)
                 const isIdle: boolean = true
                 const access_door = new AccessDoor(
