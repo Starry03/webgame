@@ -26,6 +26,7 @@ export class Obj {
     frameDelay: number = 1000 / this.FPS
     collidedObjects: Set<CollisionInfo>
     time: number
+    custom_properties: Record<string,any>
 
     constructor(
         canvas: HTMLCanvasElement,
@@ -34,6 +35,7 @@ export class Obj {
         isIdle = false,
         pos: Vector2,
         dim: Vector2,
+        custom_properties: Record<string,any> = {}
     ) {
         this.canvas = canvas
         this.ctx = ctx
@@ -55,6 +57,8 @@ export class Obj {
         this.isInteractable = false
         this.isSolid = true
         this.collidedObjects = new Set<CollisionInfo>()
+        this.custom_properties = custom_properties
+        console.log(this.custom_properties)
     }
 
     preloadImages() {

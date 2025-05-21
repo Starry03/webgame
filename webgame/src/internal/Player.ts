@@ -21,7 +21,7 @@ export class Entity extends Obj {
         pos: Vector2 = new Vector2(50, 50),
         dim: Vector2 = new Vector2(48, 48),
     ) {
-        super(canvas, ctx, AnimationType.IDLE, true, pos, dim)
+        super(canvas, ctx, AnimationType.IDLE, true, pos, dim, { collidable: true })
         this.currentAnimation = AnimationType.IDLE
         this.speed = speed
         this.health = health

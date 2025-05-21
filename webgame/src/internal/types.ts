@@ -56,10 +56,10 @@ export class Vector2 {
     }
 
     normalize(): void {
-        const length = Math.sqrt(this.x ** 2 + this.y ** 2)
-        if (length === 0) return
-        this.x /= length
-        this.y /= length
+        const mod = Math.sqrt(this.x ** 2 + this.y ** 2)
+        if (mod === 0) return
+        this.x /= mod
+        this.y /= mod
     }
 
     toString(): string {
