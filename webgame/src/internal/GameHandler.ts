@@ -5,6 +5,8 @@ import { NotAnimatedObject } from '@/internal/mapLogic/classes/NotAnimatedObject
 import { loadMapData } from '@/internal/mapLogic/engine/utils/BackgroundLayerUtils.ts'
 import { loadMapObjects } from '@/internal/mapLogic/engine/utils/ObjectLayerUtils.ts'
 import type { Obj } from './Obj'
+import { Vector2 } from './types'
+import { Collider } from './collision'
 
 export class GameHandler {
     player: Entity
@@ -15,10 +17,11 @@ export class GameHandler {
     lastTimeStamp: number
     currentRoomPath: string
     currentBackgroundRoom: any
-    currentRoomObjects: (NotAnimatedObject | AnimatedObject)[]
+    currentRoomObjects: (Obj)[]
+    baseMapDim: Vector2 = new Vector2(800, 416);
+    gameObjects: Obj[]
 
     constructor(player: Entity, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
-        console.log(player)
         this.ctx = ctx
         this.canvas = canvas
         this.player = player
@@ -31,6 +34,7 @@ export class GameHandler {
         this.currentBackgroundRoom = {}
         this.currentRoomObjects = []
         this.bg_image = null
+        this.gameObjects = []
 
         // dati mappa = loadMapData(this.currentRoomPath, this.canvas, this.ctx)
 
@@ -55,23 +59,23 @@ export class GameHandler {
             this.ctx.drawImage(this.bg_image, 0, 0, this.canvas.width, this.canvas.height)
 
         this.ctx.restore()
-        this.currentRoomObjects.forEach((obj: Obj) => {
-            // if da togliere prima o poi
-            if (obj.selectedFrames !== undefined) obj.update(timestamp, deltaTime)
-        })
         this.player.handleInput(this.keys, deltaTime)
-        this.player.update(timestamp, deltaTime)
+        Collider.update_collisions(this.gameObjects)
+        this.gameObjects.forEach((obj: Obj) => {
+            if (obj.selectedFrames == undefined) return
+            obj.update(timestamp, deltaTime)
+        })
         requestAnimationFrame(this.gameLoop)
     }
 
     async initialize() {
         this.currentRoomPath = getRoomPath('room4')
         this.bg_image = await loadMapData(this.currentRoomPath, this.canvas, this.ctx)
-        console.log(this.bg_image)
         this.currentRoomObjects = await loadMapObjects('room4',this.currentRoomPath, this.canvas, this.ctx)
         this.currentRoomObjects.forEach((obj: Obj) => {
             obj.preloadImages()
             obj.idle(true)
         })
+        this.gameObjects = [...this.currentRoomObjects, this.player]
     }
 }

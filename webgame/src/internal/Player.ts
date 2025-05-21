@@ -19,7 +19,7 @@ export class Entity extends Obj {
         health: number,
         mana: number,
         pos: Vector2 = new Vector2(50, 50),
-        dim: Vector2 = new Vector2(100, 100),
+        dim: Vector2 = new Vector2(48, 48),
     ) {
         super(canvas, ctx, AnimationType.IDLE, true, pos, dim)
         this.currentAnimation = AnimationType.IDLE

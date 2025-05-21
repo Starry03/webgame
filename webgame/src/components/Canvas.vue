@@ -54,16 +54,9 @@ onMounted(() => {
     startGame(canvas)
 })
 
-const window_width = ref(window.innerWidth)
-const window_height = ref(window.innerHeight)
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 const gameHandler = ref<GameHandler | null>()
 const player = ref<any>(null)
-
-const handle_resize = () => {
-    window_width.value = window.innerWidth
-    window_height.value = window.innerHeight
-}
 
 const mappedPlayer = computed(() => {
     if (!player.value) return null
@@ -83,10 +76,8 @@ const mappedPlayer = computed(() => {
     }
 })
 
-console.log('Dati mappati per StatusBar:', mappedPlayer.value)
-
 onMounted(async () => {
-    window.addEventListener('resize', handle_resize)
+    // window.addEventListener('resize', handle_resize)
     const character = localStorage.getItem(prefixed(Storage_e.SELECTED_CHARACTER))
     const characterObject: Character = JSON.parse(character || '{}')
 
@@ -103,7 +94,6 @@ onMounted(async () => {
 
     switch (characterObject.name) {
         case 'wizard':
-            console.log('Creazione del Mage...')
             player.value = reactive(
                 new Mage(
                     canvas,
@@ -115,7 +105,6 @@ onMounted(async () => {
             )
             break
         case 'warrior':
-            console.log('Creazione del Samurai...')
             player.value = reactive(
                 new Samurai(
                     canvas,
@@ -127,7 +116,6 @@ onMounted(async () => {
             )
             break
         case 'thief':
-            console.log('Creazione del Thief...')
             player.value = reactive(
                 new Thief(
                     canvas,
@@ -142,8 +130,6 @@ onMounted(async () => {
             console.error('Invalid character type: ', characterObject.name)
     }
 
-    console.log('Player inizializzato:', player.value)
-
     if (!player.value) {
         console.error('Player is null')
         return
@@ -154,7 +140,7 @@ onMounted(async () => {
 })
 
 onUnmounted(() => {
-    window.removeEventListener('resize', handle_resize)
+    // window.removeEventListener('resize', handle_resize)
 })
 
 const isBossRoom = ref(false) 
