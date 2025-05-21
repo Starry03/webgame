@@ -127,10 +127,6 @@ export class Obj {
             if (this.facingDirection.x < 0)
                 this.drawFlipped(frame, this.pos.x, this.pos.y, this.dim.x, this.dim.y)
             else ctx.drawImage(frame, this.pos.x, this.pos.y, this.dim.x, this.dim.y)
-            ctx.rect(this.pos.x, this.pos.y, this.dim.x, this.dim.y)
-            ctx.strokeStyle = this.collidedObjects.size > 0 ? 'red' : 'blue'
-            ctx.lineWidth = 1
-            ctx.stroke()
             ctx.restore()
         }
     }
