@@ -1,4 +1,4 @@
-import type { CollisionInfo } from './collision'
+import { Collider, type CollisionInfo } from './collision'
 import { AnimationType, Vector2 } from './types'
 import { type Ref } from 'vue'
 
@@ -150,12 +150,24 @@ export class Obj {
 
     move(keyPressed: string | Set<string>, deltaTime: number) {}
 
-    canMove(dir: Vector2): boolean {
-        this.collidedObjects.forEach((collisionInfo: CollisionInfo) => {
-            const abs_dir = dir.direction()
-            if (collisionInfo.dir?.compare(abs_dir.x, abs_dir.y)) return false
-        })
-        return true
+    canMove(possible_position: Vector2, direction: Vector2): boolean {
+        const abs_dir = direction.direction()
+        const blocking_collisions = Array.from(this.collidedObjects.values()).filter(
+            (collision: CollisionInfo) => {
+                const isCollision = Collider.collides(
+                    possible_position,
+                    this.dim,
+                    collision.other.pos,
+                    collision.other.dim,
+                )
+                const abs_collision_dir = collision.dir?.direction()
+                if (abs_collision_dir === undefined) return false
+                const dir_match =
+                    abs_collision_dir.x !== abs_dir.x || abs_collision_dir.y !== abs_dir.y
+                return isCollision && dir_match
+            },
+        )
+        return blocking_collisions.length === 0
     }
 
     isAnimationChanged() {
@@ -208,7 +220,6 @@ export class Obj {
         if (this.collidedObjects.size === 0) return
         for (const col of this.collidedObjects) {
             if (col.other === collision.other) {
-                console.log("ciao")
                 this.collidedObjects.delete(col)
                 return
             }

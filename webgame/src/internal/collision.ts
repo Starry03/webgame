@@ -2,12 +2,12 @@ import { Obj } from './Obj'
 import { Vector2 } from './types'
 
 export type CollisionInfo = {
-    other: Obj | null
+    other: Obj
     dir: Vector2 | null
 }
 
 export class Collider {
-    static collision_treshold: number = 10
+    static collision_treshold: number = 30
 
     static update_collisions(objects: Obj[]) {
         for (let i = 0; i < objects.length - 1; i++) {
@@ -16,14 +16,34 @@ export class Collider {
                 const other = objects[j]
                 const collision_info: CollisionInfo | null = Collider.get_collision(obj, other)
                 if (collision_info !== null) {
-                    obj.enterCollision(collision_info)
-                    other.enterCollision(collision_info)
+                    obj.enterCollision({ other: other, dir: collision_info.dir })
+                    other.enterCollision({
+                        other: obj,
+                        dir: collision_info.dir
+                            ? new Vector2(-collision_info.dir.x, -collision_info.dir.y)
+                            : null,
+                    })
                 } else {
                     obj.exitCollision({ other: other, dir: null })
                     other.exitCollision({ other: obj, dir: null })
                 }
             }
         }
+    }
+
+    public static collides(
+        pos_obj: Vector2,
+        dim_obj: Vector2,
+        pos_other: Vector2,
+        dim_other: Vector2,
+        threshold: number = Collider.collision_treshold,
+    ): boolean {
+        return (
+            pos_obj.x + dim_obj.x > pos_other.x - threshold &&
+            pos_obj.x < pos_other.x + dim_other.x + threshold &&
+            pos_obj.y + dim_obj.y > pos_other.y - threshold &&
+            pos_obj.y < pos_other.y + dim_other.y + threshold
+        )
     }
 
     private static get_collision_info(
@@ -39,15 +59,11 @@ export class Collider {
         const dim_obj = obj.dim
         const pos_other = other.pos
         const dim_other = other.dim
-        const isCollision =
-            pos_obj.x + dim_obj.x > pos_other.x &&
-            pos_obj.x < pos_other.x + dim_other.x &&
-            pos_obj.y + dim_obj.y > pos_other.y &&
-            pos_obj.y < pos_other.y + dim_other.y
+        const isCollision = this.collides(pos_obj, dim_obj, pos_other, dim_other, 0)
         if (!isCollision) return null
         const dir = new Vector2(
-            pos_obj.x + dim_obj.x / 2 - (pos_other.x + dim_other.x / 2),
-            pos_obj.y + dim_obj.y / 2 - (pos_other.y + dim_other.y / 2),
+            pos_other.x + dim_other.x / 2 - (pos_obj.x + dim_obj.x / 2),
+            pos_other.y + dim_other.y / 2 - (pos_obj.y + dim_obj.y / 2),
         )
         dir.normalize()
         return { other, dir: dir }

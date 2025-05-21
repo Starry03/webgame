@@ -55,19 +55,27 @@ export class Vector2 {
         return this.x === x && this.y === y
     }
 
+    magnitude(): number {
+        return Math.sqrt(this.x ** 2 + this.y ** 2)
+    }
+
     normalize(): void {
-        const mod = Math.sqrt(this.x ** 2 + this.y ** 2)
+        const mod = this.magnitude()
         if (mod === 0) return
         this.x /= mod
         this.y /= mod
     }
 
+    getDir(n: number): number {
+        if (n > 0) return 1
+        if (n < 0) return -1
+        return 0
+    }
+
     direction(): Vector2 {
         let newVector = new Vector2(this.x, this.y)
-        if (newVector.x < 0.5) newVector.x = 0
-        if (newVector.x > 0.5) newVector.x = 1
-        if (newVector.y < 0.5) newVector.y = 0
-        if (newVector.y > 0.5) newVector.y = 1
+        newVector.x = this.getDir(this.x)
+        newVector.y = this.getDir(this.y)
         return newVector
     }
 

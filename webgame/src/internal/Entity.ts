@@ -49,10 +49,17 @@ export class Entity extends Obj {
             (keys.has('s') || keys.has('ArrowDown') ? 1 : 0) +
                 (keys.has('w') || keys.has('ArrowUp') ? -1 : 0),
         )
-        dir.normalize()        
 
-        this.pos.x += dir.x * this.speed * deltaTime * 4
-        this.pos.y += dir.y * this.speed * deltaTime * 4
+        dir.normalize()
+
+        const possible_position = new Vector2(
+            this.pos.x + dir.x * this.speed * deltaTime * 4,
+            this.pos.y + dir.y * this.speed * deltaTime * 4,
+        )
+
+        if (!dir.direction().compare(0, 0) && !this.canMove(possible_position, dir)) return
+
+        this.pos = possible_position
         if (dir.compare(0, 0)) {
             this.idle()
             return
