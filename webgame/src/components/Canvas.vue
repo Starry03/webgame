@@ -3,7 +3,7 @@
         <div id="player-status">
             <StatusBar
                 v-if="mappedPlayer"
-                :hp="mappedPlayer.hp"
+                :health="mappedPlayer.health"
                 :max-health="mappedPlayer.maxHealth"
                 :mana="mappedPlayer.mana"
                 :max-mana="mappedPlayer.maxMana"
@@ -18,7 +18,7 @@
         <div id="boss-status" v-if="isBossRoom">
             <StatusBar
                 v-if="mappedBoss"
-                :hp="mappedBoss.hp"
+                :health="mappedBoss.health"
                 :max-health="mappedBoss.maxHealth"
                 :mana="mappedBoss.mana"
                 :max-mana="mappedBoss.maxMana"
@@ -44,7 +44,7 @@ import { prefixed } from '@/internal/cryptoutils'
 import { GameHandler } from '@/internal/GameHandler'
 import { AnimationType, Storage_e, type Character } from '@/internal/types'
 import StatusBar from '@/components/StatusBar.vue'
-import type { Entity } from '@/internal/Player'
+import type { Entity } from '@/internal/Entity'
 import { startGame } from '@/game_func'
 
 onMounted(() => {
@@ -64,8 +64,8 @@ const mappedPlayer = computed(() => {
     const player_value: Reactive<Entity> = player.value
 
     return {
-        hp: player.value.hp,
-        maxHealth: player.value.hp,
+        health: player.value.health,
+        maxHealth: player.value.maxHealth,
         mana: player.value.mana,
         maxMana: player.value.mana,
         level: 1,
@@ -150,7 +150,7 @@ const mappedBoss = computed(() => {
     if (!boss.value) return null
 
     return {
-        hp: boss.value.hp,
+        health: boss.value.health,
         maxHealth: boss.value.maxHealth,
         mana: boss.value.mana,
         maxMana: boss.value.maxMana,
@@ -164,7 +164,7 @@ const mappedBoss = computed(() => {
 
 function initializeBoss() {
     boss.value = reactive({
-        hp: 1000,
+        health: 1000,
         maxHealth: 1000,
         mana: 800,
         maxMana: 800,

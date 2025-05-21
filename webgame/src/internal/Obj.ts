@@ -1,4 +1,4 @@
-import type { CollisionInfo } from './collision'
+import { Collider, type CollisionInfo } from './collision'
 import { AnimationType, Vector2 } from './types'
 import { type Ref } from 'vue'
 
@@ -26,6 +26,7 @@ export class Obj {
     frameDelay: number = 1000 / this.FPS
     collidedObjects: Set<CollisionInfo>
     time: number
+    custom_properties: Record<string, any>
 
     constructor(
         canvas: HTMLCanvasElement,
@@ -34,6 +35,7 @@ export class Obj {
         isIdle = false,
         pos: Vector2,
         dim: Vector2,
+        custom_properties: Record<string, any> = {},
     ) {
         this.canvas = canvas
         this.ctx = ctx
@@ -55,6 +57,8 @@ export class Obj {
         this.isInteractable = false
         this.isSolid = true
         this.collidedObjects = new Set<CollisionInfo>()
+        this.custom_properties = custom_properties
+        console.log(this.custom_properties)
     }
 
     preloadImages() {
@@ -146,6 +150,29 @@ export class Obj {
 
     move(keyPressed: string | Set<string>, deltaTime: number) {}
 
+    canMove(possible_position: Vector2, direction: Vector2): boolean {
+        let res = true
+        const abs_dir = direction.direction()
+
+        this.collidedObjects.forEach((collision: CollisionInfo) => {
+            const isCollision = Collider.collides(
+                possible_position,
+                this.dim,
+                collision.other.pos,
+                collision.other.dim,
+                0,
+            )
+            const abs_collision_dir = collision.dir?.direction()
+            const dir_match =
+                abs_collision_dir?.x === abs_dir.x || abs_collision_dir?.y === abs_dir.y
+            if (isCollision && dir_match) {
+                res = false
+                return
+            }
+        })
+        return res
+    }
+
     isAnimationChanged() {
         return this.prevAnimation !== this.currentAnimation
     }
@@ -183,9 +210,8 @@ export class Obj {
     }
 
     enterCollision(collision: CollisionInfo) {
-        if (!collision.other?.isSolid) return
         for (const col of this.collidedObjects)
-            if (col.other === collision.other) {
+            if (col.other === collision.other && col.dir !== collision.dir) {
                 col.dir = collision.dir
                 return
             }
@@ -194,11 +220,13 @@ export class Obj {
     }
 
     exitCollision(collision: CollisionInfo) {
-        for (const col of this.collidedObjects)
+        if (this.collidedObjects.size === 0) return
+        for (const col of this.collidedObjects) {
             if (col.other === collision.other) {
                 this.collidedObjects.delete(col)
                 return
             }
+        }
     }
 
     handleCollision(collision: CollisionInfo) {}

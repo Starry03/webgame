@@ -55,11 +55,32 @@ export class Vector2 {
         return this.x === x && this.y === y
     }
 
+    magnitude(): number {
+        return Math.sqrt(this.x ** 2 + this.y ** 2)
+    }
+
     normalize(): void {
-        const length = Math.sqrt(this.x ** 2 + this.y ** 2)
-        if (length === 0) return
-        this.x /= length
-        this.y /= length
+        const mod = this.magnitude()
+        if (mod === 0) return
+        this.x /= mod
+        this.y /= mod
+    }
+
+    getDir(n: number): number {
+        if (n > 0) return 1
+        if (n < 0) return -1
+        return 0
+    }
+
+    scalar(vector: Vector2): number {
+        return this.x * vector.x + this.y * vector.y
+    }
+
+    direction(): Vector2 {
+        let newVector = new Vector2(this.x, this.y)
+        newVector.x = this.getDir(this.x)
+        newVector.y = this.getDir(this.y)
+        return newVector
     }
 
     toString(): string {

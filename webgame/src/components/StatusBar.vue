@@ -5,15 +5,13 @@ import Filler from './Filler.vue'
 import { Storage_e } from '@/internal/types'
 
 const props = defineProps({
-    hp: {
+    health: {
         type: Number,
         required: true,
-        default: 1000,
     },
     maxHealth: {
         type: Number,
         required: true,
-        default: 1000,
     },
     mana: {
         type: Number,
@@ -71,7 +69,7 @@ onUnmounted(() => {
 
 
 const healthPercentage = computed(() => {
-    const percentage = (props.hp / props.maxHealth) * 100 || 0
+    const percentage = (props.health / props.maxHealth) * 100 || 0
     return isNaN(percentage) || percentage < 0 ? 0 : percentage
 })
 const manaPercentage = computed(() => {
@@ -112,7 +110,7 @@ const getTime = () => {
                 <div class="bar-container flex items-center gap-small">
                     <span>HP:</span>
                     <ProgressBar :progress="healthPercentage" color="crimson" />
-                    <span class="hp-value">{{ props.hp }}/{{ props.maxHealth }}</span>
+                    <span class="hp-value">{{ props.health }}/{{ props.maxHealth }}</span>
                 </div>
                 <div class="bar-container flex items-center gap-small">
                     <span>MP:</span>

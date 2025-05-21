@@ -1,4 +1,4 @@
-import type { Entity } from './Player'
+import type { Entity } from './Entity'
 import { getRoomPath } from '@/internal/mapLogic/engine/MapUtils.ts'
 import { AnimatedObject } from '@/internal/mapLogic/classes/AnimatedObject'
 import { NotAnimatedObject } from '@/internal/mapLogic/classes/NotAnimatedObject'
@@ -17,8 +17,8 @@ export class GameHandler {
     lastTimeStamp: number
     currentRoomPath: string
     currentBackgroundRoom: any
-    currentRoomObjects: (Obj)[]
-    baseMapDim: Vector2 = new Vector2(800, 416);
+    currentRoomObjects: Obj[]
+    baseMapDim: Vector2 = new Vector2(800, 416)
     gameObjects: Obj[]
 
     constructor(player: Entity, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
@@ -71,7 +71,19 @@ export class GameHandler {
     async initialize() {
         this.currentRoomPath = getRoomPath('room4')
         this.bg_image = await loadMapData(this.currentRoomPath, this.canvas, this.ctx)
-        this.currentRoomObjects = await loadMapObjects('room4',this.currentRoomPath, this.canvas, this.ctx)
+        this.currentRoomObjects = (await loadMapObjects(
+            'room4',
+            this.currentRoomPath,
+            this.canvas,
+            this.ctx,
+        )) as Obj[]
+        this.currentRoomObjects.sort((a: Obj, b: Obj) => {
+            const customA = a.custom_properties
+            const customB = b.custom_properties
+            if (customA['type'] === 'door') return 1
+            else if (customB['type'] === 'door') return -1
+            return 0
+        })
         this.currentRoomObjects.forEach((obj: Obj) => {
             obj.preloadImages()
             obj.idle(true)
