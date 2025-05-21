@@ -297,6 +297,11 @@
                          "value":false
                         }, 
                         {
+                         "name":"interactable",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
                          "name":"isOpen",
                          "type":"bool",
                          "value":false
@@ -526,14 +531,14 @@
                          "value":"enemiesCleared"
                         }, 
                         {
+                         "name":"interactable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"opensWhat",
                          "type":"string",
                          "value":"switchRoomStructure"
-                        }, 
-                        {
-                         "name":"spriteName",
-                         "type":"string",
-                         "value":"[percorsoAnimazione}"
                         }, 
                         {
                          "name":"type",
@@ -562,6 +567,11 @@
                          "name":"animating",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"interactable",
+                         "type":"bool",
+                         "value":true
                         }, 
                         {
                          "name":"isOpen",

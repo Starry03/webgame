@@ -22,38 +22,42 @@ export function loadObjectsFromMap(
     room_name: string,
 ): (NotAnimatedObject | AnimatedObject)[] {
     const list_objects: (NotAnimatedObject | AnimatedObject)[] = []
+    const all_tiledObjects: TiledObject[] = []
     jsonMap.layers.forEach((layer) => {
         if (layer.type === 'objectgroup' && layer.objects) {
-            layer.objects.forEach((object) => {
-                object.y = object.y - object.height
-                const isIdle: boolean = true
-                const pos = new Vector2(object.x, object.y)
-                const dim: Vector2 = new Vector2(object.width, object.height)
-                if (object.type === 'AnimatedObject') {
-                    let custom_properties: Record<string, string>
-                    if (object.name == 'entranceDoor') {
-                        custom_properties = extractCustomProperties(object)
-                        // console.log('loadObjects - entranceDoor')
-                        list_objects.push(
-                            new EntranceDoor(
-                                canvas,
-                                ctx,
-                                AnimationType.IDLE,
-                                isIdle,
-                                pos,
-                                dim,
-                                object.name,
-                                object.x,
-                                object.y,
-                                object.width,
-                                object.height,
-                                custom_properties,
-                            ),
+            layer.objects.forEach((object: TiledObject) => {
+                all_tiledObjects.push(object)
+            })
+        }
+    })
+    for (const object of all_tiledObjects) {
+        object.y = object.y - object.height;
+        const isIdle: boolean = true
+        const pos = new Vector2(object.x, object.y)
+        const dim: Vector2 = new Vector2(object.width, object.height)
+        if (object.type === 'AnimatedObject') {
+            let custom_properties: Record<string, string>
+                if (object.name == 'entranceDoor') {
+                    custom_properties = extractCustomProperties(object)
+                    // console.log('loadObjects - entranceDoor')
+                    list_objects.push(
+                        new EntranceDoor(
+                            canvas,
+                            ctx,
+                            AnimationType.IDLE,
+                            isIdle,
+                            pos,
+                            dim,
+                            object.name,
+                            object.x,
+                            object.y,
+                            object.width,
+                            object.height,
+                            custom_properties),
                         )
-                    } else if (
-                        object.name == 'switchRoomDoor' &&
-                        !['room3', 'room4'].includes(room_name)
-                    ) {
+                }
+                else if (
+                    object.name == 'switchRoomDoor' && !['room3', 'room4'].includes(room_name)) {
                         // console.log('loadObjects - switchRoomDoor')
                         custom_properties = extractCustomProperties(object)
                         list_objects.push(
@@ -72,45 +76,13 @@ export function loadObjectsFromMap(
                                 custom_properties,
                             ),
                         )
-                    } else if (object.name == 'switchStructure') {
-                        // console.log('switchStructure')
-                        const special_wall: SpecialWall = SwitchStructure.getSpecialWall(
-                            layer.objects,
-                            canvas,
-                            ctx,
-                        )
-                        const switch_room_door: SwitchRoomDoor = SwitchStructure.getSwitchRoomDoor(
-                            layer.objects,
-                            canvas,
-                            ctx,
-                        )
-                        list_objects.push(
-                            new SwitchStructure(
-                                canvas,
-                                ctx,
-                                AnimationType.IDLE,
-                                isIdle,
-                                pos,
-                                dim,
-                                object.name,
-                                object.x,
-                                object.y,
-                                object.width,
-                                object.height,
-                                special_wall,
-                                switch_room_door,
-                            ),
-                        )
-                    }
-                    else if (object.name == 'finalStructure') {
-                        console.log('finalStructure')
-                        const ladder: Ladder = FinalStructure.getLadder(layer.objects, canvas, ctx)
-                        const access_door: AccessDoor = FinalStructure.getAccessDoor(
-                            layer.objects,
-                            canvas,
-                            ctx,
-                        )
-                        return new FinalStructure(
+                }
+                else if (object.name == 'switchStructure') {
+                    // console.log('switchStructure')
+                    custom_properties = extractCustomProperties(object)
+                    SwitchStructure.populateCustomProperties(custom_properties, all_tiledObjects, canvas, ctx)
+                    list_objects.push(
+                        new SwitchStructure(
                             canvas,
                             ctx,
                             AnimationType.IDLE,
@@ -122,15 +94,28 @@ export function loadObjectsFromMap(
                             object.y,
                             object.width,
                             object.height,
-                            ladder,
-                            access_door,
-                        )
-                    } else {
-                        if (
-                            !['specialWall', 'switchRoomDoor', 'accessDoor', 'ladder'].includes(
-                                object.name,
-                            )
-                        ) {
+                            custom_properties))
+                }
+                else if (object.name == 'finalStructure') {
+                    console.log('finalStructure')
+                    custom_properties = extractCustomProperties(object)
+                    FinalStructure.populateCustomProperties(custom_properties, all_tiledObjects, canvas, ctx)
+                    list_objects.push(new FinalStructure(
+                            canvas,
+                            ctx,
+                            AnimationType.IDLE,
+                            isIdle,
+                            pos,
+                            dim,
+                            object.name,
+                            object.x,
+                            object.y,
+                            object.width,
+                            object.height,
+                            custom_properties))
+                }
+                else {
+                        if (!['specialWall', 'switchRoomDoor', 'accessDoor', 'ladder'].includes(object.name)) {
                             custom_properties = extractCustomProperties(object)
                             list_objects.push(
                                 new AnimatedObject(
@@ -149,28 +134,25 @@ export function loadObjectsFromMap(
                                 ),
                             )
                         }
-                    }
-                } else {
-
-                    list_objects.push(
-                        new NotAnimatedObject(
-                            canvas,
-                            ctx,
-                            AnimationType.IDLE,
-                            isIdle,
-                            pos,
-                            dim,
-                            object.name,
-                            object.x,
-                            object.y,
-                            object.width,
-                            object.height,
-                        ),
-                    )
                 }
-            })
         }
-    })
+        else {
+            list_objects.push(
+                new NotAnimatedObject(
+                    canvas,
+                    ctx,
+                    AnimationType.IDLE,
+                    isIdle,
+                    pos,
+                    dim,
+                    object.name,
+                    object.x,
+                    object.y,
+                    object.width,
+                    object.height))
+        }
+
+    }
     return list_objects
 }
 
@@ -200,7 +182,7 @@ export async function loadMapObjects(
     }
 }
 
-export function extractCustomProperties(object: TiledObject): Record<string, string> {
+export function extractCustomProperties(object: TiledObject): Record<string, any> {
     const custom_properties: Record<string, any> = {} as Record<string, any>
     if (object.properties) {
         object.properties.forEach((property: TiledProperty) => {

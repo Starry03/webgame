@@ -19,6 +19,7 @@ export interface TiledLayer {
     type: string;
     objects: TiledObject[];
     data?: string;
+    draworder?: string;
 }
 
 export interface TiledMap {

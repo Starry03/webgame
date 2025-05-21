@@ -4,7 +4,7 @@
  "layers":[
         {
          "compression":"zlib",
-         "data":"eJzbysDAsJUOeDEUb0PCi9EwLnFCmBw70DE+dch24NODC+PSg8sObPpJDRNcZmCzA18YEOOnbXjsIDWcCdmBK84J+YNadhAKD2zhR2xYURKvxMY5ujsJpWdS8wcuNxFrDz7\/0KOcAmEA49XaKQ==",
+         "data":"eJw7yMDAcJAOeCkUH0LCS9EwLnFCmBw70DE+dch24NODC+PSg8sObPpJDRNcZmCzA18YEOOnQ3jsIDWcCdmBK84J+YNadhAKD2zhR2xYURKvxMY5ujsJpWdS8wcuNxFrDz7\/0KOcAmEA2UfiwQ==",
          "encoding":"base64",
          "height":13,
          "id":1,
@@ -22,7 +22,7 @@
          "name":"objects",
          "objects":[
                 {
-                 "gid":190,
+                 "gid":202,
                  "height":32,
                  "id":1,
                  "name":"bush18",
@@ -34,7 +34,7 @@
                  "y":224
                 }, 
                 {
-                 "gid":190,
+                 "gid":202,
                  "height":32,
                  "id":2,
                  "name":"bush17",
@@ -46,7 +46,7 @@
                  "y":64
                 }, 
                 {
-                 "gid":190,
+                 "gid":202,
                  "height":32,
                  "id":3,
                  "name":"bush16",
@@ -58,7 +58,7 @@
                  "y":96
                 }, 
                 {
-                 "gid":187,
+                 "gid":199,
                  "height":32,
                  "id":4,
                  "name":"bush15",
@@ -70,7 +70,7 @@
                  "y":160
                 }, 
                 {
-                 "gid":187,
+                 "gid":199,
                  "height":32,
                  "id":5,
                  "name":"bush14",
@@ -82,7 +82,7 @@
                  "y":192
                 }, 
                 {
-                 "gid":188,
+                 "gid":200,
                  "height":32,
                  "id":7,
                  "name":"bush12",
@@ -94,7 +94,7 @@
                  "y":96
                 }, 
                 {
-                 "gid":188,
+                 "gid":200,
                  "height":32,
                  "id":8,
                  "name":"bush13",
@@ -106,7 +106,7 @@
                  "y":288
                 }, 
                 {
-                 "gid":188,
+                 "gid":200,
                  "height":32,
                  "id":9,
                  "name":"bush11",
@@ -118,7 +118,7 @@
                  "y":128
                 }, 
                 {
-                 "gid":189,
+                 "gid":201,
                  "height":32,
                  "id":10,
                  "name":"bush9",
@@ -130,7 +130,7 @@
                  "y":384
                 }, 
                 {
-                 "gid":189,
+                 "gid":201,
                  "height":32,
                  "id":11,
                  "name":"bush10",
@@ -142,7 +142,7 @@
                  "y":192
                 }, 
                 {
-                 "gid":189,
+                 "gid":201,
                  "height":32,
                  "id":12,
                  "name":"bush8",
@@ -154,7 +154,7 @@
                  "y":256
                 }, 
                 {
-                 "gid":219,
+                 "gid":231,
                  "height":64,
                  "id":13,
                  "name":"tree11",
@@ -177,7 +177,7 @@
                  "y":128
                 }, 
                 {
-                 "gid":215,
+                 "gid":227,
                  "height":64,
                  "id":14,
                  "name":"tree10",
@@ -200,7 +200,7 @@
                  "y":96
                 }, 
                 {
-                 "gid":211,
+                 "gid":223,
                  "height":64,
                  "id":17,
                  "name":"tree9",
@@ -223,7 +223,7 @@
                  "y":256
                 }, 
                 {
-                 "gid":220,
+                 "gid":232,
                  "height":64,
                  "id":18,
                  "name":"tree8",
@@ -246,7 +246,7 @@
                  "y":128
                 }, 
                 {
-                 "gid":216,
+                 "gid":228,
                  "height":64,
                  "id":21,
                  "name":"tree7",
@@ -269,7 +269,7 @@
                  "y":128
                 }, 
                 {
-                 "gid":213,
+                 "gid":225,
                  "height":64,
                  "id":23,
                  "name":"tree6",
@@ -292,7 +292,7 @@
                  "y":96
                 }, 
                 {
-                 "gid":217,
+                 "gid":229,
                  "height":64,
                  "id":27,
                  "name":"tree5",
@@ -315,7 +315,7 @@
                  "y":384
                 }, 
                 {
-                 "gid":211,
+                 "gid":223,
                  "height":64,
                  "id":28,
                  "name":"tree4",
@@ -338,7 +338,7 @@
                  "y":384
                 }, 
                 {
-                 "gid":218,
+                 "gid":230,
                  "height":64,
                  "id":34,
                  "name":"tree3",
@@ -361,7 +361,7 @@
                  "y":256
                 }, 
                 {
-                 "gid":213,
+                 "gid":225,
                  "height":64,
                  "id":35,
                  "name":"tree2",
@@ -384,7 +384,7 @@
                  "y":352
                 }, 
                 {
-                 "gid":219,
+                 "gid":231,
                  "height":64,
                  "id":38,
                  "name":"tree1",
@@ -407,7 +407,7 @@
                  "y":352
                 }, 
                 {
-                 "gid":221,
+                 "gid":233,
                  "height":128,
                  "id":39,
                  "name":"bossRock",
@@ -445,7 +445,7 @@
                  "y":288
                 }, 
                 {
-                 "gid":190,
+                 "gid":202,
                  "height":32,
                  "id":42,
                  "name":"bush7",
@@ -457,7 +457,7 @@
                  "y":288
                 }, 
                 {
-                 "gid":190,
+                 "gid":202,
                  "height":32,
                  "id":43,
                  "name":"bush6",
@@ -470,7 +470,7 @@
                 },
             
                 {
-                 "gid":187,
+                 "gid":199,
                  "height":32,
                  "id":44,
                  "name":"bush5",
@@ -482,7 +482,7 @@
                  "y":352
                 }, 
                 {
-                 "gid":188,
+                 "gid":200,
                  "height":32,
                  "id":45,
                  "name":"bush4",
@@ -494,7 +494,7 @@
                  "y":384
                 }, 
                 {
-                 "gid":188,
+                 "gid":200,
                  "height":32,
                  "id":46,
                  "name":"bush3",
@@ -506,7 +506,7 @@
                  "y":352
                 }, 
                 {
-                 "gid":189,
+                 "gid":201,
                  "height":32,
                  "id":47,
                  "name":"bush2",
@@ -518,7 +518,7 @@
                  "y":160
                 }, 
                 {
-                 "gid":189,
+                 "gid":201,
                  "height":32,
                  "id":50,
                  "name":"bush1",
@@ -530,7 +530,7 @@
                  "y":352
                 }, 
                 {
-                 "gid":226,
+                 "gid":238,
                  "height":78,
                  "id":51,
                  "name":"bossLadder",
@@ -556,7 +556,7 @@
                          "value":50
                         }],
                  "rotation":0,
-                 "type":"NotAnimatedObject",
+                 "type":"AnimatedObject",
                  "visible":true,
                  "width":40,
                  "x":223.5,
@@ -612,59 +612,59 @@
          "source":"..\/tilesets\/finalStructure.tsx"
         }, 
         {
-         "firstgid":163,
+         "firstgid":165,
          "source":"..\/tilesets\/floor.tsx"
         }, 
         {
-         "firstgid":164,
+         "firstgid":166,
          "source":"..\/tilesets\/rocks.tsx"
         }, 
         {
-         "firstgid":168,
+         "firstgid":170,
          "source":"..\/tilesets\/secondFinalDoor.tsx"
         }, 
         {
-         "firstgid":173,
+         "firstgid":185,
          "source":"..\/tilesets\/specialExit.tsx"
         }, 
         {
-         "firstgid":174,
+         "firstgid":186,
          "source":"..\/tilesets\/specialWall.tsx"
         }, 
         {
-         "firstgid":175,
+         "firstgid":187,
          "source":"..\/tilesets\/structure.tsx"
         }, 
         {
-         "firstgid":177,
+         "firstgid":189,
          "source":"..\/tilesets\/switchRoomDoor.tsx"
         }, 
         {
-         "firstgid":179,
+         "firstgid":191,
          "source":"..\/tilesets\/wall.tsx"
         }, 
         {
-         "firstgid":182,
+         "firstgid":194,
          "source":"tiled_objects\/tilesets\/boss_background.tsx"
         }, 
         {
-         "firstgid":183,
+         "firstgid":195,
          "source":"tiled_objects\/tilesets\/bushes.tsx"
         }, 
         {
-         "firstgid":191,
+         "firstgid":203,
          "source":"tiled_objects\/tilesets\/trees.tsx"
         }, 
         {
-         "firstgid":221,
+         "firstgid":233,
          "source":"tiled_objects\/tilesets\/rock.tsx"
         }, 
         {
-         "firstgid":222,
+         "firstgid":234,
          "source":"..\/tilesets\/ladder.tsx"
         }, 
         {
-         "firstgid":224,
+         "firstgid":236,
          "source":"tiled_objects\/tilesets\/boss_ladder.tsx"
         }],
  "tilewidth":32,

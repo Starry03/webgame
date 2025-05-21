@@ -1,13 +1,11 @@
-import { NotAnimatedObject } from '@/internal/mapLogic/classes/NotAnimatedObject'
+import { AnimatedObject } from '@/internal/mapLogic/classes/AnimatedObject'
 import { AnimationType, Vector2 } from '@/internal/types.ts'
 import { Ladder } from '@/internal/mapLogic/objects/Ladder'
 import { AccessDoor } from '@/internal/mapLogic/objects/door/AccessDoor'
 import type { TiledObject } from '@/internal/mapLogic/engine/interfaces/Interfaces.ts'
-import {extractCustomProperties} from "@/internal/mapLogic/engine/utils/ObjectLayerUtils.ts";
+import { extractCustomProperties } from '@/internal/mapLogic/engine/utils/ObjectLayerUtils.ts'
 
-export class FinalStructure extends NotAnimatedObject {
-    ladder: Ladder
-    access_door: AccessDoor
+export class FinalStructure extends AnimatedObject {
 
     constructor(
         canvas: HTMLCanvasElement,
@@ -21,83 +19,57 @@ export class FinalStructure extends NotAnimatedObject {
         y: number,
         width: number,
         height: number,
-        ladder: Ladder,
-        access_door: AccessDoor,
-    ) {
-        super(canvas, ctx, initialAnimation, isIdle, pos, dim, name, x, y, width, height)
-        this.ladder = ladder
-        this.access_door = access_door
-    }
-
-    static getLadder(
-        layer_objects: TiledObject[],
-        canvas: HTMLCanvasElement,
-        ctx: CanvasRenderingContext2D,
-    ): Ladder {
-        for (const obj of layer_objects) {
-            if (obj.name === 'ladder') {
-                obj.y = obj.y - obj.height
-                const isIdle: boolean = true
-                return new Ladder(
-                    canvas,
-                    ctx,
-                    AnimationType.IDLE,
-                    isIdle,
-                    new Vector2(obj.x, obj.y),
-                    new Vector2(obj.width, obj.height),
-                    obj.name,
-                    obj.x,
-                    obj.y,
-                    obj.width,
-                    obj.height,
-                )
-            }
-        }
-        return new Ladder(
+        custom_properties: Record<string, any>) {
+        super(
             canvas,
             ctx,
-            AnimationType.IDLE,
-            true,
-            new Vector2(0, 0),
-            new Vector2(0, 0),
-            '',
-            0,
-            0,
-            0,
-            0,
+            initialAnimation,
+            isIdle,
+            pos,
+            dim,
+            name,
+            x,
+            y,
+            width,
+            height,
+            custom_properties,
         )
     }
 
-    static getAccessDoor(
-        layer_objects: TiledObject[],
+     static populateCustomProperties(
+        custom_properties: Record<string, any>,
+        objects: TiledObject[],
         canvas: HTMLCanvasElement,
-        ctx: CanvasRenderingContext2D,
-    ): AccessDoor {
-        for (const obj of layer_objects) {
-            if (obj.name === 'accessDoor') {
-                console.log("access_door trovata")
-                obj.y = obj.y - obj.height
-                const custom_properties: Record<string, any> = extractCustomProperties(obj)
-                const isIdle: boolean = true
-                const access_door = new AccessDoor(
+        ctx: CanvasRenderingContext2D): void {
+        for (const object of objects) {
+            if (object.name === 'accessDoor') {
+                console.log("ho trovato l'accessDoor")
+                const custom_properties_access_door: Record<string, any> =
+                    extractCustomProperties(object)
+                const access_door: AccessDoor = new AccessDoor(
                     canvas,
                     ctx,
                     AnimationType.IDLE,
-                    isIdle,
-                    new Vector2(obj.x, obj.y),
-                    new Vector2(obj.width, obj.height),
-                    obj.name,
-                    obj.x,
-                    obj.y,
-                    obj.width,
-                    obj.height,
-                    custom_properties,
+                    true,
+                    new Vector2(object.x, object.y),
+                    new Vector2(object.width, object.height),
+                    object.name,
+                    object.x,
+                    object.y,
+                    object.width,
+                    object.height,
+                    custom_properties_access_door,
                 )
                 access_door.setPaths()
-                return access_door
+                custom_properties['accessDoor'] = access_door
+            }
+
+            if (object.name === 'ladder') {
+                console.log("ho trovato ladder")
+                const custom_properties_ladder: Record<string, any> = extractCustomProperties(object)
+                const ladder: Ladder = new Ladder(canvas, ctx, AnimationType.IDLE, true, new Vector2(object.x, object.y), new Vector2(object.width, object.height), object.name, object.x, object.y, object.width, object.height, custom_properties_ladder);
+                custom_properties['ladder'] = ladder
             }
         }
-        console.log("access_door non trovata")
-        return new AccessDoor(canvas, ctx, AnimationType.IDLE, true, new Vector2(0,0), new Vector2(0,0), '', 0,0,0,0, {});
     }
 }

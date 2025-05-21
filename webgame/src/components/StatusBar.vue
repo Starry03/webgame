@@ -1,19 +1,17 @@
 <script setup lang="ts">
 import ProgressBar from './ProgressBar.vue'
-import { computed, defineProps, type Ref } from 'vue'
+import { computed, defineProps, onMounted, onUnmounted, ref, type Ref } from 'vue'
 import Filler from './Filler.vue'
 import { Storage_e } from '@/internal/types'
 
 const props = defineProps({
-    hp: {
+    health: {
         type: Number,
         required: true,
-        default: 1000,
     },
     maxHealth: {
         type: Number,
         required: true,
-        default: 1000,
     },
     mana: {
         type: Number,
@@ -49,8 +47,29 @@ const props = defineProps({
     },
 })
 
+function formatTime(seconds: number): string {
+    const min = Math.floor(seconds / 60)
+    const sec = seconds % 60
+    return `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`
+}
+
+const playTime = ref(0)
+let intervalId: number | undefined
+
+onMounted(() => {
+    const start = Date.now()
+    intervalId = window.setInterval(() => {
+        playTime.value = Math.floor((Date.now() - start) / 1000)
+    }, 1000)
+})
+
+onUnmounted(() => {
+    if (intervalId) clearInterval(intervalId)
+})
+
+
 const healthPercentage = computed(() => {
-    const percentage = (props.hp / props.maxHealth) * 100 || 0
+    const percentage = (props.health / props.maxHealth) * 100 || 0
     return isNaN(percentage) || percentage < 0 ? 0 : percentage
 })
 const manaPercentage = computed(() => {
@@ -67,13 +86,14 @@ const username = storedUser ? JSON.parse(storedUser)?.username ?? 'Player' : 'Pl
         <div class="player-header">
             <span class="player-name">{{ username }}</span>
             <span class="player-level">Level: {{ props.level }}</span>
+            <span class="player-time">Time: {{ formatTime(playTime) }}</span>
         </div>
         <div class="bars-and-cooldowns">
             <div class="bars">
                 <div class="bar-container flex items-center gap-small">
                     <span>HP:</span>
                     <ProgressBar :progress="healthPercentage" color="crimson" />
-                    <span class="hp-value">{{ props.hp }}/{{ props.maxHealth }}</span>
+                    <span class="hp-value">{{ props.health }}/{{ props.maxHealth }}</span>
                 </div>
                 <div class="bar-container flex items-center gap-small">
                     <span>MP:</span>
@@ -109,10 +129,16 @@ const username = storedUser ? JSON.parse(storedUser)?.username ?? 'Player' : 'Pl
     align-items: center;
     gap: 2rem;
     margin-bottom: 0.5rem;
+    justify-content: space-between;
 }
 
 .player-name {
     color: orange;
+}
+
+.player-time{
+    margin-left: auto;
+    color: #8ff;
 }
 
 .bars-and-cooldowns {
