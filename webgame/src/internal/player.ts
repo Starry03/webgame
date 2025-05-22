@@ -28,8 +28,7 @@ export class Player extends Entity {
     }
 
     enterInteraction(collision: CollisionInfo): void {
-        this.interactionMessage =
-            "Press 'E to interact with " + collision.other.name
+        this.interactionMessage = "Press 'E to interact with " + collision.other.name
         super.enterInteraction(collision)
     }
 
