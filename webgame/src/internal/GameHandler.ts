@@ -63,6 +63,7 @@ export class GameHandler {
         this.ctx.restore()
         this.player.handleInput(this.keys, deltaTime)
         Collider.update_collisions(this.gameObjects)
+        this.player.attack(this.keys, this.gameObjects)
         this.gameObjects.forEach((obj: Obj) => {
             if (obj.selectedFrames == undefined) {
                 return
@@ -121,5 +122,14 @@ export class GameHandler {
             return -1
         })
         this.gameObjects = [...this.currentRoomObjects, this.player]
+
+        setInterval(() => {
+            if (this.player.mana < this.player.maxMana) {
+                this.player.mana = Math.min(
+                    this.player.maxMana,
+                    this.player.mana + this.player.manaRegenRate
+                )
+            }
+        }, 1000)
     }
 }
