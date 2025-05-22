@@ -116,18 +116,19 @@ export class GameHandler {
                 break
         }*/
         populateRoom4(this.currentRoomObjects)
-        for (const obj of this.currentRoomObjects) {
+        /*for (const obj of this.currentRoomObjects) {
             console.log("<---------------------------------------------")
             console.log(obj.name)
             console.log(obj.framePaths)
             console.log("--------------------------------------------->")
-        }
+        }*/
         this.currentRoomObjects.forEach((obj: Obj) => {
             obj.preloadImages()
             obj.idle(true)
         })
         this.currentRoomObjects.sort((a: Obj, b: Obj) => {
             const exotic_peppe = a.name
+            //credo non serva più questa condizione (per quanto riguarda gli oggetti della mappa - sono oggetti a se stanti)
             if (['entranceDoor', 'accessDoor', 'ladder', 'switchRoomDoor', 'specialWall'].includes(exotic_peppe)) return 1
             const customA = a.custom_properties
             if (customA['type'] === 'door' || customA['type'] === 'ladder') return 1

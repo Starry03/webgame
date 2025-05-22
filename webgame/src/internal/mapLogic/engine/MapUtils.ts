@@ -68,9 +68,12 @@ const IMAGES_PATHS: Record<string, string> = {
     'bottomWall': '/assets/maps/rooms/last_objects/images/top_wall.png',
     'sideWall': '/assets/maps/rooms/last_objects/images/side_wall.png',
     'bossSideWall': '/assets/maps/rooms/last_objects/images/boss_side_wall.png',
-    'specialWall': '/assets/maps/rooms/tiled_objects/wall.png',
     'wallDoor': '/assets/maps/rooms/room3/exitRoom3.png',
     'switchEntrance': '/assets/maps/rooms/room3/switchEntrance.png',
+    'finalTopWall': '/assets/maps/rooms/last_objects/images/top_wall_room4.png',
+    'finalSideWall':  '/assets/maps/rooms/last_objects/images/side_wall_room4.png',
+    'finalBottomWall': '/assets/maps/rooms/last_objects/images/bottom_wall_room4.png',
+    'accessDoor': '/assets/maps/rooms/tiled_objects/finalDoor/second_final_door1.png'
 }
 
 /*export async function loadRoomByName(roomName: string, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D): Promise<(NotAnimatedObject|AnimatedObject)[]> {
@@ -806,20 +809,6 @@ export function populateRoom3 (list_objects: Obj[]) {
             }
             obj.setFramePaths(frame_paths);
         }
-        else if (obj.name == 'switchStructure') {
-            frame_paths = {
-                run: [],
-                attack1: [],
-                attack2: [],
-                special: [],
-                idle: [IMAGES_PATHS['switchStructure']],
-                hurt: [],
-                dead: [],
-                opening: [],
-                closing: []
-            }
-            obj.setFramePaths(frame_paths);
-        }
         else if (obj.name === 'specialWall') {
             frame_paths = {
                 run: [],
@@ -1030,7 +1019,7 @@ export function populateRoom4 (list_objects: (Obj)[]) {
             }
             obj.setFramePaths(frame_paths);
         }
-        else if (['crystal2', 'crystal3', 'crystal5', 'crystal7', 'crystal8', 'crystal9'].includes(obj.name)) {
+        else if (['crystal2', 'crystal3', 'crystal4', 'crystal5', 'crystal7', 'crystal8', 'crystal9'].includes(obj.name)) {
             frame_paths = {
                 run: [],
                 attack1: [],
@@ -1208,6 +1197,76 @@ export function populateRoom4 (list_objects: (Obj)[]) {
                 attack2: [],
                 special: [],
                 idle: [IMAGES_PATHS['sideWall']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (obj.name == 'finalTopWall') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['finalTopWall']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (obj.name == 'finalLeftSideWall' || obj.name == 'finalRightSideWall') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['finalSideWall']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (obj.name == 'finalLeftBottomWall' || obj.name == 'finalRightBottomWall') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['finalBottomWall']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (obj.name == 'accessDoor') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['accessDoor']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (obj.name == 'ladder') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['ladder']],
                 hurt: [],
                 dead: [],
                 opening: [],
@@ -1422,21 +1481,7 @@ export function populateBossRoom(list_objects: (NotAnimatedObject|AnimatedObject
             }
             obj.setFramePaths(frame_paths);
         }
-        else if (obj.name == 'topWall') {
-            frame_paths = {
-                run: [],
-                attack1: [],
-                attack2: [],
-                special: [],
-                idle: [IMAGES_PATHS['bottomWall']],
-                hurt: [],
-                dead: [],
-                opening: [],
-                closing: []
-            }
-            obj.setFramePaths(frame_paths);
-        }
-        else if (obj.name == 'bottomWall') {
+        else if (obj.name == 'topWall' || obj.name == 'bottomWall') {
             frame_paths = {
                 run: [],
                 attack1: [],

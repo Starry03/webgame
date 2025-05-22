@@ -53,7 +53,8 @@
   <object id="34" name="entranceDoor" type="AnimatedObject" gid="21" x="161" y="130" width="64" height="64">
    <properties>
     <property name="animating" type="bool" value="false"/>
-    <property name="interactable" type="bool" value="false"/>
+    <property name="collidable" type="bool" value="true"/>
+    <property name="interactable" type="bool" value="true"/>
     <property name="isOpen" type="bool" value="false"/>
     <property name="type" value="door"/>
    </properties>
@@ -91,10 +92,26 @@
     <property name="takeable" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="62" name="bottomWall" type="NotAnimatedObject" gid="37" x="0" y="416" width="800" height="32"/>
-  <object id="63" name="topWall" type="NotAnimatedObject" gid="38" x="0" y="64" width="800" height="64"/>
-  <object id="64" name="leftSideWall" type="NotAnimatedObject" gid="39" x="0" y="384" width="32" height="320"/>
-  <object id="65" name="rightSideWall" type="NotAnimatedObject" gid="39" x="768" y="384" width="32" height="320"/>
+  <object id="62" name="bottomWall" type="AnimatedObject" gid="37" x="0" y="416" width="800" height="32">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="63" name="topWall" type="AnimatedObject" gid="38" x="0" y="64" width="800" height="64">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="64" name="leftSideWall" type="AnimatedObject" gid="39" x="0" y="384" width="32" height="320">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="65" name="rightSideWall" type="AnimatedObject" gid="39" x="768" y="384" width="32" height="320">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+   </properties>
+  </object>
   <object id="68" name="wallDoor" type="AnimatedObject" gid="42" x="608" y="288" width="160" height="64">
    <properties>
     <property name="collidable" type="bool" value="true"/>
@@ -107,20 +124,10 @@
   </object>
  </objectgroup>
  <objectgroup id="3" name="objects2">
-  <object id="45" name="specialWall" type="AnimatedObject" gid="2147483671" x="608" y="352" width="32" height="32" visible="0">
-   <properties>
-    <property name="activationDelay" type="int" value="500"/>
-    <property name="animating" type="bool" value="false"/>
-    <property name="disappearsWhen" value="enemiesCleared"/>
-    <property name="interactable" type="bool" value="true"/>
-    <property name="opensWhat" value="switchRoomStructure"/>
-    <property name="type" value="brick_wall"/>
-    <property name="visibleInitially" type="bool" value="false"/>
-   </properties>
-  </object>
   <object id="57" name="switchRoomDoor" type="AnimatedObject" gid="6" x="672" y="288" width="64" height="64">
    <properties>
     <property name="animating" type="bool" value="false"/>
+    <property name="collidable" type="bool" value="true"/>
     <property name="interactable" type="bool" value="true"/>
     <property name="isOpen" type="bool" value="false"/>
     <property name="type" value="door"/>
