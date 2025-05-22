@@ -98,7 +98,7 @@ const username = storedUser ? JSON.parse(storedUser)?.username ?? 'Player' : 'Pl
                 <div class="bar-container flex items-center gap-small">
                     <span>MP:</span>
                     <ProgressBar :progress="manaPercentage" color="cyan" class="mana-bar" />
-                    <span class="mp-value">{{ props.mana }}/{{ props.maxMana }}</span>
+                    <span class="mp-value">{{ Math.floor(props.mana) }}/{{ props.maxMana }}</span>
                 </div>
             </div>
             <div class="cooldown-container">

@@ -56,6 +56,12 @@ export class GameHandler {
     gameLoop(timestamp: number) {
         const deltaTime = (timestamp - this.lastTimeStamp) / 1000
         this.lastTimeStamp = timestamp
+        if (this.player.mana < this.player.maxMana) {
+            this.player.mana = Math.min(
+                this.player.maxMana,
+                this.player.mana + this.player.manaRegenRate * deltaTime
+            )
+        }
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
         this.ctx.save()
         if (this.bg_image)
@@ -122,14 +128,5 @@ export class GameHandler {
             return -1
         })
         this.gameObjects = [...this.currentRoomObjects, this.player]
-
-        setInterval(() => {
-            if (this.player.mana < this.player.maxMana) {
-                this.player.mana = Math.min(
-                    this.player.maxMana,
-                    this.player.mana + this.player.manaRegenRate
-                )
-            }
-        }, 1000)
     }
 }
