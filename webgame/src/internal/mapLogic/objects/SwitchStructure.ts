@@ -61,6 +61,7 @@ export class SwitchStructure extends AnimatedObject {
                     object.height,
                     custom_properties_special_wall,
                 )
+                special_wall.setPaths()
                 custom_properties['specialWall'] = special_wall
             }
 
@@ -80,6 +81,7 @@ export class SwitchStructure extends AnimatedObject {
                     object.width,
                     object.height,
                     custom_properties_door)
+                switch_room_door.setPaths()
                 custom_properties['switchRoomDoor'] = switch_room_door
             }
         }

@@ -63,8 +63,12 @@ const IMAGES_PATHS: Record<string, string> = {
     'tree1': '/assets/maps/rooms/boss_room/tiled_objects/images/trees1/Tree1.png',
     'tree2': '/assets/maps/rooms/boss_room/tiled_objects/images/trees1/Tree2.png',
     'tree3': '/assets/maps/rooms/boss_room/tiled_objects/images/trees1/Tree3.png',
-    'bossRock': '/assets/maps/rooms/boss_room/tiled_objects/images/Rock1_1.png'
-
+    'bossRock': '/assets/maps/rooms/boss_room/tiled_objects/images/Rock1_1.png',
+    'topWall': '/assets/maps/rooms/last_objects/images/top_wall.png',
+    'bottomWall': '/assets/maps/rooms/last_objects/images/top_wall.png',
+    'sideWall': '/assets/maps/rooms/last_objects/images/side_wall.png',
+    'bossSideWall': '/assets/maps/rooms/last_objects/images/boss_side_wall.png',
+    'specialWall': '/assets/maps/rooms/tiled_objects/wall.png',
 }
 
 /*export async function loadRoomByName(roomName: string, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D): Promise<(NotAnimatedObject|AnimatedObject)[]> {
@@ -246,6 +250,48 @@ export function populateRoom1(list_objects: (NotAnimatedObject|AnimatedObject)[]
                 attack2: [],
                 special: [],
                 idle: [IMAGES_PATHS['bat']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (obj.name == 'topWall') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['topWall']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (obj.name == 'bottomWall') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['bottomWall']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (obj.name == 'leftSideWall' || obj.name == 'rightSideWall') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['sideWall']],
                 hurt: [],
                 dead: [],
                 opening: [],
@@ -493,6 +539,48 @@ export function populateRoom2 (tiled_objects: (NotAnimatedObject|AnimatedObject)
             }
             obj.setFramePaths(frame_paths);
         }
+        else if (obj.name == 'topWall') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['topWall']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (obj.name == 'bottomWall') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['bottomWall']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (obj.name == 'leftSideWall' || obj.name == 'rightSideWall') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['sideWall']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
         else {
             throw new Error('path not found');
             return;
@@ -500,7 +588,7 @@ export function populateRoom2 (tiled_objects: (NotAnimatedObject|AnimatedObject)
     }
 }
 
-export function populateRoom3 (list_objects: (NotAnimatedObject|AnimatedObject)[]) {
+export function populateRoom3 (list_objects: Obj[]) {
     for (const obj of list_objects) {
         let frame_paths: Record<AnimationType, string[]>;
         if (obj.name == 'rock9') {
@@ -559,7 +647,7 @@ export function populateRoom3 (list_objects: (NotAnimatedObject|AnimatedObject)[
             }
             obj.setFramePaths(frame_paths);
         }
-        else if (['crystal1', 'crystal5', 'crystal16'].includes(obj.name)) {
+        else if (['crystal1', 'crystal2', 'crystal5'].includes(obj.name)) {
             frame_paths = {
                 run: [],
                 attack1: [],
@@ -730,14 +818,70 @@ export function populateRoom3 (list_objects: (NotAnimatedObject|AnimatedObject)[
             }
             obj.setFramePaths(frame_paths);
         }
+        else if (obj.name === 'specialWall') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['specialWall']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
         else if (obj instanceof Door) {
             obj.setPaths();
         }
-        /*else {
+        else if (obj.name == 'topWall') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['topWall']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (obj.name == 'bottomWall') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['bottomWall']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (obj.name == 'leftSideWall' || obj.name == 'rightSideWall') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['sideWall']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else {
             console.log(obj.name);
             throw new Error('path not found');
             return;
-        }*/
+        }
     }
 }
 
@@ -999,11 +1143,53 @@ export function populateRoom4 (list_objects: (Obj)[]) {
             }
             obj.setFramePaths(frame_paths);
         }
-        /*else {
+        else if (obj.name == 'topWall') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['topWall']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (obj.name == 'bottomWall') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['bottomWall']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (obj.name == 'leftSideWall' || obj.name == 'rightSideWall') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['sideWall']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else {
             console.log(obj.name);
             throw new Error('path not found');
             return;
-        }*/
+        }
     }
 }
 
@@ -1206,11 +1392,53 @@ export function populateBossRoom(list_objects: (NotAnimatedObject|AnimatedObject
             }
             obj.setFramePaths(frame_paths);
         }
-        /*else {
+        else if (obj.name == 'topWall') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['bottomWall']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (obj.name == 'bottomWall') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['bottomWall']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (obj.name == 'leftSideWall' || obj.name == 'rightSideWall') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['bossSideWall']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else {
             console.log(obj.name);
             throw new Error('path not found');
             return;
-        }*/
+        }
     }
 }
 

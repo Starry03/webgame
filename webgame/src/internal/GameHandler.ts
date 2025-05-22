@@ -1,5 +1,5 @@
 import type { Entity } from './Entity'
-import { getRoomPath, populateRoom4 } from '@/internal/mapLogic/engine/MapUtils.ts'
+import {getRoomPath, populateRoom3, populateRoom4} from '@/internal/mapLogic/engine/MapUtils.ts'
 import { AnimatedObject } from '@/internal/mapLogic/classes/AnimatedObject'
 import { NotAnimatedObject } from '@/internal/mapLogic/classes/NotAnimatedObject'
 import { loadMapData } from '@/internal/mapLogic/engine/utils/BackgroundLayerUtils.ts'
@@ -115,26 +115,23 @@ export class GameHandler {
             default:
                 break
         }*/
+        populateRoom3(this.currentRoomObjects)
+        for (const obj of this.currentRoomObjects) {
+            console.log("<---------------------------------------------")
+            console.log(obj.name)
+            console.log(obj.framePaths)
+            console.log("--------------------------------------------->")
+        }
         this.currentRoomObjects.forEach((obj: Obj) => {
             obj.preloadImages()
             obj.idle(true)
         })
         this.currentRoomObjects.sort((a: Obj, b: Obj) => {
             const exotic_peppe = a.name
-            if (exotic_peppe === 'ladder') console.debug('ladder')
-            if (
-                ['entranceDoor', 'accessDoor', 'ladder', 'switchRoomDoor', 'specialWall'].includes(
-                    exotic_peppe,
-                )
-            )
-                //console.log("primo if", exotic_peppe)
-                return 1
+            if (['entranceDoor', 'accessDoor', 'ladder', 'switchRoomDoor', 'specialWall'].includes(exotic_peppe)) return 1
             const customA = a.custom_properties
-            // if (customA['type'] === 'door' || customA['type'] === 'ladder') return 1
-            // if (customA['type'] === 'brick_wall' || customA['type'] === 'door') {
-            //     //console.log("terzo if", customA)
-            //     return 1
-            // }
+            if (customA['type'] === 'door' || customA['type'] === 'ladder') return 1
+            if (customA['type'] === 'brick_wall' || customA['type'] === 'door') return 1
             return -1
         })
         this.gameObjects = [...this.currentRoomObjects, this.player]
