@@ -8,6 +8,9 @@ export class Entity extends Obj {
     maxHealth: number
     mana: number
     maxMana: number
+    manaRegenRate: number = 20
+    attackPower: number 
+    defense: number 
     maxCooldownE: number
     maxCooldownQ: number
     maxCooldownR: number
@@ -18,6 +21,8 @@ export class Entity extends Obj {
         speed: number,
         health: number,
         mana: number,
+        attackPower: number,
+        defense: number,
         pos: Vector2 = new Vector2(50, 50),
         dim: Vector2 = new Vector2(48, 48),
     ) {
@@ -28,6 +33,8 @@ export class Entity extends Obj {
         this.maxHealth = health
         this.mana = mana
         this.maxMana = mana
+        this.attackPower = attackPower
+        this.defense = defense
         this.cooldowns.set(AnimationType.ATTACK_1, ref(0))
         this.cooldowns.set(AnimationType.ATTACK_2, ref(0))
         this.cooldowns.set(AnimationType.SPECIAL, ref(0))
@@ -36,9 +43,14 @@ export class Entity extends Obj {
         this.maxCooldownR = this.speed * 10 * 5
     }
 
+    consumeMana(amount: number): boolean {
+        if (this.mana < amount) return false
+        this.mana -= amount
+        return true
+    }
+
     handleInput(keys: Set<string>, deltaTime: number) {
         this.move(keys, deltaTime)
-        this.attack(keys)
     }
 
     move(keys: Set<string>, deltaTime: number) {
@@ -81,28 +93,49 @@ export class Entity extends Obj {
 
     die() {}
 
-    attack(keys: Set<string>) {
-        let isAttacking: boolean = true
-        let cooldownFactor: number = 1
-        let attackFactor: number = 1
+    isInAttackArc(target: Entity, angleRad: number = 2 * Math.PI / 3): boolean {
+        const attackerPos = this.pos
+        const targetPos = target.pos
+        const facingDir = this.facingDirection.x >= 0 ? 1 : -1
+        const dirToTarget = new Vector2(targetPos.x - attackerPos.x, targetPos.y - attackerPos.y)
+        dirToTarget.normalize()
+        const facing = new Vector2(facingDir, 0)
+        const dot = facing.scalar(dirToTarget)
+        const angle = Math.acos(dot)
+        return angle <= angleRad / 2
+    }
+
+    attack(keys: Set<string>, gameObjects: Obj[]) {
+        let isAttacking = true
+        let attackFactor: number 
         let usedAnimation: AnimationType = AnimationType.IDLE
+        let attackType: 'basic' | 'q' | 'r' = 'basic'
+        let cooldownFactor = 1
 
         if (keys.has('e') && this.cooldowns.get(AnimationType.ATTACK_1)?.value == 0) {
             this.changeAnimation(AnimationType.ATTACK_1, true)
             usedAnimation = AnimationType.ATTACK_1
+            attackType = 'basic'
+            attackFactor = 1
             cooldownFactor = 1
-        } else if (keys.has('q') && this.cooldowns.get(AnimationType.ATTACK_2)?.value == 0) {
+        } else if (keys.has('q') && this.cooldowns.get(AnimationType.ATTACK_2)?.value == 0 && this.mana >= 200) {
             this.changeAnimation(AnimationType.ATTACK_2, true)
             usedAnimation = AnimationType.ATTACK_2
+            attackType = 'q'
+            attackFactor = 2
             cooldownFactor = 2.5
-        } else if (keys.has('r') && this.cooldowns.get(AnimationType.SPECIAL)?.value == 0) {
+        } else if (keys.has('r') && this.cooldowns.get(AnimationType.SPECIAL)?.value == 0 && this.mana >= 400) {
             this.changeAnimation(AnimationType.SPECIAL, true)
             usedAnimation = AnimationType.SPECIAL
+            attackType = 'r'
+            attackFactor = 3
             cooldownFactor = 5
         } else isAttacking = false
+
         if (!isAttacking) return
 
         attackFactor = cooldownFactor
+        this.handleAttack(attackType, attackFactor, gameObjects.filter(obj => obj instanceof Entity) as Entity[])
         let refCooldown: Ref<number> | undefined = this.cooldowns.get(usedAnimation)
         if (!refCooldown) return
 
@@ -122,5 +155,19 @@ export class Entity extends Obj {
             this.speed * 10 * cooldownFactor,
         )
     }
-    handleAttack() {}
+
+    handleAttack(type: 'basic' | 'q' | 'r', attackFactor: number, enemies: Entity[]) {
+        const manaCost = type === 'q' ? 200 : type === 'r' ? 400 : 0
+        if (manaCost > 0 && !this.consumeMana(manaCost)) return
+
+        let baseDamage = this.attackPower* attackFactor
+
+        for (const enemy of enemies) {
+            if (enemy === this) continue
+            if (this.isInAttackArc(enemy)) {
+                const damage = Math.max(1, 100-enemy.defense*(baseDamage / 100))
+                enemy.get_damage(damage)
+            }
+        }
+    }
 }
