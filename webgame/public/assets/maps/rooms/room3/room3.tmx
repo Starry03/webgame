@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="25" height="13" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="66">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="25" height="13" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="70">
  <editorsettings>
   <export target="room3.json" format="json"/>
  </editorsettings>
@@ -20,6 +20,8 @@
  <tileset firstgid="37" source="../tilesets/bottom_wall.tsx"/>
  <tileset firstgid="38" source="../tilesets/top_wall.tsx"/>
  <tileset firstgid="39" source="../tilesets/side_wall.tsx"/>
+ <tileset firstgid="40" source="../tilesets/switchStructure.tsx"/>
+ <tileset firstgid="43" source="../tilesets/switchEntrance.tsx"/>
  <layer id="1" name="background" width="25" height="13">
   <data encoding="base64" compression="zlib">
    eJxjZGBgYBzFo3gUj2ISsSwUD3U70DEAiL0Btg==
@@ -54,13 +56,6 @@
     <property name="interactable" type="bool" value="false"/>
     <property name="isOpen" type="bool" value="false"/>
     <property name="type" value="door"/>
-   </properties>
-  </object>
-  <object id="42" name="switchStructure" type="AnimatedObject" gid="22" x="608" y="384" width="160" height="160">
-   <properties>
-    <property name="accessWall" type="object" value="45"/>
-    <property name="collidable" type="bool" value="true"/>
-    <property name="door" type="object" value="44"/>
    </properties>
   </object>
   <object id="47" name="structure" type="AnimatedObject" gid="8" x="64" y="129" width="256" height="128">
@@ -100,9 +95,19 @@
   <object id="63" name="topWall" type="NotAnimatedObject" gid="38" x="0" y="64" width="800" height="64"/>
   <object id="64" name="leftSideWall" type="NotAnimatedObject" gid="39" x="0" y="384" width="32" height="320"/>
   <object id="65" name="rightSideWall" type="NotAnimatedObject" gid="39" x="768" y="384" width="32" height="320"/>
+  <object id="68" name="wallDoor" type="AnimatedObject" gid="42" x="608" y="288" width="160" height="64">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="69" name="switchEntrance" type="AnimatedObject" gid="43" x="608" y="384" width="32" height="96">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup id="3" name="objects2">
-  <object id="45" name="specialWall" type="AnimatedObject" gid="2147483671" x="608" y="352" width="32" height="32">
+  <object id="45" name="specialWall" type="AnimatedObject" gid="2147483671" x="608" y="352" width="32" height="32" visible="0">
    <properties>
     <property name="activationDelay" type="int" value="500"/>
     <property name="animating" type="bool" value="false"/>
