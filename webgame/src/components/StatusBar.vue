@@ -136,6 +136,10 @@ const username = storedUser ? JSON.parse(storedUser)?.username ?? 'Player' : 'Pl
     color: orange;
 }
 
+.player-level{
+    color:chartreuse;
+}
+
 .player-time{
     margin-left: auto;
     color: #8ff;
