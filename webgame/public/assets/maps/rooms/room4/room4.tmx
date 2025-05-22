@@ -106,7 +106,7 @@
   </object>
   <object id="82" name="ladder" type="AnimatedObject" gid="46" x="141" y="223" width="40" height="78">
    <properties>
-    <property name="interactable" type="bool" value="false"/>
+    <property name="interactable" type="bool" value="true"/>
     <property name="type" value="ladder"/>
    </properties>
   </object>
