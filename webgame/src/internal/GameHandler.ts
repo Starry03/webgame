@@ -21,7 +21,7 @@ export class GameHandler {
     baseMapDim: Vector2 = new Vector2(800, 416)
     gameObjects: Obj[]
     count
-    currentRoom: number = 4
+    currentRoom: number = 3
 
     constructor(player: Entity, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
         this.ctx = ctx
@@ -80,10 +80,10 @@ export class GameHandler {
     }
 
     async initialize() {
-        this.currentRoomPath = getRoomPath('room4')
+        this.currentRoomPath = getRoomPath('room3')
         this.bg_image = await loadMapData(this.currentRoomPath, this.canvas, this.ctx)
         const objs = (await loadMapObjects(
-            'room4',
+            'room3',
             this.currentRoomPath,
             this.canvas,
             this.ctx,
@@ -128,7 +128,7 @@ export class GameHandler {
         })
         this.currentRoomObjects.sort((a: Obj, b: Obj) => {
             const exotic_peppe = a.name
-            if (['entranceDoor', 'accessDoor', 'ladder', 'switchRoomDoor', 'specialWall'].includes(exotic_peppe)) return 1
+            if (['entranceDoor', 'accessDoor', 'ladder', 'switchRoomDoor', 'specialWall', "structure"].includes(exotic_peppe)) return 1
             const customA = a.custom_properties
             if (customA['type'] === 'door' || customA['type'] === 'ladder') return 1
             if (customA['type'] === 'brick_wall' || customA['type'] === 'door') return 1
