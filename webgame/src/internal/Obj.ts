@@ -143,7 +143,7 @@ export class Obj {
                 this.cooldowns.get(this.currentAnimation)?.value != 0
             ) {
                 this.isAnimationBlocking = false
-                this.idle()
+                this.idle(true)
             }
         }
     }
