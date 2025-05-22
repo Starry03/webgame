@@ -140,8 +140,9 @@ export class Obj {
         if (this.currentFrame >= this.selectedFrames.length) {
             this.currentFrame = 0
             if (
-                this.cooldowns.has(this.currentAnimation) &&
-                this.cooldowns.get(this.currentAnimation)?.value != 0
+                (this.cooldowns.has(this.currentAnimation) &&
+                    this.cooldowns.get(this.currentAnimation)?.value != 0) ||
+                this.isAnimationBlocking
             ) {
                 this.isAnimationBlocking = false
                 this.idle(true)
