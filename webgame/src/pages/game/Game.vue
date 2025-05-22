@@ -40,11 +40,19 @@ async function handleFullscreen() {
         await document.documentElement.requestFullscreen({
             navigationUI: 'hide',
         } as FullscreenOptions)
-        await screen.orientation.lock('portrait')
+        await (screen.orientation as any).lock('portrait')
     } catch (error) {
         console.error(error)
     }
     isReady.value = true
+
+    setTimeout(() => {
+        const canvas = document.getElementById('canvas')
+        if (canvas) {
+            canvas.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        }
+    }, 300)
+
 }
 
 function playAudio() {

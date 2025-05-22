@@ -115,7 +115,7 @@ const getTime = () => {
                 <div class="bar-container flex items-center gap-small">
                     <span>MP:</span>
                     <ProgressBar :progress="manaPercentage" color="cyan" class="mana-bar" />
-                    <span class="mp-value">{{ props.mana }}/{{ props.maxMana }}</span>
+                    <span class="mp-value">{{ Math.floor(props.mana) }}/{{ props.maxMana }}</span>
                 </div>
             </div>
             <div class="cooldown-container">
@@ -147,10 +147,15 @@ const getTime = () => {
     gap: 2rem;
     margin-bottom: 0.5rem;
     justify-content: space-between;
+    text-shadow: 0 0 10px black, 0 0 20px black;
 }
 
 .player-name {
     color: orange;
+}
+
+.player-level{
+    color:chartreuse;
 }
 
 .player-time{

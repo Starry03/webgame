@@ -15,6 +15,10 @@
             />
         </div>
 
+        <div id="message_zone" v-if="currentRoom >= 1 && currentRoom <= 4">
+            {{ interactionMessage }}
+        </div>
+
         <div id="boss-status" v-if="isBossRoom">
             <StatusBar
                 v-if="mappedBoss"
@@ -67,7 +71,7 @@ const mappedPlayer = computed(() => {
         health: player.value.health,
         maxHealth: player.value.maxHealth,
         mana: player.value.mana,
-        maxMana: player.value.mana,
+        maxMana: player.value.maxMana,
         level: 1,
         cooldownQ: player_value.cooldowns.get(AnimationType.ATTACK_2),
         maxCooldownQ: player_value.maxCooldownQ,
@@ -145,6 +149,9 @@ onUnmounted(() => {
 
 const isBossRoom = ref(false) 
 const boss = ref<any>(null)
+
+const currentRoom = ref(1)
+const interactionMessage = ref('')
 
 const mappedBoss = computed(() => {
     if (!boss.value) return null
@@ -226,6 +233,15 @@ function initializeBoss() {
     border: 1px solid #ccc;
     background: #111;
     object-fit: contain;
+}
+
+#message_zone {
+    width: 50%;
+    text-align: center;
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 10px;
 }
 
 @media (max-width: 900px), (max-height: 500px) {

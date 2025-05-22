@@ -1,5 +1,3 @@
-import { NotAnimatedObject } from '../../classes/NotAnimatedObject'
-import { AnimatedObject } from '../../classes/AnimatedObject'
 import * as pako from 'pako'
 
 const tileSize = 32
@@ -10,7 +8,6 @@ export function loadImage(): Promise<HTMLImageElement> {
 
     return new Promise((resolve, reject) => {
         background_map_image.onload = () => {
-            console.log('Loaded image')
             resolve(background_map_image)
             //return background_map_image;
         }
@@ -26,22 +23,18 @@ export async function loadMapData(
     canvas: HTMLCanvasElement,
     ctx: CanvasRenderingContext2D,
 ): Promise<HTMLImageElement | null> {
-    console.log('loadMapData(): begin')
     // let results = {}
     let map_data: any = null
     try {
-        console.log('dentro il try')
         const res = await fetch(path)
-        console.log('dopo fetch(path)')
         if (!res.ok) {
             throw new Error(`HTTP error! status: ${res.status}`)
         }
 
         map_data = await res.json()
-        console.log('popolazione di map_data avvenuta con successo!')
         const image = await loadImage()
         return image
-        // console.log('caricamento immagine di background avvenuta con successo!')
+        
         // const background_layer = map_data.layers.find(
         //     (layer: TiledLayer) => layer.name === 'background',
         // )
@@ -60,7 +53,7 @@ export async function loadMapData(
         console.error(err)
         return null
     }
-    // console.log('loadMapData(): end')
+    
     // return results
 }
 

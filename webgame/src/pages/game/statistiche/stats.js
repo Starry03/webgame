@@ -22,7 +22,6 @@ function showStats(
 }
 
 function nextLevel() {
-  console.log('Starting next level...')
   // codice per avviare il livello successivo
 }
 

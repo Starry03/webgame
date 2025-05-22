@@ -103,15 +103,15 @@ export class AESUtils {
             token: JSON.parse(token),
             session: JSON.parse(session),
         }
-        AESUtils.isExpired(session_ret)
+        if (AESUtils.isExpired(session_ret)) throw new Error('session expired')
         return session_ret
     }
 
     /* TODO: check*/
-    static isExpired(session: { token: Token; session: Session }): void {
+    static isExpired(session: { token: Token; session: Session }): boolean {
         const expirationDate = new Date(session.session.expiration_date)
         const currentDate = new Date()
-        if (expirationDate < currentDate) throw new Error('Session expired')
+        return expirationDate < currentDate
     }
 
     static encrypt(data: string): string {

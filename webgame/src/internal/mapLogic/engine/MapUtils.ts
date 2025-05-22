@@ -494,7 +494,6 @@ export function populateRoom2 (tiled_objects: (NotAnimatedObject|AnimatedObject)
             obj.setFramePaths(frame_paths);
         }
         else {
-            console.log(obj.name);
             throw new Error('path not found');
             return;
         }
@@ -998,7 +997,6 @@ export function populateRoom4 (list_objects: (Obj)[]) {
                 opening: [],
                 closing: []
             }
-            console.log(frame_paths)
             obj.setFramePaths(frame_paths);
         }
         /*else {

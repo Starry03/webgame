@@ -20,6 +20,7 @@ export class GameHandler {
     currentRoomObjects: Obj[]
     baseMapDim: Vector2 = new Vector2(800, 416)
     gameObjects: Obj[]
+    count
     currentRoom: number = 4
 
     constructor(player: Entity, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
@@ -36,6 +37,7 @@ export class GameHandler {
         this.currentRoomObjects = []
         this.bg_image = null
         this.gameObjects = []
+        this.count = 0
 
         // dati mappa = loadMapData(this.currentRoomPath, this.canvas, this.ctx)
 
@@ -54,14 +56,20 @@ export class GameHandler {
     gameLoop(timestamp: number) {
         const deltaTime = (timestamp - this.lastTimeStamp) / 1000
         this.lastTimeStamp = timestamp
+        if (this.player.mana < this.player.maxMana) {
+            this.player.mana = Math.min(
+                this.player.maxMana,
+                this.player.mana + this.player.manaRegenRate * deltaTime
+            )
+        }
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
         this.ctx.save()
         if (this.bg_image)
             this.ctx.drawImage(this.bg_image, 0, 0, this.canvas.width, this.canvas.height)
-
         this.ctx.restore()
         this.player.handleInput(this.keys, deltaTime)
         Collider.update_collisions(this.gameObjects)
+        this.player.attack(this.keys, this.gameObjects)
         this.gameObjects.forEach((obj: Obj) => {
             if (obj.selectedFrames == undefined) {
                 return
