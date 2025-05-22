@@ -197,7 +197,6 @@ export class Obj {
 
     update(timestamp: number, deltaTime: number) {
         if (!this.ready) return
-        console.log(this.isAnimationChanged(), !this.isIdle, !this.isAnimationBlocking)
         if (this.isAnimationChanged() && !this.isIdle) {
             this.changeFrames(this.currentAnimation)
         }

@@ -3,6 +3,7 @@ import hashlib
 
 from sqlalchemy.sql import text
 from fastapi import Request, HTTPException
+from fastapi.logger import logger
 from starlette.status import HTTP_401_UNAUTHORIZED
 
 from app.db.session import get_db_session
@@ -10,6 +11,7 @@ from app.auth.models import Credentials, User, UserSession, UserSessionResponse
 from app.auth.aes_manager import AESManager
 from app.auth.jwt_manager import JWTManager
 from app.auth.hasher import Hasher
+
 
 
 class AuthManager:
@@ -46,6 +48,7 @@ class AuthManager:
                 return None
             session = UserSession(id=res[0], sym_key=res[1], expiration_date=res[2])
             if AuthManager.is_session_expired(session):
+                logger.error("Session expired")
                 return None
             return session
 
