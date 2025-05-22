@@ -80,10 +80,10 @@ export class GameHandler {
     }
 
     async initialize() {
-        this.currentRoomPath = getRoomPath('room4')
+        this.currentRoomPath = getRoomPath('room3')
         this.bg_image = await loadMapData(this.currentRoomPath, this.canvas, this.ctx)
         const objs = (await loadMapObjects(
-            'room4',
+            'room3',
             this.currentRoomPath,
             this.canvas,
             this.ctx,
@@ -115,7 +115,7 @@ export class GameHandler {
             default:
                 break
         }*/
-        populateRoom4(this.currentRoomObjects)
+        populateRoom3(this.currentRoomObjects)
         for (const obj of this.currentRoomObjects) {
             console.log("<---------------------------------------------")
             console.log(obj.name)

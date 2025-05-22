@@ -21,6 +21,13 @@ export class Player extends Entity {
     ) {
         super(canvas, ctx, speed, health, mana, attackPower, defense, pos, dim)
         this.interactionMessage = interactionMessage ?? ''
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'p') {
+                this.interactedObjects.forEach((collision) => {
+                    collision.other.onInteraction()
+                })
+            }
+        })
     }
 
     interact(other: Obj): void {
