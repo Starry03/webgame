@@ -39,7 +39,7 @@ export function loadObjectsFromMap(
             let custom_properties: Record<string, string>
             if (object.name == 'entranceDoor') {
                 custom_properties = extractCustomProperties(object)
-                
+
                 list_objects.push(
                     new EntranceDoor(
                         canvas,
@@ -57,7 +57,7 @@ export function loadObjectsFromMap(
                     ),
                 )
             } else if (object.name == 'switchRoomDoor' && !['room3', 'room4'].includes(room_name)) {
-                
+
                 custom_properties = extractCustomProperties(object)
                 list_objects.push(
                     new SwitchRoomDoor(
@@ -76,7 +76,7 @@ export function loadObjectsFromMap(
                     ),
                 )
             } else if (object.name == 'switchStructure') {
-                
+
                 custom_properties = extractCustomProperties(object)
                 SwitchStructure.populateCustomProperties(
                     custom_properties,
@@ -187,7 +187,7 @@ export async function loadMapObjects(
             ctx,
             'room3',
         )
-        populateRoom4(list_objects)
+        populateRoom3(list_objects)
         return list_objects
     } catch (error) {
         console.error(`Errore nel caricamento della mappa: ${mapUrl}`, error)
