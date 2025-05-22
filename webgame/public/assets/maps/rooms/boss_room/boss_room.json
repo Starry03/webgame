@@ -4,7 +4,7 @@
  "layers":[
         {
          "compression":"zlib",
-         "data":"eJw7yMDAcJAOeCkUH0LCS9EwLnFCmBw70DE+dch24NODC+PSg8sObPpJDRNcZmCzA18YEOOnQ3jsIDWcCdmBK84J+YNadhAKD2zhR2xYURKvxMY5ujsJpWdS8wcuNxFrDz7\/0KOcAmEA2UfiwQ==",
+         "data":"eJxjYKAPWArFh5DwUjSMS5wQJscOdIxPHbId+PTgwrj04LIDm35SwwSXGdjswBcGxPjpEB47SA1nQnbginNC\/qCWHYTCA1v4ERtWlMQrsXGO7k5C6ZnU\/IHLTcTag88\/9AIAkdGseQ==",
          "encoding":"base64",
          "height":13,
          "id":1,
@@ -561,6 +561,54 @@
                  "width":40,
                  "x":223.5,
                  "y":256
+                }, 
+                {
+                 "gid":239,
+                 "height":32,
+                 "id":52,
+                 "name":"bottomWall",
+                 "rotation":0,
+                 "type":"NotAnimatedObject",
+                 "visible":true,
+                 "width":800,
+                 "x":0,
+                 "y":416
+                }, 
+                {
+                 "gid":239,
+                 "height":32,
+                 "id":53,
+                 "name":"topWall",
+                 "rotation":0,
+                 "type":"NotAnimatedObject",
+                 "visible":true,
+                 "width":800,
+                 "x":0,
+                 "y":32
+                }, 
+                {
+                 "gid":240,
+                 "height":352,
+                 "id":54,
+                 "name":"leftSideWall",
+                 "rotation":0,
+                 "type":"NotAnimatedObject",
+                 "visible":true,
+                 "width":32,
+                 "x":0,
+                 "y":384
+                }, 
+                {
+                 "gid":240,
+                 "height":352,
+                 "id":55,
+                 "name":"rightSideWall",
+                 "rotation":0,
+                 "type":"NotAnimatedObject",
+                 "visible":true,
+                 "width":32,
+                 "x":768,
+                 "y":384
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -569,7 +617,7 @@
          "y":0
         }],
  "nextlayerid":3,
- "nextobjectid":52,
+ "nextobjectid":56,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
@@ -666,6 +714,14 @@
         {
          "firstgid":236,
          "source":"tiled_objects\/tilesets\/boss_ladder.tsx"
+        }, 
+        {
+         "firstgid":239,
+         "source":"..\/tilesets\/bottom_wall.tsx"
+        }, 
+        {
+         "firstgid":240,
+         "source":"..\/tilesets\/boss_side_wall.tsx"
         }],
  "tilewidth":32,
  "type":"map",

@@ -4,7 +4,7 @@
  "layers":[
         {
          "compression":"zlib",
-         "data":"eJzrZ2Bg6B8meCkN8agdo3aM2jE47KA1BgD7xMlQ",
+         "data":"eJxbysDAsHQUj+JRPIpHMRgDAKR70Xo=",
          "encoding":"base64",
          "height":13,
          "id":1,
@@ -401,6 +401,54 @@
                  "width":64,
                  "x":576,
                  "y":129
+                }, 
+                {
+                 "gid":166,
+                 "height":64,
+                 "id":77,
+                 "name":"topWall",
+                 "rotation":0,
+                 "type":"NotAnimatedObject",
+                 "visible":true,
+                 "width":800,
+                 "x":0,
+                 "y":64
+                }, 
+                {
+                 "gid":167,
+                 "height":320,
+                 "id":78,
+                 "name":"leftSideWall",
+                 "rotation":0,
+                 "type":"NotAnimatedObject",
+                 "visible":true,
+                 "width":32,
+                 "x":0,
+                 "y":384
+                }, 
+                {
+                 "gid":168,
+                 "height":32,
+                 "id":79,
+                 "name":"bottomWall",
+                 "rotation":0,
+                 "type":"NotAnimatedObject",
+                 "visible":true,
+                 "width":800,
+                 "x":0,
+                 "y":416
+                }, 
+                {
+                 "gid":167,
+                 "height":320,
+                 "id":80,
+                 "name":"rightSideWall",
+                 "rotation":0,
+                 "type":"NotAnimatedObject",
+                 "visible":true,
+                 "width":32,
+                 "x":768,
+                 "y":384
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -409,7 +457,7 @@
          "y":0
         }],
  "nextlayerid":16,
- "nextobjectid":77,
+ "nextobjectid":81,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
@@ -454,6 +502,18 @@
         {
          "firstgid":165,
          "source":"..\/tilesets\/floor.tsx"
+        }, 
+        {
+         "firstgid":166,
+         "source":"..\/tilesets\/top_wall.tsx"
+        }, 
+        {
+         "firstgid":167,
+         "source":"..\/tilesets\/side_wall.tsx"
+        }, 
+        {
+         "firstgid":168,
+         "source":"..\/tilesets\/bottom_wall.tsx"
         }],
  "tilewidth":32,
  "type":"map",

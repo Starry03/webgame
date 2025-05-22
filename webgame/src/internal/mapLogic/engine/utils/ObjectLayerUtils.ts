@@ -186,7 +186,7 @@ export async function loadMapObjects(
             map_data,
             canvas,
             ctx,
-            'room4',
+            'room3',
         )
         populateRoom4(list_objects)
         return list_objects

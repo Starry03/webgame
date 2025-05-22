@@ -62,7 +62,6 @@ export class Entity extends Obj {
         )
 
         if (!dir.direction().compare(0, 0) && !this.canMove(possible_position, dir)) {
-            console.log('PUERCODIOS')
             return
         }
 

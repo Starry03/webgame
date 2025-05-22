@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="25" height="13" tilewidth="32" tileheight="32" infinite="0" nextlayerid="16" nextobjectid="77">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="25" height="13" tilewidth="32" tileheight="32" infinite="0" nextlayerid="16" nextobjectid="81">
  <editorsettings>
   <export target="room1.json" format="json"/>
  </editorsettings>
@@ -13,9 +13,12 @@
  <tileset firstgid="160" source="../tilesets/switchRoomDoor.tsx"/>
  <tileset firstgid="162" source="../tilesets/entrance.tsx"/>
  <tileset firstgid="165" source="../tilesets/floor.tsx"/>
+ <tileset firstgid="166" source="../tilesets/top_wall.tsx"/>
+ <tileset firstgid="167" source="../tilesets/side_wall.tsx"/>
+ <tileset firstgid="168" source="../tilesets/bottom_wall.tsx"/>
  <layer id="1" name="background" width="25" height="13">
   <data encoding="base64" compression="zlib">
-   eJzrZ2Bg6B8meCkN8agdo3aM2jE47KA1BgD7xMlQ
+   eJxbysDAsHQUj+JRPIpHMRgDAKR70Xo=
   </data>
  </layer>
  <objectgroup id="2" name="objects">
@@ -60,5 +63,9 @@
     <property name="type" value="door"/>
    </properties>
   </object>
+  <object id="77" name="topWall" type="NotAnimatedObject" gid="166" x="0" y="64" width="800" height="64"/>
+  <object id="78" name="leftSideWall" type="NotAnimatedObject" gid="167" x="0" y="384" width="32" height="320"/>
+  <object id="79" name="bottomWall" type="NotAnimatedObject" gid="168" x="0" y="416" width="800" height="32"/>
+  <object id="80" name="rightSideWall" type="NotAnimatedObject" gid="167" x="768" y="384" width="32" height="320"/>
  </objectgroup>
 </map>
