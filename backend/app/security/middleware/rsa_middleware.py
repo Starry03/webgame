@@ -9,7 +9,7 @@ from app.auth.rsa_manager import RSAManager
 
 
 class RSADecryptionMiddleware(BaseHTTPMiddleware):
-    allowed_paths: tuple[str] = ("/auth/login", "/auth/register")
+    allowed_paths: tuple[str] = ("/auth/login", "/auth/register", "/auth/delete")
     __allowed_methods: tuple[str] = ("POST")
 
     async def dispatch(self, request: Request, call_next):

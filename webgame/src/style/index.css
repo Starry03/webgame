@@ -154,6 +154,11 @@
   color: black;
 }
 
+.button-tertiary {
+  font-size: var(--font-small);
+  text-decoration: underline;
+}
+
 #canvas {
   background-color: var(--black);
 }
