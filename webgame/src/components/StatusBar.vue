@@ -130,6 +130,7 @@ const username = storedUser ? JSON.parse(storedUser)?.username ?? 'Player' : 'Pl
     gap: 2rem;
     margin-bottom: 0.5rem;
     justify-content: space-between;
+    text-shadow: 0 0 10px black, 0 0 20px black;
 }
 
 .player-name {
