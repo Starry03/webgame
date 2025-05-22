@@ -89,7 +89,7 @@ function loadFrames(animationName) {
     img.onerror = () => console.error(`Errore nel caricamento dell'immagine: ${path}`)
     frames.push(img)
   })
-  //console.log(`Frames caricati per ${animationName}:`, frames.length);
+  
 }
 
 // Disegna il frame corrente

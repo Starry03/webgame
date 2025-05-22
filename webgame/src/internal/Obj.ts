@@ -25,6 +25,7 @@ export class Obj {
     FPS = 200
     frameDelay: number = 1000 / this.FPS
     collidedObjects: Set<CollisionInfo>
+    interactedObjects: Set<CollisionInfo>
     time: number
     custom_properties: Record<string, any>
     name: string
@@ -59,9 +60,9 @@ export class Obj {
         this.isInteractable = false
         this.isSolid = true
         this.collidedObjects = new Set<CollisionInfo>()
+        this.interactedObjects = new Set<CollisionInfo>()
         this.custom_properties = custom_properties
         this.name = name
-        if (this.name == 'finalStructure') console.log(this)
     }
 
     preloadImages() {
@@ -74,7 +75,6 @@ export class Obj {
                 const promise = new Promise<void>((resolve, reject) => {
                     img.src = path
                     img.onerror = () => {
-                        console.debug('preload', this.name)
                         reject(`${path} failed to load`)
                     }
                     img.onload = () => {
@@ -228,9 +228,24 @@ export class Obj {
         }
     }
 
-    onInteract(other: Obj) {}
+    enterInteraction(collision: CollisionInfo) {
+        for (const col of this.interactedObjects)
+            if (col.other === collision.other && col.dir !== collision.dir) {
+                col.dir = collision.dir
+                return
+            }
+        this.interactedObjects.add(collision)
+    }
 
-    interact(target: Obj) {}
+    exitInteraction(collision: CollisionInfo) {
+        if (this.interactedObjects.size === 0) return
+        for (const col of this.interactedObjects) {
+            if (col.other === collision.other) {
+                this.interactedObjects.delete(col)
+                return
+            }
+        }
+    }
 
     getFramePaths(): Record<AnimationType, string[]> {
         return this.framePaths

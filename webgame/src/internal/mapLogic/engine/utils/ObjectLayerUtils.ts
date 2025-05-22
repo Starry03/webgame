@@ -39,7 +39,7 @@ export function loadObjectsFromMap(
             let custom_properties: Record<string, string>
             if (object.name == 'entranceDoor') {
                 custom_properties = extractCustomProperties(object)
-                // console.log('loadObjects - entranceDoor')
+                
                 list_objects.push(
                     new EntranceDoor(
                         canvas,
@@ -57,7 +57,7 @@ export function loadObjectsFromMap(
                     ),
                 )
             } else if (object.name == 'switchRoomDoor' && !['room3', 'room4'].includes(room_name)) {
-                // console.log('loadObjects - switchRoomDoor')
+                
                 custom_properties = extractCustomProperties(object)
                 list_objects.push(
                     new SwitchRoomDoor(
@@ -76,7 +76,7 @@ export function loadObjectsFromMap(
                     ),
                 )
             } else if (object.name == 'switchStructure') {
-                // console.log('switchStructure')
+                
                 custom_properties = extractCustomProperties(object)
                 SwitchStructure.populateCustomProperties(
                     custom_properties,
@@ -101,7 +101,6 @@ export function loadObjectsFromMap(
                     ),
                 )
             } else if (object.name == 'finalStructure') {
-                console.log('finalStructure')
                 custom_properties = extractCustomProperties(object)
                 FinalStructure.populateCustomProperties(
                     custom_properties,

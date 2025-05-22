@@ -9,22 +9,43 @@ export type CollisionInfo = {
 export class Collider {
     static collision_treshold: number = 10
 
+    private static trigger_collision(obj: Obj, other: Obj, collision_info: CollisionInfo) {
+        if (collision_info !== null && collision_info.dir !== null) {
+            obj.enterCollision({ other: other, dir: collision_info.dir })
+            other.enterCollision({
+                other: obj,
+                dir: new Vector2(-collision_info.dir.x, -collision_info.dir.y),
+            })
+        } else {
+            obj.exitCollision({ other: other, dir: null })
+            other.exitCollision({ other: obj, dir: null })
+        }
+    }
+
+    private static trigger_interaction(obj: Obj, other: Obj, collision_info: CollisionInfo) {
+        if (collision_info !== null && collision_info.dir !== null) {
+            obj.enterInteraction({ other: other, dir: collision_info.dir })
+            other.enterInteraction({
+                other: obj,
+                dir: new Vector2(-collision_info.dir.x, -collision_info.dir.y),
+            })
+        } else {
+            obj.exitInteraction({ other: other, dir: null })
+            other.exitInteraction({ other: obj, dir: null })
+        }
+    }
+
     static update_collisions(objects: Obj[]) {
         for (let i = 0; i < objects.length - 1; i++) {
             for (let j = i + 1; j < objects.length; j++) {
                 const obj = objects[i]
                 const other = objects[j]
                 const collision_info: CollisionInfo | null = Collider.get_collision(obj, other)
-                if (collision_info !== null && collision_info.dir !== null) {
-                    obj.enterCollision({ other: other, dir: collision_info.dir })
-                    other.enterCollision({
-                        other: obj,
-                        dir: new Vector2(-collision_info.dir.x, -collision_info.dir.y),
-                    })
-                } else {
-                    obj.exitCollision({ other: other, dir: null })
-                    other.exitCollision({ other: obj, dir: null })
-                }
+                if (!collision_info) continue
+                const use_interaction =
+                    obj.custom_properties['interactable'] && obj.custom_properties['interactable']
+                if (use_interaction) Collider.trigger_interaction(obj, other, collision_info)
+                else Collider.trigger_collision(obj, other, collision_info)
             }
         }
     }
@@ -47,12 +68,14 @@ export class Collider {
     private static get_collision_info(
         obj: Obj | null = null,
         other: Obj | null = null,
-        raycast: boolean = false,
     ): CollisionInfo | null {
         if (!obj || !other) return null
         if (obj.custom_properties === undefined || other.custom_properties === undefined)
             return null
-        if (!obj.custom_properties['collidable'] || !other.custom_properties['collidable'])
+        if (
+            (!obj.custom_properties['collidable'] && !obj.custom_properties['interactable']) ||
+            (!other.custom_properties['collidable'] && !other.custom_properties['interactable'])
+        )
             return null
         const pos_obj = obj.pos
         const dim_obj = obj.dim
@@ -68,12 +91,8 @@ export class Collider {
         return { other, dir: dir }
     }
 
-    private static get_collision(
-        obj: Obj,
-        other: Obj,
-        raycast: boolean = false,
-    ): CollisionInfo | null {
+    private static get_collision(obj: Obj, other: Obj): CollisionInfo | null {
         if (obj === other) return null
-        return Collider.get_collision_info(obj, other, raycast)
+        return Collider.get_collision_info(obj, other)
     }
 }
