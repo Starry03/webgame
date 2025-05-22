@@ -4,7 +4,7 @@
  "layers":[
         {
          "compression":"zlib",
-         "data":"eJxbysDAsHSYYEYaYlLtWI2GaWEHPfwxaseoHYPNDlpjAO88QMo=",
+         "data":"eJxjZGBgYBzFVMer0fBAu2cUj+JRTBwGAB0DA+4=",
          "encoding":"base64",
          "height":13,
          "id":1,
@@ -526,6 +526,54 @@
                  "width":32,
                  "x":384,
                  "y":128
+                }, 
+                {
+                 "gid":179,
+                 "height":64,
+                 "id":51,
+                 "name":"topWall",
+                 "rotation":0,
+                 "type":"NotAnimatedObject",
+                 "visible":true,
+                 "width":800,
+                 "x":0,
+                 "y":64
+                }, 
+                {
+                 "gid":180,
+                 "height":320,
+                 "id":52,
+                 "name":"leftSideWall",
+                 "rotation":0,
+                 "type":"NotAnimatedObject",
+                 "visible":true,
+                 "width":32,
+                 "x":0,
+                 "y":384
+                }, 
+                {
+                 "gid":180,
+                 "height":320,
+                 "id":53,
+                 "name":"rightSideWall",
+                 "rotation":0,
+                 "type":"NotAnimatedObject",
+                 "visible":true,
+                 "width":32,
+                 "x":768,
+                 "y":384
+                }, 
+                {
+                 "gid":181,
+                 "height":32,
+                 "id":54,
+                 "name":"bottomWall",
+                 "rotation":0,
+                 "type":"NotAnimatedObject",
+                 "visible":true,
+                 "width":800,
+                 "x":0,
+                 "y":416
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -534,7 +582,7 @@
          "y":0
         }],
  "nextlayerid":3,
- "nextobjectid":51,
+ "nextobjectid":55,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
@@ -599,6 +647,18 @@
         {
          "firstgid":175,
          "source":"..\/tilesets\/attackEnhancement.tsx"
+        }, 
+        {
+         "firstgid":179,
+         "source":"..\/tilesets\/top_wall.tsx"
+        }, 
+        {
+         "firstgid":180,
+         "source":"..\/tilesets\/side_wall.tsx"
+        }, 
+        {
+         "firstgid":181,
+         "source":"..\/tilesets\/bottom_wall.tsx"
         }],
  "tilewidth":32,
  "type":"map",

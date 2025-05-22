@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="25" height="13" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="51">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="25" height="13" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="55">
  <editorsettings>
   <export target="room2.json" format="json"/>
  </editorsettings>
@@ -18,9 +18,12 @@
  <tileset firstgid="171" source="../tilesets/rug.tsx"/>
  <tileset firstgid="172" source="../tilesets/defenseEnhancement.tsx"/>
  <tileset firstgid="175" source="../tilesets/attackEnhancement.tsx"/>
+ <tileset firstgid="179" source="../tilesets/top_wall.tsx"/>
+ <tileset firstgid="180" source="../tilesets/side_wall.tsx"/>
+ <tileset firstgid="181" source="../tilesets/bottom_wall.tsx"/>
  <layer id="1" name="background" width="25" height="13">
   <data encoding="base64" compression="zlib">
-   eJxbysDAsHSYYEYaYlLtWI2GaWEHPfwxaseoHYPNDlpjAO88QMo=
+   eJxjZGBgYBzFVMer0fBAu2cUj+JRTBwGAB0DA+4=
   </data>
  </layer>
  <objectgroup id="2" name="objects">
@@ -97,5 +100,9 @@
     <property name="takeable" type="bool" value="true"/>
    </properties>
   </object>
+  <object id="51" name="topWall" type="NotAnimatedObject" gid="179" x="0" y="64" width="800" height="64"/>
+  <object id="52" name="leftSideWall" type="NotAnimatedObject" gid="180" x="0" y="384" width="32" height="320"/>
+  <object id="53" name="rightSideWall" type="NotAnimatedObject" gid="180" x="768" y="384" width="32" height="320"/>
+  <object id="54" name="bottomWall" type="NotAnimatedObject" gid="181" x="0" y="416" width="800" height="32"/>
  </objectgroup>
 </map>

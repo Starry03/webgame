@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="25" height="13" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="62">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="25" height="13" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="66">
  <editorsettings>
-  <export target="room3.js" format="js"/>
+  <export target="room3.json" format="json"/>
  </editorsettings>
  <tileset firstgid="1" source="../tilesets/floor.tsx"/>
  <tileset firstgid="2" source="../tilesets/wall.tsx"/>
@@ -17,9 +17,12 @@
  <tileset firstgid="29" source="../tilesets/rug.tsx"/>
  <tileset firstgid="30" source="../tilesets/attackEnhancement.tsx"/>
  <tileset firstgid="34" source="../tilesets/defenseEnhancement.tsx"/>
+ <tileset firstgid="37" source="../tilesets/bottom_wall.tsx"/>
+ <tileset firstgid="38" source="../tilesets/top_wall.tsx"/>
+ <tileset firstgid="39" source="../tilesets/side_wall.tsx"/>
  <layer id="1" name="background" width="25" height="13">
   <data encoding="base64" compression="zlib">
-   eJxjYWBgYBkmmJGGeNSOUTtG7UDFslBMbztojQHligLT
+   eJxjZGBgYBzFo3gUj2ISsSwUD3U70DEAiL0Btg==
   </data>
  </layer>
  <objectgroup id="2" name="objects">
@@ -93,6 +96,10 @@
     <property name="takeable" type="bool" value="true"/>
    </properties>
   </object>
+  <object id="62" name="bottomWall" type="NotAnimatedObject" gid="37" x="0" y="416" width="800" height="32"/>
+  <object id="63" name="topWall" type="NotAnimatedObject" gid="38" x="0" y="64" width="800" height="64"/>
+  <object id="64" name="leftSideWall" type="NotAnimatedObject" gid="39" x="0" y="384" width="32" height="320"/>
+  <object id="65" name="rightSideWall" type="NotAnimatedObject" gid="39" x="768" y="384" width="32" height="320"/>
  </objectgroup>
  <objectgroup id="3" name="objects2">
   <object id="45" name="specialWall" type="AnimatedObject" gid="2147483671" x="608" y="352" width="32" height="32">
