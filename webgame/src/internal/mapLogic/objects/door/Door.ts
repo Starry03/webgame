@@ -61,4 +61,8 @@ export class Door extends AnimatedObject {
         }
         this.setFramePaths(frame_paths)
     }
+
+    onInteraction(): void {
+        
+    }
 }

@@ -102,7 +102,6 @@ export class Obj {
     }
 
     changeFrames(animationName: AnimationType) {
-        this.currentFrame = 0
         this.changeAnimation(animationName)
         this.selectedFrames = this.frames[animationName]
     }
@@ -139,12 +138,13 @@ export class Obj {
         this.lastUpdateTime = timestamp
         if (this.currentFrame >= this.selectedFrames.length) {
             this.currentFrame = 0
-            this.isAnimationBlocking = false
             if (
                 this.cooldowns.has(this.currentAnimation) &&
                 this.cooldowns.get(this.currentAnimation)?.value != 0
-            )
+            ) {
+                this.isAnimationBlocking = false
                 this.idle()
+            }
         }
     }
 
@@ -182,6 +182,8 @@ export class Obj {
         isBlocking: boolean = false,
         prevAnimation: AnimationType | null = null,
     ) {
+        if (this.isAnimationBlocking) return
+        this.currentFrame = 0
         if (prevAnimation) this.prevAnimation = prevAnimation
         else this.prevAnimation = this.currentAnimation
         if (animationName !== AnimationType.IDLE) this.isIdle = false
@@ -236,6 +238,8 @@ export class Obj {
             }
         this.interactedObjects.add(collision)
     }
+
+    onInteraction() {}
 
     exitInteraction(collision: CollisionInfo) {
         if (this.interactedObjects.size === 0) return
