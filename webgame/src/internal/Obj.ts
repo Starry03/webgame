@@ -102,6 +102,7 @@ export class Obj {
     }
 
     changeFrames(animationName: AnimationType) {
+        this.currentFrame = 0
         this.changeAnimation(animationName)
         this.selectedFrames = this.frames[animationName]
     }
@@ -135,6 +136,7 @@ export class Obj {
         if (this.time <= this.frameDelay) return
         this.time = 0
         this.currentFrame++
+        console.log(this.currentFrame)
         this.lastUpdateTime = timestamp
         if (this.currentFrame >= this.selectedFrames.length) {
             this.currentFrame = 0
@@ -183,7 +185,6 @@ export class Obj {
         prevAnimation: AnimationType | null = null,
     ) {
         if (this.isAnimationBlocking) return
-        this.currentFrame = 0
         if (prevAnimation) this.prevAnimation = prevAnimation
         else this.prevAnimation = this.currentAnimation
         if (animationName !== AnimationType.IDLE) this.isIdle = false
@@ -240,6 +241,8 @@ export class Obj {
     }
 
     onInteraction() {}
+
+    interact(other: Obj) {}
 
     exitInteraction(collision: CollisionInfo) {
         if (this.interactedObjects.size === 0) return
