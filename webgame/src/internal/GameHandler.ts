@@ -59,7 +59,7 @@ export class GameHandler {
         if (this.player.mana < this.player.maxMana) {
             this.player.mana = Math.min(
                 this.player.maxMana,
-                this.player.mana + this.player.manaRegenRate * deltaTime
+                this.player.mana + this.player.manaRegenRate * deltaTime,
             )
         }
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
@@ -80,10 +80,10 @@ export class GameHandler {
     }
 
     async initialize() {
-        this.currentRoomPath = getRoomPath('room3')
+        this.currentRoomPath = getRoomPath('room4')
         this.bg_image = await loadMapData(this.currentRoomPath, this.canvas, this.ctx)
         const objs = (await loadMapObjects(
-            'room3',
+            'room4',
             this.currentRoomPath,
             this.canvas,
             this.ctx,
@@ -121,19 +121,20 @@ export class GameHandler {
         })
         this.currentRoomObjects.sort((a: Obj, b: Obj) => {
             const exotic_peppe = a.name
-            console.log("<--------------------------------------------------------------")
-            console.log(exotic_peppe)
-            console.log(a.custom_properties)
-            console.log("---------------------------------------------------------->")
-            if (['accessDoor', 'ladder', 'switchRoomDoor', 'specialWall'].includes(exotic_peppe))
+            if (exotic_peppe === 'ladder') console.debug('ladder')
+            if (
+                ['entranceDoor', 'accessDoor', 'ladder', 'switchRoomDoor', 'specialWall'].includes(
+                    exotic_peppe,
+                )
+            )
                 //console.log("primo if", exotic_peppe)
                 return 1
             const customA = a.custom_properties
-            if (customA['type'] === 'door' || customA['type'] === 'ladder') return 1
-            if (customA['type'] === 'brick_wall' || customA['type'] === 'door') {
-                //console.log("terzo if", customA)
-                return 1
-            }
+            // if (customA['type'] === 'door' || customA['type'] === 'ladder') return 1
+            // if (customA['type'] === 'brick_wall' || customA['type'] === 'door') {
+            //     //console.log("terzo if", customA)
+            //     return 1
+            // }
             return -1
         })
         this.gameObjects = [...this.currentRoomObjects, this.player]

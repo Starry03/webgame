@@ -41,13 +41,13 @@ export class Obj {
         name: string,
     ) {
         this.canvas = canvas
+        this.currentFrame = 0
         this.ctx = ctx
         this.pos = pos
         this.dim = dim
         this.speed = 0
         this.frames = {} as Record<AnimationType, HTMLImageElement[]>
         this.framePaths = {} as Record<AnimationType, string[]>
-        this.currentFrame = 0
         this.time = 0
         this.lastUpdateTime = performance.now()
         this.facingDirection = new Vector2(0, 1)
@@ -184,7 +184,10 @@ export class Obj {
         isBlocking: boolean = false,
         prevAnimation: AnimationType | null = null,
     ) {
-        if (this.isAnimationBlocking) return
+        if (this.isAnimationBlocking) {
+            this.prevAnimation = this.currentAnimation
+            return
+        }
         if (prevAnimation) this.prevAnimation = prevAnimation
         else this.prevAnimation = this.currentAnimation
         if (animationName !== AnimationType.IDLE) this.isIdle = false
@@ -194,6 +197,7 @@ export class Obj {
 
     update(timestamp: number, deltaTime: number) {
         if (!this.ready) return
+        console.log(this.isAnimationChanged(), !this.isIdle, !this.isAnimationBlocking)
         if (this.isAnimationChanged() && !this.isIdle) {
             this.changeFrames(this.currentAnimation)
         }

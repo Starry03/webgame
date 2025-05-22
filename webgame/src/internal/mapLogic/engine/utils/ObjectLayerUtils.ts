@@ -185,9 +185,9 @@ export async function loadMapObjects(
             map_data,
             canvas,
             ctx,
-            'room3',
+            'room4',
         )
-        populateRoom3(list_objects)
+        populateRoom4(list_objects)
         return list_objects
     } catch (error) {
         console.error(`Errore nel caricamento della mappa: ${mapUrl}`, error)
