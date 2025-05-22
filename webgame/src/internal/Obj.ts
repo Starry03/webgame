@@ -136,7 +136,6 @@ export class Obj {
         if (this.time <= this.frameDelay) return
         this.time = 0
         this.currentFrame++
-        console.log(this.currentFrame)
         this.lastUpdateTime = timestamp
         if (this.currentFrame >= this.selectedFrames.length) {
             this.currentFrame = 0
