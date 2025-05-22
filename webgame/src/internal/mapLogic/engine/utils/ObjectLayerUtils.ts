@@ -56,7 +56,7 @@ export function loadObjectsFromMap(
                         custom_properties,
                     ),
                 )
-            } else if (object.name == 'switchRoomDoor' && !['room3', 'room4'].includes(room_name)) {
+            } else if (object.name == 'switchRoomDoor' && !(room_name !== 'room3')) {
 
                 custom_properties = extractCustomProperties(object)
                 list_objects.push(
