@@ -319,34 +319,6 @@
                  "y":130
                 }, 
                 {
-                 "gid":22,
-                 "height":160,
-                 "id":42,
-                 "name":"switchStructure",
-                 "properties":[
-                        {
-                         "name":"accessWall",
-                         "type":"object",
-                         "value":45
-                        }, 
-                        {
-                         "name":"collidable",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
-                         "name":"door",
-                         "type":"object",
-                         "value":44
-                        }],
-                 "rotation":0,
-                 "type":"AnimatedObject",
-                 "visible":true,
-                 "width":160,
-                 "x":608,
-                 "y":384
-                }, 
-                {
                  "gid":8,
                  "height":128,
                  "id":47,
@@ -368,8 +340,7 @@
                  "width":256,
                  "x":64,
                  "y":129
-                },
-            
+                }, 
                 {
                  "gid":11,
                  "height":47,
@@ -381,7 +352,8 @@
                  "width":33,
                  "x":74,
                  "y":291
-                }, 
+                },
+            
                 {
                  "gid":11,
                  "height":47,
@@ -545,6 +517,42 @@
                  "width":32,
                  "x":768,
                  "y":384
+                }, 
+                {
+                 "gid":42,
+                 "height":64,
+                 "id":68,
+                 "name":"wallDoor",
+                 "properties":[
+                        {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"AnimatedObject",
+                 "visible":true,
+                 "width":160,
+                 "x":608,
+                 "y":288
+                }, 
+                {
+                 "gid":43,
+                 "height":96,
+                 "id":69,
+                 "name":"switchEntrance",
+                 "properties":[
+                        {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"AnimatedObject",
+                 "visible":true,
+                 "width":32,
+                 "x":608,
+                 "y":384
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -600,7 +608,7 @@
                         }],
                  "rotation":0,
                  "type":"AnimatedObject",
-                 "visible":true,
+                 "visible":false,
                  "width":32,
                  "x":608,
                  "y":352
@@ -645,7 +653,7 @@
          "y":0
         }],
  "nextlayerid":4,
- "nextobjectid":66,
+ "nextobjectid":70,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
@@ -718,6 +726,14 @@
         {
          "firstgid":39,
          "source":"..\/tilesets\/side_wall.tsx"
+        }, 
+        {
+         "firstgid":40,
+         "source":"..\/tilesets\/switchStructure.tsx"
+        }, 
+        {
+         "firstgid":43,
+         "source":"..\/tilesets\/switchEntrance.tsx"
         }],
  "tilewidth":32,
  "type":"map",

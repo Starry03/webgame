@@ -69,6 +69,8 @@ const IMAGES_PATHS: Record<string, string> = {
     'sideWall': '/assets/maps/rooms/last_objects/images/side_wall.png',
     'bossSideWall': '/assets/maps/rooms/last_objects/images/boss_side_wall.png',
     'specialWall': '/assets/maps/rooms/tiled_objects/wall.png',
+    'wallDoor': '/assets/maps/rooms/room3/exitRoom3.png',
+    'switchEntrance': '/assets/maps/rooms/room3/switchEntrance.png',
 }
 
 /*export async function loadRoomByName(roomName: string, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D): Promise<(NotAnimatedObject|AnimatedObject)[]> {
@@ -870,6 +872,34 @@ export function populateRoom3 (list_objects: Obj[]) {
                 attack2: [],
                 special: [],
                 idle: [IMAGES_PATHS['sideWall']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (obj.name === 'wallDoor') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['wallDoor']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (obj.name === 'switchEntrance') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['switchEntrance']],
                 hurt: [],
                 dead: [],
                 opening: [],
