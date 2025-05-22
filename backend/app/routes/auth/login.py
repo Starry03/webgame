@@ -24,8 +24,38 @@ from app.db.user_manager import UserManager
 router = APIRouter(prefix="/auth")
 
 
+@router.post("/delete", response_class=JSONResponse)
+async def delete(request: Request):
+    body: CoroutineType[Any, Any, Any] = await request.json()
+    credentials: Credentials = RequestUtil.get_credentials(body)
+    plain_data = RequestUtil.get_plain_data(body)
+    if plain_data is None:
+        logger.error("data is missing")
+        return JSONResponse(
+            content={"detail": "data is missing"},
+            status_code=HTTP_401_UNAUTHORIZED,
+        )
+    client_public_key_pem = plain_data.get("client_public_key")
+    if client_public_key_pem is None:
+        logger.error("client public key is missing")
+        return JSONResponse(
+            content={"detail": "client public key is missing"},
+            status_code=HTTP_401_UNAUTHORIZED,
+        )
+    current_user = AuthManager.get_user_from_credentials(credentials)
+    if current_user is None:
+        logger.error("user not found")
+        return JSONResponse(
+            content={"detail": "Incorrect username or password"},
+            status_code=HTTP_401_UNAUTHORIZED,
+        )
+    username = current_user[1]
+    UserManager.delete_user(username)
+    return JSONResponse(status_code=200, content={"detail": "user deleted"})
+
+
 @router.get("/public-key", response_class=JSONResponse)
-def public_key() -> JSONResponse:
+async def public_key() -> JSONResponse:
     public_key: str = RSAManager.get_public_key()
     return JSONResponse(content={"public_key": public_key})
 

@@ -20,20 +20,28 @@
                         placeholder="Password"
                         v-model="password"
                     />
-                    <div v-if="!isLogging" class="bot flex flex-space-between gap-mid">
+                    <div v-if="!isLogging" class="w-full flex flex-center flex-column gap-small">
+                        <div class="bot flex-fit flex flex-space-between gap-mid">
+                            <button
+                                class="button-primary btn-regist flex-grow"
+                                type="submit"
+                                @click="register"
+                            >
+                                SIGN UP
+                            </button>
+                            <button
+                                class="button-primary btn-login flex-grow"
+                                type="submit"
+                                @click="login"
+                            >
+                                SIGN IN
+                            </button>
+                        </div>
                         <button
-                            class="button-primary btn-regist flex-grow"
-                            type="submit"
-                            @click="register"
+                            class="button button-secondary button-tertiary"
+                            @click="delete_account"
                         >
-                            SIGN UP
-                        </button>
-                        <button
-                            class="button-primary btn-login flex-grow"
-                            type="submit"
-                            @click="login"
-                        >
-                            SIGN IN
+                            Delete account
                         </button>
                     </div>
                     <Loader v-else />
@@ -65,8 +73,14 @@ async function main_req(path: string): Promise<{ session: Session; token: Token 
     const f = await AuthService.login(path, username.value, password.value)
     if (f.status === 409) throw new Error('User already exists')
     if (f.status !== 200) throw new Error('Unauthorized')
-    const res = await f.json()
-    return (await JSON.parse(res)) as { session: Session; token: Token }
+    try {
+        const res = await f.json()
+        return (await JSON.parse(res)) as { session: Session; token: Token }
+    } catch (err) {
+        if (path == import.meta.env.VITE_DELETE_PATH && (err as Error).message.startsWith('JSON'))
+            return { session: {} as Session, token: {} as Token }
+        throw err
+    }
 }
 
 async function process_session(req: { session: Session; token: Token }) {
@@ -105,6 +119,19 @@ async function register() {
         login_error.value = error as Error
         console.error(error)
     }
+}
+
+async function delete_account() {
+    isLogging.value = true
+    login_error.value = null
+    try {
+        await main_req(import.meta.env.VITE_DELETE_PATH ?? '')
+    } catch (error) {
+        console.error(error)
+        login_error.value = error as Error
+    }
+    window.alert("user deleted")
+    isLogging.value = false
 }
 </script>
 

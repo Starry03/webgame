@@ -7,12 +7,26 @@ if (!SERVER_URL) {
 }
 
 export function buildEndpoint(path: String) {
-	console.log(`${SERVER_URL}${path}`)
+    console.log(`${SERVER_URL}${path}`)
     return `${SERVER_URL}${path}`
 }
 
 export const AuthService = {
     login: (endpoint: string, username: string, password: string) =>
+        RequestWrapper.loginFetch(
+            buildEndpoint(endpoint),
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            },
+            {
+                username: username,
+                password: password,
+            },
+        ),
+    delete_account: (endpoint: string, username: string, password: string) =>
         RequestWrapper.loginFetch(
             buildEndpoint(endpoint),
             {

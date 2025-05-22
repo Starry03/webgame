@@ -37,3 +37,13 @@ class UserManager:
             )
             db.commit()
             return True
+
+    @staticmethod
+    def delete_user(username: str) -> bool:
+        with get_db_session() as db:
+            db.execute(
+                text("DELETE FROM public.user WHERE username = :username"),
+                {"username": username},
+            )
+            db.commit()
+            return True

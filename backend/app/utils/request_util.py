@@ -1,6 +1,7 @@
 from typing import Any
 from types import CoroutineType
 import json
+from fastapi.logger import logger
 
 from app.auth.models import Credentials
 
@@ -14,6 +15,7 @@ class RequestUtil:
         username = decrypted_data.get("username")
         password = decrypted_data.get("password")
         if username is None or password is None:
+            logger.error("encryption failed")
             raise ValueError("Invalid credentials")
         return Credentials(username=username, password=password)
 
