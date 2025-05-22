@@ -684,7 +684,7 @@
                  "visible":true,
                  "width":32,
                  "x":64,
-                 "y":256
+                 "y":258
                 }, 
                 {
                  "gid":65,
@@ -702,7 +702,7 @@
                  "visible":true,
                  "width":32,
                  "x":223,
-                 "y":256
+                 "y":258
                 }, 
                 {
                  "gid":66,
@@ -720,7 +720,7 @@
                  "visible":true,
                  "width":192,
                  "x":64,
-                 "y":192
+                 "y":194
                 }],
          "opacity":1,
          "properties":[

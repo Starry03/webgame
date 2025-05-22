@@ -146,17 +146,17 @@
     <property name="collidable" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="92" name="finalLeftSideWall" type="AnimatedObject" gid="65" x="64" y="256" width="32" height="64">
+  <object id="92" name="finalLeftSideWall" type="AnimatedObject" gid="65" x="64" y="258" width="32" height="64">
    <properties>
     <property name="collidable" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="93" name="finalRightSideWall" type="AnimatedObject" gid="65" x="223" y="256" width="32" height="64">
+  <object id="93" name="finalRightSideWall" type="AnimatedObject" gid="65" x="223" y="258" width="32" height="64">
    <properties>
     <property name="collidable" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="94" name="finalTopWall" type="AnimatedObject" gid="66" x="64" y="192" width="192" height="64">
+  <object id="94" name="finalTopWall" type="AnimatedObject" gid="66" x="64" y="194" width="192" height="64">
    <properties>
     <property name="collidable" type="bool" value="true"/>
    </properties>
