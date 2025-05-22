@@ -63,6 +63,6 @@ export class Door extends AnimatedObject {
     }
 
     onInteraction(): void {
-        
+        this.changeAnimation(AnimationType.OPENING)
     }
 }
