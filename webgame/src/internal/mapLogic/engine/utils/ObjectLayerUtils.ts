@@ -36,9 +36,7 @@ export function loadObjectsFromMap(
             let custom_properties: Record<string, string>
             if (object.name == 'entranceDoor') {
                 custom_properties = extractCustomProperties(object)
-
-                list_objects.push(
-                    new EntranceDoor(
+                const entranceDoor: EntranceDoor = new EntranceDoor(
                         canvas,
                         ctx,
                         AnimationType.IDLE,
@@ -51,14 +49,14 @@ export function loadObjectsFromMap(
                         object.width,
                         object.height,
                         custom_properties,
-                    ),
                 )
+                entranceDoor.setPaths()
+                list_objects.push(entranceDoor)
             }
-            // prima della modifica: else if (object.name == 'switchRoomDoor' && !(room_name !== 'room3')) {
             else if (object.name == 'switchRoomDoor') {
+                console.log(object.name)
                 custom_properties = extractCustomProperties(object)
-                list_objects.push(
-                    new SwitchRoomDoor(
+                const switchRoomDoor: SwitchRoomDoor = new SwitchRoomDoor(
                         canvas,
                         ctx,
                         AnimationType.IDLE,
@@ -71,9 +69,11 @@ export function loadObjectsFromMap(
                         object.width,
                         object.height,
                         custom_properties,
-                    ),
                 )
-            } else if (object.name == 'switchEntrance') {
+                switchRoomDoor.setPaths()
+                list_objects.push(switchRoomDoor)
+            }
+            else if (object.name == 'switchEntrance') {
                 custom_properties = extractCustomProperties(object)
                 const switchEntrance: SwitchEntrance = new SwitchEntrance(
                     canvas,

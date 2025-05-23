@@ -33,6 +33,8 @@ export class Door extends AnimatedObject {
         )
     }
 
+    setPaths() {}
+
     enterCollision(collisionInfo: CollisionInfo): void {
         super.enterCollision(collisionInfo)
     }

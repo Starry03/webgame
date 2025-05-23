@@ -34,7 +34,7 @@ export class GameHandler {
         this.currentRoomObjects = []
         this.bg_image = null
         this.gameObjects = []
-        this.currentRoom = 'room4'
+        this.currentRoom = 'room2'
 
         window.addEventListener('keydown', (e) => {
             e.preventDefault()
