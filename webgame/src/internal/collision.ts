@@ -8,6 +8,21 @@ export type CollisionInfo = {
 
 export class Collider {
     static collision_treshold: number = 10
+    static collidable_classes: string[] = [
+        'collidable',
+        'interactable',
+        'takeable',
+    ]
+
+    private static isCollidable(obj: Obj): boolean {
+        const props = obj.custom_properties
+        for (const prop of this.collidable_classes) {
+            if (Collider.collidable_classes.includes(prop) && props[prop]) {
+                return true
+            }
+        }
+        return false
+    }
 
     private static trigger_collision(obj: Obj, other: Obj, collision_info: CollisionInfo) {
         if (collision_info !== null && collision_info.dir !== null) {
@@ -43,7 +58,7 @@ export class Collider {
                 const collision_info: CollisionInfo | null = Collider.get_collision(obj, other)
                 if (!collision_info) continue
                 const use_interaction =
-                    obj.custom_properties['interactable'] && obj.custom_properties['interactable']
+                    obj.custom_properties['interactable'] || obj.custom_properties['takeable']
                 if (use_interaction) Collider.trigger_interaction(obj, other, collision_info)
                 else Collider.trigger_collision(obj, other, collision_info)
             }
@@ -72,16 +87,21 @@ export class Collider {
         if (!obj || !other) return null
         if (obj.custom_properties === undefined || other.custom_properties === undefined)
             return null
-        if (
-            (!obj.custom_properties['collidable'] && !obj.custom_properties['interactable']) ||
-            (!other.custom_properties['collidable'] && !other.custom_properties['interactable'])
-        )
-            return null
+        if (!Collider.isCollidable(obj) || !Collider.isCollidable(other)) return null
+        
         const pos_obj = obj.pos
         const dim_obj = obj.dim
         const pos_other = other.pos
         const dim_other = other.dim
-        const isCollision = this.collides(pos_obj, dim_obj, pos_other, dim_other)
+        const isCollision = this.collides(
+            pos_obj,
+            dim_obj,
+            pos_other,
+            dim_other,
+            obj.custom_properties['interactable']
+                ? Collider.collision_treshold * 10
+                : Collider.collision_treshold,
+        )
         if (!isCollision) return null
         const dir = new Vector2(
             pos_other.x + dim_other.x / 2 - (pos_obj.x + dim_obj.x / 2),

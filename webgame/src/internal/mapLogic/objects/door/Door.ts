@@ -49,9 +49,10 @@ export class Door extends AnimatedObject {
                 '/assets/maps/rooms/tiled_objects/switchRoomDoors/entrance_door.png',
             ],
             closing: [
-                '/assets/maps/rooms/tiled_objects/switchRoomDoors/entrance_door.png',
-                '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura3.png',
-                '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura2.png',
+                // '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura.png',
+                // '/assets/maps/rooms/tiled_objects/switchRoomDoors/entrance_door.png',
+                // '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura3.png',
+                // '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura2.png',
                 '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura1.png',
                 '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura.png',
             ],
@@ -60,7 +61,6 @@ export class Door extends AnimatedObject {
     }
 
     onInteraction(): void {
-        console.debug("currentAnimation", this.currentAnimation)
         if (this.currentAnimation === AnimationType.OPENING) {
             this.changeAnimation(AnimationType.CLOSING, true, false)
             return

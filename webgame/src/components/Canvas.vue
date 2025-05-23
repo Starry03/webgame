@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-space-between" id="game-header">
+    <div class="flex flex-space-between flex-row" id="game-header">
         <div id="player-status">
             <StatusBar
                 v-if="mappedPlayer"
@@ -15,7 +15,7 @@
             />
         </div>
 
-        <div id="message_zone" v-if="currentRoom >= 1 && currentRoom <= 4">
+        <div id="message_zone" class="flex-fit font-mid" v-if="currentRoom >= 1 && currentRoom <= 4">
             {{ mappedPlayer?.interactionMessage }}
         </div>
 
@@ -234,12 +234,8 @@ function initializeBoss() {
 }
 
 #message_zone {
-    width: 50%;
     text-align: center;
     color: #fff;
-    font-size: 1.2rem;
-    font-weight: bold;
-    padding: 10px;
 }
 
 @media (max-width: 900px), (max-height: 500px) {
