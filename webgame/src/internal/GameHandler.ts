@@ -39,7 +39,7 @@ export class GameHandler {
         this.currentRoomObjects = []
         this.bg_image = null
         this.gameObjects = []
-        this.currentRoom = 1
+        this.currentRoom = 2
 
         window.addEventListener('keydown', (e) => {
             e.preventDefault()
@@ -87,15 +87,13 @@ export class GameHandler {
     async initialize() {
         const room = this.currentRoom < 5 ? `room${this.currentRoom}` : 'boss_room'
         this.currentRoomPath = getRoomPath(room)
-        this.bg_image = await loadMapData(this.currentRoomPath, room, this.canvas, this.ctx)
         this.currentRoomObjects = (await loadMapObjects(
+            this.bg_image,
             room,
             this.currentRoomPath,
             this.canvas,
             this.ctx,
         )) as Obj[]
-
-        populateBossRoom(this.currentRoomObjects)
 
         this.currentRoomObjects.forEach((obj: Obj) => {
             obj.preloadImages()

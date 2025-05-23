@@ -69,8 +69,9 @@ export async function loadMapData(
         //         image,
         //     )
         // }
-    } catch (err) {
-        console.error(err)
+    }
+    catch (err) {
+        console.error("background image error: ", err)
         return null
     }
 

@@ -66,7 +66,7 @@ const IMAGES_PATHS: Record<string, string> = {
     'tree3': '/assets/maps/rooms/boss_room/tiled_objects/images/trees1/Tree3.png',
     'bossRock': '/assets/maps/rooms/boss_room/tiled_objects/images/Rock1_1.png',
     'topWall': '/assets/maps/rooms/last_objects/images/top_wall.png',
-    'bottomWall': '/assets/maps/rooms/last_objects/images/top_wall.png',
+    'bottomWall': '/assets/maps/rooms/last_objects/images/bottom_wall.png',
     'sideWall': '/assets/maps/rooms/last_objects/images/side_wall.png',
     'bossSideWall': '/assets/maps/rooms/last_objects/images/boss_side_wall.png',
     'wallDoor': '/assets/maps/rooms/room3/exitRoom3.png',
@@ -595,7 +595,6 @@ export function populateRoom2 (tiled_objects: (NotAnimatedObject|AnimatedObject)
 }
 
 export function populateRoom3 (list_objects: Obj[]) {
-    console.log("populateRoom3");
     for (const obj of list_objects) {
         let frame_paths: Record<AnimationType, string[]>;
         if (obj.name == 'rock9') {
@@ -1067,7 +1066,6 @@ export function populateRoom4 (list_objects: (Obj)[]) {
             obj.setFramePaths(frame_paths);
         }
         else if (obj instanceof Door) {
-            console.log(obj.name)
             obj.setPaths();
         }
         else if (obj.name == 'manaPotion') {
@@ -1239,7 +1237,6 @@ export function populateRoom4 (list_objects: (Obj)[]) {
             obj.setFramePaths(frame_paths);
         }
         else if (obj.name == 'accessDoor') {
-            console.log(obj.name)
             frame_paths = {
                 run: [],
                 attack1: [],
