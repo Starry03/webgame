@@ -1,6 +1,7 @@
 import { Collider, type CollisionInfo } from './collision'
 import { AnimationType, Vector2 } from './types'
 import { type Ref } from 'vue'
+import { v4 as uuidv4 } from 'uuid'
 
 export class Obj {
     canvas: HTMLCanvasElement
@@ -30,6 +31,7 @@ export class Obj {
     custom_properties: Record<string, any>
     isIdleBlocked: boolean
     name: string
+    id: string
 
     constructor(
         canvas: HTMLCanvasElement,
@@ -65,6 +67,7 @@ export class Obj {
         this.custom_properties = custom_properties
         this.name = name
         this.isIdleBlocked = false
+        this.id = uuidv4()
     }
 
     preloadImages() {
@@ -221,7 +224,7 @@ export class Obj {
 
     enterCollision(collision: CollisionInfo) {
         for (const col of this.collidedObjects)
-            if (col.other === collision.other && col.dir !== collision.dir) {
+            if (col.other.id === collision.other.id && col.dir !== collision.dir) {
                 col.dir = collision.dir
                 return
             }
@@ -231,7 +234,7 @@ export class Obj {
     exitCollision(collision: CollisionInfo) {
         if (this.collidedObjects.size === 0) return
         for (const col of this.collidedObjects) {
-            if (col.other === collision.other) {
+            if (col.other.id === collision.other.id) {
                 this.collidedObjects.delete(col)
                 return
             }
@@ -240,7 +243,7 @@ export class Obj {
 
     enterInteraction(collision: CollisionInfo) {
         for (const col of this.interactedObjects)
-            if (col.other === collision.other && col.dir !== collision.dir) {
+            if (col.other.id === collision.other.id && col.dir !== collision.dir) {
                 col.dir = collision.dir
                 return
             }
@@ -252,9 +255,10 @@ export class Obj {
     interact(other: Obj) {}
 
     exitInteraction(collision: CollisionInfo) {
+        console.debug('Exit interaction')
         if (this.interactedObjects.size === 0) return
         for (const col of this.interactedObjects) {
-            if (col.other === collision.other) {
+            if (col.other.id === collision.other.id) {
                 this.interactedObjects.delete(col)
                 return
             }

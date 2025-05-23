@@ -8,11 +8,7 @@ export type CollisionInfo = {
 
 export class Collider {
     static collision_treshold: number = 10
-    static collidable_classes: string[] = [
-        'collidable',
-        'interactable',
-        'takeable',
-    ]
+    static collidable_classes: string[] = ['collidable', 'interactable', 'takeable']
 
     private static isCollidable(obj: Obj): boolean {
         const props = obj.custom_properties
@@ -24,7 +20,7 @@ export class Collider {
         return false
     }
 
-    private static trigger_collision(obj: Obj, other: Obj, collision_info: CollisionInfo) {
+    private static trigger_collision(obj: Obj, other: Obj, collision_info: CollisionInfo | null) {
         if (collision_info !== null && collision_info.dir !== null) {
             obj.enterCollision({ other: other, dir: collision_info.dir })
             other.enterCollision({
@@ -37,7 +33,7 @@ export class Collider {
         }
     }
 
-    private static trigger_interaction(obj: Obj, other: Obj, collision_info: CollisionInfo) {
+    private static trigger_interaction(obj: Obj, other: Obj, collision_info: CollisionInfo | null) {
         if (collision_info !== null && collision_info.dir !== null) {
             obj.enterInteraction({ other: other, dir: collision_info.dir })
             other.enterInteraction({
@@ -56,11 +52,11 @@ export class Collider {
                 const obj = objects[i]
                 const other = objects[j]
                 const collision_info: CollisionInfo | null = Collider.get_collision(obj, other)
-                if (!collision_info) continue
                 const use_interaction =
                     obj.custom_properties['interactable'] || obj.custom_properties['takeable']
+                const use_collision = obj.custom_properties['collidable']
                 if (use_interaction) Collider.trigger_interaction(obj, other, collision_info)
-                else Collider.trigger_collision(obj, other, collision_info)
+                if (use_collision) Collider.trigger_collision(obj, other, collision_info)
             }
         }
     }
@@ -88,7 +84,7 @@ export class Collider {
         if (obj.custom_properties === undefined || other.custom_properties === undefined)
             return null
         if (!Collider.isCollidable(obj) || !Collider.isCollidable(other)) return null
-        
+
         const pos_obj = obj.pos
         const dim_obj = obj.dim
         const pos_other = other.pos
@@ -112,7 +108,7 @@ export class Collider {
     }
 
     private static get_collision(obj: Obj, other: Obj): CollisionInfo | null {
-        if (obj === other) return null
+        if (obj.id === other.id) return null
         return Collider.get_collision_info(obj, other)
     }
 }
