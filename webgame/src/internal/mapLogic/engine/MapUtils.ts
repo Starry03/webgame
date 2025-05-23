@@ -1067,6 +1067,7 @@ export function populateRoom4 (list_objects: (Obj)[]) {
             obj.setFramePaths(frame_paths);
         }
         else if (obj instanceof Door) {
+            console.log(obj.name)
             obj.setPaths();
         }
         else if (obj.name == 'manaPotion') {
@@ -1238,6 +1239,7 @@ export function populateRoom4 (list_objects: (Obj)[]) {
             obj.setFramePaths(frame_paths);
         }
         else if (obj.name == 'accessDoor') {
+            console.log(obj.name)
             frame_paths = {
                 run: [],
                 attack1: [],
