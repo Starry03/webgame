@@ -14,11 +14,11 @@
                 :max-cooldown-r="mappedPlayer.maxCooldownR"
             />
         </div>
-<!--
-        <div id="message_zone" class="flex-fit font-mid" v-if="gameHandler.value && gameHandler.value.currentRoom >= 1 && gameHandler.value.currentRoom <= 4">
+
+        <div id="message_zone" class="flex-fit font-mid" v-if="gameHandler && gameHandler.currentRoom >= 1 && gameHandler.currentRoom <= 4">
             {{ mappedPlayer?.interactionMessage }}
         </div>
-    -->
+    
 
         <div id="boss-status" v-if="isBossRoom">
             <BossStatusBar

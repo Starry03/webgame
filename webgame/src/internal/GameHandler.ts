@@ -128,6 +128,7 @@ export class GameHandler {
             speed: 65,
             health: 1200,
             mana: 800,
+            level: 20,
             attackPower: 120,
             defense: 60,
             position: { x: 500, y: 200 }

@@ -174,7 +174,7 @@ export class Entity extends Obj {
 
         for (const enemy of collidedEnemies) {
             if (this.isInAttackArc(enemy)) {
-                const damage = Math.max(1, 100 - enemy.defense * (baseDamage / 100))
+                const damage = Math.max(1, Math.floor(baseDamage * (100 / (100 + enemy.defense))))
                 enemy.get_damage(damage)
             }
         }
