@@ -114,6 +114,7 @@
   <object id="39" name="bossRock" type="AnimatedObject" gid="233" x="544" y="288" width="128" height="128">
    <properties>
     <property name="activatedOnce" type="bool" value="true"/>
+    <property name="collidable" type="bool" value="true"/>
     <property name="delay" type="int" value="2000"/>
     <property name="enemyType" value="boss"/>
     <property name="spawnDirection" value="left"/>
@@ -135,9 +136,25 @@
     <property name="triggerDistance" type="int" value="50"/>
    </properties>
   </object>
-  <object id="52" name="bottomWall" type="NotAnimatedObject" gid="239" x="0" y="416" width="800" height="32"/>
-  <object id="53" name="topWall" type="NotAnimatedObject" gid="239" x="0" y="32" width="800" height="32"/>
-  <object id="54" name="leftSideWall" type="NotAnimatedObject" gid="240" x="0" y="384" width="32" height="352"/>
-  <object id="55" name="rightSideWall" type="NotAnimatedObject" gid="240" x="768" y="384" width="32" height="352"/>
+  <object id="52" name="bottomWall" type="AnimatedObject" gid="239" x="0" y="416" width="800" height="32">
+   <properties>
+    <property name="coliidable" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="53" name="topWall" type="AnimatedObject" gid="239" x="0" y="32" width="800" height="32">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="54" name="leftSideWall" type="AnimatedObject" gid="240" x="0" y="384" width="32" height="352">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="55" name="rightSideWall" type="AnimatedObject" gid="240" x="768" y="384" width="32" height="352">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

@@ -418,6 +418,11 @@
                          "value":true
                         }, 
                         {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"delay",
                          "type":"int",
                          "value":2000
@@ -567,8 +572,14 @@
                  "height":32,
                  "id":52,
                  "name":"bottomWall",
+                 "properties":[
+                        {
+                         "name":"coliidable",
+                         "type":"bool",
+                         "value":true
+                        }],
                  "rotation":0,
-                 "type":"NotAnimatedObject",
+                 "type":"AnimatedObject",
                  "visible":true,
                  "width":800,
                  "x":0,
@@ -579,8 +590,14 @@
                  "height":32,
                  "id":53,
                  "name":"topWall",
+                 "properties":[
+                        {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":true
+                        }],
                  "rotation":0,
-                 "type":"NotAnimatedObject",
+                 "type":"AnimatedObject",
                  "visible":true,
                  "width":800,
                  "x":0,
@@ -591,8 +608,14 @@
                  "height":352,
                  "id":54,
                  "name":"leftSideWall",
+                 "properties":[
+                        {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":true
+                        }],
                  "rotation":0,
-                 "type":"NotAnimatedObject",
+                 "type":"AnimatedObject",
                  "visible":true,
                  "width":32,
                  "x":0,
@@ -603,8 +626,14 @@
                  "height":352,
                  "id":55,
                  "name":"rightSideWall",
+                 "properties":[
+                        {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":true
+                        }],
                  "rotation":0,
-                 "type":"NotAnimatedObject",
+                 "type":"AnimatedObject",
                  "visible":true,
                  "width":32,
                  "x":768,

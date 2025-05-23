@@ -483,9 +483,14 @@
                          "value":false
                         }, 
                         {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"interactable",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"isOpen",
@@ -532,8 +537,14 @@
                  "height":64,
                  "id":51,
                  "name":"topWall",
+                 "properties":[
+                        {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":true
+                        }],
                  "rotation":0,
-                 "type":"NotAnimatedObject",
+                 "type":"AnimatedObject",
                  "visible":true,
                  "width":800,
                  "x":0,
@@ -544,8 +555,14 @@
                  "height":320,
                  "id":52,
                  "name":"leftSideWall",
+                 "properties":[
+                        {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":true
+                        }],
                  "rotation":0,
-                 "type":"NotAnimatedObject",
+                 "type":"AnimatedObject",
                  "visible":true,
                  "width":32,
                  "x":0,
@@ -556,8 +573,14 @@
                  "height":320,
                  "id":53,
                  "name":"rightSideWall",
+                 "properties":[
+                        {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":true
+                        }],
                  "rotation":0,
-                 "type":"NotAnimatedObject",
+                 "type":"AnimatedObject",
                  "visible":true,
                  "width":32,
                  "x":768,
@@ -568,8 +591,14 @@
                  "height":32,
                  "id":54,
                  "name":"bottomWall",
+                 "properties":[
+                        {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":true
+                        }],
                  "rotation":0,
-                 "type":"NotAnimatedObject",
+                 "type":"AnimatedObject",
                  "visible":true,
                  "width":800,
                  "x":0,

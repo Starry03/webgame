@@ -58,14 +58,31 @@
   <object id="76" name="switchRoomDoor" type="AnimatedObject" gid="161" x="576" y="129" width="64" height="64">
    <properties>
     <property name="animating" type="bool" value="false"/>
+    <property name="collidable" type="bool" value="true"/>
     <property name="interactable" type="bool" value="true"/>
     <property name="isOpen" type="bool" value="false"/>
     <property name="type" value="door"/>
    </properties>
   </object>
-  <object id="77" name="topWall" type="NotAnimatedObject" gid="166" x="0" y="64" width="800" height="64"/>
-  <object id="78" name="leftSideWall" type="NotAnimatedObject" gid="167" x="0" y="384" width="32" height="320"/>
-  <object id="79" name="bottomWall" type="NotAnimatedObject" gid="168" x="0" y="416" width="800" height="32"/>
-  <object id="80" name="rightSideWall" type="NotAnimatedObject" gid="167" x="768" y="384" width="32" height="320"/>
+  <object id="77" name="topWall" type="AnimatedObject" gid="166" x="0" y="64" width="800" height="64">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="78" name="leftSideWall" type="AnimatedObject" gid="167" x="0" y="384" width="32" height="320">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="79" name="bottomWall" type="AnimatedObject" gid="168" x="0" y="416" width="800" height="32">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="80" name="rightSideWall" type="AnimatedObject" gid="167" x="768" y="384" width="32" height="320">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>
