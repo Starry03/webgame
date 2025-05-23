@@ -1,4 +1,4 @@
-import {AnimationType, Vector2} from '@/internal/types.ts';
+import { AnimationType, Vector2 } from '@/internal/types.ts'
 import { AnimatedObject } from '@/internal/mapLogic/classes/AnimatedObject'
 
 export class Door extends AnimatedObject {
@@ -32,15 +32,13 @@ export class Door extends AnimatedObject {
         )
     }
     /*verificare se nelle sottoclassi va messa l'animazione contraria al nome stesso della classe*/
-    setPaths(): void{
+    setPaths(): void {
         const frame_paths: Record<AnimationType, string[]> = {
             run: [],
             attack1: [],
             attack2: [],
             special: [],
-            idle: [
-                '/assets/maps/rooms/tiled_objects/switchRoomDoors/entrance_door.png',
-            ],
+            idle: ['/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura.png'],
             hurt: [],
             dead: [],
             opening: [
@@ -49,12 +47,12 @@ export class Door extends AnimatedObject {
                 '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura2.png',
                 '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura3.png',
                 '/assets/maps/rooms/tiled_objects/switchRoomDoors/entrance_door.png',
-
             ],
             closing: [
-                '/assets/maps/rooms/tiled_objects/switchRoomDoors/entrance_door.png',
-                '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura3.png',
-                '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura2.png',
+                // '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura.png',
+                // '/assets/maps/rooms/tiled_objects/switchRoomDoors/entrance_door.png',
+                // '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura3.png',
+                // '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura2.png',
                 '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura1.png',
                 '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura.png',
             ],
@@ -63,6 +61,10 @@ export class Door extends AnimatedObject {
     }
 
     onInteraction(): void {
-        this.changeAnimation(AnimationType.OPENING)
+        if (this.currentAnimation === AnimationType.OPENING) {
+            this.changeAnimation(AnimationType.CLOSING, true, false)
+            return
+        }
+        this.changeAnimation(AnimationType.OPENING, true, false)
     }
 }

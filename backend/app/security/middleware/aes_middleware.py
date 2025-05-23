@@ -24,19 +24,22 @@ class AESDecryptionMiddleware(BaseHTTPMiddleware):
             headers = request.headers
             session_id = headers.get("sessionid", None)
             if session_id is None:
+                logger.error("SessionID missing")
                 return JSONResponse(
                     content={"detail": "SessionID missing"},
                     status_code=HTTP_401_UNAUTHORIZED,
                 )
             bearer_token = headers.get("authorization", None)
             if bearer_token is None:
+                logger.error("Authorization header missing")
                 return JSONResponse(
                     content={"detail": "Token error"},
                     status_code=HTTP_401_UNAUTHORIZED,
                 )
             encrypted_token = bearer_token.split(" ")[1]
-            user_session: UserSession = AuthManager.get_user_session(int(session_id))
+            user_session: UserSession | None = AuthManager.get_user_session(int(session_id))
             if user_session is None:
+                logger.error("Session not found")
                 return JSONResponse(
                     content={"detail": "Session not found"},
                     status_code=HTTP_401_UNAUTHORIZED,

@@ -1,8 +1,16 @@
 import { Entity } from '@/internal/Entity'
 
 export class Skele_arc extends Entity {
-  constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, speed: number, health: number, mana: number) {
-    super(canvas, ctx, speed, health, mana)
+  constructor(
+        canvas: HTMLCanvasElement,
+        ctx: CanvasRenderingContext2D,
+        speed: number,
+        health: number,
+        mana: number,
+        attackPower: number,
+        defense: number,
+    ) {
+        super(canvas, ctx, speed, health, mana, attackPower, defense)
     this.framePaths = {
       run: [
         'assets/Sprite/Nemici/Skeleton_Archer/Run/frame_0_0.png',

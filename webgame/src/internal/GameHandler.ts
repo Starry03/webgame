@@ -21,7 +21,7 @@ export class GameHandler {
     baseMapDim: Vector2 = new Vector2(800, 416)
     gameObjects: Obj[]
     count
-    currentRoom: number = 4
+    currentRoom: number = 3
 
     constructor(player: Entity, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
         this.ctx = ctx
@@ -59,7 +59,7 @@ export class GameHandler {
         if (this.player.mana < this.player.maxMana) {
             this.player.mana = Math.min(
                 this.player.maxMana,
-                this.player.mana + this.player.manaRegenRate * deltaTime
+                this.player.mana + this.player.manaRegenRate * deltaTime,
             )
         }
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
@@ -129,7 +129,7 @@ export class GameHandler {
         this.currentRoomObjects.sort((a: Obj, b: Obj) => {
             const exotic_peppe = a.name
             //credo non serva più questa condizione (per quanto riguarda gli oggetti della mappa - sono oggetti a se stanti)
-            if (['entranceDoor', 'accessDoor', 'ladder', 'switchRoomDoor', 'specialWall'].includes(exotic_peppe)) return 1
+            if (['entranceDoor', 'accessDoor', 'ladder', 'switchRoomDoor', 'specialWall', 'structure'].includes(exotic_peppe)) return 1
             const customA = a.custom_properties
             if (customA['type'] === 'door' || customA['type'] === 'ladder') return 1
             if (customA['type'] === 'brick_wall' || customA['type'] === 'door') return 1
