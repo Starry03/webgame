@@ -1,7 +1,5 @@
 import type { Entity } from './Entity'
-import { getRoomPath, populateRoom3, populateRoom4 } from '@/internal/mapLogic/engine/MapUtils.ts'
-import { AnimatedObject } from '@/internal/mapLogic/classes/AnimatedObject'
-import { NotAnimatedObject } from '@/internal/mapLogic/classes/NotAnimatedObject'
+import { getRoomPath } from '@/internal/mapLogic/engine/MapUtils.ts'
 import { loadMapData } from '@/internal/mapLogic/engine/utils/BackgroundLayerUtils.ts'
 import { loadMapObjects } from '@/internal/mapLogic/engine/utils/ObjectLayerUtils.ts'
 import type { Obj } from './Obj'
@@ -20,8 +18,7 @@ export class GameHandler {
     currentRoomObjects: Obj[]
     baseMapDim: Vector2 = new Vector2(800, 416)
     gameObjects: Obj[]
-    count
-    currentRoom: number = 4
+    currentRoom: string
 
     constructor(player: Entity, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
         this.ctx = ctx
@@ -37,9 +34,7 @@ export class GameHandler {
         this.currentRoomObjects = []
         this.bg_image = null
         this.gameObjects = []
-        this.count = 0
-
-        // dati mappa = loadMapData(this.currentRoomPath, this.canvas, this.ctx)
+        this.currentRoom = 'room4'
 
         window.addEventListener('keydown', (e) => {
             e.preventDefault()
@@ -80,41 +75,30 @@ export class GameHandler {
     }
 
     async initialize() {
-        this.currentRoomPath = getRoomPath('room3')
+        this.currentRoomPath = getRoomPath(this.currentRoom)
         this.bg_image = await loadMapData(this.currentRoomPath, this.canvas, this.ctx)
         this.currentRoomObjects = (await loadMapObjects(
-            'room3',
+            this.currentRoom,
             this.currentRoomPath,
             this.canvas,
             this.ctx,
         )) as Obj[]
-
-        /*switch (this.currentRoom) {
-            case 4:
-                populateRoom4(this.currentRoomObjects)
-                break
-
-            default:
-                break
-        }*/
-        populateRoom3(this.currentRoomObjects)
-        /*for (const obj of this.currentRoomObjects) {
-            console.log("<---------------------------------------------")
-            console.log(obj.name)
-            console.log(obj.framePaths)
-            console.log("--------------------------------------------->")
-        }*/
         this.currentRoomObjects.forEach((obj: Obj) => {
             obj.preloadImages()
             obj.idle(true)
         })
         this.currentRoomObjects.sort((a: Obj, b: Obj) => {
             const exotic_peppe = a.name
-            //credo non serva più questa condizione (per quanto riguarda gli oggetti della mappa - sono oggetti a se stanti)
+            if (exotic_peppe === 'structure' && b.name === 'switchRoomDoor') return -1
             if (
-                ['entranceDoor', 'accessDoor', 'ladder', 'switchRoomDoor', 'specialWall', 'structure'].includes(
-                    exotic_peppe,
-                )
+                [
+                    'entranceDoor',
+                    'accessDoor',
+                    'ladder',
+                    'switchRoomDoor',
+                    'specialWall',
+                    'structure',
+                ].includes(exotic_peppe)
             )
                 return 1
             const customA = a.custom_properties
