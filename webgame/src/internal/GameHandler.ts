@@ -82,7 +82,7 @@ export class GameHandler {
     async initialize() {
         const room = this.currentRoom < 5 ? `room${this.currentRoom}` : 'boss_room'
         this.currentRoomPath = getRoomPath(room)
-        this.bg_image = await loadMapData(this.currentRoomPath, this.canvas, this.ctx)
+        this.bg_image = await loadMapData(this.currentRoomPath, room, this.canvas, this.ctx)
         this.currentRoomObjects = (await loadMapObjects(
             room,
             this.currentRoomPath,
