@@ -18,7 +18,10 @@ class AESDecryptionMiddleware(BaseHTTPMiddleware):
     )
 
     async def dispatch(self, request: Request, call_next):
-        if request.url.path in AESDecryptionMiddleware.__excluded_paths or request.method == "OPTIONS":
+        if (
+            request.url.path in AESDecryptionMiddleware.__excluded_paths
+            or request.method == "OPTIONS"
+        ):
             return await call_next(request)
         try:
             headers = request.headers
@@ -37,9 +40,11 @@ class AESDecryptionMiddleware(BaseHTTPMiddleware):
                     status_code=HTTP_401_UNAUTHORIZED,
                 )
             encrypted_token = bearer_token.split(" ")[1]
-            user_session: UserSession | None = AuthManager.get_user_session(int(session_id))
+            user_session: UserSession | None = AuthManager.get_user_session(
+                int(session_id)
+            )
             if user_session is None:
-                logger.error("Session not found")
+                print("Session not found")
                 return JSONResponse(
                     content={"detail": "Session not found"},
                     status_code=HTTP_401_UNAUTHORIZED,
@@ -60,6 +65,8 @@ class AESDecryptionMiddleware(BaseHTTPMiddleware):
 
     async def decrypt_body(self, request: Request, session_key: str):
         body = await request.body()
+        if len(body) == 0:
+            return
         decrypted_body = AESManager.decrypt(
             base64.b64decode(body), base64.b64decode(session_key)
         ).decode()
@@ -72,4 +79,4 @@ class AESDecryptionMiddleware(BaseHTTPMiddleware):
             ).decode("utf-8")
             request.state.Authorization_jwt = decrypted_token
         except Exception as e:
-            logger.error(e)
+            print(e)
