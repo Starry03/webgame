@@ -6,7 +6,7 @@ import type {
     TiledObject,
     TiledProperty,
 } from '@/internal/mapLogic/engine/interfaces/Interfaces'
-import { populateRoom4 } from '@/internal/mapLogic/engine/MapUtils.ts'
+import { populateRoom1, populateRoom2, populateRoom3, populateRoom4 } from '@/internal/mapLogic/engine/MapUtils.ts'
 import { EntranceDoor } from '@/internal/mapLogic/objects/door/EntranceDoor'
 import { SwitchRoomDoor } from '@/internal/mapLogic/objects/door/SwitchRoomDoor'
 import { SwitchEntrance } from '@/internal/mapLogic/objects/SwitchEntrance'
@@ -159,9 +159,24 @@ export async function loadMapObjects(
             map_data,
             canvas,
             ctx,
-            'room4',
+            room_name,
         )
-        populateRoom4(list_objects)
+        switch (room_name) {
+            case 'room1':
+                populateRoom1(list_objects)
+                break
+            case 'room2':
+                populateRoom2(list_objects)
+                break
+            case 'room3':
+                populateRoom3(list_objects)
+                break
+            case 'room4':
+                populateRoom4(list_objects)
+                break
+            default:
+                break
+        }
         return list_objects
     } catch (error) {
         console.error(`Errore nel caricamento della mappa: ${mapUrl}`, error)

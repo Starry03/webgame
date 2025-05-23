@@ -1,5 +1,5 @@
-import {AnimationType, Vector2} from "@/internal/types.ts";
-import {Door} from '@/internal/mapLogic/objects/door/Door'
+import { AnimationType, Vector2 } from '@/internal/types.ts'
+import { Door } from '@/internal/mapLogic/objects/door/Door'
 
 export class EntranceDoor extends Door {
     constructor(
@@ -38,23 +38,23 @@ export class EntranceDoor extends Door {
             attack1: [],
             attack2: [],
             special: [],
-            idle: ['/assets/maps/rooms/tiled_objects/switchRoomDoors/entrance_door.png',],
+            idle: ['/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura.png'],
             hurt: [],
             dead: [],
             opening: [
+                '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura.png',
+                '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura1.png',
+                '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura2.png',
+                '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura3.png',
+                '/assets/maps/rooms/tiled_objects/switchRoomDoors/entrance_door.png',
+            ],
+            closing: [
                 '/assets/maps/rooms/tiled_objects/switchRoomDoors/entrance_door.png',
                 '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura3.png',
                 '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura2.png',
                 '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura1.png',
                 '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura.png',
             ],
-            closing: [
-                '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura.png',
-                '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura1.png',
-                '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura2.png',
-                '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura3.png',
-                '/assets/maps/rooms/tiled_objects/switchRoomDoors/entrance_door.png',
-            ]
         }
         this.setFramePaths(frame_paths)
     }
