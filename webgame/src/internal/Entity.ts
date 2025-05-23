@@ -14,6 +14,7 @@ export class Entity extends Obj {
     maxCooldownE: number
     maxCooldownQ: number
     maxCooldownR: number
+    override isIdleBlocked: boolean = false
 
     constructor(
         canvas: HTMLCanvasElement,

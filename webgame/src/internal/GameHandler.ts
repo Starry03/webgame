@@ -5,10 +5,10 @@ import { NotAnimatedObject } from '@/internal/mapLogic/classes/NotAnimatedObject
 import { loadMapData } from '@/internal/mapLogic/engine/utils/BackgroundLayerUtils.ts'
 import { loadMapObjects } from '@/internal/mapLogic/engine/utils/ObjectLayerUtils.ts'
 import type { Obj } from './Obj'
-import { Vector2 } from './types'
+import { AnimationType, Vector2 } from './types'
 import { Collider } from './collision'
 import { Gorg_red } from './Gorg_red'
-import boss from '@/components/Canvas.vue'
+import { computed, reactive, ref } from 'vue'
 
 export class GameHandler {
     player: Entity
@@ -23,6 +23,7 @@ export class GameHandler {
     baseMapDim: Vector2 = new Vector2(800, 416)
     gameObjects: Obj[]
     currentRoom: string
+    boss: Obj | undefined
 
     constructor(player: Entity, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
         this.ctx = ctx
@@ -87,40 +88,9 @@ export class GameHandler {
             this.canvas,
             this.ctx,
         )) as Obj[]
-        // unpack
-        /*objs.forEach((obj: Obj) => {
-            if (obj.name === 'finalStructure') {
-                const accessDoor = obj.custom_properties['accessDoor']
-                const ladder = obj.custom_properties['ladder']
-                this.currentRoomObjects.push(accessDoor)
-                this.currentRoomObjects.push(ladder)
-                this.currentRoomObjects.push(obj)
-            } else if (obj.name === 'switchStructure') {
-                const switchDoor = obj.custom_properties['switchRoomDoor']
-                const specialWall = obj.custom_properties['specialWall']
-                this.currentRoomObjects.push(switchDoor)
-                this.currentRoomObjects.push(specialWall)
-                this.currentRoomObjects.push(obj)
-            } else {
-                this.currentRoomObjects.push(obj)
-            }
-        })*/
-
-        /*switch (this.currentRoom) {
-            case 4:
-                populateRoom4(this.currentRoomObjects)
-                break
-
-            default:
-                break
-        }*/
+        
         populateBossRoom(this.currentRoomObjects)
-        /*for (const obj of this.currentRoomObjects) {
-            console.log("<---------------------------------------------")
-            console.log(obj.name)
-            console.log(obj.framePaths)
-            console.log("--------------------------------------------->")
-        }*/
+
         this.currentRoomObjects.forEach((obj: Obj) => {
             obj.preloadImages()
             obj.idle(true)
@@ -148,8 +118,6 @@ export class GameHandler {
         const isBossRoom = ref(true) 
         const boss = ref<any>(null)
 
-        const currentRoom = ref(1)
-
         const mappedBoss = computed(() => {
             if (!boss.value) return null
 
@@ -170,7 +138,7 @@ export class GameHandler {
             }
         })
 
-        function initializeBoss() {
+        /*function initializeBoss() {
             const bossStats = {
                 speed: 65,
                 health: 1200,
@@ -191,7 +159,57 @@ export class GameHandler {
             isBossRoom.value = true
             return bossStats
         }
+        
+        const bossStats = initializeBoss()
 
-        this.gameObjects = [...this.currentRoomObjects, this.player, this.boss]
+        let bossEntity = reactive(
+            new Gorg_red(
+                this.canvas,
+                this.ctx,
+                boss.value.speed,
+                boss.value.health,
+                boss.value.mana,
+                boss.value.attackPower,
+                boss.value.defense
+            )
+        )
+        bossEntity.name = 'Gorgone Rossa'
+        bossEntity.custom_properties = { collidable: true }
+        bossEntity.preloadImages()
+        bossEntity.idle(true)
+
+        this.boss = bossEntity*/
+
+        const bossStats = {
+            canvas: this.canvas,
+            ctx: this.ctx,
+            speed: 65,
+            health: 1200,
+            mana: 800,
+            attackPower: 120,
+            defense: 60,
+            position: { x: 500, y: 200 }
+        }
+
+        const bossEntity = reactive(
+            new Gorg_red(
+                this.canvas,
+                this.ctx,
+                bossStats.speed,
+                bossStats.health,
+                bossStats.mana,
+                bossStats.attackPower,
+                bossStats.defense,
+                new Vector2(bossStats.position.x, bossStats.position.y)
+            )
+        )
+        bossEntity.name = 'Gorgone Rossa'
+        bossEntity.custom_properties = { collidable: true }
+        bossEntity.preloadImages()
+        bossEntity.idle(true)
+
+        this.boss = bossEntity
+
+        this.gameObjects = [...this.currentRoomObjects, this.player, this.boss].filter((obj): obj is Obj | Entity => obj !== undefined)
     }
 }

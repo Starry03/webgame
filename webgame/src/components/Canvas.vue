@@ -18,7 +18,7 @@
         <div id="message_zone" class="flex-fit font-mid" v-if="currentRoom >= 1 && currentRoom <= 4">
             {{ mappedPlayer?.interactionMessage }}
         </div>
-
+<!--
         <div id="boss-status" v-if="isBossRoom">
             <StatusBar
                 v-if="mappedBoss"
@@ -33,6 +33,7 @@
                 :max-cooldown-r="mappedBoss.maxCooldownR"
             />
         </div>
+    -->
     </div>
     <div class="canvas-wrapper">
         <canvas ref="canvasRef" id="canvas" :width="800" :height="416" />
@@ -77,6 +78,7 @@ const mappedPlayer = computed(() => {
 onMounted(async () => {
     const character = localStorage.getItem(prefixed(Storage_e.SELECTED_CHARACTER))
     const characterObject: Character = JSON.parse(character || '{}')
+    
 
     const canvas = canvasRef.value
     if (!canvas) {
@@ -141,27 +143,7 @@ onMounted(async () => {
         return
     }
     gameHandler.value = new GameHandler(player.value, canvas, ctx)
-    //gameHandler.value.gameLoop(performance.now())
     gameHandler.value.initialize()
-
-    const bossStats = initializeBoss()
-    boss.value = reactive (
-        new Gorg_red(
-            canvas,
-            ctx,
-            bossStats.speed,
-            bossStats.health,
-            bossStats.mana,
-            bossStats.attackPower,
-            bossStats.defense
-        )
-    )
-    boss.value.name = 'Gorgone Rossa'
-    boss.value.custom_properties = {  collidable: true }
-    boss.value.preloadImages()
-    boss.value.idle(true)
-
-    gameHandler.value.gameObjects.push(boss.value)
     gameHandler.value.gameLoop(performance.now())
 })
 
