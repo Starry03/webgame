@@ -101,7 +101,7 @@ export class Obj {
             })
             .catch((error) => {
                 console.error('Error loading images:', error)
-                this.ready = true
+                this.ready = false
                 this.idle()
             })
     }
@@ -132,6 +132,7 @@ export class Obj {
             if (this.facingDirection.x < 0)
                 this.drawFlipped(frame, this.pos.x, this.pos.y, this.dim.x, this.dim.y)
             else ctx.drawImage(frame, this.pos.x, this.pos.y, this.dim.x, this.dim.y)
+            if(this.name === 'entranceDoor') console.debug("frame", this.currentFrame, this.currentAnimation)
             ctx.restore()
         }
     }
@@ -151,6 +152,14 @@ export class Obj {
             ) {
                 this.isAnimationBlocking = false
                 if (!this.isIdleBlocked) this.idle(true)
+                else {
+                    console.debug(
+                        this.currentAnimation,
+                        this.currentFrame,
+                        this.frames[this.currentAnimation][this.currentFrame],
+                        Date.now(),
+                    )
+                }
             }
         }
     }
@@ -206,6 +215,7 @@ export class Obj {
         if (!this.ready) return
         if (this.isAnimationChanged() && !this.isIdle) {
             this.changeFrames(this.currentAnimation)
+            console.debug("call", Date.now())
         }
         this.animate(timestamp, deltaTime)
         this.drawFrame()
@@ -255,7 +265,6 @@ export class Obj {
     interact(other: Obj) {}
 
     exitInteraction(collision: CollisionInfo) {
-        console.debug('Exit interaction')
         if (this.interactedObjects.size === 0) return
         for (const col of this.interactedObjects) {
             if (col.other.id === collision.other.id) {
