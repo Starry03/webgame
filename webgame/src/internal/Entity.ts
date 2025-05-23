@@ -90,7 +90,13 @@ export class Entity extends Obj {
         }
     }
 
-    die() {}
+    die() {
+        this.changeAnimation(AnimationType.DEAD, true, false)
+        this.isAnimationBlocking = true
+        this.isIdleBlocked = true
+        this.handleInput = () => {}
+        this.attack = () => {}
+    }
 
     isInAttackArc(target: Entity, angleRad: number = 2 * Math.PI / 3): boolean {
         const attackerPos = this.pos

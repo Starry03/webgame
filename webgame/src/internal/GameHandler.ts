@@ -7,6 +7,8 @@ import { loadMapObjects } from '@/internal/mapLogic/engine/utils/ObjectLayerUtil
 import type { Obj } from './Obj'
 import { Vector2 } from './types'
 import { Collider } from './collision'
+import { Gorg_red } from './Gorg_red'
+import boss from '@/components/Canvas.vue'
 
 export class GameHandler {
     player: Entity
@@ -135,6 +137,54 @@ export class GameHandler {
             if (customA['type'] === 'brick_wall' || customA['type'] === 'door') return 1
             return -1
         })
-        this.gameObjects = [...this.currentRoomObjects, this.player]
+
+        const isBossRoom = ref(true) 
+        const boss = ref<any>(null)
+
+        const currentRoom = ref(1)
+
+        const mappedBoss = computed(() => {
+            if (!boss.value) return null
+
+            return {
+                speed: boss.value.speed,
+                health: boss.value.health,
+                maxHealth: boss.value.maxHealth,
+                mana: boss.value.mana,
+                maxMana: boss.value.maxMana,
+                level: boss.value.level,
+                attackPower: boss.value.attackPower,
+                defense: boss.value.defense,
+                cooldownQ: boss.value.cooldowns.get(AnimationType.ATTACK_2),
+                maxCooldownQ: boss.value.maxCooldownQ,
+                cooldownR: boss.value.cooldowns.get(AnimationType.SPECIAL),
+                maxCooldownR: boss.value.maxCooldownR,
+                position: boss.value.position,
+            }
+        })
+
+        function initializeBoss() {
+            const bossStats = {
+                speed: 65,
+                health: 1200,
+                maxHealth: 1200,
+                mana: 800,
+                maxMana: 800,
+                level: 20,
+                attackPower: 120,
+                defense: 60,
+                cooldowns: new Map([
+                    [AnimationType.ATTACK_2, 0],
+                    [AnimationType.SPECIAL, 0],
+                ]),
+                maxCooldownQ: 5,
+                maxCooldownR: 10,
+                position: { x: 500, y: 200 },
+            }
+            isBossRoom.value = true
+            return bossStats
+        }
+
+        this.gameObjects = [...this.currentRoomObjects, this.player, this.boss]
     }
 }

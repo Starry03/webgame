@@ -45,8 +45,9 @@ import { Mage } from '@/internal/Mage'
 import { Samurai } from '@/internal/Samurai'
 import { Thief } from '@/internal/Thief'
 import { prefixed } from '@/internal/cryptoutils'
+import { Gorg_red } from '@/internal/Gorg_red'
 import { GameHandler } from '@/internal/GameHandler'
-import { AnimationType, Storage_e, type Character } from '@/internal/types'
+import { AnimationType, Storage_e, Vector2, type Character } from '@/internal/types'
 import StatusBar from '@/components/StatusBar.vue'
 import type { Player } from '@/internal/player'
 
@@ -140,49 +141,33 @@ onMounted(async () => {
         return
     }
     gameHandler.value = new GameHandler(player.value, canvas, ctx)
-    gameHandler.value.gameLoop(performance.now())
+    //gameHandler.value.gameLoop(performance.now())
     gameHandler.value.initialize()
+
+    const bossStats = initializeBoss()
+    boss.value = reactive (
+        new Gorg_red(
+            canvas,
+            ctx,
+            bossStats.speed,
+            bossStats.health,
+            bossStats.mana,
+            bossStats.attackPower,
+            bossStats.defense
+        )
+    )
+    boss.value.name = 'Gorgone Rossa'
+    boss.value.custom_properties = {  collidable: true }
+    boss.value.preloadImages()
+    boss.value.idle(true)
+
+    gameHandler.value.gameObjects.push(boss.value)
+    gameHandler.value.gameLoop(performance.now())
 })
 
 onUnmounted(() => {})
 
-const isBossRoom = ref(true) 
-const boss = ref<any>(null)
 
-const currentRoom = ref(1)
-
-const mappedBoss = computed(() => {
-    if (!boss.value) return null
-
-    return {
-        health: boss.value.health,
-        maxHealth: boss.value.maxHealth,
-        mana: boss.value.mana,
-        maxMana: boss.value.maxMana,
-        level: boss.value.level || 1,
-        cooldownQ: boss.value.cooldowns.get(AnimationType.ATTACK_2),
-        maxCooldownQ: boss.value.maxCooldownQ,
-        cooldownR: boss.value.cooldowns.get(AnimationType.SPECIAL),
-        maxCooldownR: boss.value.maxCooldownR,
-    }
-})
-
-function initializeBoss() {
-    boss.value = reactive({
-        health: 1000,
-        maxHealth: 1000,
-        mana: 800,
-        maxMana: 800,
-        level: 20,
-        cooldowns: new Map([
-            [AnimationType.ATTACK_2, 0],
-            [AnimationType.SPECIAL, 0],
-        ]),
-        maxCooldownQ: 5,
-        maxCooldownR: 10,
-    })
-    isBossRoom.value = true
-}
 </script>
 
 <style scoped>
