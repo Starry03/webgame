@@ -132,7 +132,9 @@ export class Obj {
             if (this.facingDirection.x < 0)
                 this.drawFlipped(frame, this.pos.x, this.pos.y, this.dim.x, this.dim.y)
             else ctx.drawImage(frame, this.pos.x, this.pos.y, this.dim.x, this.dim.y)
-            if(this.name === 'entranceDoor') console.debug("frame", this.currentFrame, this.currentAnimation)
+            ctx.strokeStyle = 'red'
+            ctx.strokeRect(this.pos.x, this.pos.y, this.dim.x, this.dim.y)
+
             ctx.restore()
         }
     }
@@ -181,7 +183,7 @@ export class Obj {
             const abs_collision_dir = collision.dir?.direction()
             const dir_match =
                 abs_collision_dir?.x === abs_dir.x || abs_collision_dir?.y === abs_dir.y
-            if (isCollision && dir_match) {
+            if (isCollision && dir_match && collision.other.custom_properties['collidable']) {
                 res = false
                 return
             }
@@ -215,7 +217,6 @@ export class Obj {
         if (!this.ready) return
         if (this.isAnimationChanged() && !this.isIdle) {
             this.changeFrames(this.currentAnimation)
-            console.debug("call", Date.now())
         }
         this.animate(timestamp, deltaTime)
         this.drawFrame()
@@ -280,5 +281,11 @@ export class Obj {
 
     setFramePaths(path: Record<AnimationType, string[]>) {
         this.framePaths = path
+    }
+
+    getDistance(other: Obj): number {
+        return Math.sqrt(
+            Math.pow(this.pos.x - other.pos.x, 2) + Math.pow(this.pos.y - other.pos.y, 2),
+        )
     }
 }

@@ -1,5 +1,5 @@
-import {AnimatedObject} from '@/internal/mapLogic/classes/AnimatedObject'
-import {AnimationType, Vector2} from '@/internal/types.ts'
+import { AnimatedObject } from '@/internal/mapLogic/classes/AnimatedObject'
+import { AnimationType, Vector2 } from '@/internal/types.ts'
 
 export class SwitchEntrance extends AnimatedObject {
     constructor(
@@ -42,8 +42,15 @@ export class SwitchEntrance extends AnimatedObject {
             hurt: [],
             dead: [],
             opening: [],
-            closing: []
+            closing: [],
         }
         this.setFramePaths(frame_paths)
+    }
+
+    onInteraction(): void {
+        if (this.isAnimationBlocking) return
+        this.changeAnimation(AnimationType.DEAD, true, false)
+        this.custom_properties['collidable'] = false
+        this.collidedObjects.clear()
     }
 }

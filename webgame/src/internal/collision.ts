@@ -13,7 +13,7 @@ export class Collider {
     private static isCollidable(obj: Obj): boolean {
         const props = obj.custom_properties
         for (const prop of this.collidable_classes) {
-            if (Collider.collidable_classes.includes(prop) && props[prop]) {
+            if (Collider.collidable_classes.includes(prop) && props[prop] === true) {
                 return true
             }
         }
@@ -54,7 +54,7 @@ export class Collider {
                 const collision_info: CollisionInfo | null = Collider.get_collision(obj, other)
                 const use_interaction =
                     obj.custom_properties['interactable'] || obj.custom_properties['takeable']
-                const use_collision = obj.custom_properties['collidable']
+                const use_collision = obj.custom_properties['collidable'] && other.custom_properties['collidable']
                 if (use_interaction) Collider.trigger_interaction(obj, other, collision_info)
                 if (use_collision) Collider.trigger_collision(obj, other, collision_info)
             }
