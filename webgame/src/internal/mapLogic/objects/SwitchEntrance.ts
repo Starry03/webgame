@@ -1,8 +1,7 @@
-import { AnimationType, Vector2 } from '@/internal/types.ts'
 import { AnimatedObject } from '@/internal/mapLogic/classes/AnimatedObject'
-import type { CollisionInfo } from '@/internal/collision'
+import { AnimationType, Vector2 } from '@/internal/types.ts'
 
-export class Door extends AnimatedObject {
+export class SwitchEntrance extends AnimatedObject {
     constructor(
         canvas: HTMLCanvasElement,
         ctx: CanvasRenderingContext2D,
@@ -33,14 +32,25 @@ export class Door extends AnimatedObject {
         )
     }
 
-    enterCollision(collisionInfo: CollisionInfo): void {
-        super.enterCollision(collisionInfo)
+    setPaths() {
+        const frame_paths: Record<AnimationType, string[]> = {
+            run: [],
+            attack1: [],
+            attack2: [],
+            special: [],
+            idle: ['/assets/maps/rooms/room3/switchEntrance.png'],
+            hurt: [],
+            dead: [],
+            opening: [],
+            closing: [],
+        }
+        this.setFramePaths(frame_paths)
     }
 
     onInteraction(): void {
         if (this.isAnimationBlocking) return
-        this.changeAnimation(AnimationType.OPENING, true, false)
+        this.changeAnimation(AnimationType.DEAD, true, false)
         this.custom_properties['collidable'] = false
-        console.debug(this.name)
+        this.collidedObjects.clear()
     }
 }

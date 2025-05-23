@@ -22,8 +22,7 @@ export class GameHandler {
     currentRoomObjects: Obj[]
     baseMapDim: Vector2 = new Vector2(800, 416)
     gameObjects: Obj[]
-    count
-    currentRoom: number = 3
+    currentRoom: string
 
     constructor(player: Entity, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
         this.ctx = ctx
@@ -39,9 +38,7 @@ export class GameHandler {
         this.currentRoomObjects = []
         this.bg_image = null
         this.gameObjects = []
-        this.count = 0
-
-        // dati mappa = loadMapData(this.currentRoomPath, this.canvas, this.ctx)
+        this.currentRoom = 'room4'
 
         window.addEventListener('keydown', (e) => {
             e.preventDefault()
@@ -130,8 +127,18 @@ export class GameHandler {
         })
         this.currentRoomObjects.sort((a: Obj, b: Obj) => {
             const exotic_peppe = a.name
-            //credo non serva più questa condizione (per quanto riguarda gli oggetti della mappa - sono oggetti a se stanti)
-            if (['entranceDoor', 'accessDoor', 'ladder', 'switchRoomDoor', 'specialWall', 'structure'].includes(exotic_peppe)) return 1
+            if (exotic_peppe === 'structure' && b.name === 'switchRoomDoor') return -1
+            if (
+                [
+                    'entranceDoor',
+                    'accessDoor',
+                    'ladder',
+                    'switchRoomDoor',
+                    'specialWall',
+                    'structure',
+                ].includes(exotic_peppe)
+            )
+                return 1
             const customA = a.custom_properties
             if (customA['type'] === 'door' || customA['type'] === 'ladder') return 1
             if (customA['type'] === 'brick_wall' || customA['type'] === 'door') return 1

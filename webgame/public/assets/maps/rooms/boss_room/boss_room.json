@@ -185,7 +185,7 @@
                         {
                          "name":"collidable",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"type",
@@ -323,7 +323,7 @@
                         {
                          "name":"collidable",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"type",

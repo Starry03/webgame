@@ -1,6 +1,7 @@
 import { Collider, type CollisionInfo } from './collision'
 import { AnimationType, Vector2 } from './types'
 import { type Ref } from 'vue'
+import { v4 as uuidv4 } from 'uuid'
 
 export class Obj {
     canvas: HTMLCanvasElement
@@ -30,6 +31,7 @@ export class Obj {
     custom_properties: Record<string, any>
     isIdleBlocked: boolean
     name: string
+    id: string
 
     constructor(
         canvas: HTMLCanvasElement,
@@ -65,6 +67,7 @@ export class Obj {
         this.custom_properties = custom_properties
         this.name = name
         this.isIdleBlocked = false
+        this.id = uuidv4()
     }
 
     preloadImages() {
@@ -98,7 +101,7 @@ export class Obj {
             })
             .catch((error) => {
                 console.error('Error loading images:', error)
-                this.ready = true
+                this.ready = false
                 this.idle()
             })
     }
@@ -172,7 +175,7 @@ export class Obj {
             const abs_collision_dir = collision.dir?.direction()
             const dir_match =
                 abs_collision_dir?.x === abs_dir.x || abs_collision_dir?.y === abs_dir.y
-            if (isCollision && dir_match) {
+            if (isCollision && dir_match && collision.other.custom_properties['collidable']) {
                 res = false
                 return
             }
@@ -224,7 +227,7 @@ export class Obj {
 
     enterCollision(collision: CollisionInfo) {
         for (const col of this.collidedObjects)
-            if (col.other === collision.other && col.dir !== collision.dir) {
+            if (col.other.id === collision.other.id && col.dir !== collision.dir) {
                 col.dir = collision.dir
                 return
             }
@@ -234,7 +237,7 @@ export class Obj {
     exitCollision(collision: CollisionInfo) {
         if (this.collidedObjects.size === 0) return
         for (const col of this.collidedObjects) {
-            if (col.other === collision.other) {
+            if (col.other.id === collision.other.id) {
                 this.collidedObjects.delete(col)
                 return
             }
@@ -243,7 +246,7 @@ export class Obj {
 
     enterInteraction(collision: CollisionInfo) {
         for (const col of this.interactedObjects)
-            if (col.other === collision.other && col.dir !== collision.dir) {
+            if (col.other.id === collision.other.id && col.dir !== collision.dir) {
                 col.dir = collision.dir
                 return
             }
@@ -257,7 +260,7 @@ export class Obj {
     exitInteraction(collision: CollisionInfo) {
         if (this.interactedObjects.size === 0) return
         for (const col of this.interactedObjects) {
-            if (col.other === collision.other) {
+            if (col.other.id === collision.other.id) {
                 this.interactedObjects.delete(col)
                 return
             }
@@ -270,5 +273,11 @@ export class Obj {
 
     setFramePaths(path: Record<AnimationType, string[]>) {
         this.framePaths = path
+    }
+
+    getDistance(other: Obj): number {
+        return Math.sqrt(
+            Math.pow(this.pos.x - other.pos.x, 2) + Math.pow(this.pos.y - other.pos.y, 2),
+        )
     }
 }

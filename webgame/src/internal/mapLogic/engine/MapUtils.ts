@@ -4,6 +4,7 @@ import {AnimationType, Vector2} from '@/internal/types.ts';
 import * as pako from 'pako';
 import {Door} from '@/internal/mapLogic/objects/door/Door'
 import type { Obj } from '@/internal/Obj';
+import {SwitchEntrance} from '@/internal/mapLogic/objects/SwitchEntrance';
 
 export function getRoomPath(room: string): string {
     if (room == 'room1') {
@@ -594,6 +595,7 @@ export function populateRoom2 (tiled_objects: (NotAnimatedObject|AnimatedObject)
 }
 
 export function populateRoom3 (list_objects: Obj[]) {
+    console.log("populateRoom3");
     for (const obj of list_objects) {
         let frame_paths: Record<AnimationType, string[]>;
         if (obj.name == 'rock9') {
@@ -882,19 +884,8 @@ export function populateRoom3 (list_objects: Obj[]) {
             }
             obj.setFramePaths(frame_paths);
         }
-        else if (obj.name === 'switchEntrance') {
-            frame_paths = {
-                run: [],
-                attack1: [],
-                attack2: [],
-                special: [],
-                idle: [IMAGES_PATHS['switchEntrance']],
-                hurt: [],
-                dead: [],
-                opening: [],
-                closing: []
-            }
-            obj.setFramePaths(frame_paths);
+        else if (obj instanceof SwitchEntrance) {
+            obj.setPaths();
         }
         else {
             console.log(obj.name);
@@ -1076,6 +1067,7 @@ export function populateRoom4 (list_objects: (Obj)[]) {
             obj.setFramePaths(frame_paths);
         }
         else if (obj instanceof Door) {
+            console.log(obj.name)
             obj.setPaths();
         }
         else if (obj.name == 'manaPotion') {
@@ -1247,6 +1239,7 @@ export function populateRoom4 (list_objects: (Obj)[]) {
             obj.setFramePaths(frame_paths);
         }
         else if (obj.name == 'accessDoor') {
+            console.log(obj.name)
             frame_paths = {
                 run: [],
                 attack1: [],
