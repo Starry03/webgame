@@ -41,6 +41,5 @@ export class Door extends AnimatedObject {
         if (this.isAnimationBlocking) return
         this.changeAnimation(AnimationType.OPENING, true, false)
         this.custom_properties['collidable'] = false
-        console.debug(this.name)
     }
 }
