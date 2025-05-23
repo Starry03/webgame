@@ -132,9 +132,6 @@ export class Obj {
             if (this.facingDirection.x < 0)
                 this.drawFlipped(frame, this.pos.x, this.pos.y, this.dim.x, this.dim.y)
             else ctx.drawImage(frame, this.pos.x, this.pos.y, this.dim.x, this.dim.y)
-            ctx.strokeStyle = 'red'
-            ctx.strokeRect(this.pos.x, this.pos.y, this.dim.x, this.dim.y)
-
             ctx.restore()
         }
     }
@@ -154,14 +151,6 @@ export class Obj {
             ) {
                 this.isAnimationBlocking = false
                 if (!this.isIdleBlocked) this.idle(true)
-                else {
-                    console.debug(
-                        this.currentAnimation,
-                        this.currentFrame,
-                        this.frames[this.currentAnimation][this.currentFrame],
-                        Date.now(),
-                    )
-                }
             }
         }
     }
