@@ -56,10 +56,11 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { getHealthPercentage, getManaPercentage, getLevel, getTime } from '@/components/StatusBar.vue'
+import { getHealthPercentage, getManaPercentage, getTime } from '@/components/StatusBar.vue'
+import {getCurrentRoom} from '@/internal/GameHandler'
 
 var timeTaken = getTime()
-var level = getLevel()
+var level = getCurrentRoom()
 var esp = ref('')
 var healthPercentage = getHealthPercentage()
 var manaPercentage = getManaPercentage()

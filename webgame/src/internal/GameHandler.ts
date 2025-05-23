@@ -218,4 +218,10 @@ export class GameHandler {
             obj.setGameHandler(this)
         })
     }
+
+    getCurrentLevel(): Number {
+        return this.currentRoom
+    }
 }
+
+
