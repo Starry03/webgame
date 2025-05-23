@@ -82,30 +82,12 @@ export class GameHandler {
     async initialize() {
         this.currentRoomPath = getRoomPath('room4')
         this.bg_image = await loadMapData(this.currentRoomPath, this.canvas, this.ctx)
-        const objs = (await loadMapObjects(
+        this.currentRoomObjects  = (await loadMapObjects(
             'room4',
             this.currentRoomPath,
             this.canvas,
             this.ctx,
         )) as Obj[]
-        // unpack
-        objs.forEach((obj: Obj) => {
-            if (obj.name === 'finalStructure') {
-                const accessDoor = obj.custom_properties['accessDoor']
-                const ladder = obj.custom_properties['ladder']
-                this.currentRoomObjects.push(accessDoor)
-                this.currentRoomObjects.push(ladder)
-                this.currentRoomObjects.push(obj)
-            } else if (obj.name === 'switchStructure') {
-                const switchDoor = obj.custom_properties['switchRoomDoor']
-                const specialWall = obj.custom_properties['specialWall']
-                this.currentRoomObjects.push(switchDoor)
-                this.currentRoomObjects.push(specialWall)
-                this.currentRoomObjects.push(obj)
-            } else {
-                this.currentRoomObjects.push(obj)
-            }
-        })
 
         /*switch (this.currentRoom) {
             case 4:
@@ -129,7 +111,7 @@ export class GameHandler {
         this.currentRoomObjects.sort((a: Obj, b: Obj) => {
             const exotic_peppe = a.name
             //credo non serva più questa condizione (per quanto riguarda gli oggetti della mappa - sono oggetti a se stanti)
-            if (['entranceDoor', 'accessDoor', 'ladder', 'switchRoomDoor', 'specialWall'].includes(exotic_peppe)) return 1
+            if (['entranceDoor', 'accessDoor', 'ladder', 'switchRoomDoor', 'specialWall', 'structure', 'wallDoor'].includes(exotic_peppe)) return 1
             const customA = a.custom_properties
             if (customA['type'] === 'door' || customA['type'] === 'ladder') return 1
             if (customA['type'] === 'brick_wall' || customA['type'] === 'door') return 1
