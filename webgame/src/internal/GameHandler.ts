@@ -1,5 +1,7 @@
 import type { Entity } from './Entity'
 import {getRoomPath, populateRoom3, populateRoom4} from '@/internal/mapLogic/engine/MapUtils.ts'
+import { AnimatedObject } from '@/internal/mapLogic/classes/AnimatedObject'
+import { NotAnimatedObject } from '@/internal/mapLogic/classes/NotAnimatedObject'
 import { loadMapData } from '@/internal/mapLogic/engine/utils/BackgroundLayerUtils.ts'
 import { loadMapObjects } from '@/internal/mapLogic/engine/utils/ObjectLayerUtils.ts'
 import type { Obj } from './Obj'
@@ -19,7 +21,7 @@ export class GameHandler {
     baseMapDim: Vector2 = new Vector2(800, 416)
     gameObjects: Obj[]
     count
-    currentRoom: number = 3
+    currentRoom: number = 4
 
     constructor(player: Entity, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
         this.ctx = ctx
@@ -57,7 +59,7 @@ export class GameHandler {
         if (this.player.mana < this.player.maxMana) {
             this.player.mana = Math.min(
                 this.player.maxMana,
-                this.player.mana + this.player.manaRegenRate * deltaTime,
+                this.player.mana + this.player.manaRegenRate * deltaTime
             )
         }
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
@@ -80,12 +82,30 @@ export class GameHandler {
     async initialize() {
         this.currentRoomPath = getRoomPath('room4')
         this.bg_image = await loadMapData(this.currentRoomPath, this.canvas, this.ctx)
-        this.currentRoomObjects = (await loadMapObjects(
+        const objs = (await loadMapObjects(
             'room4',
             this.currentRoomPath,
             this.canvas,
             this.ctx,
         )) as Obj[]
+        // unpack
+        objs.forEach((obj: Obj) => {
+            if (obj.name === 'finalStructure') {
+                const accessDoor = obj.custom_properties['accessDoor']
+                const ladder = obj.custom_properties['ladder']
+                this.currentRoomObjects.push(accessDoor)
+                this.currentRoomObjects.push(ladder)
+                this.currentRoomObjects.push(obj)
+            } else if (obj.name === 'switchStructure') {
+                const switchDoor = obj.custom_properties['switchRoomDoor']
+                const specialWall = obj.custom_properties['specialWall']
+                this.currentRoomObjects.push(switchDoor)
+                this.currentRoomObjects.push(specialWall)
+                this.currentRoomObjects.push(obj)
+            } else {
+                this.currentRoomObjects.push(obj)
+            }
+        })
 
         /*switch (this.currentRoom) {
             case 4:
@@ -109,7 +129,7 @@ export class GameHandler {
         this.currentRoomObjects.sort((a: Obj, b: Obj) => {
             const exotic_peppe = a.name
             //credo non serva più questa condizione (per quanto riguarda gli oggetti della mappa - sono oggetti a se stanti)
-            if (['entranceDoor', 'accessDoor', 'ladder', 'switchRoomDoor', 'specialWall', 'structure'].includes(exotic_peppe)) return 1
+            if (['entranceDoor', 'accessDoor', 'ladder', 'switchRoomDoor', 'specialWall'].includes(exotic_peppe)) return 1
             const customA = a.custom_properties
             if (customA['type'] === 'door' || customA['type'] === 'ladder') return 1
             if (customA['type'] === 'brick_wall' || customA['type'] === 'door') return 1
