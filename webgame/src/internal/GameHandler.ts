@@ -22,8 +22,8 @@ export class GameHandler {
     currentRoomObjects: Obj[]
     baseMapDim: Vector2 = new Vector2(800, 416)
     gameObjects: Obj[]
-    currentRoom: string
     boss: Obj | undefined
+    currentRoom: number
 
     constructor(player: Entity, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
         this.ctx = ctx
@@ -39,7 +39,7 @@ export class GameHandler {
         this.currentRoomObjects = []
         this.bg_image = null
         this.gameObjects = []
-        this.currentRoom = 'boss_room'
+        this.currentRoom = 1
 
         window.addEventListener('keydown', (e) => {
             e.preventDefault()
@@ -79,11 +79,17 @@ export class GameHandler {
         requestAnimationFrame(this.gameLoop)
     }
 
+    changeRoom(room: number) {
+        this.currentRoom = room
+        this.initialize()
+    }
+
     async initialize() {
-        this.currentRoomPath = getRoomPath(this.currentRoom)
-        this.bg_image = await loadMapData(this.currentRoomPath, this.currentRoom, this.canvas, this.ctx)
+        const room = this.currentRoom < 5 ? `room${this.currentRoom}` : 'boss_room'
+        this.currentRoomPath = getRoomPath(room)
+        this.bg_image = await loadMapData(this.currentRoomPath, room, this.canvas, this.ctx)
         this.currentRoomObjects = (await loadMapObjects(
-            'boss_room',
+            room,
             this.currentRoomPath,
             this.canvas,
             this.ctx,
@@ -200,7 +206,6 @@ export class GameHandler {
                 bossStats.mana,
                 bossStats.attackPower,
                 bossStats.defense,
-                new Vector2(bossStats.position.x, bossStats.position.y)
             )
         )
         bossEntity.name = 'Gorgone Rossa'
@@ -211,5 +216,8 @@ export class GameHandler {
         this.boss = bossEntity
 
         this.gameObjects = [...this.currentRoomObjects, this.player, this.boss].filter((obj): obj is Obj | Entity => obj !== undefined)
+        this.gameObjects.forEach((obj: Obj) => {
+            obj.setGameHandler(this)
+        })
     }
 }
