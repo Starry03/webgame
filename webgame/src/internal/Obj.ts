@@ -2,6 +2,7 @@ import { Collider, type CollisionInfo } from './collision'
 import { AnimationType, Vector2 } from './types'
 import { type Ref } from 'vue'
 import { v4 as uuidv4 } from 'uuid'
+import type { GameHandler } from './GameHandler'
 
 export class Obj {
     canvas: HTMLCanvasElement
@@ -32,6 +33,7 @@ export class Obj {
     isIdleBlocked: boolean
     name: string
     id: string
+    gameHandler: GameHandler | null
 
     constructor(
         canvas: HTMLCanvasElement,
@@ -68,6 +70,7 @@ export class Obj {
         this.name = name
         this.isIdleBlocked = false
         this.id = uuidv4()
+        this.gameHandler = null
     }
 
     preloadImages() {
@@ -132,6 +135,10 @@ export class Obj {
             if (this.facingDirection.x < 0)
                 this.drawFlipped(frame, this.pos.x, this.pos.y, this.dim.x, this.dim.y)
             else ctx.drawImage(frame, this.pos.x, this.pos.y, this.dim.x, this.dim.y)
+            ctx.fillStyle = 'red'
+            ctx.strokeRect(this.pos.x, this.pos.y, this.dim.x, this.dim.y)
+            ctx.strokeStyle = 'rgba(255, 0, 0, 0.5)'
+            ctx.lineWidth = 2
             ctx.restore()
         }
     }
@@ -276,5 +283,9 @@ export class Obj {
         return Math.sqrt(
             Math.pow(this.pos.x - other.pos.x, 2) + Math.pow(this.pos.y - other.pos.y, 2),
         )
+    }
+
+    setGameHandler(gameHandler: GameHandler) {
+        this.gameHandler = gameHandler
     }
 }

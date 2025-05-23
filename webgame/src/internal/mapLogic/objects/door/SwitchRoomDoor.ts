@@ -1,5 +1,6 @@
-import {Door} from '@/internal/mapLogic/objects/door/Door.ts'
-import {AnimationType, Vector2} from '@/internal/types.ts'
+import type { CollisionInfo } from '@/internal/collision'
+import { Door } from '@/internal/mapLogic/objects/door/Door.ts'
+import { AnimationType, Vector2 } from '@/internal/types.ts'
 
 export class SwitchRoomDoor extends Door {
     constructor(
@@ -46,16 +47,25 @@ export class SwitchRoomDoor extends Door {
                 '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura1.png',
                 '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura2.png',
                 '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura3.png',
-                '/assets/maps/rooms/tiled_objects/switchRoomDoors/entrance_door.png'
+                '/assets/maps/rooms/tiled_objects/switchRoomDoors/entrance_door.png',
             ],
             closing: [
                 '/assets/maps/rooms/tiled_objects/switchRoomDoors/entrance_door.png',
                 '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura3.png',
                 '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura2.png',
                 '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura1.png',
-                '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura.png'
+                '/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura.png',
             ],
         }
         this.setFramePaths(frame_paths)
+    }
+
+    onInteraction(): void {
+        if (this.isAnimationBlocking) return
+        if (this.gameHandler && this.custom_properties['collidable'] === false) {
+            this.gameHandler.changeRoom(this.gameHandler.currentRoom + 1)
+            console.debug('switch')
+        }
+        super.onInteraction()
     }
 }

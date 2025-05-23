@@ -1,4 +1,3 @@
-import { type Ref, ref } from 'vue'
 import { Entity } from './Entity'
 import type { Obj } from './Obj'
 import { Vector2 } from './types'
@@ -16,7 +15,7 @@ export class Player extends Entity {
         attackPower: number,
         defense: number,
         interactionMessage?: string,
-        pos: Vector2 = new Vector2(200, 200),
+        pos: Vector2 = new Vector2(350, 200),
         dim: Vector2 = new Vector2(48, 48),
     ) {
         super(canvas, ctx, speed, health, mana, attackPower, defense, pos, dim)

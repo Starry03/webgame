@@ -1275,7 +1275,7 @@ export function populateRoom4 (list_objects: (Obj)[]) {
     }
 }
 
-export function populateBossRoom(list_objects: (NotAnimatedObject|AnimatedObject)[]) {
+export function populateBossRoom(list_objects: Obj[]) {
     for (const obj of list_objects) {
         let frame_paths: Record<AnimationType, string[]>;
         if (['bush6', 'bush7', 'bush16', 'bush17', 'bush18'].includes(obj.name)) {
