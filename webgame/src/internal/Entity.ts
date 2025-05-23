@@ -168,10 +168,13 @@ export class Entity extends Obj {
 
         let baseDamage = this.attackPower* attackFactor
 
-        for (const enemy of enemies) {
-            if (enemy === this) continue
+        const collidedEnemies = Array.from(this.collidedObjects)
+            .map(c => c.other)
+            .filter(obj => obj instanceof Entity && obj !== this) as Entity[]
+
+        for (const enemy of collidedEnemies) {
             if (this.isInAttackArc(enemy)) {
-                const damage = Math.max(1, 100-enemy.defense*(baseDamage / 100))
+                const damage = Math.max(1, 100 - enemy.defense * (baseDamage / 100))
                 enemy.get_damage(damage)
             }
         }

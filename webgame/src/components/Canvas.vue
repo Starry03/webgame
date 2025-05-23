@@ -14,26 +14,26 @@
                 :max-cooldown-r="mappedPlayer.maxCooldownR"
             />
         </div>
-
-        <div id="message_zone" class="flex-fit font-mid" v-if="currentRoom >= 1 && currentRoom <= 4">
+<!--
+        <div id="message_zone" class="flex-fit font-mid" v-if="gameHandler.value && gameHandler.value.currentRoom >= 1 && gameHandler.value.currentRoom <= 4">
             {{ mappedPlayer?.interactionMessage }}
         </div>
-<!--
+    -->
+
         <div id="boss-status" v-if="isBossRoom">
-            <StatusBar
-                v-if="mappedBoss"
-                :health="mappedBoss.health"
-                :max-health="mappedBoss.maxHealth"
-                :mana="mappedBoss.mana"
-                :max-mana="mappedBoss.maxMana"
-                :level="mappedBoss.level"
-                :cooldownQ="mappedBoss.cooldownQ"
-                :cooldownR="mappedBoss.cooldownR"
-                :max-cooldown-q="mappedBoss.maxCooldownQ"
-                :max-cooldown-r="mappedBoss.maxCooldownR"
+            <BossStatusBar
+                v-if="gameHandler?.boss"
+                :health="gameHandler.boss.health"
+                :max-health="gameHandler.boss.maxHealth"
+                :mana="gameHandler.boss.mana"
+                :max-mana="gameHandler.boss.maxMana"
+                :level="gameHandler.boss.level"
+                :cooldownQ="gameHandler.boss.cooldownQ"
+                :cooldownR="gameHandler.boss.cooldownR"
+                :max-cooldown-q="gameHandler.boss.maxCooldownQ"
+                :max-cooldown-r="gameHandler.boss.maxCooldownR"
             />
         </div>
-    -->
     </div>
     <div class="canvas-wrapper">
         <canvas ref="canvasRef" id="canvas" :width="800" :height="416" />
@@ -51,11 +51,14 @@ import { GameHandler } from '@/internal/GameHandler'
 import { AnimationType, Storage_e, Vector2, type Character } from '@/internal/types'
 import StatusBar from '@/components/StatusBar.vue'
 import type { Player } from '@/internal/player'
-import { }
+import BossStatusBar from '@/components/BossStatusBar.vue'
 
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 const gameHandler = ref<GameHandler | null>()
 const player = ref<Player | null>(null)
+
+const isBossRoom = computed(() => gameHandler.value?.currentRoom === 5)
+
 
 const mappedPlayer = computed(() => {
     if (!player.value) return null

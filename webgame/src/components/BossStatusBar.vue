@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ProgressBar from './ProgressBar.vue'
+import Filler from './Filler.vue'
 import { computed, defineProps, onMounted, onUnmounted, ref, type Ref } from 'vue'
 
 const props = defineProps({
@@ -57,7 +58,6 @@ const manaPercentage = computed(() => {
     const percentage = (props.mana / props.maxMana) * 100 || 0
     return isNaN(percentage) || percentage < 0 ? 0 : percentage
 })
-
 </script>
 
 <template>

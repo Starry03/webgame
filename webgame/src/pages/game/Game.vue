@@ -9,14 +9,6 @@
             <button class="button button-secondary button-mute" @click="toggleMute">🔊</button>
         </div>
         <div v-if="isReady" class="flex flex-column flex-fit">
-            <StatusBar
-                :health="80"
-                :maxHealth="100"
-                :mana="50"
-                :maxMana="100"
-                :level="5"
-                :canAttack="true"
-            />
             <Canvas />
         </div>
         <button v-else class="button button-primary" :onclick="handleFullscreen">
