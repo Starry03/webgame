@@ -31,4 +31,8 @@ export class Ladder extends AnimatedObject {
             custom_properties,
         )
     }
+
+    onInteraction(): void {
+        this.gameHandler?.changeRoom(this.gameHandler.currentRoom + 1)
+    }
 }

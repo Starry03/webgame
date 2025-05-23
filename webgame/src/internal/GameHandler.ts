@@ -18,7 +18,7 @@ export class GameHandler {
     currentRoomObjects: Obj[]
     baseMapDim: Vector2 = new Vector2(800, 416)
     gameObjects: Obj[]
-    currentRoom: string
+    currentRoom: number
 
     constructor(player: Entity, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
         this.ctx = ctx
@@ -34,7 +34,7 @@ export class GameHandler {
         this.currentRoomObjects = []
         this.bg_image = null
         this.gameObjects = []
-        this.currentRoom = 'room4'
+        this.currentRoom = 1
 
         window.addEventListener('keydown', (e) => {
             e.preventDefault()
@@ -74,11 +74,17 @@ export class GameHandler {
         requestAnimationFrame(this.gameLoop)
     }
 
+    changeRoom(room: number) {
+        this.currentRoom = room
+        this.initialize()
+    }
+
     async initialize() {
-        this.currentRoomPath = getRoomPath(this.currentRoom)
+        const room = this.currentRoom < 5 ? `room${this.currentRoom}` : 'boss_room'
+        this.currentRoomPath = getRoomPath(room)
         this.bg_image = await loadMapData(this.currentRoomPath, this.canvas, this.ctx)
         this.currentRoomObjects = (await loadMapObjects(
-            this.currentRoom,
+            room,
             this.currentRoomPath,
             this.canvas,
             this.ctx,
@@ -107,5 +113,8 @@ export class GameHandler {
             return -1
         })
         this.gameObjects = [...this.currentRoomObjects, this.player]
+        this.gameObjects.forEach((obj: Obj) => {
+            obj.setGameHandler(this)
+        })
     }
 }
