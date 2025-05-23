@@ -60,7 +60,11 @@ export class Door extends AnimatedObject {
     }
 
     onInteraction(): void {
-        console.debug('Door interaction')
-        this.changeAnimation(AnimationType.OPENING, false, false)
-    }    
+        console.debug("currentAnimation", this.currentAnimation)
+        if (this.currentAnimation === AnimationType.OPENING) {
+            this.changeAnimation(AnimationType.CLOSING, true, false)
+            return
+        }
+        this.changeAnimation(AnimationType.OPENING, true, false)
+    }
 }

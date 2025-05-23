@@ -116,12 +116,12 @@ export class GameHandler {
                 break
         }*/
         populateRoom3(this.currentRoomObjects)
-        for (const obj of this.currentRoomObjects) {
-            console.log("<---------------------------------------------")
-            console.log(obj.name)
-            console.log(obj.framePaths)
-            console.log("--------------------------------------------->")
-        }
+        // for (const obj of this.currentRoomObjects) {
+        //     console.log("<---------------------------------------------")
+        //     console.log(obj.name)
+        //     console.log(obj.framePaths)
+        //     console.log("--------------------------------------------->")
+        // }
         this.currentRoomObjects.forEach((obj: Obj) => {
             obj.preloadImages()
             obj.idle(true)

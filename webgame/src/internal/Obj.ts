@@ -28,7 +28,7 @@ export class Obj {
     interactedObjects: Set<CollisionInfo>
     time: number
     custom_properties: Record<string, any>
-    idleBlocked: boolean
+    isIdleBlocked: boolean
     name: string
 
     constructor(
@@ -64,7 +64,7 @@ export class Obj {
         this.interactedObjects = new Set<CollisionInfo>()
         this.custom_properties = custom_properties
         this.name = name
-        this.idleBlocked = false
+        this.isIdleBlocked = false
     }
 
     preloadImages() {
@@ -140,14 +140,14 @@ export class Obj {
         this.currentFrame++
         this.lastUpdateTime = timestamp
         if (this.currentFrame >= this.selectedFrames.length) {
-            this.currentFrame = (!this.idleBlocked) ? 0 : this.selectedFrames.length - 1
+            this.currentFrame = !this.isIdleBlocked ? 0 : this.selectedFrames.length - 1
             if (
                 (this.cooldowns.has(this.currentAnimation) &&
                     this.cooldowns.get(this.currentAnimation)?.value != 0) ||
                 this.isAnimationBlocking
             ) {
                 this.isAnimationBlocking = false
-                if (!this.idleBlocked) this.idle(true)
+                if (!this.isIdleBlocked) this.idle(true)
             }
         }
     }
@@ -191,8 +191,7 @@ export class Obj {
             this.prevAnimation = this.currentAnimation
             return
         }
-        if (!backToIdle) this.idleBlocked = true
-        else this.idleBlocked = false
+        if (!backToIdle) this.isIdleBlocked = true
         if (prevAnimation) this.prevAnimation = prevAnimation
         else this.prevAnimation = this.currentAnimation
         if (animationName !== AnimationType.IDLE) this.isIdle = false
