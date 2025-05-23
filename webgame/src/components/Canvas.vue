@@ -18,7 +18,7 @@
         <div id="message_zone" class="flex-fit font-mid" v-if="currentRoom >= 1 && currentRoom <= 4">
             {{ mappedPlayer?.interactionMessage }}
         </div>
-
+<!--
         <div id="boss-status" v-if="isBossRoom">
             <StatusBar
                 v-if="mappedBoss"
@@ -33,6 +33,7 @@
                 :max-cooldown-r="mappedBoss.maxCooldownR"
             />
         </div>
+    -->
     </div>
     <div class="canvas-wrapper">
         <canvas ref="canvasRef" id="canvas" :width="800" :height="416" />
@@ -45,8 +46,9 @@ import { Mage } from '@/internal/Mage'
 import { Samurai } from '@/internal/Samurai'
 import { Thief } from '@/internal/Thief'
 import { prefixed } from '@/internal/cryptoutils'
+import { Gorg_red } from '@/internal/Gorg_red'
 import { GameHandler } from '@/internal/GameHandler'
-import { AnimationType, Storage_e, type Character } from '@/internal/types'
+import { AnimationType, Storage_e, Vector2, type Character } from '@/internal/types'
 import StatusBar from '@/components/StatusBar.vue'
 import type { Player } from '@/internal/player'
 
@@ -76,6 +78,7 @@ const mappedPlayer = computed(() => {
 onMounted(async () => {
     const character = localStorage.getItem(prefixed(Storage_e.SELECTED_CHARACTER))
     const characterObject: Character = JSON.parse(character || '{}')
+    
 
     const canvas = canvasRef.value
     if (!canvas) {
@@ -140,49 +143,13 @@ onMounted(async () => {
         return
     }
     gameHandler.value = new GameHandler(player.value, canvas, ctx)
-    gameHandler.value.gameLoop(performance.now())
     gameHandler.value.initialize()
+    gameHandler.value.gameLoop(performance.now())
 })
 
 onUnmounted(() => {})
 
-const isBossRoom = ref(false)
-const boss = ref<any>(null)
 
-const currentRoom = ref(1)
-
-const mappedBoss = computed(() => {
-    if (!boss.value) return null
-
-    return {
-        health: boss.value.health,
-        maxHealth: boss.value.maxHealth,
-        mana: boss.value.mana,
-        maxMana: boss.value.maxMana,
-        level: boss.value.level || 1,
-        cooldownQ: boss.value.cooldowns.get(AnimationType.ATTACK_2),
-        maxCooldownQ: boss.value.maxCooldownQ,
-        cooldownR: boss.value.cooldowns.get(AnimationType.SPECIAL),
-        maxCooldownR: boss.value.maxCooldownR,
-    }
-})
-
-function initializeBoss() {
-    boss.value = reactive({
-        health: 1000,
-        maxHealth: 1000,
-        mana: 800,
-        maxMana: 800,
-        level: 20,
-        cooldowns: new Map([
-            [AnimationType.ATTACK_2, 0],
-            [AnimationType.SPECIAL, 0],
-        ]),
-        maxCooldownQ: 5,
-        maxCooldownR: 10,
-    })
-    isBossRoom.value = true
-}
 </script>
 
 <style scoped>

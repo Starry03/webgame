@@ -1,6 +1,7 @@
 import { Entity } from '@/internal/Entity'
 import { Player } from './player'
 import type { Ref } from 'vue'
+import { Vector2 } from './types'
 
 export class Mage extends Player {
     constructor(
