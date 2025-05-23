@@ -15,16 +15,13 @@ const props = defineProps({
     mana: {
         type: Number,
         required: true,
-        default: 100,
     },
     maxMana: {
         type: Number,
         required: true,
-        default: 100,
     },
     level: {
         type: Number,
-        default: 1,
     },
     cooldownQ: {
         type: Object as () => Ref<number>,
@@ -70,12 +67,12 @@ const manaPercentage = computed(() => {
             <div class="bars">
                 <div class="bar-container flex items-center gap-small">
                     <span>HP:</span>
-                    <ProgressBar :progress="healthPercentage" color="crimson" />
+                    <ProgressBar :progress="healthPercentage" color="violet" class="boss-hp-bar"/>
                     <span class="hp-value">{{ props.health }}/{{ props.maxHealth }}</span>
                 </div>
                 <div class="bar-container flex items-center gap-small">
                     <span>MP:</span>
-                    <ProgressBar :progress="manaPercentage" color="cyan" class="mana-bar" />
+                    <ProgressBar :progress="manaPercentage" color="blue" class="boss-mana-bar" />
                     <span class="mp-value">{{ Math.floor(props.mana) }}/{{ props.maxMana }}</span>
                 </div>
             </div>
@@ -88,40 +85,49 @@ const manaPercentage = computed(() => {
 </template>
 
 <style scoped>
-
-.status-bar {
+.boss-status-bar {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    padding: 10px;
-    background-color: #333;
-    border-radius: 8px;
-    color: white;
-    font-size: 14px;
-    height: 100%;
-    max-width: 600px;
+    gap: 14px;
+    padding: 18px 24px;
+    background: linear-gradient(90deg, #3a0d0d 60%, #6e1e1e 100%);
+    border: 3px solid gold;
+    border-radius: 14px;
+    color: #fff;
+    font-size: 1.1rem;
+    box-shadow: 0 0 24px 4px #b3000088, 0 0 8px 2px gold;
+    max-width: 700px;
+    margin: 0 auto;
+    animation: boss-bar-glow 2s infinite alternate;
 }
 
-.player-header {
+@keyframes boss-bar-glow {
+    from { box-shadow: 0 0 24px 4px #b3000088, 0 0 8px 2px gold; }
+    to   { box-shadow: 0 0 36px 8px #ff333388, 0 0 16px 4px gold; }
+}
+
+.boss-header {
     display: flex;
     align-items: center;
-    gap: 2rem;
-    margin-bottom: 0.5rem;
     justify-content: space-between;
-    text-shadow: 0 0 10px black, 0 0 20px black;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+    text-shadow: 0 0 8px #b30000, 0 0 16px #fff;
+    margin-bottom: 0.5rem;
 }
 
-.player-name {
-    color: orange;
+.boss-name {
+    color: gold;
+    font-weight: bold;
+    text-shadow: 0 0 8px #fff, 0 0 16px #b30000;
 }
 
-.player-level{
-    color:chartreuse;
-}
-
-.player-time{
-    margin-left: auto;
-    color: #8ff;
+.boss-level {
+    color: #ffb347;
+    font-size: 1.1rem;
+    margin-left: 1.5rem;
+    text-shadow: 0 0 6px #fff;
 }
 
 .bars-and-cooldowns {
@@ -129,18 +135,7 @@ const manaPercentage = computed(() => {
     flex-direction: row;
     align-items: flex-start;
     width: 100%;
-    gap: 1rem;
-}
-
-span{
-    font-family: 'Press Start 2P', cursive;
-    font-size: var(--font-small);
-}
-
-.hp-value,
-.mp-value {
-    font-size: 0.5rem;
-    color: #ccc;
+    gap: 2rem;
 }
 
 .bars {
@@ -148,31 +143,40 @@ span{
     min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 16px;
 }
 
 .bar-container {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 16px;
     width: 100%;
+    font-size: 1.1rem;
 }
 
-.progress-bar {
-    flex: 1 1 0;
-    min-width: 0;
-    max-width: 100%;
+.boss-hp-bar {
+    height: 22px;
+    border-radius: 8px;
+    box-shadow: 0 0 8px 2px #ff0000aa;
 }
 
-.mana-bar {
-    width: 40%;
-    max-width: 50%;
+.boss-mana-bar {
+    height: 18px;
+    border-radius: 8px;
+    box-shadow: 0 0 8px 2px #ffd700aa;
+}
+
+.hp-value,
+.mp-value {
+    font-size: 0.9rem;
+    color: #ffd700;
+    text-shadow: 0 0 4px #000;
 }
 
 .cooldown-container {
     display: flex;
     flex-direction: row;
-    gap: 0.25rem;
+    gap: 1rem;
     align-items: center;
     justify-content: flex-end;
     min-width: 0;
@@ -180,62 +184,58 @@ span{
     padding-right: 4px;
 }
 
+span{
+    font-family: 'Press Start 2P', cursive;
+    font-size: var(--font-small);
+}
+
 @media (max-width: 768px) {
-    .status-bar {
-        font-size: 12px;
+    .boss-status-bar {
+        font-size: 1rem;
+        padding: 8px 6px;
         max-width: 100vw;
-        padding: 5px;
     }
     .bars-and-cooldowns {
         flex-direction: column;
         gap: 1rem;
     }
-    .cooldown-container {
-        flex-direction: row;
-        gap: 1rem;
-        align-items: center;
-        justify-content: flex-start;
-    }
-    .player-header {
-        flex-direction: column;
-        gap: 0.5rem;
-        align-items: flex-start;
+    .boss-header {
+        font-size: 1rem;
     }
 }
 
-@media (max-width: 768px) {
-    #canvas {
-        width: 80%;
-        height: auto;
-    }
-
-    .status-bar {
-        font-size: 14px;
-    }
-}
-
-@media (orientation: landscape) and (max-height: 500px) {
-    .status-bar {
-        font-size: 10px;
-        width: 50%;
-        height: 100%
-    }
-    .bar-container {
-        gap: 5px;
-    }
-    .cooldown-container {
-        width: 30%;
-        height: 90%;
-    }
-    .cooldown-bar {
-        width: 50%;
-        height: 150%;
-    }
-
-    #canvas {
-        width: 100%;
-        height: 100%;
-    }
-
+@media (max-width: 600px) {
+  .boss-status-bar {
+    font-size: 0.9rem;
+    padding: 6px 2px;
+    max-width: 100vw;
+    min-width: 0;
+    border-width: 2px;
+  }
+  .bars-and-cooldowns {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: stretch;
+  }
+  .boss-header {
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 1rem;
+    gap: 0.2rem;
+  }
+  .bar-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  .cooldown-container {
+    justify-content: flex-start;
+    gap: 0.5rem;
+    padding-right: 0;
+  }
+  .boss-hp-bar, .boss-mana-bar {
+    height: 14px;
+    font-size: 0.8rem;
+  }
 }
 </style>
