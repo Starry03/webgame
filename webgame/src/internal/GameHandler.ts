@@ -76,7 +76,7 @@ export class GameHandler {
 
     async initialize() {
         this.currentRoomPath = getRoomPath(this.currentRoom)
-        this.bg_image = await loadMapData(this.currentRoomPath, this.canvas, this.ctx)
+        this.bg_image = await loadMapData(this.currentRoomPath, this.currentRoom, this.canvas, this.ctx)
         this.currentRoomObjects = (await loadMapObjects(
             this.currentRoom,
             this.currentRoomPath,

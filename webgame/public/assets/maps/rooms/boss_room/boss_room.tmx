@@ -30,7 +30,7 @@
  <tileset firstgid="240" source="../tilesets/boss_side_wall.tsx"/>
  <layer id="1" name="background" width="25" height="13">
   <data encoding="base64" compression="zlib">
-   eJxjYKAPWArFh5DwUjSMS5wQJscOdIxPHbId+PTgwrj04LIDm35SwwSXGdjswBcGxPjpEB47SA1nQnbginNC/qCWHYTCA1v4ERtWlMQrsXGO7k5C6ZnU/IHLTcTag88/9AIAkdGseQ==
+   eJxbysDAsJSO+BASxiVHDzvQMbFm4NNDqnuINYtaYULIfeToQdZLTHhTElfEhjMt7SDF7kN47KBGnBITR4TcScjv5IYpKeqJkacnBgDJm9rh
   </data>
  </layer>
  <objectgroup id="2" name="objects">

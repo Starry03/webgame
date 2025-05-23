@@ -2,9 +2,28 @@ import * as pako from 'pako'
 
 const tileSize = 32
 
-export function loadImage(): Promise<HTMLImageElement> {
-    const background_map_image = new Image()
-    background_map_image.src = '/assets/maps/rooms/background_map/background_map.png'
+export function loadImage(room_name: string): Promise<HTMLImageElement> {
+    let background_map_image = new Image()
+    switch (room_name) {
+        case 'room1':
+            background_map_image.src = '/assets/maps/rooms/room1/room1_background.png'
+            break
+        case 'room2':
+            background_map_image.src = '/assets/maps/rooms/room2/room2_background.png'
+            break
+        case 'room3':
+            background_map_image.src = '/assets/maps/rooms/room3/room3_background.png'
+            break
+        case 'room4':
+            background_map_image.src = '/assets/maps/rooms/room4/room4_background.png'
+            break
+        case 'boss_room':
+            background_map_image.src = '/assets/maps/rooms/boss_room/boss_background.png'
+            break
+        default:
+            console.log("background image not found")
+            background_map_image.src = ''
+    }
 
     return new Promise((resolve, reject) => {
         background_map_image.onload = () => {
@@ -20,6 +39,7 @@ export function loadImage(): Promise<HTMLImageElement> {
 
 export async function loadMapData(
     path: string,
+    room_name: string,
     canvas: HTMLCanvasElement,
     ctx: CanvasRenderingContext2D,
 ): Promise<HTMLImageElement | null> {
@@ -32,9 +52,9 @@ export async function loadMapData(
         }
 
         map_data = await res.json()
-        const image = await loadImage()
+        const image = await loadImage(room_name)
         return image
-        
+
         // const background_layer = map_data.layers.find(
         //     (layer: TiledLayer) => layer.name === 'background',
         // )
@@ -53,7 +73,7 @@ export async function loadMapData(
         console.error(err)
         return null
     }
-    
+
     // return results
 }
 

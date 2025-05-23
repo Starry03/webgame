@@ -6,7 +6,7 @@ import type {
     TiledObject,
     TiledProperty,
 } from '@/internal/mapLogic/engine/interfaces/Interfaces'
-import { populateRoom1, populateRoom2, populateRoom3, populateRoom4 } from '@/internal/mapLogic/engine/MapUtils.ts'
+import { populateRoom1, populateRoom2, populateRoom3, populateRoom4, populateBossRoom } from '@/internal/mapLogic/engine/MapUtils.ts'
 import { EntranceDoor } from '@/internal/mapLogic/objects/door/EntranceDoor'
 import { SwitchRoomDoor } from '@/internal/mapLogic/objects/door/SwitchRoomDoor'
 import { SwitchEntrance } from '@/internal/mapLogic/objects/SwitchEntrance'
@@ -174,6 +174,8 @@ export async function loadMapObjects(
             case 'room4':
                 populateRoom4(list_objects)
                 break
+            case 'boss_room':
+                populateBossRoom(list_objects)
             default:
                 break
         }
