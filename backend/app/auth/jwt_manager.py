@@ -9,7 +9,7 @@ from app.auth.models import Credentials, Token
 
 class JWTManager:
     passoauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
-    __EXPIRATION_TIME_MIN = getenv("JWT_EXPIRES_IN_MIN", default=60)
+    __EXPIRATION_TIME_DAYS = getenv("JWT_EXPIRES_IN_DAYS")
 
     @staticmethod
     def __get_token(to_encode: dict, delta_time: timedelta) -> str:
@@ -21,9 +21,9 @@ class JWTManager:
 
     @staticmethod
     def create_token(data: Credentials) -> Token:
-        expiration_time_min = timedelta(minutes=JWTManager.__EXPIRATION_TIME_MIN)
+        expiration_time_days = timedelta(days=1)
         token = JWTManager.__get_token(
-            dict(username=data.username), expiration_time_min
+            dict(username=data.username), expiration_time_days
         )
         return Token(access_token=token, token_type="bearer")
 
