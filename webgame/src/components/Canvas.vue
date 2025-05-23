@@ -51,6 +51,7 @@ import { GameHandler } from '@/internal/GameHandler'
 import { AnimationType, Storage_e, Vector2, type Character } from '@/internal/types'
 import StatusBar from '@/components/StatusBar.vue'
 import type { Player } from '@/internal/player'
+import { }
 
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 const gameHandler = ref<GameHandler | null>()
