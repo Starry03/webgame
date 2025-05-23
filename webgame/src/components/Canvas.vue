@@ -104,7 +104,7 @@ onMounted(async () => {
                     ctx,
                     characterObject.speed,
                     characterObject.hp,
-                    characterObject.mana,
+                    characterObject.mana
                 ),
             )
             break
@@ -147,7 +147,7 @@ onUnmounted(() => {
     // window.removeEventListener('resize', handle_resize)
 })
 
-const isBossRoom = ref(false) 
+const isBossRoom = ref(true) 
 const boss = ref<any>(null)
 
 const currentRoom = ref(1)

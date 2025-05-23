@@ -1,5 +1,5 @@
 import type { Entity } from './Entity'
-import {getRoomPath, populateRoom3, populateRoom4} from '@/internal/mapLogic/engine/MapUtils.ts'
+import {getRoomPath, populateBossRoom, populateRoom3, populateRoom4} from '@/internal/mapLogic/engine/MapUtils.ts'
 import { AnimatedObject } from '@/internal/mapLogic/classes/AnimatedObject'
 import { NotAnimatedObject } from '@/internal/mapLogic/classes/NotAnimatedObject'
 import { loadMapData } from '@/internal/mapLogic/engine/utils/BackgroundLayerUtils.ts'
@@ -80,16 +80,16 @@ export class GameHandler {
     }
 
     async initialize() {
-        this.currentRoomPath = getRoomPath('room4')
+        this.currentRoomPath = getRoomPath('boss_room')
         this.bg_image = await loadMapData(this.currentRoomPath, this.canvas, this.ctx)
-        const objs = (await loadMapObjects(
-            'room4',
+        this.currentRoomObjects = (await loadMapObjects(
+            'boss_room',
             this.currentRoomPath,
             this.canvas,
             this.ctx,
         )) as Obj[]
         // unpack
-        objs.forEach((obj: Obj) => {
+        /*objs.forEach((obj: Obj) => {
             if (obj.name === 'finalStructure') {
                 const accessDoor = obj.custom_properties['accessDoor']
                 const ladder = obj.custom_properties['ladder']
@@ -105,7 +105,7 @@ export class GameHandler {
             } else {
                 this.currentRoomObjects.push(obj)
             }
-        })
+        })*/
 
         /*switch (this.currentRoom) {
             case 4:
@@ -115,7 +115,7 @@ export class GameHandler {
             default:
                 break
         }*/
-        populateRoom4(this.currentRoomObjects)
+        populateBossRoom(this.currentRoomObjects)
         /*for (const obj of this.currentRoomObjects) {
             console.log("<---------------------------------------------")
             console.log(obj.name)

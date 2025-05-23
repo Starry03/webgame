@@ -127,6 +127,9 @@ export class Obj {
             if (this.facingDirection.x < 0)
                 this.drawFlipped(frame, this.pos.x, this.pos.y, this.dim.x, this.dim.y)
             else ctx.drawImage(frame, this.pos.x, this.pos.y, this.dim.x, this.dim.y)
+            ctx.strokeStyle = 'rgba(255, 0, 0, 0.5)'
+            ctx.lineWidth = 2
+            ctx.strokeRect(this.pos.x, this.pos.y, this.dim.x, this.dim.y)
             ctx.restore()
         }
     }
