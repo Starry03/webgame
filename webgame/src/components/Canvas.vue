@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-space-between" id="game-header">
+    <div class="flex flex-space-between flex-row" id="game-header">
         <div id="player-status">
             <StatusBar
                 v-if="mappedPlayer"
@@ -15,8 +15,8 @@
             />
         </div>
 
-        <div id="message_zone" v-if="currentRoom >= 1 && currentRoom <= 4">
-            {{ interactionMessage }}
+        <div id="message_zone" class="flex-fit font-mid" v-if="currentRoom >= 1 && currentRoom <= 4">
+            {{ mappedPlayer?.interactionMessage }}
         </div>
 
         <div id="boss-status" v-if="isBossRoom">
@@ -48,24 +48,16 @@ import { prefixed } from '@/internal/cryptoutils'
 import { GameHandler } from '@/internal/GameHandler'
 import { AnimationType, Storage_e, type Character } from '@/internal/types'
 import StatusBar from '@/components/StatusBar.vue'
-import type { Entity } from '@/internal/Entity'
-import { startGame } from '@/game_func'
-
-onMounted(() => {
-    const canvas = canvasRef.value
-    if (!canvas) return
-
-    startGame(canvas)
-})
+import type { Player } from '@/internal/player'
 
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 const gameHandler = ref<GameHandler | null>()
-const player = ref<any>(null)
+const player = ref<Player | null>(null)
 
 const mappedPlayer = computed(() => {
     if (!player.value) return null
 
-    const player_value: Reactive<Entity> = player.value
+    const player_value: Reactive<Player> = player.value
 
     return {
         health: player.value.health,
@@ -77,11 +69,11 @@ const mappedPlayer = computed(() => {
         maxCooldownQ: player_value.maxCooldownQ,
         cooldownR: player_value.cooldowns.get(AnimationType.SPECIAL),
         maxCooldownR: player_value.maxCooldownR,
+        interactionMessage: player_value.interactionMessage,
     }
 })
 
 onMounted(async () => {
-    // window.addEventListener('resize', handle_resize)
     const character = localStorage.getItem(prefixed(Storage_e.SELECTED_CHARACTER))
     const characterObject: Character = JSON.parse(character || '{}')
 
@@ -105,6 +97,9 @@ onMounted(async () => {
                     characterObject.speed,
                     characterObject.hp,
                     characterObject.mana,
+                    characterObject.attack,
+                    characterObject.defense,
+                    "",
                 ),
             )
             break
@@ -116,6 +111,9 @@ onMounted(async () => {
                     characterObject.speed,
                     characterObject.hp,
                     characterObject.mana,
+                    characterObject.attack,
+                    characterObject.defense,
+                    "",
                 ),
             )
             break
@@ -127,6 +125,9 @@ onMounted(async () => {
                     characterObject.speed,
                     characterObject.hp,
                     characterObject.mana,
+                    characterObject.attack,
+                    characterObject.defense,
+                    "",
                 ),
             )
             break
@@ -143,15 +144,12 @@ onMounted(async () => {
     gameHandler.value.initialize()
 })
 
-onUnmounted(() => {
-    // window.removeEventListener('resize', handle_resize)
-})
+onUnmounted(() => {})
 
-const isBossRoom = ref(false) 
+const isBossRoom = ref(false)
 const boss = ref<any>(null)
 
 const currentRoom = ref(1)
-const interactionMessage = ref('')
 
 const mappedBoss = computed(() => {
     if (!boss.value) return null
@@ -190,7 +188,7 @@ function initializeBoss() {
 <style scoped>
 #game-header {
     display: flex;
-    justify-content: flex-start; 
+    justify-content: flex-start;
     align-items: center;
     width: 100%;
     padding: 10px;
@@ -199,18 +197,18 @@ function initializeBoss() {
 }
 
 #player-status {
-    width: 50%; 
+    width: 50%;
     display: flex;
     flex-direction: column;
-    gap: 10px; 
+    gap: 10px;
 }
 
 #boss-status {
-    width: 50%; 
+    width: 50%;
     display: flex;
     flex-direction: column;
-    gap: 10px; 
-    align-items: flex-end; 
+    gap: 10px;
+    align-items: flex-end;
 }
 
 .canvas-wrapper {
@@ -219,7 +217,7 @@ function initializeBoss() {
     display: flex;
     justify-content: center;
     align-items: center;
-    max-height: 70svh; 
+    max-height: 70svh;
     overflow: hidden;
 }
 
@@ -236,12 +234,8 @@ function initializeBoss() {
 }
 
 #message_zone {
-    width: 50%;
     text-align: center;
     color: #fff;
-    font-size: 1.2rem;
-    font-weight: bold;
-    padding: 10px;
 }
 
 @media (max-width: 900px), (max-height: 500px) {
@@ -268,22 +262,22 @@ function initializeBoss() {
     }
 
     #player-status {
-        width: 50%; 
+        width: 50%;
         display: flex;
         flex-direction: column;
-        gap: 5px; 
+        gap: 5px;
     }
 
     #boss-status {
         width: 50%;
         display: flex;
         flex-direction: column;
-        gap: 5px; 
+        gap: 5px;
         align-items: flex-end;
     }
 
     .status-bar {
-        padding: 5px; 
+        padding: 5px;
         background-color: #333;
         border-radius: 8px;
         color: white;
@@ -293,7 +287,7 @@ function initializeBoss() {
     .bar-container {
         display: flex;
         align-items: center;
-        gap: 5px; 
+        gap: 5px;
     }
 
     .cooldown-container {
@@ -306,7 +300,7 @@ function initializeBoss() {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 3px; 
+        gap: 3px;
     }
 
     .cooldown-circle {
@@ -327,27 +321,28 @@ function initializeBoss() {
     }
 
     #game-header {
-        flex-direction: column; 
+        flex-direction: column;
         align-items: flex-start;
-        gap: 5px; 
+        gap: 5px;
     }
 
-    #player-status,#boss-status {
+    #player-status,
+    #boss-status {
         width: 100%;
     }
 
     .status-bar {
-        padding: 5px; 
-        font-size: 0.8rem; 
+        padding: 5px;
+        font-size: 0.8rem;
     }
 
     .cooldown-circle {
-        width: 30px; 
+        width: 30px;
         height: 30px;
     }
 
     .cooldown-circle span {
-        font-size: 10px; 
+        font-size: 10px;
     }
 }
 </style>
