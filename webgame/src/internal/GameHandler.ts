@@ -80,32 +80,15 @@ export class GameHandler {
     }
 
     async initialize() {
-        this.currentRoomPath = getRoomPath('room4')
+        this.currentRoomPath = getRoomPath('room3')
         this.bg_image = await loadMapData(this.currentRoomPath, this.canvas, this.ctx)
-        const objs = (await loadMapObjects(
-            'room4',
+        this.currentRoomObjects = (await loadMapObjects(
+            'room3',
             this.currentRoomPath,
             this.canvas,
             this.ctx,
         )) as Obj[]
         // unpack
-        objs.forEach((obj: Obj) => {
-            if (obj.name === 'finalStructure') {
-                const accessDoor = obj.custom_properties['accessDoor']
-                const ladder = obj.custom_properties['ladder']
-                this.currentRoomObjects.push(accessDoor)
-                this.currentRoomObjects.push(ladder)
-                this.currentRoomObjects.push(obj)
-            } else if (obj.name === 'switchStructure') {
-                const switchDoor = obj.custom_properties['switchRoomDoor']
-                const specialWall = obj.custom_properties['specialWall']
-                this.currentRoomObjects.push(switchDoor)
-                this.currentRoomObjects.push(specialWall)
-                this.currentRoomObjects.push(obj)
-            } else {
-                this.currentRoomObjects.push(obj)
-            }
-        })
 
         /*switch (this.currentRoom) {
             case 4:
@@ -115,13 +98,13 @@ export class GameHandler {
             default:
                 break
         }*/
-        populateRoom4(this.currentRoomObjects)
         /*for (const obj of this.currentRoomObjects) {
             console.log("<---------------------------------------------")
             console.log(obj.name)
             console.log(obj.framePaths)
             console.log("--------------------------------------------->")
         }*/
+
         this.currentRoomObjects.forEach((obj: Obj) => {
             obj.preloadImages()
             obj.idle(true)

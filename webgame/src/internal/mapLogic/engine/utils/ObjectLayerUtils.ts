@@ -3,17 +3,14 @@ import { AnimatedObject } from '@/internal/mapLogic/classes/AnimatedObject'
 import { AnimationType, Vector2 } from '@/internal/types.ts'
 import type {
     TiledMap,
-    TiledProperty,
     TiledObject,
+    TiledProperty,
 } from '@/internal/mapLogic/engine/interfaces/Interfaces'
-import { populateRoom3, populateRoom4 } from '@/internal/mapLogic/engine/MapUtils.ts'
+import { populateRoom3 } from '@/internal/mapLogic/engine/MapUtils.ts'
 import { EntranceDoor } from '@/internal/mapLogic/objects/door/EntranceDoor'
 import { SwitchRoomDoor } from '@/internal/mapLogic/objects/door/SwitchRoomDoor'
-import { AccessDoor } from '@/internal/mapLogic/objects/door/AccessDoor'
-import { SwitchStructure } from '@/internal/mapLogic/objects/SwitchStructure'
-import { SpecialWall } from '@/internal/mapLogic/objects/SpecialWall'
 import { FinalStructure } from '@/internal/mapLogic/objects/FinalStructure'
-import { Ladder } from '@/internal/mapLogic/objects/Ladder'
+import { SwitchEntrance } from '@/internal/mapLogic/objects/SwitchEntrance'
 
 export function loadObjectsFromMap(
     jsonMap: TiledMap,
@@ -76,32 +73,13 @@ export function loadObjectsFromMap(
                         custom_properties,
                     ),
                 )
-            }
-            else if (object.name == 'switchStructure') {
+            } else if (object.name == 'switchEntrance') {
                 custom_properties = extractCustomProperties(object)
-                SwitchStructure.populateCustomProperties(
-                    custom_properties,
-                    all_tiledObjects,
-                    canvas,
-                    ctx,
-                )
-                list_objects.push(
-                    new SwitchStructure(
-                        canvas,
-                        ctx,
-                        AnimationType.IDLE,
-                        isIdle,
-                        pos,
-                        dim,
-                        object.name,
-                        object.x,
-                        object.y,
-                        object.width,
-                        object.height,
-                        custom_properties,
-                    ),
-                )
-            } else if (object.name == 'finalStructure') {
+                const switchEntrance: SwitchEntrance = new SwitchEntrance(canvas, ctx, AnimationType.IDLE, isIdle, pos, dim, object.name, object.x, object.y, object.width, object.height, custom_properties)
+                switchEntrance.setPaths()
+                list_objects.push(switchEntrance)
+            }
+            else if (object.name == 'finalStructure') {
                 custom_properties = extractCustomProperties(object)
                 FinalStructure.populateCustomProperties(
                     custom_properties,
@@ -186,9 +164,9 @@ export async function loadMapObjects(
             map_data,
             canvas,
             ctx,
-            'room4',
+            'room3',
         )
-        populateRoom4(list_objects)
+        populateRoom3(list_objects)
         return list_objects
     } catch (error) {
         console.error(`Errore nel caricamento della mappa: ${mapUrl}`, error)
