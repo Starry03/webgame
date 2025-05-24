@@ -43,8 +43,7 @@ export class GameHandler {
         this.currentRoomObjects = []
         this.bg_image = null
         this.gameObjects = []
-        this.currentRoom = 1
-        this.spawner = null
+        this.currentRoom = 5
 
         window.addEventListener('keydown', (e) => {
             e.preventDefault()
