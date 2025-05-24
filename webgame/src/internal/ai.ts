@@ -14,6 +14,7 @@ export class Ai {
     player: Entity
     enemies: Entity[]
     moveCombinations: string[] = ['w', 'wa', 'wd', 'd', 'ds', 'dw', 's', 'sa', 'sd', 'a', 'ad', 'd']
+    keys = new Set<string>(['r', 'q', 'e'])
 
     constructor(player: Entity, enemies: Entity[]) {
         this.player = player
@@ -22,9 +23,10 @@ export class Ai {
 
     private heuristic(pos: Vector2, dir: Vector2, a: Entity, goal: Entity): number {
         if (!a.canMove(pos, dir)) return Infinity
+        const relDir = a.getRelDirection(goal)
         let dx = goal.pos.x - pos.x
         let dy = goal.pos.y - pos.y
-        return Math.sqrt(dx * dx + dy * dy)
+        return Math.sqrt(dx * dx + dy * dy) + relDir.y ** 2
     }
 
     update(deltaTime: number) {
@@ -33,16 +35,18 @@ export class Ai {
         this.enemies.forEach((enemy: Entity, index: number) => {
             if (enemy.isDead) return
             if (
-                Array.from(this.player.collidedObjects).some(
+                Array.from(enemy.collidedObjects).some(
                     (o: CollisionInfo) => o.other.id === this.player.id,
                 )
             ) {
-                if (!enemy.getRelDirection(this.player).compare(enemy.facingDirection.x, enemy.facingDirection.y)) {
-                    enemy.turn(this.player.getRelDirection(enemy))
-                }
-                
-                enemy.attack(new Set(['e']))
-                return
+                if (
+                    !enemy
+                        .getRelDirection(this.player)
+                        .direction()
+                        .compare(enemy.facingDirection.x, enemy.facingDirection.y)
+                )
+                    enemy.turn(enemy.getRelDirection(this.player))
+                enemy.attack(this.keys)
             }
             const moves: WeightedMove[] = []
             this.moveCombinations.forEach((comb) => {

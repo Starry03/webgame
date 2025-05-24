@@ -135,12 +135,16 @@ export class Entity extends Obj {
         let attackType: 'basic' | 'q' | 'r' = 'basic'
         let cooldownFactor = 1
 
-        if (keys.has('e') && this.cooldowns.get(AnimationType.ATTACK_1)?.value == 0) {
-            this.changeAnimation(AnimationType.ATTACK_1, true)
-            usedAnimation = AnimationType.ATTACK_1
-            attackType = 'basic'
-            attackFactor = 1
-            cooldownFactor = 1
+        if (
+            keys.has('r') &&
+            this.cooldowns.get(AnimationType.SPECIAL)?.value == 0 &&
+            this.mana >= 400
+        ) {
+            this.changeAnimation(AnimationType.SPECIAL, true)
+            usedAnimation = AnimationType.SPECIAL
+            attackType = 'r'
+            attackFactor = 3
+            cooldownFactor = 5
         } else if (
             keys.has('q') &&
             this.cooldowns.get(AnimationType.ATTACK_2)?.value == 0 &&
@@ -151,16 +155,12 @@ export class Entity extends Obj {
             attackType = 'q'
             attackFactor = 2
             cooldownFactor = 2.5
-        } else if (
-            keys.has('r') &&
-            this.cooldowns.get(AnimationType.SPECIAL)?.value == 0 &&
-            this.mana >= 400
-        ) {
-            this.changeAnimation(AnimationType.SPECIAL, true)
-            usedAnimation = AnimationType.SPECIAL
-            attackType = 'r'
-            attackFactor = 3
-            cooldownFactor = 5
+        } else if (keys.has('e') && this.cooldowns.get(AnimationType.ATTACK_1)?.value == 0) {
+            this.changeAnimation(AnimationType.ATTACK_1, true)
+            usedAnimation = AnimationType.ATTACK_1
+            attackType = 'basic'
+            attackFactor = 1
+            cooldownFactor = 1
         } else isAttacking = false
 
         if (!isAttacking) return
