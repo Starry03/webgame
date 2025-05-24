@@ -132,8 +132,7 @@ export class GameHandler {
         )
         if (bossStats === undefined)
             throw new Error('Boss character not found in available characters')
-        const bossEntity = reactive(
-            new Gorg_red(
+        const bossEntity = new Gorg_red(
                 this.canvas,
                 this.ctx,
                 bossStats.speed,
@@ -141,8 +140,8 @@ export class GameHandler {
                 bossStats.mana,
                 bossStats.attack,
                 bossStats.defence,
-            ),
-        )
+            ) as Entity
+        
         bossEntity.name = 'Gorgone Rossa'
         bossEntity.pos = new Vector2(400, 200)
         bossEntity.custom_properties = { collidable: true }
