@@ -1,5 +1,5 @@
 import { AnimatedObject } from '@/internal/mapLogic/classes/AnimatedObject'
-import {AnimationType, Vector2} from '@/internal/types.ts'
+import { AnimationType, Vector2 } from '@/internal/types.ts'
 
 export class AttackEnhancement extends AnimatedObject {
     constructor(
@@ -30,5 +30,9 @@ export class AttackEnhancement extends AnimatedObject {
             height,
             custom_properties,
         )
+    }
+
+    onInteraction(): void {
+        if (this.gameHandler && this.gameHandler.player) this.gameHandler.player.attackPower *= 1.15
     }
 }

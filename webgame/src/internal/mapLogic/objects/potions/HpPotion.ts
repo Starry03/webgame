@@ -1,6 +1,6 @@
+import type { Entity } from '@/internal/Entity'
 import { AnimatedObject } from '@/internal/mapLogic/classes/AnimatedObject'
-import {AnimationType, Vector2} from '@/internal/types.ts'
-
+import { AnimationType, Vector2 } from '@/internal/types.ts'
 export class HpPotion extends AnimatedObject {
     constructor(
         canvas: HTMLCanvasElement,
@@ -30,5 +30,9 @@ export class HpPotion extends AnimatedObject {
             height,
             custom_properties,
         )
+    }
+
+    onInteraction(): void {
+        if (this.gameHandler && this.gameHandler.player) this.gameHandler.player.health += 200
     }
 }
