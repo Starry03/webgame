@@ -33,6 +33,10 @@ export class DefenseEnhancement extends AnimatedObject {
     }
 
     onInteraction(): void {
-        if (this.gameHandler && this.gameHandler.player) this.gameHandler.player.defense *= 1.1
+        if (this.gameHandler && this.gameHandler.player) {
+            this.gameHandler.player.defense *= 1.1
+            this.custom_properties['takeable'] = false
+            this.changeAnimation(AnimationType.DEAD, true, false)
+        }
     }
 }

@@ -33,6 +33,11 @@ export class HpPotion extends AnimatedObject {
     }
 
     onInteraction(): void {
-        if (this.gameHandler && this.gameHandler.player) this.gameHandler.player.health += 200
+        if (this.gameHandler && this.gameHandler.player) {
+            this.gameHandler.player.health += 200
+            this.custom_properties['takeable'] = false
+            console.log(this.custom_properties)
+            this.changeAnimation(AnimationType.DEAD, true, false)
+        }
     }
 }
