@@ -14,6 +14,7 @@ export class Entity extends Obj {
     maxCooldownE: number
     maxCooldownQ: number
     maxCooldownR: number
+    level: number
     override isIdleBlocked: boolean = false
 
     constructor(
@@ -42,6 +43,7 @@ export class Entity extends Obj {
         this.maxCooldownE = this.speed * 10
         this.maxCooldownQ = this.speed * 10 * 2.5
         this.maxCooldownR = this.speed * 10 * 5
+        this.level = 1
     }
 
     consumeMana(amount: number): boolean {
@@ -174,7 +176,7 @@ export class Entity extends Obj {
 
         for (const enemy of collidedEnemies) {
             if (this.isInAttackArc(enemy)) {
-                const damage = Math.max(1, 100 - enemy.defense * (baseDamage / 100))
+                const damage = Math.max(1, Math.floor(baseDamage * (100 / (100 + enemy.defense))))
                 enemy.get_damage(damage)
             }
         }

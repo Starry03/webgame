@@ -64,7 +64,6 @@ export class SwitchRoomDoor extends Door {
         if (this.isAnimationBlocking) return
         if (this.gameHandler && this.custom_properties['collidable'] === false) {
             this.gameHandler.changeRoom(this.gameHandler.currentRoom + 1)
-            console.debug('switch')
         }
         super.onInteraction()
     }

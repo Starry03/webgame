@@ -14,11 +14,14 @@
                 :max-cooldown-r="mappedPlayer.maxCooldownR"
             />
         </div>
-<!--
-        <div id="message_zone" class="flex-fit font-mid" v-if="gameHandler.value && gameHandler.value.currentRoom >= 1 && gameHandler.value.currentRoom <= 4">
+
+        <div
+            id="message_zone"
+            class="flex-fit font-mid"
+            v-if="gameHandler && gameHandler.currentRoom >= 1 && gameHandler.currentRoom <= 4"
+        >
             {{ mappedPlayer?.interactionMessage }}
         </div>
-    -->
 
         <div id="boss-status" v-if="isBossRoom">
             <BossStatusBar
@@ -28,8 +31,8 @@
                 :mana="gameHandler.boss.mana"
                 :max-mana="gameHandler.boss.maxMana"
                 :level="gameHandler.boss.level"
-                :cooldownQ="gameHandler.boss.cooldownQ"
-                :cooldownR="gameHandler.boss.cooldownR"
+                :cooldownQ="gameHandler.boss.cooldowns.get(AnimationType.ATTACK_2)"
+                :cooldownR="gameHandler.boss.cooldowns.get(AnimationType.SPECIAL)"
                 :max-cooldown-q="gameHandler.boss.maxCooldownQ"
                 :max-cooldown-r="gameHandler.boss.maxCooldownR"
             />
@@ -41,14 +44,13 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, onUnmounted, reactive, computed, type Reactive, type Ref } from 'vue'
+import { ref, onMounted, onUnmounted, reactive, computed, type Reactive } from 'vue'
 import { Mage } from '@/internal/Mage'
 import { Samurai } from '@/internal/Samurai'
 import { Thief } from '@/internal/Thief'
 import { prefixed } from '@/internal/cryptoutils'
-import { Gorg_red } from '@/internal/Gorg_red'
 import { GameHandler } from '@/internal/GameHandler'
-import { AnimationType, Storage_e, Vector2, type Character } from '@/internal/types'
+import { AnimationType, Storage_e, type Character } from '@/internal/types'
 import StatusBar from '@/components/StatusBar.vue'
 import type { Player } from '@/internal/player'
 import BossStatusBar from '@/components/BossStatusBar.vue'
@@ -58,7 +60,6 @@ const gameHandler = ref<GameHandler | null>()
 const player = ref<Player | null>(null)
 
 const isBossRoom = computed(() => gameHandler.value?.currentRoom === 5)
-
 
 const mappedPlayer = computed(() => {
     if (!player.value) return null
@@ -70,7 +71,7 @@ const mappedPlayer = computed(() => {
         maxHealth: player.value.maxHealth,
         mana: player.value.mana,
         maxMana: player.value.maxMana,
-        level: 1,
+        level: player.value.level,
         cooldownQ: player_value.cooldowns.get(AnimationType.ATTACK_2),
         maxCooldownQ: player_value.maxCooldownQ,
         cooldownR: player_value.cooldowns.get(AnimationType.SPECIAL),
@@ -82,7 +83,6 @@ const mappedPlayer = computed(() => {
 onMounted(async () => {
     const character = localStorage.getItem(prefixed(Storage_e.SELECTED_CHARACTER))
     const characterObject: Character = JSON.parse(character || '{}')
-    
 
     const canvas = canvasRef.value
     if (!canvas) {
@@ -106,7 +106,7 @@ onMounted(async () => {
                     characterObject.mana,
                     characterObject.attack,
                     characterObject.defense,
-                    "",
+                    '',
                 ),
             )
             break
@@ -120,7 +120,7 @@ onMounted(async () => {
                     characterObject.mana,
                     characterObject.attack,
                     characterObject.defense,
-                    "",
+                    '',
                 ),
             )
             break
@@ -134,7 +134,7 @@ onMounted(async () => {
                     characterObject.mana,
                     characterObject.attack,
                     characterObject.defense,
-                    "",
+                    '',
                 ),
             )
             break
@@ -152,8 +152,6 @@ onMounted(async () => {
 })
 
 onUnmounted(() => {})
-
-
 </script>
 
 <style scoped>

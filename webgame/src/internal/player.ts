@@ -22,23 +22,28 @@ export class Player extends Entity {
         this.interactionMessage = interactionMessage ?? ''
         document.addEventListener('keyup', (event) => {
             if (event.key === 'p') {
-                const objs = Array.from(this.interactedObjects).map((collision) => collision.other)
-                if (objs.length === 0) return
-                let closest = null
-                let closestDistance = Infinity
-                for (const obj of objs) {
-                    if (closest === null) {
-                        closest = obj
-                        continue
-                    }
-                    if (closestDistance > this.getDistance(obj)) {
-                        closestDistance = this.getDistance(obj)
-                        closest = obj
-                    }
-                }
-                if (closest) this.interact(closest)
+                const closestObj: Obj | null = this.getClosestInteractableObj()
+                if (closestObj) this.interact(closestObj)
             }
         })
+    }
+
+    getClosestInteractableObj(): Obj | null {
+        if (this.interactedObjects.size === 0) return null
+        const objs = Array.from(this.interactedObjects).map((collision) => collision.other)
+        let closest = null
+        let closestDistance = Infinity
+        for (const obj of objs) {
+            if (closest === null) {
+                closest = obj
+                continue
+            }
+            if (closestDistance > this.getDistance(obj)) {
+                closestDistance = this.getDistance(obj)
+                closest = obj
+            }
+        }
+        return closest
     }
 
     interact(other: Obj): void {
@@ -50,12 +55,21 @@ export class Player extends Entity {
     }
 
     enterInteraction(collision: CollisionInfo): void {
-        this.interactionMessage = "'P' to interact with " + collision.other.name
+        const closestObj = this.getClosestInteractableObj()
+        if (closestObj) {
+            this.interactionMessage = "'P' to interact with " + closestObj.name
+        }
         super.enterInteraction(collision)
     }
 
     exitInteraction(collision: CollisionInfo): void {
-        this.interactionMessage = ''
+        if (this.interactedObjects.size > 1) {
+            const closestObj = this.getClosestInteractableObj()
+            if (closestObj) {
+                closestObj.drawHitbox()
+                this.interactionMessage = "'P' to interact with " + closestObj.name
+            } else this.interactionMessage = ''
+        }
         super.exitInteraction(collision)
     }
 }
