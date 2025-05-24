@@ -27,10 +27,10 @@ export class Skele_spe extends Entity {
         'assets/Sprite/Nemici/Skeleton_Spearman/Attack 1/frame_0_3.png',
       ],
       attack2: [
-        'assets/Sprite/Nemici/Skeleton_Spearman/Attack 3/frame_0_0.png',
-        'assets/Sprite/Nemici/Skeleton_Spearman/Attack 3/frame_0_1.png',
-        'assets/Sprite/Nemici/Skeleton_Spearman/Attack 3/frame_0_2.png',
-        'assets/Sprite/Nemici/Skeleton_Spearman/Attack 3/frame_0_3.png',
+        'assets/Sprite/Nemici/Skeleton_Spearman/Attack 2/frame_0_0.png',
+        'assets/Sprite/Nemici/Skeleton_Spearman/Attack 2/frame_0_1.png',
+        'assets/Sprite/Nemici/Skeleton_Spearman/Attack 2/frame_0_2.png',
+        'assets/Sprite/Nemici/Skeleton_Spearman/Attack 2/frame_0_3.png',
       ],
       special: [
         'assets/Sprite/Nemici/Skeleton_Spearman/Special/frame_0_0.png',

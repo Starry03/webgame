@@ -54,6 +54,7 @@ import { AnimationType, Storage_e, type Character } from '@/internal/types'
 import StatusBar from '@/components/StatusBar.vue'
 import type { Player } from '@/internal/player'
 import BossStatusBar from '@/components/BossStatusBar.vue'
+import type { Entity } from '@/internal/Entity'
 
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 const gameHandler = ref<GameHandler | null>()
@@ -146,7 +147,7 @@ onMounted(async () => {
         console.error('Player is null')
         return
     }
-    gameHandler.value = new GameHandler(player.value, canvas, ctx)
+    gameHandler.value = new GameHandler(player.value as Entity, canvas, ctx)
     gameHandler.value.initialize()
     gameHandler.value.gameLoop(performance.now())
 })

@@ -1,4 +1,4 @@
-import type { Entity } from './Entity'
+import { Entity } from './Entity'
 import { getRoomPath } from '@/internal/mapLogic/engine/MapUtils.ts'
 import { loadMapObjects } from '@/internal/mapLogic/engine/utils/ObjectLayerUtils.ts'
 import type { Obj } from './Obj'
@@ -7,6 +7,7 @@ import { Collider } from './collision'
 import { Gorg_red } from './Gorg_red'
 import { reactive } from 'vue'
 import { prefixed } from './cryptoutils'
+import { Spawner } from './spawner'
 
 export class GameHandler {
     player: Entity
@@ -23,6 +24,7 @@ export class GameHandler {
     boss: Entity | undefined
     availableCharacters: Character[]
     currentRoom: number
+    spawner: Spawner | null
 
     constructor(player: Entity, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
         this.ctx = ctx
@@ -42,6 +44,7 @@ export class GameHandler {
         this.bg_image = null
         this.gameObjects = []
         this.currentRoom = 1
+        this.spawner = null
 
         window.addEventListener('keydown', (e) => {
             e.preventDefault()
@@ -73,9 +76,7 @@ export class GameHandler {
         Collider.update_collisions(this.gameObjects)
         this.player.attack(this.keys, this.gameObjects)
         this.gameObjects.forEach((obj: Obj) => {
-            if (obj.selectedFrames == undefined) {
-                return
-            }
+            if (obj.selectedFrames == undefined) return
             obj.update(timestamp, deltaTime)
         })
         requestAnimationFrame(this.gameLoop)
@@ -135,10 +136,11 @@ export class GameHandler {
                 bossStats.hp,
                 bossStats.mana,
                 bossStats.attack,
-                bossStats.defense,
+                bossStats.defence,
             ),
         )
         bossEntity.name = 'Gorgone Rossa'
+        bossEntity.pos = new Vector2(400, 200)
         bossEntity.custom_properties = { collidable: true }
         this.boss = bossEntity
 
@@ -147,10 +149,18 @@ export class GameHandler {
             this.gameObjects.push(bossEntity)
         }
         this.gameObjects.forEach((obj: Obj) => {
-            obj.preloadImages()
-            obj.idle(true)
+            obj.setup()
             obj.setGameHandler(this)
         })
+        this.spawner = new Spawner(
+            this.canvas,
+            this.ctx,
+            this.gameObjects,
+            this.availableCharacters.filter((o: Character) => {
+                return o.name !== 'gorgon' && o.name !== 'evil gorgon' && o.playable === false
+            }),
+        )
+        this.spawner.spawn(3)
     }
 
     getCurrentLevel(): Number {

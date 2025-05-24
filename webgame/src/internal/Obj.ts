@@ -123,7 +123,7 @@ export class Obj {
         ctx.restore()
     }
 
-    drawFrame() {
+    render() {
         const ctx = this.ctx
         if (this.selectedFrames.length === 0 || !this.selectedFrames[this.currentFrame]) {
             console.error(
@@ -222,7 +222,7 @@ export class Obj {
             this.changeFrames(this.currentAnimation)
         }
         this.animate(timestamp, deltaTime)
-        this.drawFrame()
+        this.render()
     }
 
     idle(forced: boolean = false) {
@@ -296,5 +296,10 @@ export class Obj {
 
     setGameHandler(gameHandler: GameHandler) {
         this.gameHandler = gameHandler
+    }
+
+    setup() {
+        this.preloadImages()
+        this.idle(true)
     }
 }
