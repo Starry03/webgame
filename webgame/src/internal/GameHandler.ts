@@ -164,7 +164,19 @@ export class GameHandler {
                 return o.name !== 'gorgon' && o.name !== 'evil gorgon' && o.playable === false
             }),
         )
-        this.spawner.spawn(3)
+        this.spawner
+            .spawn(3)
+            .then(() => {
+                console.debug('Enemies spawned:')
+                this.gameObjects.sort((a: Obj, b: Obj) => {
+                    if (a.id === this.player.id) return 1
+                    if (b.id === this.player.id) return -1
+                    return -1
+                })
+            })
+            .catch((error) => {
+                throw new Error(`Error spawning enemies: ${error}`)
+            })
         this.ai = new Ai(
             this.player,
             this.gameObjects.filter(
