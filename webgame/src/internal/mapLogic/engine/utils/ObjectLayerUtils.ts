@@ -24,6 +24,7 @@ import { DefenseEnhancement } from '@/internal/mapLogic/objects/enhancements/Def
 import { ManaPotion } from '@/internal/mapLogic/objects/potions/ManaPotion'
 import { HpPotion } from '@/internal/mapLogic/objects/potions/HpPotion'
 import { BossLadder } from '@/internal/mapLogic/objects/ladder/BossLadder'
+import { BossRock } from '@/internal/mapLogic/objects/BossRock'
 
 export function loadObjectsFromMap(
     jsonMap: TiledMap,
@@ -138,7 +139,20 @@ export function loadObjectsFromMap(
                 list_objects.push(ladder)
             } else if (object.name == 'bossLadder') {
                 custom_properties = extractCustomProperties(object)
-                const bossLadder: BossLadder = new BossLadder(canvas, ctx, AnimationType.IDLE, isIdle, pos, dim, object.name, object.x, object.y, object.width, object.height, custom_properties);
+                const bossLadder: BossLadder = new BossLadder(
+                    canvas,
+                    ctx,
+                    AnimationType.IDLE,
+                    isIdle,
+                    pos,
+                    dim,
+                    object.name,
+                    object.x,
+                    object.y,
+                    object.width,
+                    object.height,
+                    custom_properties,
+                )
                 list_objects.push(bossLadder)
             } else if (object.name == 'attackEnhancement') {
                 custom_properties = extractCustomProperties(object)
@@ -208,6 +222,10 @@ export function loadObjectsFromMap(
                     custom_properties,
                 )
                 list_objects.push(hpPotion)
+            } else if (object.name == 'bossRock') {
+                custom_properties = extractCustomProperties(object)
+                const bossRock: BossRock = new BossRock(canvas, ctx, AnimationType.IDLE, isIdle, pos, dim, object.name, object.x, object.y, object.width, object.height, custom_properties)
+                list_objects.push(bossRock)
             } else {
                 if (!['specialWall', 'switchRoomDoor', 'accessDoor'].includes(object.name)) {
                     custom_properties = extractCustomProperties(object)

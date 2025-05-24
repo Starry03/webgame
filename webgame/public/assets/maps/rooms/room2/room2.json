@@ -22,39 +22,6 @@
          "name":"objects",
          "objects":[
                 {
-                 "gid":154,
-                 "height":64,
-                 "id":1,
-                 "name":"entranceDoor",
-                 "properties":[
-                        {
-                         "name":"animating",
-                         "type":"bool",
-                         "value":false
-                        }, 
-                        {
-                         "name":"interactable",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
-                         "name":"isOpen",
-                         "type":"bool",
-                         "value":false
-                        }, 
-                        {
-                         "name":"type",
-                         "type":"string",
-                         "value":"door"
-                        }],
-                 "rotation":0,
-                 "type":"AnimatedObject",
-                 "visible":true,
-                 "width":64,
-                 "x":672,
-                 "y":64
-                }, 
-                {
                  "gid":142,
                  "height":27,
                  "id":4,
@@ -352,8 +319,7 @@
                  "width":256,
                  "x":64,
                  "y":129
-                },
-            
+                }, 
                 {
                  "gid":145,
                  "height":47,
@@ -365,7 +331,8 @@
                  "width":33,
                  "x":88,
                  "y":203
-                }, 
+                },
+            
                 {
                  "gid":150,
                  "height":28,
@@ -609,9 +576,53 @@
          "visible":true,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":3,
+         "name":"objects2",
+         "objects":[
+                {
+                 "gid":154,
+                 "height":64,
+                 "id":56,
+                 "name":"entranceDoor",
+                 "properties":[
+                        {
+                         "name":"animating",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"interactable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"isOpen",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"door"
+                        }],
+                 "rotation":0,
+                 "type":"AnimatedObject",
+                 "visible":true,
+                 "width":64,
+                 "x":672,
+                 "y":64
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
         }],
- "nextlayerid":3,
- "nextobjectid":55,
+ "nextlayerid":4,
+ "nextobjectid":57,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
