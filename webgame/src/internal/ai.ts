@@ -22,11 +22,10 @@ export class Ai {
     }
 
     private heuristic(pos: Vector2, dir: Vector2, a: Entity, goal: Entity): number {
-        if (!a.canMove(pos, dir)) return Infinity
-        const relDir = a.getRelDirection(goal)
+        if (!a.canMove(pos, dir)) return 9999999999
         let dx = goal.pos.x - pos.x
         let dy = goal.pos.y - pos.y
-        return Math.sqrt(dx * dx + dy * dy) + relDir.y ** 2
+        return Math.sqrt(dx * dx + dy * dy)
     }
 
     update(deltaTime: number) {
