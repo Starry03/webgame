@@ -30,24 +30,31 @@ export class Spawner {
         )
     }
 
-    spawn(number: number) {
+    async spawn(number: number) {
+        const promises: Promise<void>[] = []
         for (let i = 0; i < number; i++) {
-            const randomIndex = Math.floor(Math.random() * this.enemies.length)
-            const enemy = this.enemies[randomIndex]
-            const newEnemy = this.createEnemy(enemy)
-            if (newEnemy === null) throw new Error('Enemy not found')
-            newEnemy.setup()
-            newEnemy.name = enemy.name
-            this.findSpawnPosition(newEnemy as Entity)
-                .then((spawPos: Vector2) => {
-                    newEnemy.pos = spawPos
-                    this.gameObjects.push(newEnemy)
-                    console.debug('Spawned enemy:', newEnemy.name, newEnemy.pos)
-                })
-                .catch((error) => {
-                    console.error('Error finding spawn position:', error)
-                })
+            promises.push(
+                new Promise((resolve) => {
+                    const randomIndex = Math.floor(Math.random() * this.enemies.length)
+                    const enemy = this.enemies[randomIndex]
+                    const newEnemy = this.createEnemy(enemy)
+                    if (newEnemy === null) throw new Error('Enemy not found')
+                    newEnemy.setup()
+                    newEnemy.name = enemy.name
+                    this.findSpawnPosition(newEnemy as Entity)
+                        .then((spawPos: Vector2) => {
+                            newEnemy.pos = spawPos
+                            this.gameObjects.push(newEnemy)
+                            console.debug('Spawned enemy:', newEnemy.name, newEnemy.pos)
+                            resolve()
+                        })
+                        .catch((error) => {
+                            console.error('Error finding spawn position:', error)
+                        })
+                }),
+            )
         }
+        await Promise.all(promises)
     }
 
     private createEnemy(enemy: Character) {

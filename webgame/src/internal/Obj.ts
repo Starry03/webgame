@@ -124,16 +124,10 @@ export class Obj {
     }
 
     render() {
-        const ctx = this.ctx
         if (this.selectedFrames.length === 0 || !this.selectedFrames[this.currentFrame]) {
-            console.error(
-                'Frame non disponibile o non caricato correttamente:',
-                this.name,
-                this.currentAnimation,
-                this.currentFrame,
-            )
             return
         }
+        const ctx = this.ctx
         const frame = this.selectedFrames[this.currentFrame] || this.selectedFrames[0]
         if (frame.complete) {
             if (this.facingDirection.x < 0)
@@ -169,7 +163,11 @@ export class Obj {
         }
     }
 
-    move(keyPressed: string | Set<string>, deltaTime: number) {}
+    move(
+        keyPressed: string | Set<string>,
+        deltaTime: number,
+        getPossiblePosition: boolean = false,
+    ) {}
 
     canMove(possible_position: Vector2, direction: Vector2): boolean {
         let res = true
@@ -223,6 +221,7 @@ export class Obj {
         }
         this.animate(timestamp, deltaTime)
         this.render()
+        this.drawHitbox()
     }
 
     idle(forced: boolean = false) {

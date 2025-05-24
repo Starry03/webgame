@@ -1,8 +1,7 @@
-import { AnimationType, Vector2 } from '@/internal/types.ts'
 import { AnimatedObject } from '@/internal/mapLogic/classes/AnimatedObject'
-import type { CollisionInfo } from '@/internal/collision'
+import {AnimationType, Vector2} from '@/internal/types.ts'
 
-export class Door extends AnimatedObject {
+export class ManaPotion extends AnimatedObject {
     constructor(
         canvas: HTMLCanvasElement,
         ctx: CanvasRenderingContext2D,
@@ -31,17 +30,5 @@ export class Door extends AnimatedObject {
             height,
             custom_properties,
         )
-    }
-
-    setPaths() {}
-
-    enterCollision(collisionInfo: CollisionInfo): void {
-        super.enterCollision(collisionInfo)
-    }
-
-    onInteraction(): void {
-        if (this.isAnimationBlocking) return
-        this.changeAnimation(AnimationType.OPENING, true, false)
-        this.custom_properties['collidable'] = false
     }
 }

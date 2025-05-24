@@ -1,8 +1,7 @@
+import { AnimatedObject } from '@/internal/mapLogic/classes/AnimatedObject.ts'
 import { AnimationType, Vector2 } from '@/internal/types.ts'
-import { AnimatedObject } from '@/internal/mapLogic/classes/AnimatedObject'
-import type { CollisionInfo } from '@/internal/collision'
 
-export class Door extends AnimatedObject {
+export class BossLadder extends AnimatedObject {
     constructor(
         canvas: HTMLCanvasElement,
         ctx: CanvasRenderingContext2D,
@@ -15,7 +14,7 @@ export class Door extends AnimatedObject {
         y: number,
         width: number,
         height: number,
-        custom_properties: Record<string, string>,
+        custom_properties: Record<string, any>,
     ) {
         super(
             canvas,
@@ -33,15 +32,12 @@ export class Door extends AnimatedObject {
         )
     }
 
-    setPaths() {}
-
-    enterCollision(collisionInfo: CollisionInfo): void {
-        super.enterCollision(collisionInfo)
-    }
-
     onInteraction(): void {
-        if (this.isAnimationBlocking) return
-        this.changeAnimation(AnimationType.OPENING, true, false)
-        this.custom_properties['collidable'] = false
+        if (this.gameHandler) {
+            if (this.gameHandler.player) {
+                this.gameHandler.player.pos = this.pos;
+            }
+        }
+        this.gameHandler?.changeRoom(this.gameHandler.currentRoom + 1)
     }
 }

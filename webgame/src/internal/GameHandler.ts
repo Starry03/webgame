@@ -8,6 +8,7 @@ import { Gorg_red } from './Gorg_red'
 import { reactive } from 'vue'
 import { prefixed } from './cryptoutils'
 import { Spawner } from './spawner'
+import { Ai } from './ai'
 
 export class GameHandler {
     player: Entity
@@ -24,7 +25,8 @@ export class GameHandler {
     boss: Entity | undefined
     availableCharacters: Character[]
     currentRoom: number
-    spawner: Spawner | null | undefined
+    spawner: Spawner | null
+    ai: Ai | null
 
     constructor(player: Entity, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
         this.ctx = ctx
@@ -43,7 +45,9 @@ export class GameHandler {
         this.currentRoomObjects = []
         this.bg_image = null
         this.gameObjects = []
-        this.currentRoom = 5
+        this.currentRoom = 1
+        this.spawner = null
+        this.ai = null
 
         window.addEventListener('keydown', (e) => {
             e.preventDefault()
@@ -71,9 +75,10 @@ export class GameHandler {
         if (this.bg_image)
             this.ctx.drawImage(this.bg_image, 0, 0, this.canvas.width, this.canvas.height)
         this.ctx.restore()
-        this.player.handleInput(this.keys, deltaTime)
         Collider.update_collisions(this.gameObjects)
+        this.player.handleInput(this.keys, deltaTime)
         this.player.attack(this.keys, this.gameObjects)
+        this.ai?.update(timestamp, deltaTime)
         this.gameObjects.forEach((obj: Obj) => {
             if (obj.selectedFrames == undefined) return
             obj.update(timestamp, deltaTime)
@@ -157,12 +162,28 @@ export class GameHandler {
                 return o.name !== 'gorgon' && o.name !== 'evil gorgon' && o.playable === false
             }),
         )
-        this.spawner.spawn(3)
+        this.spawner
+            .spawn(3)
+            .then(() => {
+                console.debug('Enemies spawned:')
+                this.gameObjects.sort((a: Obj, b: Obj) => {
+                    if (a.id === this.player.id) return 1
+                    if (b.id === this.player.id) return -1
+                    return -1
+                })
+                this.ai = new Ai(
+                    this.player,
+                    this.gameObjects.filter(
+                        (o: Obj) => o instanceof Entity && o.id !== this.player.id,
+                    ) as Entity[],
+                )
+            })
+            .catch((error) => {
+                throw new Error(`Error spawning enemies: ${error}`)
+            })
     }
 
     getCurrentLevel(): Number {
         return this.currentRoom
     }
 }
-
-
