@@ -1,4 +1,4 @@
-import { AnimatedObject } from '@/internal/mapLogic/classes/AnimatedObject'
+import { AnimatedObject } from '@/internal/mapLogic/classes/AnimatedObject.ts'
 import { AnimationType, Vector2 } from '@/internal/types.ts'
 
 export class Ladder extends AnimatedObject {

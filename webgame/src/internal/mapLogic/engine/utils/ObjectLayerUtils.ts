@@ -17,12 +17,13 @@ import { EntranceDoor } from '@/internal/mapLogic/objects/door/EntranceDoor'
 import { SwitchRoomDoor } from '@/internal/mapLogic/objects/door/SwitchRoomDoor'
 import { SwitchEntrance } from '@/internal/mapLogic/objects/SwitchEntrance'
 import { AccessDoor } from '@/internal/mapLogic/objects/door/AccessDoor'
-import { Ladder } from '@/internal/mapLogic/objects/Ladder'
+import { Ladder } from '@/internal/mapLogic/objects/ladder/Ladder.ts'
 import { loadMapData } from '@/internal/mapLogic/engine/utils/BackgroundLayerUtils.ts'
-import { AttackEnhancement } from '@/internal/mapLogic/objects/enhancements/AttackEnhancement.ts'
+import { AttackEnhancement } from '@/internal/mapLogic/objects/enhancements/AttackEnhancement'
 import { DefenseEnhancement } from '@/internal/mapLogic/objects/enhancements/DefenseEnhancement.ts'
 import { ManaPotion } from '@/internal/mapLogic/objects/potions/ManaPotion.ts'
 import { HpPotion } from '@/internal/mapLogic/objects/potions/HpPotion.ts'
+import { BossLadder } from '@/internal/mapLogic/objects/ladder/BossLadder.ts'
 
 export function loadObjectsFromMap(
     jsonMap: TiledMap,
@@ -135,6 +136,10 @@ export function loadObjectsFromMap(
                     custom_properties,
                 )
                 list_objects.push(ladder)
+            } else if (object.name == 'bossLadder') {
+                custom_properties = extractCustomProperties(object)
+                const bossLadder: BossLadder = new BossLadder(canvas, ctx, AnimationType.IDLE, isIdle, pos, dim, object.name, object.x, object.y, object.width, object.height, custom_properties);
+                list_objects.push(bossLadder)
             } else if (object.name == 'attackEnhancement') {
                 custom_properties = extractCustomProperties(object)
                 const attackEnhancement: AttackEnhancement = new AttackEnhancement(
@@ -152,8 +157,7 @@ export function loadObjectsFromMap(
                     custom_properties,
                 )
                 list_objects.push(attackEnhancement)
-            }
-            else if (object.name == 'defenseEnhancement') {
+            } else if (object.name == 'defenseEnhancement') {
                 custom_properties = extractCustomProperties(object)
                 const defenseEnhancement: DefenseEnhancement = new DefenseEnhancement(
                     canvas,
@@ -167,21 +171,44 @@ export function loadObjectsFromMap(
                     object.y,
                     object.width,
                     object.height,
-                    custom_properties
+                    custom_properties,
                 )
                 list_objects.push(defenseEnhancement)
-            }
-            else if (object.name == 'manaPotion') {
+            } else if (object.name == 'manaPotion') {
                 custom_properties = extractCustomProperties(object)
-                const manaPotion: ManaPotion = new ManaPotion (canvas, ctx, AnimationType.IDLE, isIdle, pos, dim, object.name, object.x, object.y, object.width, object.height, custom_properties)
+                const manaPotion: ManaPotion = new ManaPotion(
+                    canvas,
+                    ctx,
+                    AnimationType.IDLE,
+                    isIdle,
+                    pos,
+                    dim,
+                    object.name,
+                    object.x,
+                    object.y,
+                    object.width,
+                    object.height,
+                    custom_properties,
+                )
                 list_objects.push(manaPotion)
-            }
-            else if (object.name == 'hpPotion') {
+            } else if (object.name == 'hpPotion') {
                 custom_properties = extractCustomProperties(object)
-                const hpPotion: HpPotion = new HpPotion(canvas, ctx, AnimationType.IDLE, isIdle, pos, dim, object.name, object.x, object.y, object.width, object.height, custom_properties)
+                const hpPotion: HpPotion = new HpPotion(
+                    canvas,
+                    ctx,
+                    AnimationType.IDLE,
+                    isIdle,
+                    pos,
+                    dim,
+                    object.name,
+                    object.x,
+                    object.y,
+                    object.width,
+                    object.height,
+                    custom_properties,
+                )
                 list_objects.push(hpPotion)
-            }
-            else {
+            } else {
                 if (!['specialWall', 'switchRoomDoor', 'accessDoor'].includes(object.name)) {
                     custom_properties = extractCustomProperties(object)
                     list_objects.push(
