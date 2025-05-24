@@ -19,7 +19,7 @@ export function loadImage(room_name: string): Promise<HTMLImageElement> {
             background_map_image.src = '/assets/maps/rooms/room4/room4_background.png'
             break
         case 'boss_room':
-            background_map_image.src = '/assets/maps/rooms/boss_room/boss_background.png'
+            background_map_image.src = '/assets/maps/rooms/boss_room/boss_room_background.png'
             break
         default:
             console.log("background image not found")
