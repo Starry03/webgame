@@ -9,8 +9,8 @@ export class Entity extends Obj {
     mana: number
     maxMana: number
     manaRegenRate: number = 20
-    attackPower: number 
-    defense: number 
+    attackPower: number
+    defense: number
     maxCooldownE: number
     maxCooldownQ: number
     maxCooldownR: number
@@ -91,17 +91,19 @@ export class Entity extends Obj {
             this.health = 0
             this.die()
         }
+        console.log(
+            `Entity ${this.name} took ${damage} damage, remaining health: ${this.health}/${this.maxHealth}`,
+        )
     }
 
     die() {
         this.changeAnimation(AnimationType.DEAD, true, false)
-        this.isAnimationBlocking = true
-        this.isIdleBlocked = true
+        this.custom_properties['collidable'] = false
         this.handleInput = () => {}
         this.attack = () => {}
     }
 
-    isInAttackArc(target: Entity, angleRad: number = 2 * Math.PI / 3): boolean {
+    isInAttackArc(target: Entity, angleRad: number = (2 * Math.PI) / 3): boolean {
         const attackerPos = this.pos
         const targetPos = target.pos
         const facingDir = this.facingDirection.x >= 0 ? 1 : -1
@@ -115,7 +117,7 @@ export class Entity extends Obj {
 
     attack(keys: Set<string>, gameObjects: Obj[]) {
         let isAttacking = true
-        let attackFactor: number 
+        let attackFactor: number = 1
         let usedAnimation: AnimationType = AnimationType.IDLE
         let attackType: 'basic' | 'q' | 'r' = 'basic'
         let cooldownFactor = 1
@@ -126,13 +128,21 @@ export class Entity extends Obj {
             attackType = 'basic'
             attackFactor = 1
             cooldownFactor = 1
-        } else if (keys.has('q') && this.cooldowns.get(AnimationType.ATTACK_2)?.value == 0 && this.mana >= 200) {
+        } else if (
+            keys.has('q') &&
+            this.cooldowns.get(AnimationType.ATTACK_2)?.value == 0 &&
+            this.mana >= 200
+        ) {
             this.changeAnimation(AnimationType.ATTACK_2, true)
             usedAnimation = AnimationType.ATTACK_2
             attackType = 'q'
             attackFactor = 2
             cooldownFactor = 2.5
-        } else if (keys.has('r') && this.cooldowns.get(AnimationType.SPECIAL)?.value == 0 && this.mana >= 400) {
+        } else if (
+            keys.has('r') &&
+            this.cooldowns.get(AnimationType.SPECIAL)?.value == 0 &&
+            this.mana >= 400
+        ) {
             this.changeAnimation(AnimationType.SPECIAL, true)
             usedAnimation = AnimationType.SPECIAL
             attackType = 'r'
@@ -142,8 +152,7 @@ export class Entity extends Obj {
 
         if (!isAttacking) return
 
-        attackFactor = cooldownFactor
-        this.handleAttack(attackType, attackFactor, gameObjects.filter(obj => obj instanceof Entity) as Entity[])
+        this.handleAttack(attackType, attackFactor)
         let refCooldown: Ref<number> | undefined = this.cooldowns.get(usedAnimation)
         if (!refCooldown) return
 
@@ -164,21 +173,37 @@ export class Entity extends Obj {
         )
     }
 
-    handleAttack(type: 'basic' | 'q' | 'r', attackFactor: number, enemies: Entity[]) {
+    handleAttack(type: 'basic' | 'q' | 'r', attackFactor: number) {
         const manaCost = type === 'q' ? 200 : type === 'r' ? 400 : 0
         if (manaCost > 0 && !this.consumeMana(manaCost)) return
 
-        let baseDamage = this.attackPower* attackFactor
+        let baseDamage = this.attackPower * attackFactor
 
         const collidedEnemies = Array.from(this.collidedObjects)
-            .map(c => c.other)
-            .filter(obj => obj instanceof Entity && obj !== this) as Entity[]
+            .map((c) => c.other)
+            .filter((obj) => obj instanceof Entity && obj.id !== this.id) as Entity[]
 
         for (const enemy of collidedEnemies) {
             if (this.isInAttackArc(enemy)) {
-                const damage = Math.max(1, Math.floor(baseDamage * (100 / (100 + enemy.defense))))
+                const damage = baseDamage * ((100 - enemy.defense) / 100)
                 enemy.get_damage(damage)
             }
         }
+    }
+
+    render() {
+        if (this.name !== 'player') {
+            const ctx = this.ctx
+            ctx.save()
+            ctx.fillStyle = 'rgba(255, 0, 0, 0.75)'
+            ctx.fillRect(
+                this.pos.x * (100 * this.health / this.maxHealth),
+                this.pos.y - 20,
+                this.dim.x,
+                4,
+            )
+            ctx.restore()
+        }
+        super.render()
     }
 }

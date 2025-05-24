@@ -2,9 +2,8 @@ export type Character = {
     name: string
     description: string
     mana: number
-    health: number
     attack: number
-    defense: number
+    defence: number
     speed: number
     hp: number
     playable: boolean

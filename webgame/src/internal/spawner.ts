@@ -60,7 +60,7 @@ export class Spawner {
                     enemy.hp,
                     enemy.mana,
                     enemy.attack,
-                    enemy.defense,
+                    enemy.defence,
                 )
             case 'werewolf':
                 return new Werewolf(
@@ -70,7 +70,7 @@ export class Spawner {
                     enemy.hp,
                     enemy.mana,
                     enemy.attack,
-                    enemy.defense,
+                    enemy.defence,
                 )
             case 'archer_skeleton':
                 return new Skele_arc(
@@ -80,7 +80,7 @@ export class Spawner {
                     enemy.hp,
                     enemy.mana,
                     enemy.attack,
-                    enemy.defense,
+                    enemy.defence,
                 )
             case 'warrior_skeleton':
                 return new Skele_war(
@@ -90,7 +90,7 @@ export class Spawner {
                     enemy.hp,
                     enemy.mana,
                     enemy.attack,
-                    enemy.defense,
+                    enemy.defence,
                 )
             case 'spear_skeleton':
                 return new Skele_spe(
@@ -100,7 +100,7 @@ export class Spawner {
                     enemy.hp,
                     enemy.mana,
                     enemy.attack,
-                    enemy.defense,
+                    enemy.defence,
                 )
             default:
                 return null

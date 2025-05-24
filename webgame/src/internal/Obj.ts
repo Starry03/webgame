@@ -123,7 +123,7 @@ export class Obj {
         ctx.restore()
     }
 
-    drawFrame() {
+    render() {
         const ctx = this.ctx
         if (this.selectedFrames.length === 0 || !this.selectedFrames[this.currentFrame]) {
             console.error(
@@ -139,7 +139,6 @@ export class Obj {
             if (this.facingDirection.x < 0)
                 this.drawFlipped(frame, this.pos.x, this.pos.y, this.dim.x, this.dim.y)
             else ctx.drawImage(frame, this.pos.x, this.pos.y, this.dim.x, this.dim.y)
-            this.drawHitbox()
         }
     }
 
@@ -223,7 +222,7 @@ export class Obj {
             this.changeFrames(this.currentAnimation)
         }
         this.animate(timestamp, deltaTime)
-        this.drawFrame()
+        this.render()
     }
 
     idle(forced: boolean = false) {

@@ -79,16 +79,6 @@ export class GameHandler {
             if (obj.selectedFrames == undefined) return
             obj.update(timestamp, deltaTime)
         })
-        // this.ctx.save()
-        // this.mapReducer?.map.forEach((row: boolean[], y: number) => {
-        //     row.forEach((cell: boolean, x: number) => {
-        //         if (!cell) {
-        //             this.ctx.fillStyle = 'rgba(255, 0, 0, 1)'
-        //             this.ctx.fillRect(x, y, 1, 1)
-        //         }
-        //     })
-        // })
-        // this.ctx.restore()
         requestAnimationFrame(this.gameLoop)
     }
 
@@ -146,10 +136,11 @@ export class GameHandler {
                 bossStats.hp,
                 bossStats.mana,
                 bossStats.attack,
-                bossStats.defense,
+                bossStats.defence,
             ),
         )
         bossEntity.name = 'Gorgone Rossa'
+        bossEntity.pos = new Vector2(400, 200)
         bossEntity.custom_properties = { collidable: true }
         this.boss = bossEntity
 
