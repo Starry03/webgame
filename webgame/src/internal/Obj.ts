@@ -188,7 +188,6 @@ export class Obj {
                 abs_collision_dir?.x === abs_dir.x || abs_collision_dir?.y === abs_dir.y
             if (isCollision && dir_match && collision.other.custom_properties['collidable']) {
                 res = false
-                console.debug(collision.other.name, 'collision')
                 return
             }
         })
@@ -290,7 +289,8 @@ export class Obj {
 
     getDistance(other: Obj): number {
         return Math.sqrt(
-            Math.pow(this.pos.x - other.pos.x, 2) + Math.pow(this.pos.y - other.pos.y, 2),
+            Math.pow(this.pos.x + this.dim.x / 2 - (other.pos.x + other.dim.x / 2), 2) +
+                Math.pow(this.pos.y + this.dim.y / 2 - (other.pos.y + other.dim.y / 2), 2),
         )
     }
 

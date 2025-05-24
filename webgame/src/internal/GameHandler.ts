@@ -1,19 +1,12 @@
 import type { Entity } from './Entity'
-import {
-    getRoomPath,
-    populateBossRoom,
-    populateRoom3,
-    populateRoom4,
-} from '@/internal/mapLogic/engine/MapUtils.ts'
-import { AnimatedObject } from '@/internal/mapLogic/classes/AnimatedObject'
-import { NotAnimatedObject } from '@/internal/mapLogic/classes/NotAnimatedObject'
-import { loadMapData } from '@/internal/mapLogic/engine/utils/BackgroundLayerUtils.ts'
+import { getRoomPath } from '@/internal/mapLogic/engine/MapUtils.ts'
 import { loadMapObjects } from '@/internal/mapLogic/engine/utils/ObjectLayerUtils.ts'
 import type { Obj } from './Obj'
-import { AnimationType, Vector2 } from './types'
+import { Storage_e, Vector2, type Character } from './types'
 import { Collider } from './collision'
 import { Gorg_red } from './Gorg_red'
-import { computed, reactive, ref } from 'vue'
+import { reactive } from 'vue'
+import { prefixed } from './cryptoutils'
 
 export class GameHandler {
     player: Entity
@@ -27,12 +20,16 @@ export class GameHandler {
     currentRoomObjects: Obj[]
     baseMapDim: Vector2 = new Vector2(800, 416)
     gameObjects: Obj[]
-    boss: Obj | undefined
+    boss: Entity | undefined
+    availableCharacters: Character[]
     currentRoom: number
 
     constructor(player: Entity, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
         this.ctx = ctx
         this.canvas = canvas
+        this.availableCharacters = JSON.parse(
+            localStorage.getItem(prefixed(Storage_e.CHARACTERS)) || '{[]}',
+        ) as Character[]
         this.player = player
         this.keys = new Set<string>()
         this.lastTimeStamp = 0
@@ -105,10 +102,6 @@ export class GameHandler {
             this.ctx,
         )) as Obj[]
 
-        this.currentRoomObjects.forEach((obj: Obj) => {
-            obj.preloadImages()
-            obj.idle(true)
-        })
         this.currentRoomObjects.sort((a: Obj, b: Obj) => {
             const exotic_peppe = a.name
             if (exotic_peppe === 'structure' && b.name === 'switchRoomDoor') return -1
@@ -129,34 +122,24 @@ export class GameHandler {
             return -1
         })
 
-        const bossStats = {
-            canvas: this.canvas,
-            ctx: this.ctx,
-            speed: 65,
-            health: 1200,
-            mana: 800,
-            level: 20,
-            attackPower: 120,
-            defense: 60,
-            position: { x: 500, y: 200 },
-        }
-
+        const bossStats: Character | undefined = this.availableCharacters.find(
+            (character: Character) => character.name === 'gorgon',
+        )
+        if (bossStats === undefined)
+            throw new Error('Boss character not found in available characters')
         const bossEntity = reactive(
             new Gorg_red(
                 this.canvas,
                 this.ctx,
                 bossStats.speed,
-                bossStats.health,
+                bossStats.hp,
                 bossStats.mana,
-                bossStats.attackPower,
+                bossStats.attack,
                 bossStats.defense,
             ),
         )
         bossEntity.name = 'Gorgone Rossa'
         bossEntity.custom_properties = { collidable: true }
-        bossEntity.preloadImages()
-        bossEntity.idle(true)
-
         this.boss = bossEntity
 
         this.gameObjects = [...this.currentRoomObjects, this.player]
@@ -164,6 +147,8 @@ export class GameHandler {
             this.gameObjects.push(bossEntity)
         }
         this.gameObjects.forEach((obj: Obj) => {
+            obj.preloadImages()
+            obj.idle(true)
             obj.setGameHandler(this)
         })
     }

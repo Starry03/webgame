@@ -22,6 +22,7 @@ export enum Storage_e {
     SESSION = 'session',
     TOKEN = 'token',
     USER = 'aitdt_user',
+    CHARACTERS = 'characters',
 }
 
 export enum AttackType {

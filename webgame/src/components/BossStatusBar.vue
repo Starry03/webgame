@@ -42,7 +42,10 @@ const props = defineProps({
         required: true,
     },
 })
-onMounted(() => {})
+onMounted(() => {
+    console.debug(props)
+
+})
 
 onUnmounted(() => {})
 

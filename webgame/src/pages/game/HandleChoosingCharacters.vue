@@ -52,18 +52,20 @@ const fetchCharacters = async () => {
             throw new Error(`Errore HTTP: ${response.status}`)
         }
         const data: Array<Character> = await response.json()
-        characters.value = data.filter((character: Character) => character.playable);
+        // save all available characters in localStorage (playable and enemies)
+        localStorage.setItem(prefixed(Storage_e.CHARACTERS), JSON.stringify(data))
+        characters.value = data.filter((character: Character) => character.playable)
     } catch (error) {
         console.error('Errore nel recupero dei personaggi:', error)
     }
 }
 
 const selectCharacter = (index) => {
-    selectedCards.value = [false, false, false]    //reset totale delle card
+    selectedCards.value = [false, false, false] //reset totale delle card
 
-    selectedCards.value[index] = true          //seleziona la card cliccata
+    selectedCards.value[index] = true //seleziona la card cliccata
 
-    selectedCharacter.value = characters.value[index]    //imposta il personaggio selezionato
+    selectedCharacter.value = characters.value[index] //imposta il personaggio selezionato
 }
 
 const startGame = (character) => {

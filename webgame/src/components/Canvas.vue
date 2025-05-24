@@ -31,8 +31,8 @@
                 :mana="gameHandler.boss.mana"
                 :max-mana="gameHandler.boss.maxMana"
                 :level="gameHandler.boss.level"
-                :cooldownQ="gameHandler.boss.cooldownQ"
-                :cooldownR="gameHandler.boss.cooldownR"
+                :cooldownQ="gameHandler.boss.cooldowns.get(AnimationType.ATTACK_2)"
+                :cooldownR="gameHandler.boss.cooldowns.get(AnimationType.SPECIAL)"
                 :max-cooldown-q="gameHandler.boss.maxCooldownQ"
                 :max-cooldown-r="gameHandler.boss.maxCooldownR"
             />
@@ -44,14 +44,13 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, onUnmounted, reactive, computed, type Reactive, type Ref } from 'vue'
+import { ref, onMounted, onUnmounted, reactive, computed, type Reactive } from 'vue'
 import { Mage } from '@/internal/Mage'
 import { Samurai } from '@/internal/Samurai'
 import { Thief } from '@/internal/Thief'
 import { prefixed } from '@/internal/cryptoutils'
-import { Gorg_red } from '@/internal/Gorg_red'
 import { GameHandler } from '@/internal/GameHandler'
-import { AnimationType, Storage_e, Vector2, type Character } from '@/internal/types'
+import { AnimationType, Storage_e, type Character } from '@/internal/types'
 import StatusBar from '@/components/StatusBar.vue'
 import type { Player } from '@/internal/player'
 import BossStatusBar from '@/components/BossStatusBar.vue'
@@ -72,7 +71,7 @@ const mappedPlayer = computed(() => {
         maxHealth: player.value.maxHealth,
         mana: player.value.mana,
         maxMana: player.value.maxMana,
-        level: 1,
+        level: player.value.level,
         cooldownQ: player_value.cooldowns.get(AnimationType.ATTACK_2),
         maxCooldownQ: player_value.maxCooldownQ,
         cooldownR: player_value.cooldowns.get(AnimationType.SPECIAL),
