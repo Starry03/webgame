@@ -206,6 +206,12 @@ export class Entity extends Obj {
         }
     }
 
+    regenMana(deltaTime: number) {
+        if (this.mana < this.maxMana) {
+            this.mana = Math.min(this.maxMana, this.mana + this.manaRegenRate * deltaTime)
+        }
+    }
+
     render() {
         if (this.name !== 'player') {
             const ctx = this.ctx

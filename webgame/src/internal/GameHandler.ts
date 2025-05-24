@@ -45,7 +45,7 @@ export class GameHandler {
         this.currentRoomObjects = []
         this.bg_image = null
         this.gameObjects = []
-        this.currentRoom = 5
+        this.currentRoom = 1
         this.spawner = null
         this.ai = null
 
@@ -64,12 +64,6 @@ export class GameHandler {
     gameLoop(timestamp: number) {
         const deltaTime = (timestamp - this.lastTimeStamp) / 1000
         this.lastTimeStamp = timestamp
-        if (this.player.mana < this.player.maxMana) {
-            this.player.mana = Math.min(
-                this.player.maxMana,
-                this.player.mana + this.player.manaRegenRate * deltaTime,
-            )
-        }
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
         this.ctx.save()
         if (this.bg_image)
@@ -79,6 +73,10 @@ export class GameHandler {
         this.player.handleInput(this.keys, deltaTime)
         this.player.attack(this.keys)
         this.ai?.update(deltaTime)
+
+        this.gameObjects
+            .filter((obj: Obj) => obj instanceof Entity)
+            .forEach((obj: Entity) => obj.regenMana(deltaTime))
         this.gameObjects.forEach((obj: Obj) => {
             if (obj.selectedFrames == undefined) return
             obj.update(timestamp, deltaTime)
@@ -159,7 +157,9 @@ export class GameHandler {
             this.ctx,
             this.gameObjects,
             this.availableCharacters.filter((o: Character) => {
-                return o.name !== 'gorgone rossa' && o.name !== 'gorgone viola' && o.playable === false
+                return (
+                    o.name !== 'gorgone rossa' && o.name !== 'gorgone viola' && o.playable === false
+                )
             }),
         )
         this.spawner
