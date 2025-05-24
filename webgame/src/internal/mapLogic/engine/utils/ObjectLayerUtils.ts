@@ -20,10 +20,10 @@ import { AccessDoor } from '@/internal/mapLogic/objects/door/AccessDoor'
 import { Ladder } from '@/internal/mapLogic/objects/ladder/Ladder.ts'
 import { loadMapData } from '@/internal/mapLogic/engine/utils/BackgroundLayerUtils.ts'
 import { AttackEnhancement } from '@/internal/mapLogic/objects/enhancements/AttackEnhancement'
-import { DefenseEnhancement } from '@/internal/mapLogic/objects/enhancements/DefenseEnhancement.ts'
-import { ManaPotion } from '@/internal/mapLogic/objects/potions/ManaPotion.ts'
-import { HpPotion } from '@/internal/mapLogic/objects/potions/HpPotion.ts'
-import { BossLadder } from '@/internal/mapLogic/objects/ladder/BossLadder.ts'
+import { DefenseEnhancement } from '@/internal/mapLogic/objects/enhancements/DefenseEnhancement'
+import { ManaPotion } from '@/internal/mapLogic/objects/potions/ManaPotion'
+import { HpPotion } from '@/internal/mapLogic/objects/potions/HpPotion'
+import { BossLadder } from '@/internal/mapLogic/objects/ladder/BossLadder'
 
 export function loadObjectsFromMap(
     jsonMap: TiledMap,
