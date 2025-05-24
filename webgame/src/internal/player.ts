@@ -66,7 +66,6 @@ export class Player extends Entity {
         if (this.interactedObjects.size > 1) {
             const closestObj = this.getClosestInteractableObj()
             if (closestObj) {
-                closestObj.drawHitbox()
                 this.interactionMessage = "'P' to interact with " + closestObj.name
             } else this.interactionMessage = ''
         }

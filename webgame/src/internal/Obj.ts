@@ -221,7 +221,6 @@ export class Obj {
         }
         this.animate(timestamp, deltaTime)
         this.render()
-        this.drawHitbox()
     }
 
     idle(forced: boolean = false) {
