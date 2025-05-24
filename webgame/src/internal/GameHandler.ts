@@ -45,7 +45,7 @@ export class GameHandler {
         this.currentRoomObjects = []
         this.bg_image = null
         this.gameObjects = []
-        this.currentRoom = 1
+        this.currentRoom = 5
         this.spawner = null
         this.ai = null
 
@@ -133,15 +133,14 @@ export class GameHandler {
         if (bossStats === undefined)
             throw new Error('Boss character not found in available characters')
         const bossEntity = new Gorg_red(
-                this.canvas,
-                this.ctx,
-                bossStats.speed,
-                bossStats.hp,
-                bossStats.mana,
-                bossStats.attack,
-                bossStats.defence,
-            ) as Entity
-        
+            this.canvas,
+            this.ctx,
+            bossStats.speed,
+            bossStats.hp,
+            bossStats.mana,
+            bossStats.attack,
+            bossStats.defence,
+        )
         bossEntity.name = 'Gorgone Rossa'
         bossEntity.pos = new Vector2(400, 200)
         bossEntity.custom_properties = { collidable: true }
