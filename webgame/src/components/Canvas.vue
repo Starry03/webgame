@@ -14,11 +14,14 @@
                 :max-cooldown-r="mappedPlayer.maxCooldownR"
             />
         </div>
-<!--
-        <div id="message_zone" class="flex-fit font-mid" v-if="gameHandler.value && gameHandler.value.currentRoom >= 1 && gameHandler.value.currentRoom <= 4">
+
+        <div
+            id="message_zone"
+            class="flex-fit font-mid"
+            v-if="gameHandler && gameHandler.currentRoom >= 1 && gameHandler.currentRoom <= 4"
+        >
             {{ mappedPlayer?.interactionMessage }}
         </div>
-    -->
 
         <div id="boss-status" v-if="isBossRoom">
             <BossStatusBar
@@ -59,7 +62,6 @@ const player = ref<Player | null>(null)
 
 const isBossRoom = computed(() => gameHandler.value?.currentRoom === 5)
 
-
 const mappedPlayer = computed(() => {
     if (!player.value) return null
 
@@ -82,7 +84,6 @@ const mappedPlayer = computed(() => {
 onMounted(async () => {
     const character = localStorage.getItem(prefixed(Storage_e.SELECTED_CHARACTER))
     const characterObject: Character = JSON.parse(character || '{}')
-    
 
     const canvas = canvasRef.value
     if (!canvas) {
@@ -106,7 +107,7 @@ onMounted(async () => {
                     characterObject.mana,
                     characterObject.attack,
                     characterObject.defense,
-                    "",
+                    '',
                 ),
             )
             break
@@ -120,7 +121,7 @@ onMounted(async () => {
                     characterObject.mana,
                     characterObject.attack,
                     characterObject.defense,
-                    "",
+                    '',
                 ),
             )
             break
@@ -134,7 +135,7 @@ onMounted(async () => {
                     characterObject.mana,
                     characterObject.attack,
                     characterObject.defense,
-                    "",
+                    '',
                 ),
             )
             break
@@ -152,8 +153,6 @@ onMounted(async () => {
 })
 
 onUnmounted(() => {})
-
-
 </script>
 
 <style scoped>

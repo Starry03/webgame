@@ -37,7 +37,7 @@ export class GameHandler {
         this.currentRoomObjects = []
         this.bg_image = null
         this.gameObjects = []
-        this.currentRoom = 5
+        this.currentRoom = 1
 
         window.addEventListener('keydown', (e) => {
             e.preventDefault()
@@ -79,6 +79,11 @@ export class GameHandler {
 
     changeRoom(room: number) {
         this.currentRoom = room
+        this.gameObjects.forEach((obj: Obj) => obj.resetCollisions())
+        this.currentRoomObjects = []
+        this.gameObjects = []
+        this.boss = undefined
+        this.bg_image = null
         this.initialize()
     }
 
@@ -112,7 +117,6 @@ export class GameHandler {
             if (customA['type'] === 'brick_wall' || customA['type'] === 'door') return 1
             return -1
         })
-        const boss = ref<any>(null)
 
         const bossStats = {
             canvas: this.canvas,

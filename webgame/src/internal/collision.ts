@@ -7,7 +7,8 @@ export type CollisionInfo = {
 }
 
 export class Collider {
-    static collision_treshold: number = 10
+    static TRESHOLD: number = 10
+    static INTERACTION_TRESHOLD: number = 35
     static collidable_classes: string[] = ['collidable', 'interactable', 'takeable']
 
     private static isCollidable(obj: Obj): boolean {
@@ -66,7 +67,7 @@ export class Collider {
         dim_obj: Vector2,
         pos_other: Vector2,
         dim_other: Vector2,
-        threshold: number = Collider.collision_treshold,
+        threshold: number = Collider.TRESHOLD,
     ): boolean {
         return (
             pos_obj.x + dim_obj.x > pos_other.x - threshold &&
@@ -95,8 +96,8 @@ export class Collider {
             pos_other,
             dim_other,
             obj.custom_properties['interactable']
-                ? Collider.collision_treshold * 10
-                : Collider.collision_treshold,
+                ? Collider.INTERACTION_TRESHOLD
+                : Collider.TRESHOLD,
         )
         if (!isCollision) return null
         const dir = new Vector2(

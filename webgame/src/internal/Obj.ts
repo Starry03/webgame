@@ -126,21 +126,28 @@ export class Obj {
     drawFrame() {
         const ctx = this.ctx
         if (this.selectedFrames.length === 0 || !this.selectedFrames[this.currentFrame]) {
-            console.error('Frame non disponibile o non caricato correttamente.')
+            console.error(
+                'Frame non disponibile o non caricato correttamente:',
+                this.name,
+                this.currentAnimation,
+                this.currentFrame,
+            )
             return
         }
         const frame = this.selectedFrames[this.currentFrame] || this.selectedFrames[0]
         if (frame.complete) {
-            ctx.save()
             if (this.facingDirection.x < 0)
                 this.drawFlipped(frame, this.pos.x, this.pos.y, this.dim.x, this.dim.y)
             else ctx.drawImage(frame, this.pos.x, this.pos.y, this.dim.x, this.dim.y)
-            ctx.fillStyle = 'red'
-            ctx.strokeRect(this.pos.x, this.pos.y, this.dim.x, this.dim.y)
-            ctx.strokeStyle = 'rgba(255, 0, 0, 0.5)'
-            ctx.lineWidth = 2
-            ctx.restore()
         }
+    }
+
+    drawHitbox() {
+        const ctx = this.ctx
+        ctx.save()
+        ctx.strokeStyle = 'rgba(255, 0, 0, 0.5)'
+        ctx.strokeRect(this.pos.x, this.pos.y, this.dim.x, this.dim.y)
+        ctx.restore()
     }
 
     animate(timestamp: number, deltaTime: number) {
@@ -181,6 +188,7 @@ export class Obj {
                 abs_collision_dir?.x === abs_dir.x || abs_collision_dir?.y === abs_dir.y
             if (isCollision && dir_match && collision.other.custom_properties['collidable']) {
                 res = false
+                console.debug(collision.other.name, 'collision')
                 return
             }
         })
@@ -227,6 +235,7 @@ export class Obj {
 
     resetCollisions() {
         this.collidedObjects.clear()
+        this.interactedObjects.clear()
     }
 
     enterCollision(collision: CollisionInfo) {
