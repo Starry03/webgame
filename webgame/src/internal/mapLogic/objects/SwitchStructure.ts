@@ -87,8 +87,4 @@ export class SwitchStructure extends AnimatedObject {
             }
         }
     }
-
-    onInteraction(): void {
-        this.changeAnimation(AnimationType.DEAD)
-    }
 }
