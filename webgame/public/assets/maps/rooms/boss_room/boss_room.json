@@ -180,6 +180,11 @@
                          "value":"boss"
                         }, 
                         {
+                         "name":"interactable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"spawnDirection",
                          "type":"string",
                          "value":"left"
