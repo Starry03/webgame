@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import ProgressBar from './ProgressBar.vue'
 import Filler from './Filler.vue'
+import { Storage_e } from '@/internal/types'
 import { computed, defineProps, onMounted, onUnmounted, ref, type Ref } from 'vue'
 
 const props = defineProps({
@@ -42,9 +43,21 @@ const props = defineProps({
         required: true,
     },
 })
-onMounted(() => {
-    console.debug(props)
 
+const bossName = ref('Boss')
+
+onMounted(() => {
+    //console.debug(props)
+    const chars = localStorage.getItem('aitdt_characters')
+    if (chars) {
+        try {
+            const arr = JSON.parse(chars)
+            const bossObj = arr.find((c: any) => c.name === 'evil gorgon')
+            bossName.value = bossObj?.displayName || bossObj?.name || 'Boss'
+        } catch (e) {
+            bossName.value = 'Boss'
+        }
+    }
 })
 
 onUnmounted(() => {})
@@ -58,15 +71,12 @@ const manaPercentage = computed(() => {
     const percentage = (props.mana / props.maxMana) * 100 || 0
     return isNaN(percentage) || percentage < 0 ? 0 : percentage
 })
-
-const storedUser = localStorage.getItem('')
-const bossName = 
 </script>
 
 <template>
     <div class="boss-status-bar flex flex-col gap-mid">
         <div class="boss-header">
-            <span class="boss-name">BOSS: {{ props.bossName }}</span>
+            <span class="boss-name">BOSS: {{ bossName }}</span>
             <span class="boss-level">Lv. {{ props.level }}</span>
         </div>
         <div class="bars-and-cooldowns">
@@ -104,7 +114,8 @@ const bossName =
     font-size: 14px;
     /*box-shadow: 0 0 24px 4px #b3000088, 0 0 8px 2px gold;*/
     height: 100%;
-    max-width: 500px;
+    width: 100%;
+    max-width: 600px;
     /*animation: boss-bar-glow 2s infinite alternate;*/
 }
 /*
@@ -118,9 +129,10 @@ const bossName =
     align-items: center;
     justify-content: space-between;
     gap: 2rem;
+    margin-bottom: 0.5rem;
+    font-size: var(--font-small);
     letter-spacing: 2px;
     text-shadow: 0 0 10px black, 0 0 20px black;
-    margin-bottom: 0.5rem;
     font-weight: bold;
 }
 
@@ -130,13 +142,11 @@ span{
 
 .boss-name {
     color: gold;
-    font-size: var(--font-small);
     /*text-shadow: 0 0 8px #fff, 0 0 16px #b30000;*/
 }
 
 .boss-level {
     color: #f93200;
-    margin-left: 1.5rem;
     /*text-shadow: 0 0 6px #fff;*/
 }
 
@@ -164,13 +174,15 @@ span{
 }
 
 .boss-hp-bar {
-    box-shadow: 0 0 8px 2px #ff0000aa;
+    width: 80%;
+    min-width: 120px;
+    max-width: 100%;
 }
 
 .boss-mana-bar {
     width: 40%;
-    max-width: 500px;
-    box-shadow: 0 0 8px 2px #ffd700aa;
+    max-width: 100%;
+    min-width: 80px;
 }
 
 .hp-value,
@@ -184,7 +196,7 @@ span{
     flex-direction: row;
     gap: 0.25rem;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: flex-end;
     min-width: 0;
     width: auto;
     padding-right: 4px;
@@ -195,58 +207,8 @@ span{
     font-size: var(--font-small);
 }
 
-/*@media (max-width: 768px) {
-    .boss-status-bar {
-        font-size: 1rem;
-        padding: 8px 6px;
-        max-width: 100vw;
-    }
-    .bars-and-cooldowns {
-        flex-direction: column;
-        gap: 1rem;
-    }
-    .boss-header {
-        font-size: 1rem;
-    }
-}
-
-@media (max-width: 600px) {
-  .boss-status-bar {
-    font-size: 0.9rem;
-    padding: 6px 2px;
-    max-width: 100vw;
-    min-width: 0;
-    border-width: 2px;
-  }
-  .bars-and-cooldowns {
-    flex-direction: column;
-    gap: 0.5rem;
-    align-items: stretch;
-  }
-  .boss-header {
-    flex-direction: column;
-    align-items: flex-start;
-    font-size: 1rem;
-    gap: 0.2rem;
-  }
-  .bar-container {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 4px;
-  }
-  .cooldown-container {
-    justify-content: flex-start;
-    gap: 0.5rem;
-    padding-right: 0;
-  }
-  .boss-hp-bar, .boss-mana-bar {
-    height: 14px;
-    font-size: 0.8rem;
-  }
-}*/
-
 @media (max-width: 768px) {
-    .status-bar {
+    .boss-status-bar {
         font-size: 12px;
         max-width: 100vw;
         padding: 5px;
@@ -261,10 +223,10 @@ span{
         align-items: center;
         justify-content: flex-start;
     }
-    .player-header {
+    .boss-header {
         flex-direction: column;
         gap: 0.5rem;
-        align-items: flex-start;
+        align-items: flex-end;
     }
 }
 

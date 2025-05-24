@@ -23,8 +23,12 @@
             {{ mappedPlayer?.interactionMessage }}
         </div>
 
+        <div v-if="isBossRoom" class="vs">
+            <span class="vs-animated">VS</span>
+        </div>
+
         <div id="boss-status" v-if="isBossRoom">
-            <!--<span class="versus">Vs</span>-->
+            
             <BossStatusBar
                 v-if="gameHandler?.boss"
                 :health="gameHandler.boss.health"
@@ -315,5 +319,32 @@ onUnmounted(() => {})
     .cooldown-circle span {
         font-size: 10px;
     }
+}
+.vs-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0 0 10px 0;
+}
+
+.vs-animated {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1rem;
+    color: gold;
+    text-shadow: 0 0 8px #fff, 0 0 16px #f93200;
+    animation: vs-scale 1s infinite alternate;
+    padding: 0;
+    border: none;
+    background: none;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    letter-spacing: 0.2em;
+    display: inline-block;
+}
+
+@keyframes vs-scale {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.35); }
 }
 </style>
