@@ -109,20 +109,23 @@ export class Spawner {
 
     private async findSpawnPosition(enemy: Entity): Promise<Vector2> {
         let spawnPos: Vector2 | null = null
-        while (spawnPos === null) {
+        let attempt: Vector2 | null = null
+        while (attempt === null) {
             const x = Math.floor(Math.random() * this.canvas.width)
             const y = Math.floor(Math.random() * this.canvas.height)
-            const attempt = new Vector2(x, y)
-
+            attempt = new Vector2(x, y)
             this.gameObjects.forEach((obj: Obj) => {
+                if (attempt === null) return
                 if (obj.id === enemy.id) return
                 if (!obj.custom_properties['collidable']) return
-                if (!Collider.collides(attempt, enemy.dim, obj.pos, obj.dim, 0)) {
-                    spawnPos = attempt
+                if (Collider.collides(attempt as Vector2, enemy.dim, obj.pos, obj.dim, 0)) {
+                    attempt = null
                     return
                 }
             })
+            if (attempt === null) continue
+            spawnPos = attempt
         }
-        return spawnPos;
+        return spawnPos as Vector2
     }
 }

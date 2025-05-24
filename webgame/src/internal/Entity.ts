@@ -197,9 +197,9 @@ export class Entity extends Obj {
             ctx.save()
             ctx.fillStyle = 'rgba(255, 0, 0, 0.75)'
             ctx.fillRect(
-                this.pos.x * (100 * this.health / this.maxHealth),
+                this.pos.x,
                 this.pos.y - 20,
-                this.dim.x,
+                this.dim.x * (this.health / this.maxHealth),
                 4,
             )
             ctx.restore()
