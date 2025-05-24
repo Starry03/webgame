@@ -11,6 +11,8 @@ import { EntranceDoor } from '@/internal/mapLogic/objects/door/EntranceDoor'
 import { SwitchRoomDoor } from '@/internal/mapLogic/objects/door/SwitchRoomDoor'
 import { SwitchEntrance } from '@/internal/mapLogic/objects/SwitchEntrance'
 import { AccessDoor } from '@/internal/mapLogic/objects/door/AccessDoor'
+import { Ladder } from '@/internal/mapLogic/objects/Ladder'
+import {loadMapData} from '@/internal/mapLogic/engine/utils/BackgroundLayerUtils.ts'
 
 export function loadObjectsFromMap(
     jsonMap: TiledMap,
@@ -36,9 +38,7 @@ export function loadObjectsFromMap(
             let custom_properties: Record<string, string>
             if (object.name == 'entranceDoor') {
                 custom_properties = extractCustomProperties(object)
-
-                list_objects.push(
-                    new EntranceDoor(
+                const entranceDoor: EntranceDoor = new EntranceDoor(
                         canvas,
                         ctx,
                         AnimationType.IDLE,
@@ -51,14 +51,13 @@ export function loadObjectsFromMap(
                         object.width,
                         object.height,
                         custom_properties,
-                    ),
                 )
+                entranceDoor.setPaths()
+                list_objects.push(entranceDoor)
             }
-            // prima della modifica: else if (object.name == 'switchRoomDoor' && !(room_name !== 'room3')) {
             else if (object.name == 'switchRoomDoor') {
                 custom_properties = extractCustomProperties(object)
-                list_objects.push(
-                    new SwitchRoomDoor(
+                const switchRoomDoor: SwitchRoomDoor = new SwitchRoomDoor(
                         canvas,
                         ctx,
                         AnimationType.IDLE,
@@ -71,9 +70,11 @@ export function loadObjectsFromMap(
                         object.width,
                         object.height,
                         custom_properties,
-                    ),
                 )
-            } else if (object.name == 'switchEntrance') {
+                switchRoomDoor.setPaths()
+                list_objects.push(switchRoomDoor)
+            }
+            else if (object.name == 'switchEntrance') {
                 custom_properties = extractCustomProperties(object)
                 const switchEntrance: SwitchEntrance = new SwitchEntrance(
                     canvas,
@@ -97,6 +98,11 @@ export function loadObjectsFromMap(
                 const accessDoor: AccessDoor = new AccessDoor(canvas, ctx, AnimationType.IDLE, isIdle, pos, dim, object.name, object.x, object.y, object.width, object.height, custom_properties);
                 accessDoor.setPaths()
                 list_objects.push(accessDoor)
+            }
+            else if (object.name == 'ladder') {
+                custom_properties = extractCustomProperties(object)
+                const ladder: Ladder = new Ladder(canvas, ctx, AnimationType.IDLE, isIdle,  pos, dim, object.name, object.x, object.y, object.width, object.height, custom_properties)
+                list_objects.push(ladder)
             }
             else {
                 if (
@@ -144,6 +150,7 @@ export function loadObjectsFromMap(
 }
 
 export async function loadMapObjects(
+    bg_image: HTMLImageElement | null,
     room_name: string,
     mapUrl: string,
     canvas: HTMLCanvasElement,
@@ -163,18 +170,23 @@ export async function loadMapObjects(
         )
         switch (room_name) {
             case 'room1':
+                bg_image = await loadMapData(mapUrl, room_name, canvas, ctx)
                 populateRoom1(list_objects)
                 break
             case 'room2':
+                bg_image = await loadMapData(mapUrl, room_name, canvas, ctx)
                 populateRoom2(list_objects)
                 break
             case 'room3':
+                bg_image = await loadMapData(mapUrl, room_name, canvas, ctx)
                 populateRoom3(list_objects)
                 break
             case 'room4':
+                bg_image = await loadMapData(mapUrl, room_name, canvas, ctx)
                 populateRoom4(list_objects)
                 break
             case 'boss_room':
+                bg_image = await loadMapData(mapUrl, room_name, canvas, ctx)
                 populateBossRoom(list_objects)
             default:
                 break

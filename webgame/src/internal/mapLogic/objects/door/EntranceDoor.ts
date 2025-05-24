@@ -38,7 +38,7 @@ export class EntranceDoor extends Door {
             attack1: [],
             attack2: [],
             special: [],
-            idle: ['/assets/maps/rooms/tiled_objects/switchRoomDoors/apertura.png'],
+            idle: ['/assets/maps/rooms/tiled_objects/switchRoomDoors/entrance_door.png'],
             hurt: [],
             dead: [],
             opening: [
