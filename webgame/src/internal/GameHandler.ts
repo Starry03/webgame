@@ -128,7 +128,7 @@ export class GameHandler {
         })
 
         const bossStats: Character | undefined = this.availableCharacters.find(
-            (character: Character) => character.name === 'gorgon',
+            (character: Character) => character.name === 'gorgone viola',
         )
         if (bossStats === undefined)
             throw new Error('Boss character not found in available characters')
@@ -161,7 +161,7 @@ export class GameHandler {
             this.ctx,
             this.gameObjects,
             this.availableCharacters.filter((o: Character) => {
-                return o.name !== 'gorgon' && o.name !== 'evil gorgon' && o.playable === false
+                return o.name !== 'gorgone rossa' && o.name !== 'gorgone viola' && o.playable === false
             }),
         )
         this.spawner

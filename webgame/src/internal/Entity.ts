@@ -181,10 +181,11 @@ export class Entity extends Obj {
 
         setTimeout(
             () => {
+                console.log((this.speed === 0 ? 10000 : this.speed) * 10 * cooldownFactor)
                 refCooldown.value = 0
                 clearInterval(intervalId)
             },
-            this.speed * 10 * cooldownFactor,
+            (this.speed === 0 ? 10000 : this.speed) * 10 * cooldownFactor,
         )
     }
 
