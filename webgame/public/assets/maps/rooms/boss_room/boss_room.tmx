@@ -138,7 +138,7 @@
   </object>
   <object id="52" name="bottomWall" type="AnimatedObject" gid="239" x="0" y="416" width="800" height="32">
    <properties>
-    <property name="coliidable" type="bool" value="true"/>
+    <property name="collidable" type="bool" value="true"/>
    </properties>
   </object>
   <object id="53" name="topWall" type="AnimatedObject" gid="239" x="0" y="32" width="800" height="32">

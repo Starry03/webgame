@@ -574,7 +574,7 @@
                  "name":"bottomWall",
                  "properties":[
                         {
-                         "name":"coliidable",
+                         "name":"collidable",
                          "type":"bool",
                          "value":true
                         }],

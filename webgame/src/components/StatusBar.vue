@@ -97,7 +97,6 @@ const getTime = () => {
     return intervalId
 }
 
-
 </script>
 
 <template>
