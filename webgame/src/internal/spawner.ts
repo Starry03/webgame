@@ -117,7 +117,7 @@ export class Spawner {
             this.gameObjects.forEach((obj: Obj) => {
                 if (obj.id === enemy.id) return
                 if (!obj.custom_properties['collidable']) return
-                if (!Collider.collides(attempt, enemy.dim, obj.pos, obj.dim)) {
+                if (!Collider.collides(attempt, enemy.dim, obj.pos, obj.dim, 0)) {
                     spawnPos = attempt
                     return
                 }
