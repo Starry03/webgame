@@ -209,13 +209,13 @@ COPY public.classe (name, speed, attack, defence, mana, hp, description, playabl
 warrior	60	85	85	400	800	Un combattente potente con una forza d’attacco eccezionale e una buona resistenza. Anche se non eccelle nella velocità o nella magia, è un solido baluardo sul campo di battaglia	t
 thief	120	55	60	500	650	Agile e rapido, questo ladro si muove con velocità impressionante. Sebbene abbia una difesa e un attacco più bassi, la sua mobilità lo rende perfetto per colpi rapidi e fughe strategiche	t
 wizard	45	100	40	1200	750	Un maestro delle arti magiche con un’enorme riserva di mana e punti vita. Equilibrato in velocità e difesa, è ideale per infliggere danni magici a distanza	t
-gorgon	55	90	80	800	1000	Er boss	f
-evil gorgon	65	120	60	1000	1200	Er boss ma più cattivo	f
 plant	0	40	25	300	150	Una pianta	f
 werewolf	65	80	50	500	400	Un lupo	f
 archer_skeleton	20	65	35	450	200	Uno scheletro con un arco	f
 warrior_skeleton	55	50	55	450	300	Uno scheletro	f
 spear_skeleton	60	45	50	450	250	Uno scheletro con una lancia	f
+gorgone rossa	65	120	60	1000	1200	Er boss ma più cattivo	f
+gorgone viola	55	90	80	800	1000	Er boss	f
 \.
 
 
@@ -661,6 +661,41 @@ COPY public.session (id, key, expires_at) FROM stdin;
 403	12pHCn9bLncEkPa13RqjymrxFPr7bEpDJN9sYe7Sx3U=	2025-05-16 17:09:19.99331
 404	4Qe1ll+8aHaD3+jngS6ZOfCZILuJ7PIaoDgTMUP6eRc=	2025-05-16 17:21:13.774409
 405	BULcEcGU+LW38K00cGYXvEVFBzt1ujjeRruyJJAWrBA=	2025-05-16 17:22:03.843493
+406	vQb+X2T4HJMTjDSzLt9POUzWm66qjBcfKJMATY6w5F4=	2025-05-16 18:02:15.040154
+407	jFlZsvE7EmNzmlJzrekpWVaJ0WMNaX1hG9dbN4LUNH0=	2025-05-17 18:50:27.44249
+408	ZEt+4valG0mnQbqhyeDTNOGySwA8UuI9XAepm7UYsJk=	2025-05-18 12:29:56.938411
+409	BdxAmWgwzC3ItnIQchG94dod58fuA4XsM/L3Zq1hbME=	2025-05-21 16:04:17.009997
+410	HGob3npjcSbLhfvd63cZkZUBM2NMkhUflufBHgGwc/0=	2025-05-21 17:57:26.66646
+411	vXphG6gGlt0JDcz5rMKQw+q9Ng++OgYUrDaqJKk6OmY=	2025-05-21 18:18:04.642814
+412	5jgmwkcE1Cd/Mtad/yl/Cpk1SMA+m4yLk6Fe9IFcR5s=	2025-05-21 19:46:27.796265
+413	lxqaR7Bl3HtLnDbfiNoDew99SCJ1aQJKTcksVFg8/hI=	2025-05-22 11:42:58.358922
+414	YxJDjBLozWU/vvcbs12pLeMgEug/rxVZPfuot8Qq5hw=	2025-05-22 15:42:59.133284
+415	sPpiR59AxsoHZ5yGDNgXzRv8LX5l5ZCUIKdRs8X0N8I=	2025-05-22 15:44:15.621975
+416	EucPUOeiP2CY5iKg+YIvQNIBwfQiD+OXge3ke0E6XEM=	2025-05-22 16:06:39.793295
+417	TBY5FQWNx4/xweOaSadgP+vmoMgQ9lu6mgFwtzq4xhk=	2025-05-22 16:09:02.644879
+418	dCdmKh0DQZfETIlBgfkefbjdgD0SuXu9+4pqylLkzF0=	2025-05-23 13:05:29.289306
+419	E5D+dJ8u3lc6w02KzEDj1zJhL2ZeF+k6so4R+gCxjD0=	2025-05-23 13:24:54.085411
+420	Q/cZW0DnZ9xrTUKkgfIn3qGp8PCdagl9hF5b5brvH8Y=	2025-05-23 13:26:40.391499
+421	aCdYFRcbfPGnXlQz0BL1pUQFfFumI9+a4SUS5IEY0DY=	2025-05-23 13:27:00.523115
+422	u46KCCSVWEQsHMdRNcnaQShzKPbDgS3zavzLPkeHN8U=	2025-05-23 13:28:38.351909
+423	wYjsLGievhKXl0LF4CzEsb0qt6h8BMYDz9SlMPllSnU=	2025-05-23 13:50:07.417504
+424	a3GgG6R3NzbV5GrW4GFVFP92A7aW1XSgo/ZSJE2BU8o=	2025-05-23 13:59:49.960524
+425	JY5Cak1Ay/JxXgQwOQa3BDaQBELluNbvlq7qNgU9StM=	2025-05-23 14:01:09.917887
+426	yWS8HEUIJc+udmV2KKFdppG5Pj8SCCuIdNAz7B2Y96A=	2025-05-23 14:20:37.786726
+427	ofcksuwwoH03GHCoIIaBgYivGttqeAII0Qb/uKmch88=	2025-05-23 14:21:47.236628
+428	wfbgmTbBs6vOGxwDlrCMR6DJVrq+NU+d19FCiiYBH+o=	2025-05-23 14:23:06.548371
+429	FhwsmCbLt/DftMmkn0IozerfTf/8PlnBtIkVNZsfF4c=	2025-05-23 15:08:35.736002
+430	UY7lNWrX9robeX1W5CyqzQuMjQoe77iovO1v2hkjnIs=	2025-05-23 15:09:59.693476
+431	Zj/GYjR/6hCrs43kqcoSJWa6EI6WNYmL4E36o1JEADo=	2025-05-23 16:30:19.793421
+432	hwgV1LrEbxKAUD5XFsdrg8cSnTijwfnIa7VxIj0UdcM=	2025-05-23 16:42:39.976127
+433	FlQWvZVzs1Rj6oMy1xFYNWNfXMrKOEXfKajgg43uFAM=	2025-05-23 18:02:57.558388
+434	xU+OVVycQm9/OwiAIkKZZzlx5pyoTfPE0Zm81Ntl1ZU=	2025-05-23 19:09:06.676449
+435	RuZQPWmlZtAKxWjkC9IEh1R0FFmb0jIW0Qtyt2V1xgc=	2025-05-24 11:06:07.818112
+436	nYVyIIVjuzhuIoMzxOQVlnXAmh4Q8G7E81iTh5PxLR4=	2025-05-24 11:26:43.073841
+437	ozwFr8Y/mD6a2CGczLZ1j+i3jvdlo3XmSgFkgOYFrSE=	2025-05-24 12:33:20.652979
+438	zZYUCyA8ZkypmJc1OcbYzRIkWjqH6BbAFzkB8nOOipA=	2025-05-24 14:36:18.247736
+439	eB3AtgZsiW7NdenXYn7cy5pHeZS9PUmj+P6B/2e29GM=	2025-05-24 16:48:57.238721
+440	e0D++0cf72IZ/ejkdX9kZfP3iCz+qfHAJV49G9NKwTQ=	2025-05-25 15:21:33.562432
 \.
 
 
@@ -677,6 +712,7 @@ COPY public."user" (id, username, password, email, money, online) FROM stdin;
 14	test	2a5f8f07c326f1fbd2d517bd9aa358fca9191b72e96052fc4eb0f7d20adb8faf	\N	0	f
 15	test64	2a5f8f07c326f1fbd2d517bd9aa358fca9191b72e96052fc4eb0f7d20adb8faf	\N	0	f
 16	test65	2a5f8f07c326f1fbd2d517bd9aa358fca9191b72e96052fc4eb0f7d20adb8faf	\N	0	f
+17	Lollo	ea33eb746515efb32a92732f7c531292d38ea5221ec13b866188665e88b63fff	\N	0	f
 \.
 
 
@@ -691,14 +727,14 @@ SELECT pg_catalog.setval('public.player_id_seq', 1, false);
 -- Name: session_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.session_id_seq', 405, true);
+SELECT pg_catalog.setval('public.session_id_seq', 440, true);
 
 
 --
 -- Name: user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.user_id_seq', 16, true);
+SELECT pg_catalog.setval('public.user_id_seq', 23, true);
 
 
 --

@@ -173,16 +173,16 @@ export class GameHandler {
                     if (b.id === this.player.id) return -1
                     return -1
                 })
+                this.ai = new Ai(
+                    this.player,
+                    this.gameObjects.filter(
+                        (o: Obj) => o instanceof Entity && o.id !== this.player.id,
+                    ) as Entity[],
+                )
             })
             .catch((error) => {
                 throw new Error(`Error spawning enemies: ${error}`)
             })
-        this.ai = new Ai(
-            this.player,
-            this.gameObjects.filter(
-                (o: Obj) => o instanceof Entity && o.id !== this.player.id,
-            ) as Entity[],
-        )
     }
 
     getCurrentLevel(): Number {

@@ -15,7 +15,7 @@ export class Entity extends Obj {
     maxCooldownQ: number
     maxCooldownR: number
     level: number
-    override isIdleBlocked: boolean = false
+    isDead: boolean
 
     constructor(
         canvas: HTMLCanvasElement,
@@ -44,6 +44,7 @@ export class Entity extends Obj {
         this.maxCooldownQ = this.speed * 10 * 2.5
         this.maxCooldownR = this.speed * 10 * 5
         this.level = 1
+        this.isDead = false
     }
 
     consumeMana(amount: number): boolean {
@@ -56,8 +57,15 @@ export class Entity extends Obj {
         this.move(keys, deltaTime)
     }
 
-    move(keys: Set<string>, deltaTime: number) {
-        if (this.isAnimationBlocking) return
+    getPossiblePosition(dir: Vector2, deltaTime: number): Vector2 {
+        return new Vector2(
+            this.pos.x + dir.x * this.speed * deltaTime * 4,
+            this.pos.y + dir.y * this.speed * deltaTime * 4,
+        )
+    }
+
+    move(keys: Set<string>, deltaTime: number, getPossiblePosition: boolean = false) {
+        if (this.isAnimationBlocking) return null
         let dir = new Vector2(
             (keys.has('d') || keys.has('ArrowRight') ? 1 : 0) +
                 (keys.has('a') || keys.has('ArrowLeft') ? -1 : 0),
@@ -68,21 +76,20 @@ export class Entity extends Obj {
         dir.normalize()
         if (dir.compare(0, 0)) {
             this.idle()
-            return
+            return null
         }
 
-        const possible_position = new Vector2(
-            this.pos.x + dir.x * this.speed * deltaTime * 4,
-            this.pos.y + dir.y * this.speed * deltaTime * 4,
-        )
+        const possible_position = this.getPossiblePosition(dir, deltaTime)
+        if (getPossiblePosition) return { possible_position, dir }
 
         if (!dir.direction().compare(0, 0) && !this.canMove(possible_position, dir)) {
-            return
+            return null
         }
 
         this.pos = possible_position
         this.changeAnimation(AnimationType.RUN)
         this.facingDirection = dir
+        return null
     }
 
     get_damage(damage: number) {
@@ -99,8 +106,7 @@ export class Entity extends Obj {
     die() {
         this.changeAnimation(AnimationType.DEAD, true, false)
         this.custom_properties['collidable'] = false
-        this.handleInput = () => {}
-        this.attack = () => {}
+        this.isDead = true
     }
 
     isInAttackArc(target: Entity, angleRad: number = (2 * Math.PI) / 3): boolean {

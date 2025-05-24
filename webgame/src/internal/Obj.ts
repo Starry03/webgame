@@ -163,7 +163,11 @@ export class Obj {
         }
     }
 
-    move(keyPressed: string | Set<string>, deltaTime: number) {}
+    move(
+        keyPressed: string | Set<string>,
+        deltaTime: number,
+        getPossiblePosition: boolean = false,
+    ) {}
 
     canMove(possible_position: Vector2, direction: Vector2): boolean {
         let res = true
