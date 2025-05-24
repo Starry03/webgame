@@ -9,6 +9,7 @@ import { reactive } from 'vue'
 import { prefixed } from './cryptoutils'
 import { Spawner } from './spawner'
 import { Ai } from './ai'
+import { loadMapData } from '@/internal/mapLogic/engine/utils/BackgroundLayerUtils.ts'
 
 export class GameHandler {
     player: Entity
@@ -97,14 +98,8 @@ export class GameHandler {
     async initialize() {
         const room = this.currentRoom < 5 ? `room${this.currentRoom}` : 'boss_room'
         this.currentRoomPath = getRoomPath(room)
-        this.currentRoomObjects = (await loadMapObjects(
-            this.bg_image,
-            room,
-            this.currentRoomPath,
-            this.canvas,
-            this.ctx,
-        )) as Obj[]
-
+        this.bg_image = await loadMapData(this.currentRoomPath, room, this.canvas, this.ctx)
+        this.currentRoomObjects = (await loadMapObjects(room, this.currentRoomPath, this.canvas, this.ctx)) as Obj[];
         this.currentRoomObjects.sort((a: Obj, b: Obj) => {
             const exotic_peppe = a.name
             if (exotic_peppe === 'structure' && b.name === 'switchRoomDoor') return -1

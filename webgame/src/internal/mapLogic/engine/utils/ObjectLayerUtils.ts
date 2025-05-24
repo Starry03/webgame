@@ -18,7 +18,6 @@ import { SwitchRoomDoor } from '@/internal/mapLogic/objects/door/SwitchRoomDoor'
 import { SwitchEntrance } from '@/internal/mapLogic/objects/SwitchEntrance'
 import { AccessDoor } from '@/internal/mapLogic/objects/door/AccessDoor'
 import { Ladder } from '@/internal/mapLogic/objects/ladder/Ladder.ts'
-import { loadMapData } from '@/internal/mapLogic/engine/utils/BackgroundLayerUtils.ts'
 import { AttackEnhancement } from '@/internal/mapLogic/objects/enhancements/AttackEnhancement'
 import { DefenseEnhancement } from '@/internal/mapLogic/objects/enhancements/DefenseEnhancement'
 import { ManaPotion } from '@/internal/mapLogic/objects/potions/ManaPotion'
@@ -270,7 +269,6 @@ export function loadObjectsFromMap(
 }
 
 export async function loadMapObjects(
-    bg_image: HTMLImageElement | null,
     room_name: string,
     mapUrl: string,
     canvas: HTMLCanvasElement,
@@ -290,23 +288,18 @@ export async function loadMapObjects(
         )
         switch (room_name) {
             case 'room1':
-                bg_image = await loadMapData(mapUrl, room_name, canvas, ctx)
                 populateRoom1(list_objects)
                 break
             case 'room2':
-                bg_image = await loadMapData(mapUrl, room_name, canvas, ctx)
                 populateRoom2(list_objects)
                 break
             case 'room3':
-                bg_image = await loadMapData(mapUrl, room_name, canvas, ctx)
                 populateRoom3(list_objects)
                 break
             case 'room4':
-                bg_image = await loadMapData(mapUrl, room_name, canvas, ctx)
                 populateRoom4(list_objects)
                 break
             case 'boss_room':
-                bg_image = await loadMapData(mapUrl, room_name, canvas, ctx)
                 populateBossRoom(list_objects)
             default:
                 break
