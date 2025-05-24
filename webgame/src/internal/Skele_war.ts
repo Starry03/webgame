@@ -23,7 +23,7 @@ export class Skele_war extends Entity {
         'assets/Sprite/Nemici/Skeleton_Warrior/Run/frame_0_7.png',
       ],
       attack1: [
-        'assets/Sprite/Nemici/Skeleton_Warrior/Attack 2/frame_0_0.png',
+        'assets/Sprite/Nemici/Skeleton_Warrior/Attack 1/frame_0_0.png',
         'assets/Sprite/Nemici/Skeleton_Warrior/Attack 1/frame_0_1.png',
         'assets/Sprite/Nemici/Skeleton_Warrior/Attack 1/frame_0_2.png',
         'assets/Sprite/Nemici/Skeleton_Warrior/Attack 1/frame_0_3.png',
