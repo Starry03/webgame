@@ -154,260 +154,7 @@
                  "y":256
                 }, 
                 {
-                 "gid":231,
-                 "height":64,
-                 "id":13,
-                 "name":"tree11",
-                 "properties":[
-                        {
-                         "name":"collidable",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
-                         "name":"type",
-                         "type":"string",
-                         "value":"tree"
-                        }],
-                 "rotation":0,
-                 "type":"AnimatedObject",
-                 "visible":true,
-                 "width":64,
-                 "x":32,
-                 "y":128
-                }, 
-                {
-                 "gid":227,
-                 "height":64,
-                 "id":14,
-                 "name":"tree10",
-                 "properties":[
-                        {
-                         "name":"collidable",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
-                         "name":"type",
-                         "type":"string",
-                         "value":"tree"
-                        }],
-                 "rotation":0,
-                 "type":"AnimatedObject",
-                 "visible":true,
-                 "width":64,
-                 "x":128,
-                 "y":96
-                }, 
-                {
-                 "gid":223,
-                 "height":64,
-                 "id":17,
-                 "name":"tree9",
-                 "properties":[
-                        {
-                         "name":"collidable",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
-                         "name":"type",
-                         "type":"string",
-                         "value":"tree"
-                        }],
-                 "rotation":0,
-                 "type":"AnimatedObject",
-                 "visible":true,
-                 "width":64,
-                 "x":320,
-                 "y":256
-                }, 
-                {
-                 "gid":232,
-                 "height":64,
-                 "id":18,
-                 "name":"tree8",
-                 "properties":[
-                        {
-                         "name":"collidable",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
-                         "name":"type",
-                         "type":"string",
-                         "value":"tree"
-                        }],
-                 "rotation":0,
-                 "type":"AnimatedObject",
-                 "visible":true,
-                 "width":64,
-                 "x":447,
-                 "y":128
-                }, 
-                {
-                 "gid":228,
-                 "height":64,
-                 "id":21,
-                 "name":"tree7",
-                 "properties":[
-                        {
-                         "name":"collidable",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
-                         "name":"type",
-                         "type":"string",
-                         "value":"tree"
-                        }],
-                 "rotation":0,
-                 "type":"AnimatedObject",
-                 "visible":true,
-                 "width":64,
-                 "x":672,
-                 "y":128
-                }, 
-                {
-                 "gid":225,
-                 "height":64,
-                 "id":23,
-                 "name":"tree6",
-                 "properties":[
-                        {
-                         "name":"collidable",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
-                         "name":"type",
-                         "type":"string",
-                         "value":"tree"
-                        }],
-                 "rotation":0,
-                 "type":"AnimatedObject",
-                 "visible":true,
-                 "width":64,
-                 "x":320,
-                 "y":96
-                }, 
-                {
-                 "gid":229,
-                 "height":64,
-                 "id":27,
-                 "name":"tree5",
-                 "properties":[
-                        {
-                         "name":"collidable",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
-                         "name":"type",
-                         "type":"string",
-                         "value":"tree"
-                        }],
-                 "rotation":0,
-                 "type":"AnimatedObject",
-                 "visible":true,
-                 "width":64,
-                 "x":480,
-                 "y":384
-                }, 
-                {
-                 "gid":223,
-                 "height":64,
-                 "id":28,
-                 "name":"tree4",
-                 "properties":[
-                        {
-                         "name":"collidable",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
-                         "name":"type",
-                         "type":"string",
-                         "value":"tree"
-                        }],
-                 "rotation":0,
-                 "type":"AnimatedObject",
-                 "visible":true,
-                 "width":64,
-                 "x":224,
-                 "y":384
-                }, 
-                {
-                 "gid":230,
-                 "height":64,
-                 "id":34,
-                 "name":"tree3",
-                 "properties":[
-                        {
-                         "name":"collidable",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
-                         "name":"type",
-                         "type":"string",
-                         "value":"tree"
-                        }],
-                 "rotation":0,
-                 "type":"AnimatedObject",
-                 "visible":true,
-                 "width":64,
-                 "x":128,
-                 "y":256
-                }, 
-                {
-                 "gid":225,
-                 "height":64,
-                 "id":35,
-                 "name":"tree2",
-                 "properties":[
-                        {
-                         "name":"collidable",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
-                         "name":"type",
-                         "type":"string",
-                         "value":"tree"
-                        }],
-                 "rotation":0,
-                 "type":"AnimatedObject",
-                 "visible":true,
-                 "width":64,
-                 "x":64,
-                 "y":352
-                }, 
-                {
-                 "gid":231,
-                 "height":64,
-                 "id":38,
-                 "name":"tree1",
-                 "properties":[
-                        {
-                         "name":"collidable",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
-                         "name":"type",
-                         "type":"string",
-                         "value":"tree"
-                        }],
-                 "rotation":0,
-                 "type":"AnimatedObject",
-                 "visible":true,
-                 "width":64,
-                 "x":672,
-                 "y":352
-                }, 
-                {
-                 "gid":233,
+                 "gid":248,
                  "height":128,
                  "id":39,
                  "name":"bossRock",
@@ -472,8 +219,7 @@
                  "width":32,
                  "x":64,
                  "y":384
-                },
-            
+                }, 
                 {
                  "gid":199,
                  "height":32,
@@ -535,7 +281,7 @@
                  "y":352
                 }, 
                 {
-                 "gid":238,
+                 "gid":253,
                  "height":78,
                  "id":51,
                  "name":"bossLadder",
@@ -568,7 +314,7 @@
                  "y":256
                 }, 
                 {
-                 "gid":239,
+                 "gid":254,
                  "height":32,
                  "id":52,
                  "name":"bottomWall",
@@ -586,7 +332,7 @@
                  "y":416
                 }, 
                 {
-                 "gid":239,
+                 "gid":254,
                  "height":32,
                  "id":53,
                  "name":"topWall",
@@ -604,7 +350,7 @@
                  "y":32
                 }, 
                 {
-                 "gid":240,
+                 "gid":255,
                  "height":352,
                  "id":54,
                  "name":"leftSideWall",
@@ -622,7 +368,7 @@
                  "y":384
                 }, 
                 {
-                 "gid":240,
+                 "gid":255,
                  "height":352,
                  "id":55,
                  "name":"rightSideWall",
@@ -638,6 +384,205 @@
                  "width":32,
                  "x":768,
                  "y":384
+                }, 
+                {
+                 "gid":233,
+                 "height":63,
+                 "id":56,
+                 "name":"tree1",
+                 "properties":[
+                        {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"AnimatedObject",
+                 "visible":true,
+                 "width":54,
+                 "x":33,
+                 "y":119
+                },
+            
+                {
+                 "gid":233,
+                 "height":63,
+                 "id":57,
+                 "name":"tree2",
+                 "properties":[
+                        {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"AnimatedObject",
+                 "visible":true,
+                 "width":54,
+                 "x":700,
+                 "y":125
+                }, 
+                {
+                 "gid":236,
+                 "height":57,
+                 "id":59,
+                 "name":"tree3",
+                 "properties":[
+                        {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"AnimatedObject",
+                 "visible":true,
+                 "width":54,
+                 "x":124,
+                 "y":90
+                }, 
+                {
+                 "gid":236,
+                 "height":57,
+                 "id":60,
+                 "name":"tree4",
+                 "properties":[
+                        {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"AnimatedObject",
+                 "visible":true,
+                 "width":54,
+                 "x":699,
+                 "y":349
+                }, 
+                {
+                 "gid":239,
+                 "height":60,
+                 "id":62,
+                 "name":"tree5",
+                 "properties":[
+                        {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"AnimatedObject",
+                 "visible":true,
+                 "width":48,
+                 "x":114,
+                 "y":254
+                }, 
+                {
+                 "gid":239,
+                 "height":60,
+                 "id":63,
+                 "name":"tree6",
+                 "properties":[
+                        {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"AnimatedObject",
+                 "visible":true,
+                 "width":48,
+                 "x":456,
+                 "y":91
+                }, 
+                {
+                 "gid":245,
+                 "height":57,
+                 "id":65,
+                 "name":"tree7",
+                 "properties":[
+                        {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"AnimatedObject",
+                 "visible":true,
+                 "width":48,
+                 "x":53,
+                 "y":349
+                }, 
+                {
+                 "gid":245,
+                 "height":57,
+                 "id":66,
+                 "name":"tree8",
+                 "properties":[
+                        {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"AnimatedObject",
+                 "visible":true,
+                 "width":48,
+                 "x":235,
+                 "y":383
+                }, 
+                {
+                 "gid":246,
+                 "height":62,
+                 "id":67,
+                 "name":"tree9",
+                 "properties":[
+                        {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"AnimatedObject",
+                 "visible":true,
+                 "width":56,
+                 "x":318,
+                 "y":92
+                }, 
+                {
+                 "gid":237,
+                 "height":58,
+                 "id":68,
+                 "name":"tree10",
+                 "properties":[
+                        {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"AnimatedObject",
+                 "visible":true,
+                 "width":54,
+                 "x":329,
+                 "y":254
+                }, 
+                {
+                 "gid":235,
+                 "height":60,
+                 "id":71,
+                 "name":"tree11",
+                 "properties":[
+                        {
+                         "name":"collidable",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"AnimatedObject",
+                 "visible":true,
+                 "width":54,
+                 "x":483,
+                 "y":384
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -646,7 +591,7 @@
          "y":0
         }],
  "nextlayerid":3,
- "nextobjectid":56,
+ "nextobjectid":72,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
@@ -733,23 +678,23 @@
          "source":"tiled_objects\/tilesets\/trees.tsx"
         }, 
         {
-         "firstgid":233,
+         "firstgid":248,
          "source":"tiled_objects\/tilesets\/rock.tsx"
         }, 
         {
-         "firstgid":234,
+         "firstgid":249,
          "source":"..\/tilesets\/ladder.tsx"
         }, 
         {
-         "firstgid":236,
+         "firstgid":251,
          "source":"tiled_objects\/tilesets\/boss_ladder.tsx"
         }, 
         {
-         "firstgid":239,
+         "firstgid":254,
          "source":"..\/tilesets\/bottom_wall.tsx"
         }, 
         {
-         "firstgid":240,
+         "firstgid":255,
          "source":"..\/tilesets\/boss_side_wall.tsx"
         }],
  "tilewidth":32,

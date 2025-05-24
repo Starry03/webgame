@@ -1331,13 +1331,13 @@ export function populateBossRoom(list_objects: Obj[]) {
             }
             obj.setFramePaths(frame_paths);
         }
-        else if (['tree1', 'tree11'].includes(obj.name)) {
+        else if (['tree1', 'tree2'].includes(obj.name)) {
             frame_paths = {
                 run: [],
                 attack1: [],
                 attack2: [],
                 special: [],
-                idle: [IMAGES_PATHS['tree2']],
+                idle: [IMAGES_PATHS['fruit_tree1']],
                 hurt: [],
                 dead: [],
                 opening: [],
@@ -1345,13 +1345,13 @@ export function populateBossRoom(list_objects: Obj[]) {
             }
             obj.setFramePaths(frame_paths);
         }
-        else if (['tree2', 'tree6'].includes(obj.name)) {
+        else if (['tree3', 'tree4'].includes(obj.name)) {
             frame_paths = {
                 run: [],
                 attack1: [],
                 attack2: [],
                 special: [],
-                idle: [IMAGES_PATHS['palm_tree2']],
+                idle: [IMAGES_PATHS['palm_tree1']],
                 hurt: [],
                 dead: [],
                 opening: [],
@@ -1359,7 +1359,21 @@ export function populateBossRoom(list_objects: Obj[]) {
             }
             obj.setFramePaths(frame_paths);
         }
-        else if (obj.name == 'tree3') {
+        else if (['tree5', 'tree6'].includes(obj.name)) {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['christmas_tree1']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (['tree7', 'tree8'].includes(obj.name)) {
             frame_paths = {
                 run: [],
                 attack1: [],
@@ -1373,55 +1387,13 @@ export function populateBossRoom(list_objects: Obj[]) {
             }
             obj.setFramePaths(frame_paths);
         }
-        else if (['tree4', 'tree9'].includes(obj.name)) {
+        else if (obj.name == 'tree9') {
             frame_paths = {
                 run: [],
                 attack1: [],
                 attack2: [],
                 special: [],
-                idle: [IMAGES_PATHS['fruit_tree3']],
-                hurt: [],
-                dead: [],
-                opening: [],
-                closing: []
-            }
-            obj.setFramePaths(frame_paths);
-        }
-        else if (obj.name == 'tree5') {
-            frame_paths = {
-                run: [],
-                attack1: [],
-                attack2: [],
-                special: [],
-                idle: [IMAGES_PATHS['christmas_tree3']],
-                hurt: [],
-                dead: [],
-                opening: [],
-                closing: []
-            }
-            obj.setFramePaths(frame_paths);
-        }
-        else if (obj.name == 'tree7') {
-            frame_paths = {
-                run: [],
-                attack1: [],
-                attack2: [],
-                special: [],
-                idle: [IMAGES_PATHS['christmas_tree2']],
-                hurt: [],
-                dead: [],
-                opening: [],
-                closing: []
-            }
-            obj.setFramePaths(frame_paths);
-        }
-        else if (obj.name == 'tree8') {
-            frame_paths = {
-                run: [],
-                attack1: [],
-                attack2: [],
-                special: [],
-                idle: [IMAGES_PATHS['tree3']],
+                idle: [IMAGES_PATHS['tree2']],
                 hurt: [],
                 dead: [],
                 opening: [],
@@ -1435,7 +1407,21 @@ export function populateBossRoom(list_objects: Obj[]) {
                 attack1: [],
                 attack2: [],
                 special: [],
-                idle: [IMAGES_PATHS['christmas_tree1']],
+                idle: [IMAGES_PATHS['palm_tree2']],
+                hurt: [],
+                dead: [],
+                opening: [],
+                closing: []
+            }
+            obj.setFramePaths(frame_paths);
+        }
+        else if (obj.name == 'tree11') {
+            frame_paths = {
+                run: [],
+                attack1: [],
+                attack2: [],
+                special: [],
+                idle: [IMAGES_PATHS['fruit_tree3']],
                 hurt: [],
                 dead: [],
                 opening: [],
