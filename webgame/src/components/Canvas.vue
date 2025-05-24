@@ -106,7 +106,7 @@ onMounted(async () => {
                     characterObject.hp,
                     characterObject.mana,
                     characterObject.attack,
-                    characterObject.defense,
+                    characterObject.defence,
                     '',
                 ),
             )
@@ -120,7 +120,7 @@ onMounted(async () => {
                     characterObject.hp,
                     characterObject.mana,
                     characterObject.attack,
-                    characterObject.defense,
+                    characterObject.defence,
                     '',
                 ),
             )
@@ -134,7 +134,7 @@ onMounted(async () => {
                     characterObject.hp,
                     characterObject.mana,
                     characterObject.attack,
-                    characterObject.defense,
+                    characterObject.defence,
                     '',
                 ),
             )
