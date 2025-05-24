@@ -9,6 +9,7 @@ export function loadImage(room_name: string): Promise<HTMLImageElement> {
             background_map_image.src = '/assets/maps/rooms/room1/room1_background.png'
             break
         case 'room2':
+            console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
             background_map_image.src = '/assets/maps/rooms/room2/room2_background.png'
             break
         case 'room3':
@@ -43,7 +44,6 @@ export async function loadMapData(
     canvas: HTMLCanvasElement,
     ctx: CanvasRenderingContext2D,
 ): Promise<HTMLImageElement | null> {
-    // let results = {}
     let map_data: any = null
     try {
         const res = await fetch(path)
@@ -54,28 +54,11 @@ export async function loadMapData(
         map_data = await res.json()
         const image = await loadImage(room_name)
         return image
-
-        // const background_layer = map_data.layers.find(
-        //     (layer: TiledLayer) => layer.name === 'background',
-        // )
-        // if (background_layer && background_layer.data) {
-        //     const decoded = decodeTileLayer(background_layer.data)
-        //     results = drawTiles(
-        //         decoded,
-        //         background_layer.width,
-        //         background_layer.height,
-        //         canvas,
-        //         ctx,
-        //         image,
-        //     )
-        // }
     }
     catch (err) {
         console.error("background image error: ", err)
         return null
     }
-
-    // return results
 }
 
 export function decodeTileLayer(encoded_data: string): number[] {
