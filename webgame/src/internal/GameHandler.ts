@@ -77,8 +77,8 @@ export class GameHandler {
         this.ctx.restore()
         Collider.update_collisions(this.gameObjects)
         this.player.handleInput(this.keys, deltaTime)
-        this.player.attack(this.keys, this.gameObjects)
-        this.ai?.update(timestamp, deltaTime)
+        this.player.attack(this.keys)
+        this.ai?.update(deltaTime)
         this.gameObjects.forEach((obj: Obj) => {
             if (obj.selectedFrames == undefined) return
             obj.update(timestamp, deltaTime)

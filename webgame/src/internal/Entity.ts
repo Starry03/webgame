@@ -64,6 +64,10 @@ export class Entity extends Obj {
         )
     }
 
+    turn(dir: Vector2) {
+        this.facingDirection = dir
+    }
+
     move(keys: Set<string>, deltaTime: number, getPossiblePosition: boolean = false) {
         if (this.isAnimationBlocking) return null
         let dir = new Vector2(
@@ -78,6 +82,9 @@ export class Entity extends Obj {
             this.idle()
             return null
         }
+
+        const abs_dir = dir.direction()
+        this.turn(new Vector2(abs_dir.x, 0))
 
         const possible_position = this.getPossiblePosition(dir, deltaTime)
         if (getPossiblePosition) return { possible_position, dir }
@@ -121,7 +128,7 @@ export class Entity extends Obj {
         return angle <= angleRad / 2
     }
 
-    attack(keys: Set<string>, gameObjects: Obj[]) {
+    attack(keys: Set<string>) {
         let isAttacking = true
         let attackFactor: number = 1
         let usedAnimation: AnimationType = AnimationType.IDLE
