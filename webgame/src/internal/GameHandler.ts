@@ -1,5 +1,10 @@
 import type { Entity } from './Entity'
-import {getRoomPath, populateBossRoom, populateRoom3, populateRoom4} from '@/internal/mapLogic/engine/MapUtils.ts'
+import {
+    getRoomPath,
+    populateBossRoom,
+    populateRoom3,
+    populateRoom4,
+} from '@/internal/mapLogic/engine/MapUtils.ts'
 import { AnimatedObject } from '@/internal/mapLogic/classes/AnimatedObject'
 import { NotAnimatedObject } from '@/internal/mapLogic/classes/NotAnimatedObject'
 import { loadMapData } from '@/internal/mapLogic/engine/utils/BackgroundLayerUtils.ts'
@@ -124,71 +129,6 @@ export class GameHandler {
             return -1
         })
 
-        const isBossRoom = ref(true)
-        const boss = ref<any>(null)
-
-        const mappedBoss = computed(() => {
-            if (!boss.value) return null
-
-            return {
-                speed: boss.value.speed,
-                health: boss.value.health,
-                maxHealth: boss.value.maxHealth,
-                mana: boss.value.mana,
-                maxMana: boss.value.maxMana,
-                level: boss.value.level,
-                attackPower: boss.value.attackPower,
-                defense: boss.value.defense,
-                cooldownQ: boss.value.cooldowns.get(AnimationType.ATTACK_2),
-                maxCooldownQ: boss.value.maxCooldownQ,
-                cooldownR: boss.value.cooldowns.get(AnimationType.SPECIAL),
-                maxCooldownR: boss.value.maxCooldownR,
-                position: boss.value.position,
-            }
-        })
-
-        /*function initializeBoss() {
-            const bossStats = {
-                speed: 65,
-                health: 1200,
-                maxHealth: 1200,
-                mana: 800,
-                maxMana: 800,
-                level: 20,
-                attackPower: 120,
-                defense: 60,
-                cooldowns: new Map([
-                    [AnimationType.ATTACK_2, 0],
-                    [AnimationType.SPECIAL, 0],
-                ]),
-                maxCooldownQ: 5,
-                maxCooldownR: 10,
-                position: { x: 500, y: 200 },
-            }
-            isBossRoom.value = true
-            return bossStats
-        }
-
-        const bossStats = initializeBoss()
-
-        let bossEntity = reactive(
-            new Gorg_red(
-                this.canvas,
-                this.ctx,
-                boss.value.speed,
-                boss.value.health,
-                boss.value.mana,
-                boss.value.attackPower,
-                boss.value.defense
-            )
-        )
-        bossEntity.name = 'Gorgone Rossa'
-        bossEntity.custom_properties = { collidable: true }
-        bossEntity.preloadImages()
-        bossEntity.idle(true)
-
-        this.boss = bossEntity*/
-
         const bossStats = {
             canvas: this.canvas,
             ctx: this.ctx,
@@ -198,7 +138,7 @@ export class GameHandler {
             level: 20,
             attackPower: 120,
             defense: 60,
-            position: { x: 500, y: 200 }
+            position: { x: 500, y: 200 },
         }
 
         const bossEntity = reactive(
@@ -210,7 +150,7 @@ export class GameHandler {
                 bossStats.mana,
                 bossStats.attackPower,
                 bossStats.defense,
-            )
+            ),
         )
         bossEntity.name = 'Gorgone Rossa'
         bossEntity.custom_properties = { collidable: true }
@@ -219,7 +159,10 @@ export class GameHandler {
 
         this.boss = bossEntity
 
-        this.gameObjects = [...this.currentRoomObjects, this.player, this.boss].filter((obj): obj is Obj | Entity => obj !== undefined)
+        this.gameObjects = [...this.currentRoomObjects, this.player]
+        if (this.currentRoom === 5) {
+            this.gameObjects.push(bossEntity)
+        }
         this.gameObjects.forEach((obj: Obj) => {
             obj.setGameHandler(this)
         })
