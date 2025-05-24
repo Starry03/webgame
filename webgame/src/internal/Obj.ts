@@ -225,6 +225,7 @@ export class Obj {
     }
 
     idle(forced: boolean = false) {
+        if (this.isIdleBlocked) return
         if (this.isIdle && !forced) return
         this.changeAnimation(AnimationType.IDLE)
         this.changeFrames(this.currentAnimation)
@@ -284,6 +285,13 @@ export class Obj {
 
     setFramePaths(path: Record<AnimationType, string[]>) {
         this.framePaths = path
+    }
+
+    getRelDirection(other: Obj): Vector2 {
+        return new Vector2(
+            other.pos.x + other.dim.x / 2 - (this.pos.x + this.dim.x / 2),
+            other.pos.y + other.dim.y / 2 - (this.pos.y + this.dim.y / 2),
+        )
     }
 
     getDistance(other: Obj): number {

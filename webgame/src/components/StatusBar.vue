@@ -3,7 +3,6 @@ import ProgressBar from './ProgressBar.vue'
 import { computed, defineProps, onMounted, onUnmounted, ref, type Ref } from 'vue'
 import Filler from './Filler.vue'
 import { Storage_e } from '@/internal/types'
-/*import { getCurrentRoom } from '@/internal/GameHandler'*/
 
 const props = defineProps({
     health: {
@@ -103,7 +102,7 @@ const getTime = () => {
     <div class="status-bar flex flex-col gap-mid">
         <div class="player-header">
             <span class="player-name">{{ username }}</span>
-            <span class="player-level">Level: {{ props.level }}</span>
+            <span class="player-level">Lv. {{ props.level }}</span>
             <span class="player-time">Time: {{ formatTime(playTime) }}</span>
         </div>
         <div class="bars-and-cooldowns">
@@ -148,7 +147,10 @@ const getTime = () => {
     gap: 2rem;
     margin-bottom: 0.5rem;
     justify-content: space-between;
+    letter-spacing: 2px;
+    font-size: var(--font-small);
     text-shadow: 0 0 10px black, 0 0 20px black;
+    font-weight: bold;
 }
 
 .player-name {

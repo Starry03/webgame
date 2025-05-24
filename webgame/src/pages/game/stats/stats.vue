@@ -116,7 +116,6 @@ onMounted(() => {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    /*display: none;  Nascondi il modulo inizialmente */
     z-index: 1000;
 }
 

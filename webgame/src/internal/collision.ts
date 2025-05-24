@@ -2,6 +2,7 @@ import { Obj } from './Obj'
 import { Vector2 } from './types'
 
 export type CollisionInfo = {
+    id: string
     other: Obj
     dir: Vector2 | null
 }

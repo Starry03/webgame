@@ -12,6 +12,7 @@ export class Plent extends Entity {
     ) {
         super(canvas, ctx, speed, health, mana, attackPower, defense)
     this.framePaths = {
+      
       run: [
         'assets/Sprite/Nemici/Plent/Disguise/frame_0_0.png',
         'assets/Sprite/Nemici/Plent/Disguise/frame_0_1.png',

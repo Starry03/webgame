@@ -8,7 +8,7 @@ export class Entity extends Obj {
     maxHealth: number
     mana: number
     maxMana: number
-    manaRegenRate: number = 20
+    manaRegenRate: number = 40
     attackPower: number
     defense: number
     maxCooldownE: number
@@ -64,7 +64,12 @@ export class Entity extends Obj {
         )
     }
 
+    turn(dir: Vector2) {
+        this.facingDirection = dir
+    }
+
     move(keys: Set<string>, deltaTime: number, getPossiblePosition: boolean = false) {
+        if (this.isDead) return null
         if (this.isAnimationBlocking) return null
         let dir = new Vector2(
             (keys.has('d') || keys.has('ArrowRight') ? 1 : 0) +
@@ -78,6 +83,9 @@ export class Entity extends Obj {
             this.idle()
             return null
         }
+
+        const abs_dir = dir.direction()
+        this.turn(new Vector2(abs_dir.x, 0))
 
         const possible_position = this.getPossiblePosition(dir, deltaTime)
         if (getPossiblePosition) return { possible_position, dir }
@@ -121,19 +129,24 @@ export class Entity extends Obj {
         return angle <= angleRad / 2
     }
 
-    attack(keys: Set<string>, gameObjects: Obj[]) {
+    attack(keys: Set<string>) {
+        if (this.isDead) return
         let isAttacking = true
         let attackFactor: number = 1
         let usedAnimation: AnimationType = AnimationType.IDLE
         let attackType: 'basic' | 'q' | 'r' = 'basic'
         let cooldownFactor = 1
 
-        if (keys.has('e') && this.cooldowns.get(AnimationType.ATTACK_1)?.value == 0) {
-            this.changeAnimation(AnimationType.ATTACK_1, true)
-            usedAnimation = AnimationType.ATTACK_1
-            attackType = 'basic'
-            attackFactor = 1
-            cooldownFactor = 1
+        if (
+            keys.has('r') &&
+            this.cooldowns.get(AnimationType.SPECIAL)?.value == 0 &&
+            this.mana >= 400
+        ) {
+            this.changeAnimation(AnimationType.SPECIAL, true)
+            usedAnimation = AnimationType.SPECIAL
+            attackType = 'r'
+            attackFactor = 3
+            cooldownFactor = 5
         } else if (
             keys.has('q') &&
             this.cooldowns.get(AnimationType.ATTACK_2)?.value == 0 &&
@@ -144,16 +157,12 @@ export class Entity extends Obj {
             attackType = 'q'
             attackFactor = 2
             cooldownFactor = 2.5
-        } else if (
-            keys.has('r') &&
-            this.cooldowns.get(AnimationType.SPECIAL)?.value == 0 &&
-            this.mana >= 400
-        ) {
-            this.changeAnimation(AnimationType.SPECIAL, true)
-            usedAnimation = AnimationType.SPECIAL
-            attackType = 'r'
-            attackFactor = 3
-            cooldownFactor = 5
+        } else if (keys.has('e') && this.cooldowns.get(AnimationType.ATTACK_1)?.value == 0) {
+            this.changeAnimation(AnimationType.ATTACK_1, true)
+            usedAnimation = AnimationType.ATTACK_1
+            attackType = 'basic'
+            attackFactor = 1
+            cooldownFactor = 1
         } else isAttacking = false
 
         if (!isAttacking) return
@@ -162,7 +171,7 @@ export class Entity extends Obj {
         let refCooldown: Ref<number> | undefined = this.cooldowns.get(usedAnimation)
         if (!refCooldown) return
 
-        refCooldown.value = this.speed * 10 * cooldownFactor
+        refCooldown.value = (this.speed === 0 ? 10 : this.speed) * 10 * cooldownFactor
 
         const intervalId = setInterval(() => {
             if (refCooldown.value > 0) {
@@ -175,7 +184,7 @@ export class Entity extends Obj {
                 refCooldown.value = 0
                 clearInterval(intervalId)
             },
-            this.speed * 10 * cooldownFactor,
+            (this.speed === 0 ? 10 : this.speed) * 10 * cooldownFactor,
         )
     }
 

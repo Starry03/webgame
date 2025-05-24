@@ -46,7 +46,7 @@ export class GameHandler {
         this.currentRoomObjects = []
         this.bg_image = null
         this.gameObjects = []
-        this.currentRoom = 1
+        this.currentRoom = 5
         this.spawner = null
         this.ai = null
 
@@ -78,8 +78,8 @@ export class GameHandler {
         this.ctx.restore()
         Collider.update_collisions(this.gameObjects)
         this.player.handleInput(this.keys, deltaTime)
-        this.player.attack(this.keys, this.gameObjects)
-        this.ai?.update(timestamp, deltaTime)
+        this.player.attack(this.keys)
+        this.ai?.update(deltaTime)
         this.gameObjects.forEach((obj: Obj) => {
             if (obj.selectedFrames == undefined) return
             obj.update(timestamp, deltaTime)
@@ -123,20 +123,18 @@ export class GameHandler {
         })
 
         const bossStats: Character | undefined = this.availableCharacters.find(
-            (character: Character) => character.name === 'gorgon',
+            (character: Character) => character.name === 'gorgone viola',
         )
         if (bossStats === undefined)
             throw new Error('Boss character not found in available characters')
-        const bossEntity = reactive(
-            new Gorg_red(
-                this.canvas,
-                this.ctx,
-                bossStats.speed,
-                bossStats.hp,
-                bossStats.mana,
-                bossStats.attack,
-                bossStats.defence,
-            ),
+        const bossEntity = new Gorg_red(
+            this.canvas,
+            this.ctx,
+            bossStats.speed,
+            bossStats.hp,
+            bossStats.mana,
+            bossStats.attack,
+            bossStats.defence,
         )
         bossEntity.name = 'Gorgone Rossa'
         bossEntity.pos = new Vector2(400, 200)
@@ -156,7 +154,7 @@ export class GameHandler {
             this.ctx,
             this.gameObjects,
             this.availableCharacters.filter((o: Character) => {
-                return o.name !== 'gorgon' && o.name !== 'evil gorgon' && o.playable === false
+                return o.name !== 'gorgone rossa' && o.name !== 'gorgone viola' && o.playable === false
             }),
         )
         this.spawner
