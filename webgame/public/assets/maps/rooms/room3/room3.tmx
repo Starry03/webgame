@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="25" height="13" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="70">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="25" height="13" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="71">
  <editorsettings>
   <export target="room3.json" format="json"/>
  </editorsettings>
@@ -120,6 +120,7 @@
   <object id="69" name="switchEntrance" type="AnimatedObject" gid="43" x="608" y="384" width="32" height="96">
    <properties>
     <property name="collidable" type="bool" value="true"/>
+    <property name="interactable" type="bool" value="true"/>
    </properties>
   </object>
  </objectgroup>
