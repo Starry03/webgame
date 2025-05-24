@@ -69,6 +69,7 @@ export class Entity extends Obj {
     }
 
     move(keys: Set<string>, deltaTime: number, getPossiblePosition: boolean = false) {
+        if (this.isDead) return null
         if (this.isAnimationBlocking) return null
         let dir = new Vector2(
             (keys.has('d') || keys.has('ArrowRight') ? 1 : 0) +
@@ -129,6 +130,7 @@ export class Entity extends Obj {
     }
 
     attack(keys: Set<string>) {
+        if (this.isDead) return
         let isAttacking = true
         let attackFactor: number = 1
         let usedAnimation: AnimationType = AnimationType.IDLE

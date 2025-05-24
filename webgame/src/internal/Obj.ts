@@ -225,6 +225,7 @@ export class Obj {
     }
 
     idle(forced: boolean = false) {
+        if (this.isIdleBlocked) return
         if (this.isIdle && !forced) return
         this.changeAnimation(AnimationType.IDLE)
         this.changeFrames(this.currentAnimation)
