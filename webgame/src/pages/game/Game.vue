@@ -8,7 +8,7 @@
             <h1 v-if="!isMobile" class="title">Awakening in the Dark Tower</h1>
             <button class="button button-secondary button-mute" @click="toggleMute">🔊</button>
         </div>
-        <div v-if="isReady" class="flex flex-column flex-fit">
+        <div v-if="isReady || !isMobile" class="flex flex-column flex-fit">
             <Canvas />
         </div>
         <button v-else class="button button-primary" :onclick="handleFullscreen">

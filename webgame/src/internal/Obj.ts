@@ -139,6 +139,7 @@ export class Obj {
             if (this.facingDirection.x < 0)
                 this.drawFlipped(frame, this.pos.x, this.pos.y, this.dim.x, this.dim.y)
             else ctx.drawImage(frame, this.pos.x, this.pos.y, this.dim.x, this.dim.y)
+            this.drawHitbox()
         }
     }
 
@@ -296,5 +297,10 @@ export class Obj {
 
     setGameHandler(gameHandler: GameHandler) {
         this.gameHandler = gameHandler
+    }
+
+    setup() {
+        this.preloadImages()
+        this.idle(true)
     }
 }
