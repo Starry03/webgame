@@ -44,7 +44,7 @@ export class SwitchStructure extends AnimatedObject {
     ): void {
         for (const object of objects) {
             if (object.name === 'specialWall') {
-                object.y =- object.height
+                object.y = -object.height
                 const custom_properties_special_wall: Record<string, any> =
                     extractCustomProperties(object)
                 const special_wall: SpecialWall = new SpecialWall(
@@ -66,7 +66,7 @@ export class SwitchStructure extends AnimatedObject {
             }
 
             if (object.name == 'switchRoomDoor') {
-                object.y =- object.height
+                object.y = -object.height
                 const custom_properties_door: Record<string, any> = extractCustomProperties(object)
                 const switch_room_door: SwitchRoomDoor = new SwitchRoomDoor(
                     canvas,
@@ -80,10 +80,15 @@ export class SwitchStructure extends AnimatedObject {
                     object.y,
                     object.width,
                     object.height,
-                    custom_properties_door)
+                    custom_properties_door,
+                )
                 switch_room_door.setPaths()
                 custom_properties['switchRoomDoor'] = switch_room_door
             }
         }
+    }
+
+    onInteraction(): void {
+        this.changeAnimation(AnimationType.DEAD)
     }
 }
