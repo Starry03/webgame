@@ -171,4 +171,10 @@ export class GameHandler {
         )
         this.spawner.spawn(3)
     }
+
+    getCurrentLevel(): Number {
+        return this.currentRoom
+    }
 }
+
+

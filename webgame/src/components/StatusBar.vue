@@ -3,6 +3,7 @@ import ProgressBar from './ProgressBar.vue'
 import { computed, defineProps, onMounted, onUnmounted, ref, type Ref } from 'vue'
 import Filler from './Filler.vue'
 import { Storage_e } from '@/internal/types'
+/*import { getCurrentRoom } from '@/internal/GameHandler'*/
 
 const props = defineProps({
     health: {
