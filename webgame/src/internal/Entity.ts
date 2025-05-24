@@ -171,7 +171,7 @@ export class Entity extends Obj {
         let refCooldown: Ref<number> | undefined = this.cooldowns.get(usedAnimation)
         if (!refCooldown) return
 
-        refCooldown.value = this.speed * 10 * cooldownFactor
+        refCooldown.value = (this.speed === 0 ? 10 : this.speed) * 10 * cooldownFactor
 
         const intervalId = setInterval(() => {
             if (refCooldown.value > 0) {
@@ -181,11 +181,10 @@ export class Entity extends Obj {
 
         setTimeout(
             () => {
-                console.log((this.speed === 0 ? 10000 : this.speed) * 10 * cooldownFactor)
                 refCooldown.value = 0
                 clearInterval(intervalId)
             },
-            (this.speed === 0 ? 10000 : this.speed) * 10 * cooldownFactor,
+            (this.speed === 0 ? 10 : this.speed) * 10 * cooldownFactor,
         )
     }
 
