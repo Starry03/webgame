@@ -77,21 +77,6 @@ const IMAGES_PATHS: Record<string, string> = {
     'accessDoor': '/assets/maps/rooms/tiled_objects/finalDoor/second_final_door1.png'
 }
 
-/*export async function loadRoomByName(roomName: string, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D): Promise<(NotAnimatedObject|AnimatedObject)[]> {
-    const path = roomsPaths[roomName];
-    if (!path) {
-        throw new Error(`Room ${roomName} not found`);
-    }
-    return await loadRoom(path, canvas, ctx);
-}
-
-export async function loadRoom(path: string, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D): Promise<(NotAnimatedObject|AnimatedObject)[]> {
-    console.log("caricamento livello di background")
-    await loadMapData(path, canvas, ctx);
-    console.log("caricamento livello oggetto")
-    return await loadMapObjects(path, canvas, ctx);
-}*/
-
 export function populateRoom1(list_objects: (NotAnimatedObject|AnimatedObject)[]) {
     for (const obj of list_objects) {
         let frame_paths: Record<AnimationType, string[]>;

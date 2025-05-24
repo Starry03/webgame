@@ -145,7 +145,3 @@ export function drawTiles(
     }
 }
 
-/*export function drawTileLayer(tileData: number[], width: number, height: number, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, background_map_image: HTMLImageElement): {} {
-    const result = drawTiles(background_map_image,tileData, width, height, canvas, ctx);
-    return result;
-}*/
