@@ -58,4 +58,13 @@ export class EntranceDoor extends Door {
         }
         this.setFramePaths(frame_paths)
     }
+
+    onInteraction() {
+        if (this.gameHandler) {
+            if (this.gameHandler.player) {
+                this.gameHandler.player.pos = new Vector2(this.x, this.y+32)
+            }
+        }
+        super.onInteraction()
+    }
 }

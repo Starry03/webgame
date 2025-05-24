@@ -1,6 +1,6 @@
 import { AnimatedObject } from '@/internal/mapLogic/classes/AnimatedObject'
 import { AnimationType, Vector2 } from '@/internal/types.ts'
-import { Ladder } from '@/internal/mapLogic/objects/Ladder'
+import { Ladder } from '@/internal/mapLogic/objects/ladder/Ladder.ts'
 import { AccessDoor } from '@/internal/mapLogic/objects/door/AccessDoor'
 import type { TiledObject } from '@/internal/mapLogic/engine/interfaces/Interfaces.ts'
 import { extractCustomProperties } from '@/internal/mapLogic/engine/utils/ObjectLayerUtils.ts'

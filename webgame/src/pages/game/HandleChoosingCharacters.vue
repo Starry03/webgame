@@ -1,6 +1,6 @@
 <template xmlns="http://www.w3.org/1999/html">
     <section class="select-container">
-        <button id="home-button" @click="backToHome"> Home </button>
+        <button class="button button-secondary button-home" @click="backToHome"> Home </button>
         <h1 id="container-title">Choose your character</h1>
         <div class="character-grid">
             <ClassComponent
@@ -170,25 +170,17 @@ body {
     color: red;
 }
 
-#home-button {
+.button-home {
     position: absolute;
-    top: 1rem;
-    left: 1rem;
-    background-color: red;
-    color: black;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 0.75rem;
-    border: 2px solid black;
-    border-radius: 8px;
-    padding: 0.5rem;
-    z-index: 1000;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
+    top: 0.5rem;
+    left: 0.5rem;
 }
 
-#home-button:hover {
-    background-color: black;
-    color: red;
+.button-home:hover {
+    transform: scale(1.1);
+    text-shadow:
+        0 0 10px black,
+        0 0 20px black;
 }
 
 @media screen and (orientation: landscape) {
@@ -231,11 +223,10 @@ body {
         width: 120px;
     }
 
-    #home-button {
-        padding: 0.5rem;
-        font-size: 0.6rem;
-        top: 1rem;
-        left: 1rem;
+    .button-home {
+        position: absolute;
+        top: 0.5rem;
+        left: 0.5rem;
     }
 }
 
@@ -280,11 +271,11 @@ body {
         font-size: 1rem;
     }
 
-    #home-button {
-        padding: 0.5rem;
-        font-size: 0.6rem;
+    .button-home {
+        position: absolute;
         top: 0.5rem;
         left: 0.5rem;
+        font-size: var(--font-small);
     }
 }
 </style>
