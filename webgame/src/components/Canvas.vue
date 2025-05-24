@@ -24,6 +24,7 @@
         </div>
 
         <div id="boss-status" v-if="isBossRoom">
+            <!--<span class="versus">Vs</span>-->
             <BossStatusBar
                 v-if="gameHandler?.boss"
                 :health="gameHandler.boss.health"
@@ -106,7 +107,7 @@ onMounted(async () => {
                     characterObject.hp,
                     characterObject.mana,
                     characterObject.attack,
-                    characterObject.defense,
+                    characterObject.defence,
                     '',
                 ),
             )
@@ -120,7 +121,7 @@ onMounted(async () => {
                     characterObject.hp,
                     characterObject.mana,
                     characterObject.attack,
-                    characterObject.defense,
+                    characterObject.defence,
                     '',
                 ),
             )
@@ -134,7 +135,7 @@ onMounted(async () => {
                     characterObject.hp,
                     characterObject.mana,
                     characterObject.attack,
-                    characterObject.defense,
+                    characterObject.defence,
                     '',
                 ),
             )

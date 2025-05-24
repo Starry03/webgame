@@ -24,7 +24,7 @@ export class GameHandler {
     boss: Entity | undefined
     availableCharacters: Character[]
     currentRoom: number
-    spawner: Spawner | null
+    spawner: Spawner | null | undefined
 
     constructor(player: Entity, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
         this.ctx = ctx
@@ -127,16 +127,14 @@ export class GameHandler {
         )
         if (bossStats === undefined)
             throw new Error('Boss character not found in available characters')
-        const bossEntity = reactive(
-            new Gorg_red(
-                this.canvas,
-                this.ctx,
-                bossStats.speed,
-                bossStats.hp,
-                bossStats.mana,
-                bossStats.attack,
-                bossStats.defence,
-            ),
+        const bossEntity = new Gorg_red(
+            this.canvas,
+            this.ctx,
+            bossStats.speed,
+            bossStats.hp,
+            bossStats.mana,
+            bossStats.attack,
+            bossStats.defence,
         )
         bossEntity.name = 'Gorgone Rossa'
         bossEntity.pos = new Vector2(400, 200)

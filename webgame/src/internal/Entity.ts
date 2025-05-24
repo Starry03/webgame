@@ -8,7 +8,7 @@ export class Entity extends Obj {
     maxHealth: number
     mana: number
     maxMana: number
-    manaRegenRate: number = 20
+    manaRegenRate: number = 40
     attackPower: number
     defense: number
     maxCooldownE: number
