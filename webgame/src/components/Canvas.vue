@@ -23,20 +23,19 @@
             {{ mappedPlayer?.interactionMessage }}
         </div>
 
-        <div v-if="isBossRoom" class="vs">
+        <div v-if="mappedBoss" class="vs">
             <span class="vs-text">VS</span>
         </div>
 
         <div id="boss-status" class="status" v-if="mappedBoss">
-            <pre>{{ mappedBoss }}</pre>
             <BossStatusBar
                 v-if="mappedBoss"
                 :health="mappedBoss.health"
                 :maxHealth="mappedBoss.maxHealth"
                 :mana="mappedBoss.mana"
                 :maxMana="mappedBoss.maxMana"
-                :cooldownQ="typeof mappedBoss.cooldownQ === 'object' ? mappedBoss.cooldownQ : ref(mappedBoss.cooldownQ)"
-                :cooldownR="typeof mappedBoss.cooldownR === 'object' ? mappedBoss.cooldownR : ref(mappedBoss.cooldownR)"
+                :cooldownQ="mappedBoss.cooldownQ"
+                :cooldownR="mappedBoss.cooldownR"
                 :maxCooldownQ="mappedBoss.maxCooldownQ"
                 :maxCooldownR="mappedBoss.maxCooldownR"
             />
@@ -64,8 +63,6 @@ const canvasRef = ref<HTMLCanvasElement | null>(null)
 const gameHandler = shallowRef<GameHandler | null>(null)
 const player = ref<Player | null>(null)
 
-const isBossRoom = computed(() => gameHandler.value?.currentRoom === 5)
-
 const mappedPlayer = computed(() => {
     if (!player.value) return null
 
@@ -87,7 +84,7 @@ const mappedPlayer = computed(() => {
 
 const mappedBoss = computed(() => {
     const boss = gameHandler.value?.boss.value
-    if (!isBossRoom.value || !boss) return null
+    if (!boss) return null
 
     return {
         health: boss.health,
@@ -95,9 +92,9 @@ const mappedBoss = computed(() => {
         mana: boss.mana,
         maxMana: boss.maxMana,
         level: boss.exp,
-        cooldownQ: boss.cooldowns.get(AnimationType.ATTACK_2) ?? 0,
+        cooldownQ: boss.cooldowns.get(AnimationType.ATTACK_2) ?? ref(0),
         maxCooldownQ: boss.maxCooldownQ,
-        cooldownR: boss.cooldowns.get(AnimationType.SPECIAL) ?? 0,
+        cooldownR: boss.cooldowns.get(AnimationType.SPECIAL) ?? ref(0),
         maxCooldownR: boss.maxCooldownR,
     }
 })
@@ -170,7 +167,7 @@ onMounted(async () => {
     }
     gameHandler.value = new GameHandler(player.value as Entity, canvas, ctx)
     await gameHandler.value.initialize()
-    gameHandler.value.boss.value && triggerRef(gameHandler.value.boss)
+    triggerRef(gameHandler.value.boss)
     triggerRef(gameHandler)
     gameHandler.value.gameLoop(performance.now())
 })

@@ -90,14 +90,14 @@ export class GameHandler {
         requestAnimationFrame(this.gameLoop)
     }
 
-    changeRoom(room: number) {
+    async changeRoom(room: number) {
         this.currentRoom = room
         this.gameObjects.forEach((obj: Obj) => obj.resetCollisions())
         this.currentRoomObjects = []
         this.gameObjects = []
         this.boss.value = undefined
         this.bg_image = null
-        this.initialize()
+        await this.initialize()
     }
 
     async initialize() {
