@@ -37,6 +37,8 @@ export class AttackEnhancement extends AnimatedObject {
             this.gameHandler.player.attackPower *= 1.15
             this.custom_properties['takeable'] = false
             this.changeAnimation(AnimationType.DEAD, true, false)
+            const usedEnhancement: number = this.gameHandler.getUsedEnhancement()
+            this.gameHandler.setUsedEnhancement(usedEnhancement+1)
         }
     }
 }

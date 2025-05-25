@@ -28,6 +28,8 @@ export class GameHandler {
     currentRoom: number
     spawner: Spawner | null
     ai: Ai | null
+    usedEnhancement: number
+    defeatedEnemies: number
 
     constructor(player: Entity, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
         this.ctx = ctx
@@ -49,6 +51,8 @@ export class GameHandler {
         this.currentRoom = 1
         this.spawner = null
         this.ai = null
+        this.usedEnhancement = 0
+        this.defeatedEnemies = 0
 
         window.addEventListener('keydown', (e) => {
             e.preventDefault()
@@ -178,7 +182,23 @@ export class GameHandler {
             })
     }
 
-    getCurrentLevel(): Number {
+    getCurrentLevel(): number {
         return this.currentRoom
+    }
+
+    getUsedEnhancement(): number {
+        return this.usedEnhancement
+    }
+
+    getDefeatedEnemies(): number {
+        return this.defeatedEnemies
+    }
+
+    setUsedEnhancement(enhancement: number) {
+        this.usedEnhancement = enhancement
+    }
+
+    setDefeatedEnemies(defeatedEnemies: number) {
+        this.defeatedEnemies = defeatedEnemies
     }
 }

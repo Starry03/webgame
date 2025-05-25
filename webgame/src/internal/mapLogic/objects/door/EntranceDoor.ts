@@ -60,10 +60,8 @@ export class EntranceDoor extends Door {
     }
 
     onInteraction() {
-        if (this.gameHandler) {
-            if (this.gameHandler.player) {
-                this.gameHandler.player.pos = new Vector2(this.x, this.y+32)
-            }
+        if (this.gameHandler && this.gameHandler.player) {
+            this.gameHandler.player.pos = new Vector2(this.x, this.y+32)
         }
         super.onInteraction()
     }

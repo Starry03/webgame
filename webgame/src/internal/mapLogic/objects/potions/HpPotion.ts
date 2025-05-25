@@ -38,6 +38,8 @@ export class HpPotion extends AnimatedObject {
             this.custom_properties['takeable'] = false
             console.log(this.custom_properties)
             this.changeAnimation(AnimationType.DEAD, true, false)
+            const usedEnhancement: number = this.gameHandler.getUsedEnhancement()
+            this.gameHandler.setUsedEnhancement(usedEnhancement+1)
         }
     }
 }
