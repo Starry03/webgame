@@ -1,6 +1,5 @@
 import { Collider, type CollisionInfo } from './collision'
 import type { Entity } from './Entity'
-import type { Obj } from './Obj'
 import { Vector2 } from './types'
 
 type WeightedMove = {
@@ -22,16 +21,21 @@ export class Ai {
     }
 
     private heuristic(pos: Vector2, dir: Vector2, a: Entity, goal: Entity): number {
-        if (!a.canMove(pos, dir)) return 9999999999
-        let dx = goal.pos.x - pos.x
-        let dy = goal.pos.y - pos.y
-        return Math.sqrt(dx * dx + dy * dy)
+        if (!a.canMove(pos, dir)) {
+            console.debug('works')
+            return 9999999999
+        }
+        const dx = goal.pos.x - pos.x
+        const dy = goal.pos.y - pos.y
+        const dist = Math.sqrt(dx * dx + dy * dy)
+        return dist
     }
 
     update(deltaTime: number) {
         let wantedPosition: WeightedMove[] = []
         if (this.player.isDead) return
-        this.enemies.forEach((enemy: Entity, index: number) => {
+        this.enemies.forEach((enemy: Entity) => {
+            if (enemy.isDead) return
             if (
                 !enemy
                     .getRelDirection(this.player)
@@ -39,7 +43,6 @@ export class Ai {
                     .compare(enemy.facingDirection.x, enemy.facingDirection.y)
             )
                 enemy.turn(enemy.getRelDirection(this.player))
-            if (enemy.isDead) return
             if (
                 Array.from(enemy.collidedObjects).some(
                     (o: CollisionInfo) => o.other.id === this.player.id,
@@ -65,7 +68,7 @@ export class Ai {
             moves.sort((a, b) => a.weight - b.weight)
             if (moves.length === 0) return
             moves.forEach((move: WeightedMove) => {
-                const hasCollisions = wantedPosition.map((wp: WeightedMove, ind: number) => {
+                const hasCollisions = wantedPosition.map((wp: WeightedMove) => {
                     return Collider.collides(
                         move.position,
                         move.object.pos,
