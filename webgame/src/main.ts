@@ -9,6 +9,7 @@ import Menu from '@/pages/menu/Menu.vue'
 import HandleChoosingCharacters from '@/pages/game/HandleChoosingCharacters.vue'
 import LoginView from '@/pages/auth/LoginView.vue'
 import NotFound from '@/pages/NotFound.vue'
+import ViewStats from '@/pages/game/stats/ViewStats.vue'
 
 const routes = [
   { path: '/', component: Menu },
@@ -16,6 +17,7 @@ const routes = [
   { path: '/game', component: Game },
   { path: '/selection', component: HandleChoosingCharacters },
   { path: '/login', component: LoginView },
+    { path: '/stats', component: ViewStats},
   { path: '/:catchAll(.*)*', component: NotFound },
 ]
 
