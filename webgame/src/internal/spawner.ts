@@ -1,5 +1,6 @@
 import { Collider } from './collision'
 import { Entity } from './Entity'
+import type { GameHandler } from './GameHandler'
 import type { Obj } from './Obj'
 import { Plent } from './Plent'
 import { Skele_arc } from './Skele_arc'
@@ -30,7 +31,7 @@ export class Spawner {
         )
     }
 
-    async spawn(number: number) {
+    async spawn(number: number, gameHandler: GameHandler) {
         const promises: Promise<void>[] = []
         for (let i = 0; i < number; i++) {
             promises.push(
@@ -41,6 +42,7 @@ export class Spawner {
                     if (newEnemy === null) throw new Error('Enemy not found')
                     newEnemy.setup()
                     newEnemy.name = enemy.name
+                    newEnemy.setGameHandler(gameHandler)
                     this.findSpawnPosition(newEnemy as Entity)
                         .then((spawPos: Vector2) => {
                             newEnemy.pos = spawPos
