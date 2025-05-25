@@ -16,6 +16,7 @@ export class Entity extends Obj {
     maxCooldownR: number
     exp: number
     isDead: boolean
+    movingPath: string[]
 
     constructor(
         canvas: HTMLCanvasElement,
@@ -45,6 +46,7 @@ export class Entity extends Obj {
         this.maxCooldownR = this.speed * 10 * 5
         this.exp = 1
         this.isDead = false
+        this.movingPath = []
     }
 
     consumeMana(amount: number): boolean {
