@@ -6,11 +6,6 @@ import {Vector2} from '@/internal/types.ts'
 import { setInterval } from 'node:timers'
 import ViewStats from '@/pages/game/stats/ViewStats.vue'
 
-const canvasRef = ref(null)
-const ctxRef = ref(null)
-
-let player
-let gameHandler
 
 const stats = reactive({
     timeTaken: 0,
@@ -23,14 +18,14 @@ const stats = reactive({
 
 onMounted(() => {
 
-    const gameHandler = loadGameState()
+    const storedStats = JSON.parse(sessionStorage.getItem('gameStats') || {})
     if (gameHandler) {
-        stats.timeTaken = gameHandler.getTimeTaken()
-        stats.usedEnhancement = gameHandler.getUsedEnhancement()
-        stats.defeatedEnemies = gameHandler.getDefeatedEnemies()
-        stats.healthPercentage = 0
-        stats.manaPercentage = 0
-        stats.level = gameHandler.getCurrentLevel()
+        stats.timeTaken = storedStats.timeTaken || 0;
+        stats.usedEnhancement = storedStats.usedEnhancement || 0;
+        stats.defeatedEnemies = storedStats.defeatedEnemies || 0;
+        stats.healthPercentage = storedStats.healthPercentage || 0;
+        stats.manaPercentage = storedStats.manaPercentage || 0;
+        stats.level = storedStats.level || 0;
     }
 })
 </script>
