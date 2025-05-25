@@ -1,3 +1,4 @@
+import type { CollisionInfo } from '@/internal/collision'
 import { AnimatedObject } from '@/internal/mapLogic/classes/AnimatedObject'
 import { AnimationType, Vector2 } from '@/internal/types.ts'
 
@@ -33,6 +34,7 @@ export class DefenseEnhancement extends AnimatedObject {
     }
 
     onInteraction(): void {
+        if (!this.canInteract()) return
         if (this.gameHandler && this.gameHandler.player) {
             this.gameHandler.player.defense *= 1.1
             this.custom_properties['takeable'] = false

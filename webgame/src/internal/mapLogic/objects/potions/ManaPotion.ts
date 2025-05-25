@@ -33,6 +33,8 @@ export class ManaPotion extends AnimatedObject {
     }
 
     onInteraction(): void {
+        if (!this.canInteract()) return
+
         if (this.gameHandler && this.gameHandler.player) {
             this.gameHandler.player.manaRegenRate * 2
             this.custom_properties['takeable'] = false

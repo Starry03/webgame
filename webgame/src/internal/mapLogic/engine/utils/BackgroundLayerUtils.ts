@@ -9,7 +9,6 @@ export function loadImage(room_name: string): Promise<HTMLImageElement> {
             background_map_image.src = '/assets/maps/rooms/room1/room1_background.png'
             break
         case 'room2':
-            console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
             background_map_image.src = '/assets/maps/rooms/room2/room2_background.png'
             break
         case 'room3':

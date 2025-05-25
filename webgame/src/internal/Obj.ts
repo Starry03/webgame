@@ -266,7 +266,9 @@ export class Obj {
 
     onInteraction(): void {}
 
-    interact(other: Obj) {}
+    canInteract(): boolean {
+        return this.custom_properties['takeable'] || this.custom_properties['interactable']
+    }
 
     exitInteraction(collision: CollisionInfo) {
         if (this.interactedObjects.size === 0) return
