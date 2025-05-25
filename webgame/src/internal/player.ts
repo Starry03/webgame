@@ -30,7 +30,9 @@ export class Player extends Entity {
 
     getClosestInteractableObj(): Obj | null {
         if (this.interactedObjects.size === 0) return null
-        const objs = Array.from(this.interactedObjects).map((collision) => collision.other)
+        const objs = Array.from(this.interactedObjects)
+            .map((collision) => collision.other)
+            .filter((obj) => obj.canInteract())
         let closest = null
         let closestDistance = Infinity
         for (const obj of objs) {

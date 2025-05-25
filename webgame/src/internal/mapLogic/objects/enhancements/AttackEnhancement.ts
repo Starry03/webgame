@@ -33,6 +33,7 @@ export class AttackEnhancement extends AnimatedObject {
     }
 
     onInteraction(): void {
+        if (!this.canInteract()) return
         if (this.gameHandler && this.gameHandler.player) {
             this.gameHandler.player.attackPower *= 1.15
             this.custom_properties['takeable'] = false

@@ -1,3 +1,4 @@
+import type { CollisionInfo } from '@/internal/collision'
 import type { Entity } from '@/internal/Entity'
 import { AnimatedObject } from '@/internal/mapLogic/classes/AnimatedObject'
 import { AnimationType, Vector2 } from '@/internal/types.ts'
@@ -32,11 +33,21 @@ export class HpPotion extends AnimatedObject {
         )
     }
 
+    enterInteraction(collision: CollisionInfo): void {
+        console.debug('HpPotion.enterInteraction() called')
+        super.enterInteraction(collision)
+    }
+
+    exitInteraction(collision: CollisionInfo): void {
+        console.debug('HpPotion.exitInteraction() called')
+        super.exitInteraction(collision)
+    }
+
     onInteraction(): void {
+        if (!this.canInteract()) return
         if (this.gameHandler && this.gameHandler.player) {
             this.gameHandler.player.health += 200
             this.custom_properties['takeable'] = false
-            console.log(this.custom_properties)
             this.changeAnimation(AnimationType.DEAD, true, false)
         }
     }
