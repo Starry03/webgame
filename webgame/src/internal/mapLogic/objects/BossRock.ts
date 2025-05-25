@@ -20,10 +20,8 @@ export class BossRock extends AnimatedObject {
     }
 
     onInteraction() {
-        if (this.gameHandler) {
-            if (this.gameHandler.boss) {
-                this.gameHandler.boss.pos = new Vector2(this.x - 16, this.y - 16);
-            }
+        if (this.gameHandler && this.gameHandler.boss) {
+            this.gameHandler.boss.pos = new Vector2(this.x - 16, this.y - 16);
         }
     }
 }

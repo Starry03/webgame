@@ -88,8 +88,8 @@ const getManaPercentage = () => {
     return manaPercentage.value
 }
 
-const getLevel = () => {
-    return props.level;
+const setLevel = (value: Number) => {
+    props.level = value;
 }
 
 const getTime = () => {

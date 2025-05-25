@@ -33,10 +33,14 @@ export class ManaPotion extends AnimatedObject {
     }
 
     onInteraction(): void {
+        if (!this.canInteract()) return
+
         if (this.gameHandler && this.gameHandler.player) {
             this.gameHandler.player.manaRegenRate * 2
             this.custom_properties['takeable'] = false
             this.changeAnimation(AnimationType.DEAD, true, false)
+            const usedEnhancement: number = this.gameHandler.getUsedEnhancement()
+            this.gameHandler.setUsedEnhancement(usedEnhancement+1)
         }
     }
 }

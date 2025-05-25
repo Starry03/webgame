@@ -115,6 +115,13 @@ export class Entity extends Obj {
         this.changeAnimation(AnimationType.DEAD, true, false)
         this.custom_properties['collidable'] = false
         this.isDead = true
+        if (this.gameHandler) {
+            const defeatedEnemies: number = this.gameHandler.getDefeatedEnemies()
+            this.gameHandler.setDefeatedEnemies(defeatedEnemies+1)
+        }
+        else {
+            throw new Error('Entity: die() -> problems with gameHandler',)
+        }
     }
 
     isInAttackArc(target: Entity, angleRad: number = (2 * Math.PI) / 3): boolean {

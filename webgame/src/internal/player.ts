@@ -21,7 +21,7 @@ export class Player extends Entity {
         super(canvas, ctx, speed, health, mana, attackPower, defense, pos, dim)
         this.interactionMessage = interactionMessage ?? ''
         document.addEventListener('keyup', (event) => {
-            if (event.key === 'p') {
+            if (event.key === ' ') {
                 const closestObj: Obj | null = this.getClosestInteractableObj()
                 if (closestObj) this.interact(closestObj)
             }
@@ -30,7 +30,9 @@ export class Player extends Entity {
 
     getClosestInteractableObj(): Obj | null {
         if (this.interactedObjects.size === 0) return null
-        const objs = Array.from(this.interactedObjects).map((collision) => collision.other)
+        const objs = Array.from(this.interactedObjects)
+            .map((collision) => collision.other)
+            .filter((obj) => obj.canInteract())
         let closest = null
         let closestDistance = Infinity
         for (const obj of objs) {
@@ -66,7 +68,7 @@ export class Player extends Entity {
         if (this.interactedObjects.size > 1) {
             const closestObj = this.getClosestInteractableObj()
             if (closestObj) {
-                this.interactionMessage = "'P' to interact with " + closestObj.name
+                this.interactionMessage = "'space' to interact with " + closestObj.name
             } else this.interactionMessage = ''
         }
         super.exitInteraction(collision)
