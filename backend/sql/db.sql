@@ -39,55 +39,27 @@ CREATE TABLE public.classe (
 ALTER TABLE public.classe OWNER TO postgres;
 
 --
--- Name: object; Type: TABLE; Schema: public; Owner: postgres
+-- Name: score; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.object (
-    name character varying(16) NOT NULL,
-    description text,
-    kind character varying(8) NOT NULL,
-    takeable boolean NOT NULL
-);
-
-
-ALTER TABLE public.object OWNER TO postgres;
-
---
--- Name: objectkind; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.objectkind (
-    name character varying(8) NOT NULL
-);
-
-
-ALTER TABLE public.objectkind OWNER TO postgres;
-
---
--- Name: player; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.player (
-    owner integer NOT NULL,
-    sprite_path text,
-    hp integer,
-    attack integer,
-    defence integer,
-    mana integer,
-    speed integer,
+CREATE TABLE public.score (
+    time_taken integer DEFAULT 0 NOT NULL,
     exp integer DEFAULT 0 NOT NULL,
-    level integer DEFAULT 1 NOT NULL,
-    classe character varying(32)
+    life_left integer NOT NULL,
+    boosts integer DEFAULT 0 NOT NULL,
+    kills integer DEFAULT 0 NOT NULL,
+    id integer NOT NULL,
+    owner integer NOT NULL
 );
 
 
-ALTER TABLE public.player OWNER TO postgres;
+ALTER TABLE public.score OWNER TO postgres;
 
 --
--- Name: player_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: score_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.player_id_seq
+CREATE SEQUENCE public.score_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -96,31 +68,14 @@ CREATE SEQUENCE public.player_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.player_id_seq OWNER TO postgres;
+ALTER SEQUENCE public.score_id_seq OWNER TO postgres;
 
 --
--- Name: player_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: score_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.player_id_seq OWNED BY public.player.owner;
+ALTER SEQUENCE public.score_id_seq OWNED BY public.score.id;
 
-
---
--- Name: score; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.score (
-    time_taken integer DEFAULT 0 NOT NULL,
-    score integer DEFAULT 0 NOT NULL,
-    exp integer DEFAULT 0 NOT NULL,
-    life_left integer,
-    boosts integer DEFAULT 0 NOT NULL,
-    kills integer DEFAULT 0 NOT NULL,
-    owner integer
-);
-
-
-ALTER TABLE public.score OWNER TO postgres;
 
 --
 -- Name: session; Type: TABLE; Schema: public; Owner: postgres
@@ -156,10 +111,7 @@ ALTER TABLE public.session ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 CREATE TABLE public."user" (
     id integer NOT NULL,
     username character varying(32) NOT NULL,
-    password character varying(256) NOT NULL,
-    email character varying(64),
-    money integer DEFAULT 0 NOT NULL,
-    online boolean DEFAULT false NOT NULL
+    password character varying(256) NOT NULL
 );
 
 
@@ -188,10 +140,10 @@ ALTER SEQUENCE public.user_id_seq OWNED BY public."user".id;
 
 
 --
--- Name: player owner; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: score id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.player ALTER COLUMN owner SET DEFAULT nextval('public.player_id_seq'::regclass);
+ALTER TABLE ONLY public.score ALTER COLUMN id SET DEFAULT nextval('public.score_id_seq'::regclass);
 
 
 --
@@ -211,45 +163,11 @@ wizard	45	100	40	1200	750	Un maestro delle arti magiche con un’enorme riserva 
 plant	0	40	5	300	150	Una pianta	f
 archer_skeleton	20	65	10	450	200	Uno scheletro con un arco	f
 thief	80	55	60	500	650	Agile e rapido, questo ladro si muove con velocità impressionante. Sebbene abbia una difesa e un attacco più bassi, la sua mobilità lo rende perfetto per colpi rapidi e fughe strategiche	t
-werewolf	45	80	20	500	400	Un lupo	f
 spear_skeleton	40	45	20	450	250	Uno scheletro con una lancia	f
 gorgone rossa	50	120	30	1000	1200	Er boss ma più cattivo	f
 gorgone viola	45	90	30	800	1000	Er boss	f
 warrior_skeleton	40	50	25	450	300	Uno scheletro	f
-\.
-
-
---
--- Data for Name: object; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.object (name, description, kind, takeable) FROM stdin;
-health potion	restores player hp	health	t
-mana potion	gives player mana	mana	t
-attack boost	boosts player attack stats	attack	t
-defence boost	boosts player defence boost	defence	t
-ladder	the only way to change floor	ladder	f
-\.
-
-
---
--- Data for Name: objectkind; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.objectkind (name) FROM stdin;
-health
-mana
-attack
-defence
-ladder
-\.
-
-
---
--- Data for Name: player; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.player (owner, sprite_path, hp, attack, defence, mana, speed, exp, level, classe) FROM stdin;
+werewolf	45	60	20	500	400	Un lupo	f
 \.
 
 
@@ -257,7 +175,7 @@ COPY public.player (owner, sprite_path, hp, attack, defence, mana, speed, exp, l
 -- Data for Name: score; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.score (time_taken, score, exp, life_left, boosts, kills, owner) FROM stdin;
+COPY public.score (time_taken, exp, life_left, boosts, kills, id, owner) FROM stdin;
 \.
 
 
@@ -703,24 +621,23 @@ COPY public.session (id, key, expires_at) FROM stdin;
 -- Data for Name: user; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public."user" (id, username, password, email, money, online) FROM stdin;
-9	starry	1b8b7d51173804baa165f018b7e401476e6f05d2e1fdb08e9cf605aa1f85cd84	\N	0	f
-10	darknight09	1b8b7d51173804baa165f018b7e401476e6f05d2e1fdb08e9cf605aa1f85cd84	\N	0	f
-11		35b3aac48f048c846de27a23ac0e7d307d56692d2e0201c3a0b078653e2914c8	\N	0	f
-12	starr	1b8b7d51173804baa165f018b7e401476e6f05d2e1fdb08e9cf605aa1f85cd84	\N	0	f
-13	dd	64888f47c3a045f1a020758482255e40f9d0165a5ee4057a531c296aa7000f48	\N	0	f
-14	test	2a5f8f07c326f1fbd2d517bd9aa358fca9191b72e96052fc4eb0f7d20adb8faf	\N	0	f
-15	test64	2a5f8f07c326f1fbd2d517bd9aa358fca9191b72e96052fc4eb0f7d20adb8faf	\N	0	f
-16	test65	2a5f8f07c326f1fbd2d517bd9aa358fca9191b72e96052fc4eb0f7d20adb8faf	\N	0	f
-17	Lollo	ea33eb746515efb32a92732f7c531292d38ea5221ec13b866188665e88b63fff	\N	0	f
+COPY public."user" (id, username, password) FROM stdin;
+9	starry	1b8b7d51173804baa165f018b7e401476e6f05d2e1fdb08e9cf605aa1f85cd84
+10	darknight09	1b8b7d51173804baa165f018b7e401476e6f05d2e1fdb08e9cf605aa1f85cd84
+11		35b3aac48f048c846de27a23ac0e7d307d56692d2e0201c3a0b078653e2914c8
+12	starr	1b8b7d51173804baa165f018b7e401476e6f05d2e1fdb08e9cf605aa1f85cd84
+13	dd	64888f47c3a045f1a020758482255e40f9d0165a5ee4057a531c296aa7000f48
+14	test	2a5f8f07c326f1fbd2d517bd9aa358fca9191b72e96052fc4eb0f7d20adb8faf
+16	test65	2a5f8f07c326f1fbd2d517bd9aa358fca9191b72e96052fc4eb0f7d20adb8faf
+17	Lollo	ea33eb746515efb32a92732f7c531292d38ea5221ec13b866188665e88b63fff
 \.
 
 
 --
--- Name: player_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: score_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.player_id_seq', 1, false);
+SELECT pg_catalog.setval('public.score_id_seq', 1, false);
 
 
 --
@@ -754,27 +671,11 @@ ALTER TABLE ONLY public.classe
 
 
 --
--- Name: object object_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: score score_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.object
-    ADD CONSTRAINT object_pkey PRIMARY KEY (name);
-
-
---
--- Name: objectkind objectkind_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.objectkind
-    ADD CONSTRAINT objectkind_pkey PRIMARY KEY (name);
-
-
---
--- Name: player player_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.player
-    ADD CONSTRAINT player_pkey PRIMARY KEY (owner);
+ALTER TABLE ONLY public.score
+    ADD CONSTRAINT score_pkey PRIMARY KEY (id);
 
 
 --
@@ -783,14 +684,6 @@ ALTER TABLE ONLY public.player
 
 ALTER TABLE ONLY public.session
     ADD CONSTRAINT session_pkey PRIMARY KEY (id);
-
-
---
--- Name: user user_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public."user"
-    ADD CONSTRAINT user_email_key UNIQUE (email);
 
 
 --
@@ -810,35 +703,11 @@ ALTER TABLE ONLY public."user"
 
 
 --
--- Name: object object_kind_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.object
-    ADD CONSTRAINT object_kind_fkey FOREIGN KEY (kind) REFERENCES public.objectkind(name);
-
-
---
--- Name: player player_classe_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.player
-    ADD CONSTRAINT player_classe_fkey FOREIGN KEY (classe) REFERENCES public.classe(name);
-
-
---
--- Name: player player_user_owner_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.player
-    ADD CONSTRAINT player_user_owner_fkey FOREIGN KEY (owner) REFERENCES public."user"(id);
-
-
---
 -- Name: score score_owner_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.score
-    ADD CONSTRAINT score_owner_fkey FOREIGN KEY (owner) REFERENCES public."user"(id);
+    ADD CONSTRAINT score_owner_fkey FOREIGN KEY (owner) REFERENCES public."user"(id) ON DELETE CASCADE;
 
 
 --
