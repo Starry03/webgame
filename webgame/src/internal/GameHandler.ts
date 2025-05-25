@@ -9,7 +9,7 @@ import { prefixed } from './cryptoutils'
 import { Spawner } from './spawner'
 import { Ai } from './ai'
 import { loadMapData } from '@/internal/mapLogic/engine/utils/BackgroundLayerUtils.ts'
-import { reactive, shallowRef, type ShallowRef } from 'vue'
+import {type Router, useRouter} from 'vue-router'
 
 export class GameHandler {
     player: Entity
@@ -23,13 +23,15 @@ export class GameHandler {
     currentRoomObjects: Obj[]
     baseMapDim: Vector2 = new Vector2(800, 416)
     gameObjects: Obj[]
-    boss: ShallowRef<Entity | undefined>
+    boss: Entity | undefined
     availableCharacters: Character[]
     currentRoom: number
     spawner: Spawner | null
     ai: Ai | null
     usedEnhancement: number
     defeatedEnemies: number
+    router: Router
+    timeTaken: number
 
     constructor(player: Entity, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
         this.ctx = ctx
@@ -49,11 +51,12 @@ export class GameHandler {
         this.bg_image = null
         this.gameObjects = []
         this.currentRoom = 1
-        this.boss = shallowRef(undefined)
         this.spawner = null
         this.ai = null
         this.usedEnhancement = 0
         this.defeatedEnemies = 0
+        this.router = useRouter()
+        this.timeTaken = 0
 
         window.addEventListener('keydown', (e) => {
             e.preventDefault()
@@ -88,16 +91,24 @@ export class GameHandler {
             obj.update(timestamp, deltaTime)
         })
         requestAnimationFrame(this.gameLoop)
+        if (this.isGameFinished()) {
+            this.saveGameState()
+            this.router.push('/stats')
+            return;
+        }
+        else {
+            requestAnimationFrame(this.gameLoop)
+        }
     }
 
-    async changeRoom(room: number) {
+    changeRoom(room: number) {
         this.currentRoom = room
         this.gameObjects.forEach((obj: Obj) => obj.resetCollisions())
         this.currentRoomObjects = []
         this.gameObjects = []
-        this.boss.value = undefined
+        this.boss = undefined
         this.bg_image = null
-        await this.initialize()
+        this.initialize()
     }
 
     async initialize() {
@@ -130,35 +141,25 @@ export class GameHandler {
             return -1
         })
 
+        const bossStats: Character | undefined = this.availableCharacters.find(
+            (character: Character) => character.name === 'gorgone viola',
+        )
+        if (bossStats === undefined)
+            throw new Error('Boss character not found in available characters')
+        this.boss = new Gorg_red(
+            this.canvas,
+            this.ctx,
+            bossStats.speed,
+            bossStats.hp,
+            bossStats.mana,
+            bossStats.attack,
+            bossStats.defence,
+        )
+
         this.gameObjects = [...this.currentRoomObjects, this.player]
         if (this.currentRoom === 5) {
-            const bossStats: Character | undefined = this.availableCharacters.find(
-            (character: Character) => character.name === 'gorgone viola',
-            )
-            if (bossStats === undefined)
-                throw new Error('Boss character not found in available characters')
-            const bossEntity = new Gorg_red(
-                this.canvas,
-                this.ctx,
-                bossStats.speed,
-                bossStats.hp,
-                bossStats.mana,
-                bossStats.attack,
-                bossStats.defence,
-            )
-            bossEntity.name = 'gorgone viola'
-            bossEntity.pos = new Vector2(400, 200)
-            bossEntity.custom_properties = { collidable: true }
-            this.boss.value = bossEntity
-            this.gameObjects.push(bossEntity)
-            console.log(
-                `Boss ${this.boss.value.name} initialized with speed: ${bossStats.speed}, hp: ${bossStats.hp}, mana: ${bossStats.mana}, attack: ${bossStats.attack}, defence: ${bossStats.defence}`,
-            )
-        } else{
-            this.boss.value = undefined
-            console.log('No boss in this room')
+            this.gameObjects.push(this.boss)
         }
-
         this.gameObjects.forEach((obj: Obj) => {
             obj.setup()
             obj.setGameHandler(this)
@@ -197,6 +198,10 @@ export class GameHandler {
         return this.currentRoom
     }
 
+    setCurrentLevel(level: number) {
+        this.currentRoom = level
+    }
+
     getUsedEnhancement(): number {
         return this.usedEnhancement
     }
@@ -211,5 +216,44 @@ export class GameHandler {
 
     setDefeatedEnemies(defeatedEnemies: number) {
         this.defeatedEnemies = defeatedEnemies
+    }
+
+    isGameFinished():  boolean {
+        if ((this.boss && this.boss.isDead) || this.player.isDead) {
+            console.log("game is finished!")
+            return true;
+        }
+        else {
+            console.log("game!!!")
+            return false;
+        }
+    }
+
+    getTimeTaken(): number {
+        return 0;
+    }
+
+    setTimeTaken(timeTaken: number) {
+        this.timeTaken = timeTaken
+    }
+
+    saveGameState() {
+        if (!this || !this.player) return
+
+        const gameState = {
+            level: this.getCurrentLevel(),
+            playerSpeed: this.player.speed,
+            playerAttack: this.player.attack,
+            playerDefense: this.player.defense,
+            health: this.player.health,
+            maxHealth: this.player.maxHealth,
+            mana: this.player.mana,
+            maxMana: this.player.maxMana,
+            defeatedEnemies: this.getDefeatedEnemies(),
+            usedEnhancement: this.getUsedEnhancement(),
+            timeTaken: this.getTimeTaken()
+        };
+        localStorage.setItem('gameState', JSON.stringify(gameState));
+        console.log("salvataggio completato!!")
     }
 }

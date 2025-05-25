@@ -19,14 +19,13 @@ const stats = reactive({
 onMounted(() => {
 
     const storedStats = JSON.parse(sessionStorage.getItem('gameStats') || {})
-    if (gameHandler) {
-        stats.timeTaken = storedStats.timeTaken || 0;
-        stats.usedEnhancement = storedStats.usedEnhancement || 0;
-        stats.defeatedEnemies = storedStats.defeatedEnemies || 0;
-        stats.healthPercentage = storedStats.healthPercentage || 0;
-        stats.manaPercentage = storedStats.manaPercentage || 0;
-        stats.level = storedStats.level || 0;
-    }
+
+    stats.timeTaken = storedStats.timeTaken || 0;
+    stats.usedEnhancement = storedStats.usedEnhancement || 0;
+    stats.defeatedEnemies = storedStats.defeatedEnemies || 0;
+    stats.healthPercentage = storedStats.healthPercentage || 0;
+    stats.manaPercentage = storedStats.manaPercentage || 0;
+    stats.level = storedStats.level || 0;
 })
 </script>
 
