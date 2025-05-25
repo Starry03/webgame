@@ -162,9 +162,8 @@ export class GameHandler {
             }),
         )
         this.spawner
-            .spawn(3)
+            .spawn(3, this)
             .then(() => {
-                console.debug('Enemies spawned:')
                 this.gameObjects.sort((a: Obj, b: Obj) => {
                     if (a.id === this.player.id) return 1
                     if (b.id === this.player.id) return -1

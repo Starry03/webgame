@@ -29,10 +29,10 @@ class JWTManager:
 
     @staticmethod
     def decode_token(token: str) -> dict:
-        token = jwt.decode(
+        dec_token = jwt.decode(
             token, getenv("JWT_SECRET"), algorithms=[getenv("JWT_ALGORITHM")]
         )
-        return JWTManager.checked_token(token)
+        return JWTManager.checked_token(dec_token)
 
     @staticmethod
     def checked_token(decoded_token: dict) -> dict:

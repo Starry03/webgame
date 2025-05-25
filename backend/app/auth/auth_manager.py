@@ -62,7 +62,7 @@ class AuthManager:
         return token
 
     @staticmethod
-    def get_user(request: Request) -> User:
+    def get_user(request: Request) -> dict:
         try:
             return JWTManager.decode_token(AuthManager.get_token_header(request))
         except Exception as e:

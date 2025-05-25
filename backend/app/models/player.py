@@ -1,7 +1,5 @@
 from pydantic import BaseModel
 
-from .sprite import Sprite
-
 
 class PlayerClass(BaseModel):
     name: str
@@ -17,7 +15,6 @@ class PlayerClass(BaseModel):
 class Player(BaseModel):
     id: int
     owner: int
-    sprite: Sprite
     pos_x: int
     pos_y: int
     hp: int
