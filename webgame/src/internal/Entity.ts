@@ -106,9 +106,6 @@ export class Entity extends Obj {
             this.health = 0
             this.die()
         }
-        console.log(
-            `Entity ${this.name} took ${damage} damage, remaining health: ${this.health}/${this.maxHealth}`,
-        )
     }
 
     die() {

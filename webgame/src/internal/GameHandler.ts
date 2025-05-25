@@ -102,7 +102,12 @@ export class GameHandler {
         const room = this.currentRoom < 5 ? `room${this.currentRoom}` : 'boss_room'
         this.currentRoomPath = getRoomPath(room)
         this.bg_image = await loadMapData(this.currentRoomPath, room, this.canvas, this.ctx)
-        this.currentRoomObjects = (await loadMapObjects(room, this.currentRoomPath, this.canvas, this.ctx)) as Obj[];
+        this.currentRoomObjects = (await loadMapObjects(
+            room,
+            this.currentRoomPath,
+            this.canvas,
+            this.ctx,
+        )) as Obj[]
         this.currentRoomObjects.sort((a: Obj, b: Obj) => {
             const exotic_peppe = a.name
             if (exotic_peppe === 'structure' && b.name === 'switchRoomDoor') return -1
@@ -128,7 +133,7 @@ export class GameHandler {
         )
         if (bossStats === undefined)
             throw new Error('Boss character not found in available characters')
-        const bossEntity = new Gorg_red(
+        this.boss = new Gorg_red(
             this.canvas,
             this.ctx,
             bossStats.speed,
@@ -137,14 +142,10 @@ export class GameHandler {
             bossStats.attack,
             bossStats.defence,
         )
-        bossEntity.name = 'Gorgone Rossa'
-        bossEntity.pos = new Vector2(400, 200)
-        bossEntity.custom_properties = { collidable: true }
-        this.boss = bossEntity
 
         this.gameObjects = [...this.currentRoomObjects, this.player]
         if (this.currentRoom === 5) {
-            this.gameObjects.push(bossEntity)
+            this.gameObjects.push(this.boss)
         }
         this.gameObjects.forEach((obj: Obj) => {
             obj.setup()
