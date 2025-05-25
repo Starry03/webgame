@@ -28,7 +28,6 @@
         </div>
 
         <div id="boss-status" v-if="isBossRoom">
-            
             <BossStatusBar
                 v-if="gameHandler?.boss"
                 :health="gameHandler.boss.health"
@@ -60,10 +59,13 @@ import StatusBar from '@/components/StatusBar.vue'
 import type { Player } from '@/internal/player'
 import BossStatusBar from '@/components/BossStatusBar.vue'
 import type { Entity } from '@/internal/Entity'
+import { useRouter } from 'vue-router'
 
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 const gameHandler = ref<GameHandler | null>()
 const player = ref<Player | null>(null)
+
+const router = useRouter()
 
 const isBossRoom = computed(() => gameHandler.value?.currentRoom === 5)
 
@@ -155,6 +157,7 @@ onMounted(async () => {
     gameHandler.value = new GameHandler(player.value as Entity, canvas, ctx)
     gameHandler.value.initialize()
     gameHandler.value.gameLoop(performance.now())
+
 })
 
 onUnmounted(() => {})
@@ -332,7 +335,9 @@ onUnmounted(() => {})
     font-family: 'Press Start 2P', cursive;
     font-size: 1rem;
     color: gold;
-    text-shadow: 0 0 8px #fff, 0 0 16px #f93200;
+    text-shadow:
+        0 0 8px #fff,
+        0 0 16px #f93200;
     animation: vs-scale 1s infinite alternate;
     padding: 0;
     border: none;
@@ -344,7 +349,11 @@ onUnmounted(() => {})
 }
 
 @keyframes vs-scale {
-    0% { transform: scale(1); }
-    100% { transform: scale(1.35); }
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.35);
+    }
 }
 </style>

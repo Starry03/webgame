@@ -9,6 +9,7 @@ import { prefixed } from './cryptoutils'
 import { Spawner } from './spawner'
 import { Ai } from './ai'
 import { loadMapData } from '@/internal/mapLogic/engine/utils/BackgroundLayerUtils.ts'
+import { type Router, useRouter } from 'vue-router'
 
 export class GameHandler {
     player: Entity
@@ -29,6 +30,8 @@ export class GameHandler {
     ai: Ai | null
     usedEnhancement: number
     defeatedEnemies: number
+    router: Router
+    timeTaken: number
 
     constructor(player: Entity, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
         this.ctx = ctx
@@ -52,6 +55,8 @@ export class GameHandler {
         this.ai = null
         this.usedEnhancement = 0
         this.defeatedEnemies = 0
+        this.router = useRouter()
+        this.timeTaken = 0
 
         window.addEventListener('keydown', (e) => {
             e.preventDefault()
@@ -85,7 +90,15 @@ export class GameHandler {
             if (obj.selectedFrames == undefined) return
             obj.update(timestamp, deltaTime)
         })
-        requestAnimationFrame(this.gameLoop)
+        if (this.isGameFinished()) {
+            this.saveGameState()
+            this.router.push('/stats')
+            return;
+        }
+        else {
+            requestAnimationFrame(this.gameLoop)
+        }
+
     }
 
     changeRoom(room: number) {
@@ -185,6 +198,10 @@ export class GameHandler {
         return this.currentRoom
     }
 
+    setCurrentLevel(level: number) {
+        this.currentRoom = level
+    }
+
     getUsedEnhancement(): number {
         return this.usedEnhancement
     }
@@ -199,5 +216,44 @@ export class GameHandler {
 
     setDefeatedEnemies(defeatedEnemies: number) {
         this.defeatedEnemies = defeatedEnemies
+    }
+
+    isGameFinished():  boolean {
+        if ((this.boss && this.boss.isDead) || this.player.isDead) {
+            console.log("game is finished!")
+            return true;
+        }
+        else {
+            console.log("game!!!")
+            return false;
+        }
+    }
+
+    getTimeTaken(): number {
+        return 0;
+    }
+
+    setTimeTaken(timeTaken: number) {
+        this.timeTaken = timeTaken
+    }
+
+    saveGameState() {
+        if (!this || !this.player) return
+
+        const gameState = {
+            level: this.getCurrentLevel(),
+            playerSpeed: this.player.speed,
+            playerAttack: this.player.attack,
+            playerDefense: this.player.defense,
+            health: this.player.health,
+            maxHealth: this.player.maxHealth,
+            mana: this.player.mana,
+            maxMana: this.player.maxMana,
+            defeatedEnemies: this.getDefeatedEnemies(),
+            usedEnhancement: this.getUsedEnhancement(),
+            timeTaken: this.getTimeTaken()
+        };
+        localStorage.setItem('gameState', JSON.stringify(gameState));
+        console.log("salvataggio completato!!")
     }
 }
