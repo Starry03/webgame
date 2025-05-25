@@ -17,6 +17,10 @@ export class Entity extends Obj {
     exp: number
     isDead: boolean
     movingPath: string[]
+    currentMove: number
+    target_position: Vector2 | null = null
+    isComputingPath: boolean
+    canComputePath: boolean
 
     constructor(
         canvas: HTMLCanvasElement,
@@ -47,6 +51,9 @@ export class Entity extends Obj {
         this.exp = 1
         this.isDead = false
         this.movingPath = []
+        this.currentMove = 0
+        this.isComputingPath = false
+        this.canComputePath = true
     }
 
     consumeMana(amount: number): boolean {
@@ -59,10 +66,10 @@ export class Entity extends Obj {
         this.move(keys, deltaTime)
     }
 
-    getPossiblePosition(dir: Vector2, deltaTime: number): Vector2 {
+    getPossiblePosition(pos: Vector2, dir: Vector2, deltaTime: number): Vector2 {
         return new Vector2(
-            this.pos.x + dir.x * this.speed * deltaTime * 4,
-            this.pos.y + dir.y * this.speed * deltaTime * 4,
+            pos.x + dir.x * this.speed * deltaTime * 4,
+            pos.y + dir.y * this.speed * deltaTime * 4,
         )
     }
 
@@ -70,7 +77,12 @@ export class Entity extends Obj {
         this.facingDirection = dir
     }
 
-    move(keys: Set<string>, deltaTime: number, getPossiblePosition: boolean = false) {
+    move(
+        keys: Set<string>,
+        deltaTime: number,
+        getPossiblePosition: boolean = false,
+        fixedPos: Vector2 | null = null,
+    ) {
         if (this.isDead) return null
         if (this.isAnimationBlocking) return null
         let dir = new Vector2(
@@ -89,7 +101,8 @@ export class Entity extends Obj {
         const abs_dir = dir.direction()
         this.turn(new Vector2(abs_dir.x, 0))
 
-        const possible_position = this.getPossiblePosition(dir, deltaTime)
+        const position = fixedPos || this.pos
+        const possible_position = this.getPossiblePosition(position, dir, deltaTime)
         if (getPossiblePosition) return { possible_position, dir }
 
         if (!dir.direction().compare(0, 0) && !this.canMove(possible_position, dir)) {
@@ -119,9 +132,8 @@ export class Entity extends Obj {
                 this.gameHandler.player.exp += 100
             const defeatedEnemies: number = this.gameHandler.getDefeatedEnemies()
             this.gameHandler.setDefeatedEnemies(defeatedEnemies + 1)
-        } else {
+        } else
             throw new Error('Entity: die() -> problems with gameHandler')
-        }
     }
 
     isInAttackArc(target: Entity, angleRad: number = (2 * Math.PI) / 3): boolean {
@@ -229,8 +241,19 @@ export class Entity extends Obj {
                 this.dim.x * (this.health / this.maxHealth),
                 4,
             )
+            if (this.movingPath.length === 0) this.drawHitbox()
             ctx.restore()
         }
         super.render()
+    }
+
+    update(timestamp: number, deltaTime: number): void {
+        if (!this.isDead || this.name !== 'player') {
+            if (this.movingPath.length > 0 && this.currentMove < this.movingPath.length) {
+                this.move(new Set(this.movingPath[this.currentMove].split('')), deltaTime)
+                this.currentMove++
+            }
+        }
+        super.update(timestamp, deltaTime)
     }
 }

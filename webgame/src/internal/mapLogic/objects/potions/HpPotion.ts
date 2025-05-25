@@ -34,12 +34,10 @@ export class HpPotion extends AnimatedObject {
     }
 
     enterInteraction(collision: CollisionInfo): void {
-        console.debug('HpPotion.enterInteraction() called')
         super.enterInteraction(collision)
     }
 
     exitInteraction(collision: CollisionInfo): void {
-        console.debug('HpPotion.exitInteraction() called')
         super.exitInteraction(collision)
     }
 

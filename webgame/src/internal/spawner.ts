@@ -25,10 +25,6 @@ export class Spawner {
         this.ctx = ctx
         this.gameObjects = gameObjects
         this.enemies = enemies
-        console.debug(
-            'Spawner initialized with enemies:',
-            this.enemies.map((e) => e.name),
-        )
     }
 
     async spawn(number: number, gameHandler: GameHandler) {
@@ -47,7 +43,6 @@ export class Spawner {
                         .then((spawPos: Vector2) => {
                             newEnemy.pos = spawPos
                             this.gameObjects.push(newEnemy)
-                            console.debug('Spawned enemy:', newEnemy.name, newEnemy.pos)
                             resolve()
                         })
                         .catch((error) => {

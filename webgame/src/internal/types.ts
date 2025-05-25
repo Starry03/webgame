@@ -51,7 +51,9 @@ export class Vector2 {
         this.y = y
     }
 
-    compare(x: number, y: number): boolean {
+    compare(x: number, y: number, treshold: number = 0): boolean {
+        if (treshold > 0)
+            return Math.abs(this.x - x) <= treshold && Math.abs(this.y - y) <= treshold
         return this.x === x && this.y === y
     }
 
@@ -85,5 +87,9 @@ export class Vector2 {
 
     toString(): string {
         return `(${this.x}, ${this.y})`
+    }
+
+    toRounded(): Vector2 {
+        return new Vector2(Math.round(this.x), Math.round(this.y))
     }
 }
