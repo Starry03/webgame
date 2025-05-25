@@ -4,6 +4,7 @@ import ViewStats from '../pages/game/stats/ViewStats.vue'
 import {getTime, getHealthPercentage, getManaPercentage} from '@/components/StatusBar.vue'
 import {GameHandler} from '@/internal/GameHandler'
 import {Player} from '@/internal/player'
+import {Vector2} from '@/internal/types.ts'
 
 const player = new Player(canvas, ctx, 0,0,0,0,0, '', new Vector2(0,0), new Vector2(0,0))
 const gameHandler = new GameHandler(player, canvas, ctx)
