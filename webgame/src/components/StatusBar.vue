@@ -108,7 +108,7 @@ const getTime = () => {
         <div class="player-header">
             <span class="player-name">{{ username }}</span>
             <span class="player-level">Lv. {{ props.level }}</span>
-            <span class="player-time">Time: {{ formatTime(playTime) }}</span>
+            <span class="player-time">{{ formatTime(playTime) }}</span>
         </div>
         <div class="bars-and-cooldowns">
             <div class="bars">
@@ -190,6 +190,9 @@ span{
 .mp-value {
     font-size: 0.5rem;
     color: #ccc;
+    display: inline-block;
+    min-width: 20px;
+    text-align: right;
 }
 
 .bars {
@@ -214,8 +217,8 @@ span{
 }
 
 .mana-bar {
-    width: 40%;
-    max-width: 50%;
+    width: 30%;
+    max-width: 40%;
 }
 
 .cooldown-container {

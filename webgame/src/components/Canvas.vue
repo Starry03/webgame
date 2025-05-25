@@ -95,7 +95,7 @@ const mappedBoss = computed(() => {
         maxHealth: boss.maxHealth,
         mana: boss.mana,
         maxMana: boss.maxMana,
-        level: boss.level,
+        level: boss.exp,
         cooldownQ: boss.cooldowns.get(AnimationType.ATTACK_2),
         maxCooldownQ: boss.maxCooldownQ,
         cooldownR: boss.cooldowns.get(AnimationType.SPECIAL),

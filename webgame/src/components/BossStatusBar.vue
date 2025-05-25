@@ -74,7 +74,7 @@ const manaPercentage = computed(() => {
 </script>
 
 <template>
-    <div class="boss-status-bar flex flex-col gap-mid">
+    <div class="boss-status-bar flex flex-col flex-end gap-mid">
         <div class="boss-header">
             <span class="boss-name">BOSS: {{ bossName }}</span>
             <span class="boss-level">Lv. {{ props.level }}</span>
@@ -90,7 +90,7 @@ const manaPercentage = computed(() => {
                     <ProgressBar :progress="healthPercentage" color="violet" class="boss-hp-bar"/>
                     <span>:HP</span>
                 </div>
-                <div class="bar-container flex items-center gap-small">
+                <div class="bar-container flex-end flex items-center gap-small">
                     <span class="mp-value">{{ Math.floor(props.mana) }}/{{ props.maxMana }}</span>
                     <ProgressBar :progress="manaPercentage" color="blue" class="boss-mana-bar" />
                     <span>:MP</span>
@@ -158,26 +158,31 @@ span{
 .bar-container {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     gap: 10px;
     width: 100%;
 }
 
 .boss-hp-bar {
-    width: 80%;
-    min-width: 120px;
+    width: 100%;
+    min-width: 130px;
     max-width: 100%;
+    justify-content: flex-end;
 }
 
 .boss-mana-bar {
-    width: 40%;
-    max-width: 100%;
+    width: 20%;
+    max-width: 40%;
     min-width: 80px;
 }
 
 .hp-value,
 .mp-value {
     font-size: 0.5rem;
-    color: #ccc;
+    color: #ccc;    
+    display: inline-block;
+    min-width: 70px;    
+    text-align: right;
 }
 
 .cooldown-container {
