@@ -1,6 +1,6 @@
 <template>
-    <div class="flex flex-space-between flex-row" id="game-header">
-        <div id="player-status">
+    <div class="container flex flex-space-between flex-row" id="game-header">
+        <div id="player-status" class="status">
             <StatusBar
                 v-if="mappedPlayer"
                 :health="mappedPlayer.health"
@@ -24,10 +24,10 @@
         </div>
 
         <div v-if="isBossRoom" class="vs">
-            <span class="vs-animated">VS</span>
+            <span class="vs-text">VS</span>
         </div>
 
-        <div id="boss-status" v-if="mappedBoss">
+        <div id="boss-status" class="status" v-if="mappedBoss">
             
             <BossStatusBar
                 v-if="mappedBoss"
@@ -180,27 +180,43 @@ onUnmounted(() => {})
 <style scoped>
 #game-header {
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
+    justify-content: center;
+    align-items: stretch;
     width: 100%;
+    gap: 2vw;
     padding: 10px;
     background-color: #222;
     border-bottom: 2px solid #444;
+    margin: 0 auto;
 }
 
-#player-status {
-    width: 50%;
+
+.status {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 420px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    justify-content: center;
 }
 
-#boss-status {
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    align-items: flex-end;
+.status-bar,
+.boss-status-bar {
+    font-size: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    min-width: 0;
+    width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+    word-break: break-word;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.boss-status-bar {
+    justify-self: flex-end;
 }
 
 .canvas-wrapper {
@@ -231,9 +247,44 @@ onUnmounted(() => {})
 }
 
 @media (max-width: 900px), (max-height: 500px) {
+    #game-header {
+        max-width: 99vw;   
+        width: 100vw;
+        margin: 0 auto;
+        padding: 5px;
+    }
+
+    .canvas-wrapper, #canvas {
+        max-width: 99vw;
+    }
+}
+
+
+@media (max-width: 768px) and (height <= 500px) {
+    #game-header {
+        flex-direction: row;
+        align-items: center;
+        max-width: 99vw;
+        gap: 1vw;
+        padding: 4px 0;
+    }
+
+    .player-status,
+    .boss-status {
+        font-size: 0.9em;
+    }
+
+}
+
+@media (max-width: 900px), (max-height: 500px) {
     .canvas-wrapper {
         max-height: 60vh;
     }
+
+    .status-col{
+        max-width: 48vw;;
+    }
+
     #canvas {
         width: 100vw;
         height: auto;
@@ -244,42 +295,59 @@ onUnmounted(() => {})
 
 @media (max-height: 500px) and (orientation: landscape) {
     #game-header {
-        display: flex;
-        justify-content: flex-start;
+        flex-direction: row !important;
+        justify-content: space-between;
         align-items: center;
-        width: 100%;
+        gap: 0.5rem;
+        flex-wrap: nowrap;
+        width: 100vw;
         padding: 5px;
         background-color: #222;
         border-bottom: 2px solid #444;
     }
 
-    #player-status {
-        width: 50%;
+    #player-status, #boss-status {
+        width: 100vw;
+        max-width: 200vw;
         display: flex;
+        flex: 0 1 35vw;
         flex-direction: column;
         gap: 5px;
     }
 
-    #boss-status {
-        width: 50%;
+    .vs {
         display: flex;
-        flex-direction: column;
-        gap: 5px;
-        align-items: flex-end;
+        align-items: center;
+        justify-content: center;
+        width: 10vw;
+        min-width: 50px;
+        max-width: 80px;
+        flex: 0 1 10vw;
+        padding: 0;
+        margin: 0;
     }
 
-    .status-bar {
-        padding: 5px;
-        background-color: #333;
-        border-radius: 8px;
-        color: white;
-        font-size: 0.9rem;
+    .vs-text {
+        font-size: 1.1rem;
+        padding: 0 0.2em;
+        white-space: nowrap;
+    }
+
+    .status-bar,
+    .boss-status-bar {
+        font-size: 10px !important;
+        padding: 4px !important;
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .bars-and-cooldowns {
+        flex-direction: row !important;
+        gap: 0.3rem !important;
     }
 
     .bar-container {
-        display: flex;
-        align-items: center;
-        gap: 5px;
+        gap: 4px !important;
     }
 
     .cooldown-container {
@@ -311,48 +379,23 @@ onUnmounted(() => {})
         font-weight: bold;
         color: white;
     }
-
-    #game-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 5px;
-    }
-
-    #player-status,
-    #boss-status {
-        width: 100%;
-    }
-
-    .status-bar {
-        padding: 5px;
-        font-size: 0.8rem;
-    }
-
-    .cooldown-circle {
-        width: 30px;
-        height: 30px;
-    }
-
-    .cooldown-circle span {
-        font-size: 10px;
-    }
 }
-.vs-container {
+.vs {
+    flex: 0 0 10px;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    margin: 0 0 10px 0;
 }
 
-.vs-animated {
+.vs-text {
     font-family: 'Press Start 2P', cursive;
-    font-size: 1rem;
+    font-size: 0.8rem;
     color: gold;
     text-shadow: 0 0 8px #fff, 0 0 16px #f93200;
     animation: vs-scale 1s infinite alternate;
-    padding: 0;
+    padding: 0 0.5em;
     border: none;
+    white-space: nowrap;
     background: none;
     padding-left: 1rem;
     padding-right: 1rem;

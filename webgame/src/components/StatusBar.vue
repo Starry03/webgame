@@ -45,6 +45,11 @@ const props = defineProps({
         type: Number,
         required: true,
     },
+    stopTimer:{
+        type: Boolean,
+        default: false,
+        required: false,
+    }
 })
 
 function formatTime(seconds: number): string {
@@ -59,7 +64,11 @@ let intervalId: number | undefined
 onMounted(() => {
     const start = Date.now()
     intervalId = window.setInterval(() => {
-        playTime.value = Math.floor((Date.now() - start) / 1000)
+        if (props.stopTimer) {
+            if (intervalId) clearInterval(intervalId)
+        }else{
+            playTime.value = Math.floor((Date.now() - start) / 1000)
+        }
     }, 1000)
 })
 
@@ -86,10 +95,6 @@ const getHealthPercentage = () => {
 
 const getManaPercentage = () => {
     return manaPercentage.value
-}
-
-const setLevel = (value: Number) => {
-    props.level = value;
 }
 
 const getTime = () => {
@@ -136,7 +141,7 @@ const getTime = () => {
     background-color: #333;
     border-radius: 8px;
     color: white;
-    font-size: 14px;
+    font-size: 10px;
     height: 100%;
     max-width: 600px;
 }
@@ -148,7 +153,7 @@ const getTime = () => {
     margin-bottom: 0.5rem;
     justify-content: space-between;
     letter-spacing: 2px;
-    font-size: var(--font-small);
+    font-size: 10px;
     text-shadow: 0 0 10px black, 0 0 20px black;
     font-weight: bold;
 }
@@ -162,6 +167,8 @@ const getTime = () => {
 }
 
 .player-time{
+    max-width: 80px;
+    white-space: nowrap;
     margin-left: auto;
     color: #8ff;
 }
