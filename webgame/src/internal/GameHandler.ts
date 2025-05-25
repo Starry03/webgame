@@ -144,9 +144,6 @@ export class GameHandler {
                 bossStats.attack,
                 bossStats.defence,
             )
-            bossEntity.name = 'gorgone viola'
-            bossEntity.pos = new Vector2(400, 200)
-            bossEntity.custom_properties = { collidable: true }
             this.boss = bossEntity
             this.gameObjects.push(bossEntity)
         } else this.boss = undefined
