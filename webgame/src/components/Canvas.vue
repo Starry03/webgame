@@ -4,14 +4,14 @@
             <StatusBar
                 v-if="mappedPlayer"
                 :health="mappedPlayer.health"
-                :max-health="mappedPlayer.maxHealth"
+                :maxHealth="mappedPlayer.maxHealth"
                 :mana="mappedPlayer.mana"
-                :max-mana="mappedPlayer.maxMana"
+                :maxMana="mappedPlayer.maxMana"
                 :level="mappedPlayer.level"
                 :cooldownQ="mappedPlayer.cooldownQ"
                 :cooldownR="mappedPlayer.cooldownR"
-                :max-cooldown-q="mappedPlayer.maxCooldownQ"
-                :max-cooldown-r="mappedPlayer.maxCooldownR"
+                :maxCooldownQ="mappedPlayer.maxCooldownQ"
+                :maxCooldownR="mappedPlayer.maxCooldownR"
             />
         </div>
 
@@ -28,18 +28,17 @@
         </div>
 
         <div id="boss-status" class="status" v-if="mappedBoss">
-            
+            <pre>{{ mappedBoss }}</pre>
             <BossStatusBar
                 v-if="mappedBoss"
                 :health="mappedBoss.health"
-                :max-health="mappedBoss.maxHealth"
+                :maxHealth="mappedBoss.maxHealth"
                 :mana="mappedBoss.mana"
-                :max-mana="mappedBoss.maxMana"
-                :level="mappedBoss.level"
-                :cooldownQ="mappedBoss.cooldownQ"
-                :cooldownR="mappedBoss.cooldownR"
-                :max-cooldown-q="mappedBoss.maxCooldownQ"
-                :max-cooldown-r="mappedBoss.maxCooldownR"
+                :maxMana="mappedBoss.maxMana"
+                :cooldownQ="typeof mappedBoss.cooldownQ === 'object' ? mappedBoss.cooldownQ : ref(mappedBoss.cooldownQ)"
+                :cooldownR="typeof mappedBoss.cooldownR === 'object' ? mappedBoss.cooldownR : ref(mappedBoss.cooldownR)"
+                :maxCooldownQ="mappedBoss.maxCooldownQ"
+                :maxCooldownR="mappedBoss.maxCooldownR"
             />
         </div>
     </div>
@@ -49,7 +48,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, onUnmounted, reactive, computed, type Reactive } from 'vue'
+import { ref, onMounted, onUnmounted, reactive, computed, shallowRef, triggerRef, type Reactive } from 'vue'
 import { Mage } from '@/internal/Mage'
 import { Samurai } from '@/internal/Samurai'
 import { Thief } from '@/internal/Thief'
@@ -62,7 +61,7 @@ import BossStatusBar from '@/components/BossStatusBar.vue'
 import type { Entity } from '@/internal/Entity'
 
 const canvasRef = ref<HTMLCanvasElement | null>(null)
-const gameHandler = ref<GameHandler | null>(null)
+const gameHandler = shallowRef<GameHandler | null>(null)
 const player = ref<Player | null>(null)
 
 const isBossRoom = computed(() => gameHandler.value?.currentRoom === 5)
@@ -87,8 +86,8 @@ const mappedPlayer = computed(() => {
 })
 
 const mappedBoss = computed(() => {
-    if (!isBossRoom.value || !gameHandler.value?.boss) return null
-    const boss = gameHandler.value.boss
+    const boss = gameHandler.value?.boss.value
+    if (!isBossRoom.value || !boss) return null
 
     return {
         health: boss.health,
@@ -96,9 +95,9 @@ const mappedBoss = computed(() => {
         mana: boss.mana,
         maxMana: boss.maxMana,
         level: boss.exp,
-        cooldownQ: boss.cooldowns.get(AnimationType.ATTACK_2),
+        cooldownQ: boss.cooldowns.get(AnimationType.ATTACK_2) ?? 0,
         maxCooldownQ: boss.maxCooldownQ,
-        cooldownR: boss.cooldowns.get(AnimationType.SPECIAL),
+        cooldownR: boss.cooldowns.get(AnimationType.SPECIAL) ?? 0,
         maxCooldownR: boss.maxCooldownR,
     }
 })
@@ -170,7 +169,9 @@ onMounted(async () => {
         return
     }
     gameHandler.value = new GameHandler(player.value as Entity, canvas, ctx)
-    gameHandler.value.initialize()
+    await gameHandler.value.initialize()
+    gameHandler.value.boss.value && triggerRef(gameHandler.value.boss)
+    triggerRef(gameHandler)
     gameHandler.value.gameLoop(performance.now())
 })
 

@@ -9,6 +9,7 @@ import { prefixed } from './cryptoutils'
 import { Spawner } from './spawner'
 import { Ai } from './ai'
 import { loadMapData } from '@/internal/mapLogic/engine/utils/BackgroundLayerUtils.ts'
+import { reactive, shallowRef, type ShallowRef } from 'vue'
 
 export class GameHandler {
     player: Entity
@@ -22,7 +23,7 @@ export class GameHandler {
     currentRoomObjects: Obj[]
     baseMapDim: Vector2 = new Vector2(800, 416)
     gameObjects: Obj[]
-    boss: Entity | undefined
+    boss: ShallowRef<Entity | undefined>
     availableCharacters: Character[]
     currentRoom: number
     spawner: Spawner | null
@@ -47,7 +48,8 @@ export class GameHandler {
         this.currentRoomObjects = []
         this.bg_image = null
         this.gameObjects = []
-        this.currentRoom = 5
+        this.currentRoom = 1
+        this.boss = shallowRef(undefined)
         this.spawner = null
         this.ai = null
         this.usedEnhancement = 0
@@ -93,7 +95,7 @@ export class GameHandler {
         this.gameObjects.forEach((obj: Obj) => obj.resetCollisions())
         this.currentRoomObjects = []
         this.gameObjects = []
-        this.boss = undefined
+        this.boss.value = undefined
         this.bg_image = null
         this.initialize()
     }
@@ -147,9 +149,15 @@ export class GameHandler {
             bossEntity.name = 'gorgone viola'
             bossEntity.pos = new Vector2(400, 200)
             bossEntity.custom_properties = { collidable: true }
-            this.boss = bossEntity
+            this.boss.value = bossEntity
             this.gameObjects.push(bossEntity)
-        } else this.boss = undefined
+            console.log(
+                `Boss ${this.boss.value.name} initialized with speed: ${bossStats.speed}, hp: ${bossStats.hp}, mana: ${bossStats.mana}, attack: ${bossStats.attack}, defence: ${bossStats.defence}`,
+            )
+        } else{
+            this.boss.value = undefined
+            console.log('No boss in this room')
+        }
 
         this.gameObjects.forEach((obj: Obj) => {
             obj.setup()

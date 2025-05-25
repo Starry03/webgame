@@ -21,9 +21,6 @@ const props = defineProps({
         type: Number,
         required: true,
     },
-    level: {
-        type: Number,
-    },
     cooldownQ: {
         type: Object as () => Ref<number>,
         required: true,
@@ -52,7 +49,7 @@ onMounted(() => {
     if (chars) {
         try {
             const arr = JSON.parse(chars)
-            const bossObj = arr.find((c: any) => c.name === 'evil gorgon')
+            const bossObj = arr.find((c: any) => c.name === 'gorgone rossa' || c.name === 'gorgone viola')
             bossName.value = bossObj?.displayName || bossObj?.name || 'Boss'
         } catch (e) {
             bossName.value = 'Boss'
@@ -76,8 +73,8 @@ const manaPercentage = computed(() => {
 <template>
     <div class="boss-status-bar flex flex-col flex-end gap-mid">
         <div class="boss-header">
-            <span class="boss-name">BOSS: {{ bossName }}</span>
-            <span class="boss-level">Lv. {{ props.level }}</span>
+            <span class="boss-name">{{ bossName }}</span>
+            <span class="boss-level">Lv. 20</span>
         </div>
         <div class="bars-and-cooldowns">
             <div class="cooldown-container">
