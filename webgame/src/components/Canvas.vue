@@ -35,7 +35,7 @@
                 :max-health="gameHandler.boss.maxHealth"
                 :mana="gameHandler.boss.mana"
                 :max-mana="gameHandler.boss.maxMana"
-                :level="gameHandler.boss.level"
+                :level="gameHandler.boss.exp"
                 :cooldownQ="gameHandler.boss.cooldowns.get(AnimationType.ATTACK_2)"
                 :cooldownR="gameHandler.boss.cooldowns.get(AnimationType.SPECIAL)"
                 :max-cooldown-q="gameHandler.boss.maxCooldownQ"
@@ -77,7 +77,7 @@ const mappedPlayer = computed(() => {
         maxHealth: player.value.maxHealth,
         mana: player.value.mana,
         maxMana: player.value.maxMana,
-        level: player.value.level,
+        level: player.value.exp,
         cooldownQ: player_value.cooldowns.get(AnimationType.ATTACK_2),
         maxCooldownQ: player_value.maxCooldownQ,
         cooldownR: player_value.cooldowns.get(AnimationType.SPECIAL),

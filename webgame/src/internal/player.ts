@@ -58,18 +58,16 @@ export class Player extends Entity {
 
     enterInteraction(collision: CollisionInfo): void {
         const closestObj = this.getClosestInteractableObj()
-        if (closestObj) {
-            this.interactionMessage = "'P' to interact with " + closestObj.name
-        }
+        if (closestObj) this.interactionMessage = "'space' to interact with " + closestObj.name
+
         super.enterInteraction(collision)
     }
 
     exitInteraction(collision: CollisionInfo): void {
         if (this.interactedObjects.size > 1) {
             const closestObj = this.getClosestInteractableObj()
-            if (closestObj) {
-                this.interactionMessage = "'space' to interact with " + closestObj.name
-            } else this.interactionMessage = ''
+            if (closestObj) this.interactionMessage = "'space' to interact with " + closestObj.name
+            else this.interactionMessage = ''
         }
         super.exitInteraction(collision)
     }
