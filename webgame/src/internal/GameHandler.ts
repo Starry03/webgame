@@ -120,29 +120,29 @@ export class GameHandler {
             return -1
         })
 
-        const bossStats: Character | undefined = this.availableCharacters.find(
-            (character: Character) => character.name === 'gorgone viola',
-        )
-        if (bossStats === undefined)
-            throw new Error('Boss character not found in available characters')
-        const bossEntity = new Gorg_red(
-            this.canvas,
-            this.ctx,
-            bossStats.speed,
-            bossStats.hp,
-            bossStats.mana,
-            bossStats.attack,
-            bossStats.defence,
-        )
-        bossEntity.name = 'Gorgone Rossa'
-        bossEntity.pos = new Vector2(400, 200)
-        bossEntity.custom_properties = { collidable: true }
-        this.boss = bossEntity
-
         this.gameObjects = [...this.currentRoomObjects, this.player]
         if (this.currentRoom === 5) {
+            const bossStats: Character | undefined = this.availableCharacters.find(
+            (character: Character) => character.name === 'gorgone viola',
+            )
+            if (bossStats === undefined)
+                throw new Error('Boss character not found in available characters')
+            const bossEntity = new Gorg_red(
+                this.canvas,
+                this.ctx,
+                bossStats.speed,
+                bossStats.hp,
+                bossStats.mana,
+                bossStats.attack,
+                bossStats.defence,
+            )
+            bossEntity.name = 'gorgone viola'
+            bossEntity.pos = new Vector2(400, 200)
+            bossEntity.custom_properties = { collidable: true }
+            this.boss = bossEntity
             this.gameObjects.push(bossEntity)
-        }
+        } else this.boss = undefined
+
         this.gameObjects.forEach((obj: Obj) => {
             obj.setup()
             obj.setGameHandler(this)

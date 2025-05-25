@@ -27,19 +27,19 @@
             <span class="vs-animated">VS</span>
         </div>
 
-        <div id="boss-status" v-if="isBossRoom">
+        <div id="boss-status" v-if="mappedBoss">
             
             <BossStatusBar
-                v-if="gameHandler?.boss"
-                :health="gameHandler.boss.health"
-                :max-health="gameHandler.boss.maxHealth"
-                :mana="gameHandler.boss.mana"
-                :max-mana="gameHandler.boss.maxMana"
-                :level="gameHandler.boss.level"
-                :cooldownQ="gameHandler.boss.cooldowns.get(AnimationType.ATTACK_2)"
-                :cooldownR="gameHandler.boss.cooldowns.get(AnimationType.SPECIAL)"
-                :max-cooldown-q="gameHandler.boss.maxCooldownQ"
-                :max-cooldown-r="gameHandler.boss.maxCooldownR"
+                v-if="mappedBoss"
+                :health="mappedBoss.health"
+                :max-health="mappedBoss.maxHealth"
+                :mana="mappedBoss.mana"
+                :max-mana="mappedBoss.maxMana"
+                :level="mappedBoss.level"
+                :cooldownQ="mappedBoss.cooldownQ"
+                :cooldownR="mappedBoss.cooldownR"
+                :max-cooldown-q="mappedBoss.maxCooldownQ"
+                :max-cooldown-r="mappedBoss.maxCooldownR"
             />
         </div>
     </div>
@@ -62,7 +62,7 @@ import BossStatusBar from '@/components/BossStatusBar.vue'
 import type { Entity } from '@/internal/Entity'
 
 const canvasRef = ref<HTMLCanvasElement | null>(null)
-const gameHandler = ref<GameHandler | null>()
+const gameHandler = ref<GameHandler | null>(null)
 const player = ref<Player | null>(null)
 
 const isBossRoom = computed(() => gameHandler.value?.currentRoom === 5)
@@ -83,6 +83,23 @@ const mappedPlayer = computed(() => {
         cooldownR: player_value.cooldowns.get(AnimationType.SPECIAL),
         maxCooldownR: player_value.maxCooldownR,
         interactionMessage: player_value.interactionMessage,
+    }
+})
+
+const mappedBoss = computed(() => {
+    if (!isBossRoom.value || !gameHandler.value?.boss) return null
+    const boss = gameHandler.value.boss
+
+    return {
+        health: boss.health,
+        maxHealth: boss.maxHealth,
+        mana: boss.mana,
+        maxMana: boss.maxMana,
+        level: boss.level,
+        cooldownQ: boss.cooldowns.get(AnimationType.ATTACK_2),
+        maxCooldownQ: boss.maxCooldownQ,
+        cooldownR: boss.cooldowns.get(AnimationType.SPECIAL),
+        maxCooldownR: boss.maxCooldownR,
     }
 })
 
