@@ -16,7 +16,7 @@ class UserManager:
             user = res.fetchone()
             if user is None:
                 return None
-            return User(username=user[1], password=user[2], email=user[3])
+            return User(username=user[1], password=user[2])
 
     @staticmethod
     def user_exists(username: str) -> bool:
@@ -27,12 +27,11 @@ class UserManager:
         with get_db_session() as db:
             db.execute(
                 text(
-                    "INSERT INTO public.user (username, password, email) VALUES (:username, :password, :email)"
+                    "INSERT INTO public.user (username, password) VALUES (:username, :password)"
                 ),
                 {
                     "username": user.username,
                     "password": Hasher.get_hashed(user.password),
-                    "email": user.email,
                 },
             )
             db.commit()

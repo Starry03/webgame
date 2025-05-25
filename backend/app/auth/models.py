@@ -8,9 +8,6 @@ from fastapi.encoders import jsonable_encoder
 class User(BaseModel):
     username: str
     password: str
-    email: str | None
-    online: bool = False
-    money: int = 0
 
 class Credentials(BaseModel):
     username: str

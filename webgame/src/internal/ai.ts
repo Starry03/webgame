@@ -32,19 +32,19 @@ export class Ai {
         let wantedPosition: WeightedMove[] = []
         if (this.player.isDead) return
         this.enemies.forEach((enemy: Entity, index: number) => {
+            if (
+                !enemy
+                    .getRelDirection(this.player)
+                    .direction()
+                    .compare(enemy.facingDirection.x, enemy.facingDirection.y)
+            )
+                enemy.turn(enemy.getRelDirection(this.player))
             if (enemy.isDead) return
             if (
                 Array.from(enemy.collidedObjects).some(
                     (o: CollisionInfo) => o.other.id === this.player.id,
                 )
             ) {
-                if (
-                    !enemy
-                        .getRelDirection(this.player)
-                        .direction()
-                        .compare(enemy.facingDirection.x, enemy.facingDirection.y)
-                )
-                    enemy.turn(enemy.getRelDirection(this.player))
                 enemy.attack(this.keys)
             }
             const moves: WeightedMove[] = []

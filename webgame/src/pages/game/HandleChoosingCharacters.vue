@@ -41,7 +41,7 @@ import type { Character } from '@/internal/types'
 const router = useRouter()
 
 const characters = ref([])
-const selectedCharacter = ref(null)
+const selectedCharacter = ref<Character | null>(null)
 
 // Variabili per tenere traccia delle selezioni delle card
 const selectedCards = ref([false, false, false])

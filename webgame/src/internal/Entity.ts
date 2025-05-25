@@ -14,7 +14,7 @@ export class Entity extends Obj {
     maxCooldownE: number
     maxCooldownQ: number
     maxCooldownR: number
-    level: number
+    exp: number
     isDead: boolean
 
     constructor(
@@ -43,7 +43,7 @@ export class Entity extends Obj {
         this.maxCooldownE = this.speed * 10
         this.maxCooldownQ = this.speed * 10 * 2.5
         this.maxCooldownR = this.speed * 10 * 5
-        this.level = 1
+        this.exp = 1
         this.isDead = false
     }
 
@@ -106,9 +106,6 @@ export class Entity extends Obj {
             this.health = 0
             this.die()
         }
-        console.log(
-            `Entity ${this.name} took ${damage} damage, remaining health: ${this.health}/${this.maxHealth}`,
-        )
     }
 
     die() {
@@ -116,11 +113,12 @@ export class Entity extends Obj {
         this.custom_properties['collidable'] = false
         this.isDead = true
         if (this.gameHandler) {
+            if (this.gameHandler.player && this.name !== 'player')
+                this.gameHandler.player.exp += 100
             const defeatedEnemies: number = this.gameHandler.getDefeatedEnemies()
-            this.gameHandler.setDefeatedEnemies(defeatedEnemies+1)
-        }
-        else {
-            throw new Error('Entity: die() -> problems with gameHandler',)
+            this.gameHandler.setDefeatedEnemies(defeatedEnemies + 1)
+        } else {
+            throw new Error('Entity: die() -> problems with gameHandler')
         }
     }
 
