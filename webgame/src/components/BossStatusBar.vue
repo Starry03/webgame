@@ -107,22 +107,13 @@ const manaPercentage = computed(() => {
     gap: 10px;
     padding: 10px;
     background-color: #333;
-    /*background: linear-gradient(90deg, #3a0d0d 60%, #6e1e1e 100%);
-    /*border: 3px solid gold;*/
     border-radius: 8px;
     color: #fff;
-    font-size: 14px;
-    /*box-shadow: 0 0 24px 4px #b3000088, 0 0 8px 2px gold;*/
+    font-size: 10px;
     height: 100%;
     width: 100%;
     max-width: 600px;
-    /*animation: boss-bar-glow 2s infinite alternate;*/
 }
-/*
-@keyframes boss-bar-glow {
-    from { box-shadow: 0 0 24px 4px #b3000088, 0 0 8px 2px gold; }
-    to   { box-shadow: 0 0 36px 8px #ff333388, 0 0 16px 4px gold; }
-}*/
 
 .boss-header {
     display: flex;
@@ -130,7 +121,7 @@ const manaPercentage = computed(() => {
     justify-content: space-between;
     gap: 2rem;
     margin-bottom: 0.5rem;
-    font-size: var(--font-small);
+    font-size: 10px;
     letter-spacing: 2px;
     text-shadow: 0 0 10px black, 0 0 20px black;
     font-weight: bold;
@@ -142,12 +133,10 @@ span{
 
 .boss-name {
     color: gold;
-    /*text-shadow: 0 0 8px #fff, 0 0 16px #b30000;*/
 }
 
 .boss-level {
     color: #f93200;
-    /*text-shadow: 0 0 6px #fff;*/
 }
 
 .bars-and-cooldowns {
@@ -188,7 +177,7 @@ span{
 .hp-value,
 .mp-value {
     font-size: 0.5rem;
-    color: /*#ffd700*/ #ccc;
+    color: #ccc;
 }
 
 .cooldown-container {
@@ -226,7 +215,7 @@ span{
     .boss-header {
         flex-direction: column;
         gap: 0.5rem;
-        align-items: flex-end;
+        align-items: flex-start;
     }
 }
 
@@ -241,11 +230,12 @@ span{
     }
 }
 
-@media (orientation: landscape) and (max-height: 500px) {
-    .status-bar {
+@media (orientation: landscape) and (max-height: 550px) {
+    .boss-status-bar {
         font-size: 10px;
-        width: 50%;
-        height: 100%
+        max-width: 100vw;
+        padding: 3px 5px;
+        overflow: hidden;
     }
     .bar-container {
         gap: 5px;
@@ -260,8 +250,8 @@ span{
     }
 
     #canvas {
-        width: 100%;
-        height: 100%;
+        width: 45%;
+        height: 90%;
     }
 
 }
