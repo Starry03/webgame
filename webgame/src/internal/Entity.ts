@@ -205,7 +205,7 @@ export class Entity extends Obj {
 
         for (const enemy of collidedEnemies) {
             if (this.isInAttackArc(enemy)) {
-                const damage = baseDamage * ((100 - enemy.defense) / 100)
+                const damage = Math.floor(baseDamage * ((100 - enemy.defense) / 100))
                 enemy.get_damage(damage)
             }
         }
