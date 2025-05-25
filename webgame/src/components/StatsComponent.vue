@@ -1,13 +1,16 @@
 <script setup>
-import {reactive, onMounted} from 'vue'
-import ViewStats from '../pages/game/stats/ViewStats.vue'
-import {getTime, getHealthPercentage, getManaPercentage} from '@/components/StatusBar.vue'
+import { onMounted, reactive, ref } from 'vue'
 import {GameHandler} from '@/internal/GameHandler'
 import {Player} from '@/internal/player'
 import {Vector2} from '@/internal/types.ts'
+import { setInterval } from 'node:timers'
+import ViewStats from '@/pages/game/stats/ViewStats.vue'
 
-const player = new Player(canvas, ctx, 0,0,0,0,0, '', new Vector2(0,0), new Vector2(0,0))
-const gameHandler = new GameHandler(player, canvas, ctx)
+const canvasRef = ref(null)
+const ctxRef = ref(null)
+
+let player
+let gameHandler
 
 const stats = reactive({
     timeTaken: 0,
@@ -19,12 +22,16 @@ const stats = reactive({
 })
 
 onMounted(() => {
-    stats.timeTaken = getTime()
-    stats.usedEnhancement = gameHandler.getUsedEnhancement()
-    stats.defeatedEnemies = gameHandler.getDefeatedEnemies()
-    stats.healthPercentage = getHealthPercentage();
-    stats.manaPercentage = getManaPercentage();
-    stats.level = gameHandler.getCurrentLevel()
+
+    const gameHandler = loadGameState()
+    if (gameHandler) {
+        stats.timeTaken = gameHandler.getTimeTaken()
+        stats.usedEnhancement = gameHandler.getUsedEnhancement()
+        stats.defeatedEnemies = gameHandler.getDefeatedEnemies()
+        stats.healthPercentage = 0
+        stats.manaPercentage = 0
+        stats.level = gameHandler.getCurrentLevel()
+    }
 })
 </script>
 

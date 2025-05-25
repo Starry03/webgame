@@ -1,4 +1,5 @@
 <script setup>
+console.log("view stats")
 const props = defineProps({
     stats: {
         type: Object,

@@ -1,17 +1,17 @@
 <template>
-    <div class="flex flex-space-between flex-row" id="game-header">
-        <div id="player-status">
+    <div class="container flex flex-space-between flex-row" id="game-header">
+        <div id="player-status" class="status">
             <StatusBar
                 v-if="mappedPlayer"
                 :health="mappedPlayer.health"
-                :max-health="mappedPlayer.maxHealth"
+                :maxHealth="mappedPlayer.maxHealth"
                 :mana="mappedPlayer.mana"
-                :max-mana="mappedPlayer.maxMana"
+                :maxMana="mappedPlayer.maxMana"
                 :level="mappedPlayer.level"
                 :cooldownQ="mappedPlayer.cooldownQ"
                 :cooldownR="mappedPlayer.cooldownR"
-                :max-cooldown-q="mappedPlayer.maxCooldownQ"
-                :max-cooldown-r="mappedPlayer.maxCooldownR"
+                :maxCooldownQ="mappedPlayer.maxCooldownQ"
+                :maxCooldownR="mappedPlayer.maxCooldownR"
             />
         </div>
 
@@ -23,22 +23,21 @@
             {{ mappedPlayer?.interactionMessage }}
         </div>
 
-        <div v-if="isBossRoom" class="vs">
-            <span class="vs-animated">VS</span>
+        <div v-if="mappedBoss" class="vs">
+            <span class="vs-text">VS</span>
         </div>
 
-        <div id="boss-status" v-if="isBossRoom">
+        <div id="boss-status" class="status" v-if="mappedBoss">
             <BossStatusBar
-                v-if="gameHandler?.boss"
-                :health="gameHandler.boss.health"
-                :max-health="gameHandler.boss.maxHealth"
-                :mana="gameHandler.boss.mana"
-                :max-mana="gameHandler.boss.maxMana"
-                :level="gameHandler.boss.exp"
-                :cooldownQ="gameHandler.boss.cooldowns.get(AnimationType.ATTACK_2)"
-                :cooldownR="gameHandler.boss.cooldowns.get(AnimationType.SPECIAL)"
-                :max-cooldown-q="gameHandler.boss.maxCooldownQ"
-                :max-cooldown-r="gameHandler.boss.maxCooldownR"
+                v-if="mappedBoss"
+                :health="mappedBoss.health"
+                :maxHealth="mappedBoss.maxHealth"
+                :mana="mappedBoss.mana"
+                :maxMana="mappedBoss.maxMana"
+                :cooldownQ="mappedBoss.cooldownQ"
+                :cooldownR="mappedBoss.cooldownR"
+                :maxCooldownQ="mappedBoss.maxCooldownQ"
+                :maxCooldownR="mappedBoss.maxCooldownR"
             />
         </div>
     </div>
@@ -48,7 +47,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, onUnmounted, reactive, computed, type Reactive } from 'vue'
+import { ref, onMounted, onUnmounted, reactive, computed, shallowRef, triggerRef, type Reactive } from 'vue'
 import { Mage } from '@/internal/Mage'
 import { Samurai } from '@/internal/Samurai'
 import { Thief } from '@/internal/Thief'
@@ -59,15 +58,10 @@ import StatusBar from '@/components/StatusBar.vue'
 import type { Player } from '@/internal/player'
 import BossStatusBar from '@/components/BossStatusBar.vue'
 import type { Entity } from '@/internal/Entity'
-import { useRouter } from 'vue-router'
 
 const canvasRef = ref<HTMLCanvasElement | null>(null)
-const gameHandler = ref<GameHandler | null>()
+const gameHandler = shallowRef<GameHandler | null>(null)
 const player = ref<Player | null>(null)
-
-const router = useRouter()
-
-const isBossRoom = computed(() => gameHandler.value?.currentRoom === 5)
 
 const mappedPlayer = computed(() => {
     if (!player.value) return null
@@ -85,6 +79,23 @@ const mappedPlayer = computed(() => {
         cooldownR: player_value.cooldowns.get(AnimationType.SPECIAL),
         maxCooldownR: player_value.maxCooldownR,
         interactionMessage: player_value.interactionMessage,
+    }
+})
+
+const mappedBoss = computed(() => {
+    const boss = gameHandler.value?.boss.value
+    if (!boss) return null
+
+    return {
+        health: boss.health,
+        maxHealth: boss.maxHealth,
+        mana: boss.mana,
+        maxMana: boss.maxMana,
+        level: boss.exp,
+        cooldownQ: boss.cooldowns.get(AnimationType.ATTACK_2) ?? ref(0),
+        maxCooldownQ: boss.maxCooldownQ,
+        cooldownR: boss.cooldowns.get(AnimationType.SPECIAL) ?? ref(0),
+        maxCooldownR: boss.maxCooldownR,
     }
 })
 
@@ -155,9 +166,10 @@ onMounted(async () => {
         return
     }
     gameHandler.value = new GameHandler(player.value as Entity, canvas, ctx)
-    gameHandler.value.initialize()
+    await gameHandler.value.initialize()
+    triggerRef(gameHandler.value.boss)
+    triggerRef(gameHandler)
     gameHandler.value.gameLoop(performance.now())
-
 })
 
 onUnmounted(() => {})
@@ -166,27 +178,43 @@ onUnmounted(() => {})
 <style scoped>
 #game-header {
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
+    justify-content: center;
+    align-items: stretch;
     width: 100%;
+    gap: 2vw;
     padding: 10px;
     background-color: #222;
     border-bottom: 2px solid #444;
+    margin: 0 auto;
 }
 
-#player-status {
-    width: 50%;
+
+.status {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 420px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    justify-content: center;
 }
 
-#boss-status {
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    align-items: flex-end;
+.status-bar,
+.boss-status-bar {
+    font-size: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    min-width: 0;
+    width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+    word-break: break-word;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.boss-status-bar {
+    justify-self: flex-end;
 }
 
 .canvas-wrapper {
@@ -217,9 +245,44 @@ onUnmounted(() => {})
 }
 
 @media (max-width: 900px), (max-height: 500px) {
+    #game-header {
+        max-width: 99vw;   
+        width: 100vw;
+        margin: 0 auto;
+        padding: 5px;
+    }
+
+    .canvas-wrapper, #canvas {
+        max-width: 99vw;
+    }
+}
+
+
+@media (max-width: 768px) and (height <= 500px) {
+    #game-header {
+        flex-direction: row;
+        align-items: center;
+        max-width: 99vw;
+        gap: 1vw;
+        padding: 4px 0;
+    }
+
+    .player-status,
+    .boss-status {
+        font-size: 0.9em;
+    }
+
+}
+
+@media (max-width: 900px), (max-height: 500px) {
     .canvas-wrapper {
         max-height: 60vh;
     }
+
+    .status-col{
+        max-width: 48vw;;
+    }
+
     #canvas {
         width: 100vw;
         height: auto;
@@ -230,42 +293,59 @@ onUnmounted(() => {})
 
 @media (max-height: 500px) and (orientation: landscape) {
     #game-header {
-        display: flex;
-        justify-content: flex-start;
+        flex-direction: row !important;
+        justify-content: space-between;
         align-items: center;
-        width: 100%;
+        gap: 0.5rem;
+        flex-wrap: nowrap;
+        width: 100vw;
         padding: 5px;
         background-color: #222;
         border-bottom: 2px solid #444;
     }
 
-    #player-status {
-        width: 50%;
+    #player-status, #boss-status {
+        width: 100vw;
+        max-width: 200vw;
         display: flex;
+        flex: 0 1 35vw;
         flex-direction: column;
         gap: 5px;
     }
 
-    #boss-status {
-        width: 50%;
+    .vs {
         display: flex;
-        flex-direction: column;
-        gap: 5px;
-        align-items: flex-end;
+        align-items: center;
+        justify-content: center;
+        width: 10vw;
+        min-width: 50px;
+        max-width: 80px;
+        flex: 0 1 10vw;
+        padding: 0;
+        margin: 0;
     }
 
-    .status-bar {
-        padding: 5px;
-        background-color: #333;
-        border-radius: 8px;
-        color: white;
-        font-size: 0.9rem;
+    .vs-text {
+        font-size: 1.1rem;
+        padding: 0 0.2em;
+        white-space: nowrap;
+    }
+
+    .status-bar,
+    .boss-status-bar {
+        font-size: 10px !important;
+        padding: 4px !important;
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .bars-and-cooldowns {
+        flex-direction: row !important;
+        gap: 0.3rem !important;
     }
 
     .bar-container {
-        display: flex;
-        align-items: center;
-        gap: 5px;
+        gap: 4px !important;
     }
 
     .cooldown-container {
@@ -297,50 +377,23 @@ onUnmounted(() => {})
         font-weight: bold;
         color: white;
     }
-
-    #game-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 5px;
-    }
-
-    #player-status,
-    #boss-status {
-        width: 100%;
-    }
-
-    .status-bar {
-        padding: 5px;
-        font-size: 0.8rem;
-    }
-
-    .cooldown-circle {
-        width: 30px;
-        height: 30px;
-    }
-
-    .cooldown-circle span {
-        font-size: 10px;
-    }
 }
-.vs-container {
+.vs {
+    flex: 0 0 10px;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    margin: 0 0 10px 0;
 }
 
-.vs-animated {
+.vs-text {
     font-family: 'Press Start 2P', cursive;
-    font-size: 1rem;
+    font-size: 0.8rem;
     color: gold;
-    text-shadow:
-        0 0 8px #fff,
-        0 0 16px #f93200;
+    text-shadow: 0 0 8px #fff, 0 0 16px #f93200;
     animation: vs-scale 1s infinite alternate;
-    padding: 0;
+    padding: 0 0.5em;
     border: none;
+    white-space: nowrap;
     background: none;
     padding-left: 1rem;
     padding-right: 1rem;
@@ -349,11 +402,7 @@ onUnmounted(() => {})
 }
 
 @keyframes vs-scale {
-    0% {
-        transform: scale(1);
-    }
-    100% {
-        transform: scale(1.35);
-    }
+    0% { transform: scale(1); }
+    100% { transform: scale(1.35); }
 }
 </style>
