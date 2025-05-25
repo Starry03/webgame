@@ -1,8 +1,7 @@
 import { Obj } from './Obj'
 import { Vector2 } from './types'
 
-export type CollisionInfo = {
-    id: string
+export type CollisionInfo = { 
     other: Obj
     dir: Vector2 | null
 }
