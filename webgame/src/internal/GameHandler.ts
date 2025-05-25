@@ -47,7 +47,7 @@ export class GameHandler {
         this.currentRoomObjects = []
         this.bg_image = null
         this.gameObjects = []
-        this.currentRoom = 5
+        this.currentRoom = 1
         this.spawner = null
         this.ai = null
         this.usedEnhancement = 0
