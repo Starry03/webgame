@@ -33,10 +33,8 @@ export class BossLadder extends AnimatedObject {
     }
 
     onInteraction(): void {
-        if (this.gameHandler) {
-            if (this.gameHandler.player) {
-                this.gameHandler.player.pos = this.pos;
-            }
+        if (this.gameHandler && this.gameHandler.player) {
+            this.gameHandler.player.pos = this.pos;
         }
         this.gameHandler?.changeRoom(this.gameHandler.currentRoom + 1)
     }

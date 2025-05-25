@@ -39,6 +39,8 @@ export class DefenseEnhancement extends AnimatedObject {
             this.gameHandler.player.defense *= 1.1
             this.custom_properties['takeable'] = false
             this.changeAnimation(AnimationType.DEAD, true, false)
+            const usedEnhancement: number = this.gameHandler.getUsedEnhancement()
+            this.gameHandler.setUsedEnhancement(usedEnhancement+1)
         }
     }
 }

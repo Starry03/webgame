@@ -49,6 +49,8 @@ export class HpPotion extends AnimatedObject {
             this.gameHandler.player.health += 200
             this.custom_properties['takeable'] = false
             this.changeAnimation(AnimationType.DEAD, true, false)
+            const usedEnhancement: number = this.gameHandler.getUsedEnhancement()
+            this.gameHandler.setUsedEnhancement(usedEnhancement+1)
         }
     }
 }
