@@ -234,8 +234,8 @@
                  "type":"NotAnimatedObject",
                  "visible":true,
                  "width":26,
-                 "x":133,
-                 "y":336
+                 "x":600,
+                 "y":200
                 }, 
                 {
                  "gid":158,
