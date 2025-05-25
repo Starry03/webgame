@@ -20,8 +20,8 @@ const stats = reactive({
 
 onMounted(() => {
     stats.timeTaken = getTime()
-    stats.usedEnhancement = 0;
-    stats.defeatedEnemies = 0;
+    stats.usedEnhancement = gameHandler.getUsedEnhancement()
+    stats.defeatedEnemies = gameHandler.getDefeatedEnemies()
     stats.healthPercentage = getHealthPercentage();
     stats.manaPercentage = getManaPercentage();
     stats.level = gameHandler.getCurrentLevel()
