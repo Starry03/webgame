@@ -95,7 +95,6 @@ export class GameHandler {
         }
 
         const deltaTime = (timestamp - this.lastTimeStamp) / 1000
-        this.time.value += deltaTime
         this.lastTimeStamp = timestamp
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
         this.ctx.save()
@@ -108,7 +107,7 @@ export class GameHandler {
         this.ai?.update(deltaTime)
         this.health.value = this.player.health
         this.mana.value = this.player.mana
-
+        this.time.value = performance.now() / 1000 - this.timeTaken
         this.gameObjects
             .filter((obj: Obj) => obj instanceof Entity)
             .forEach((obj: Entity) => obj.regenMana(deltaTime))
@@ -134,6 +133,7 @@ export class GameHandler {
     }
 
     async initialize() {
+        this.timeTaken = performance.now() / 1000
         const room = this.currentRoom < 5 ? `room${this.currentRoom}` : 'boss_room'
         this.currentRoomPath = getRoomPath(room)
         this.bg_image = await loadMapData(this.currentRoomPath, room, this.canvas, this.ctx)
@@ -287,7 +287,7 @@ export class GameHandler {
             maxMana: this.player.maxMana,
             defeatedEnemies: this.getDefeatedEnemies(),
             usedEnhancement: this.getUsedEnhancement(),
-            timeTaken: this.getTimeTaken(),
+            timeTaken: this.time.value,
         }
         localStorage.setItem('gameState', JSON.stringify(gameState))
     }
