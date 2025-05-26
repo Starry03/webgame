@@ -79,6 +79,7 @@ export class GameHandler {
 
     addKey(key: string) {
         this.keys.add(key)
+        console.debug(key)
     }
 
     removeKey(key: string) {
@@ -258,10 +259,8 @@ export class GameHandler {
 
     isGameFinished(): boolean {
         if ((this.boss && this.boss.isDead) || this.player.isDead) {
-            console.log('game is finished!')
             return true
         } else {
-            console.log('game!!!')
             return false
         }
     }

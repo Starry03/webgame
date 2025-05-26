@@ -21,11 +21,13 @@ export class Player extends Entity {
         super(canvas, ctx, speed, health, mana, attackPower, defense, pos, dim)
         this.interactionMessage = interactionMessage ?? ''
         document.addEventListener('keyup', (event) => {
-            if (event.key === 'c') {
-                const closestObj: Obj | null = this.getClosestInteractableObj()
-                if (closestObj) this.interact(closestObj)
-            }
+            if (event.key === 'c') this.trigger_interactions()
         })
+    }
+
+    trigger_interactions() {
+        const closestObj: Obj | null = this.getClosestInteractableObj()
+        if (closestObj) this.interact(closestObj)
     }
 
     getClosestInteractableObj(): Obj | null {
