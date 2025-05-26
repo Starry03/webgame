@@ -3,7 +3,6 @@ import { onMounted, reactive, ref } from 'vue'
 import { GameHandler } from '@/internal/GameHandler'
 import { Player } from '@/internal/player'
 import { Vector2 } from '@/internal/types.ts'
-import { setInterval } from 'node:timers'
 import ViewStats from '@/pages/game/stats/ViewStats.vue'
 
 const stats = reactive({
@@ -12,11 +11,11 @@ const stats = reactive({
     defeatedEnemies: 0,
     healthPercentage: 0,
     manaPercentage: 0,
-    level: 1,
+    level: 0,
 })
 
 const updateStats = () => {
-    const storedStats = JSON.parse(sessionStorage.getItem('gameStats') || {})
+    const storedStats = JSON.parse(localStorage.getItem('gameStats') || '{}')
     console.log('extraction complete!')
     stats.timeTaken = storedStats.timeTaken || 0
     stats.usedEnhancement = storedStats.usedEnhancement || 0
@@ -37,7 +36,6 @@ onMounted(() => {
 
 <template>
     <section id="level-stats">
-        <h1>Game Stats</h1>
         <div class="item-stats">
             <h2>Time taken</h2>
             <p id="time-taken">{{ stats.timeTaken }}</p>

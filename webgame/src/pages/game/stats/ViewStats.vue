@@ -1,8 +1,6 @@
 <script setup>
 import StatsComponent from '@/components/StatsComponent.vue'
 import { onMounted, ref } from 'vue'
-import {updateStats} from '@/components/StatsComponent.vue'
-const stats = ref([])
 
 onMounted(() => updateStats())
 
