@@ -40,27 +40,69 @@ onMounted(() => {
         <h1>Game Stats</h1>
         <div class="item-stats">
             <h2>Time taken</h2>
-            <p>{{ stats.timeTaken }}</p>
+            <p id="time-taken">{{ stats.timeTaken }}</p>
         </div>
         <div class="item-stats">
             <h2>Level</h2>
-            <p>{{ stats.level }}</p>
+            <p id="level">{{ stats.level }}</p>
         </div>
         <div class="item-stats">
             <h2>Used Enhancements</h2>
-            <p>{{ stats.usedEnhancement }}</p>
+            <p id="used-enhancement">{{ stats.usedEnhancement }}</p>
         </div>
         <div class="item-stats">
             <h2>Defeated enemies</h2>
-            <p>{{ stats.defeatedEnemies }}</p>
+            <p id="defeated-enemies">{{ stats.defeatedEnemies }}</p>
         </div>
         <div class="item-stats">
             <h2>Health</h2>
-            <p>{{ stats.healthPercentage }}</p>
+            <p id="health-percentage">{{ stats.healthPercentage }}</p>
         </div>
         <div class="item-stats">
             <h2>Mana</h2>
-            <p>{{ stats.manaPercentage }}</p>
+            <p id="mana-percentage">{{ stats.manaPercentage }}</p>
         </div>
     </section>
 </template>
+
+<style scoped>
+h2 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    font-family: 'Press Start 2P', cursive;
+}
+
+h1 {
+    font-weight: bold;
+    color: white;
+    font-size: 1.2em;
+    font-family: 'Press Start 2P', cursive;
+}
+
+label {
+    font-weight: bold;
+    color: white;
+    font-size: 1.2em;
+}
+
+p {
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+
+.item-stats {
+    margin-bottom: 15px;
+}
+
+#health-percentage:disabled {
+    background-color: crimson;
+    cursor: not-allowed;
+}
+
+#mana-percentage:disabled {
+    background-color: cyan;
+    cursor: not-allowed;
+}
+</style>
