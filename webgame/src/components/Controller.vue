@@ -3,6 +3,7 @@ import { GameHandler } from '@/internal/GameHandler'
 import ControllerButton from './ControllerButton.vue'
 import StarLayout from './StarLayout.vue'
 import { onMounted } from 'vue'
+import type { Player } from '@/internal/player'
 
 const props = defineProps({
     handler: {
@@ -55,7 +56,13 @@ const attacks = [
                 v-for="item in attacks"
                 :key="item.key"
                 :text="item.key.toUpperCase()"
-                :press="() => props.handler.addKey(item.key)"
+                :press="
+                    () => {
+                        if (item.key === 'c')
+                            return (handler.player as Player).trigger_interactions()
+                        return props.handler.addKey(item.key)
+                    }
+                "
                 :release="() => props.handler.removeKey(item.key)"
                 :style="{
                     gridArea: item.gridPosition,

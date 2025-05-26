@@ -34,7 +34,7 @@ export class GameHandler {
     router: Router
     health: Ref<number>
     mana: Ref<number>
-    time: Ref<number> = ref(0)
+    time: number
     isGameOver: Ref<boolean> = ref(false)
 
     constructor(player: Entity, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
@@ -61,6 +61,8 @@ export class GameHandler {
         this.usedEnhancement = 0
         this.defeatedEnemies = 0
         this.router = useRouter()
+        this.timeTaken = 0
+        this.time = 0
         this.health = ref<number>(this.player.health)
         this.mana = ref<number>(this.player.mana)
 
@@ -78,6 +80,7 @@ export class GameHandler {
 
     addKey(key: string) {
         this.keys.add(key)
+        console.debug(key)
     }
 
     removeKey(key: string) {
@@ -93,7 +96,6 @@ export class GameHandler {
         }
 
         const deltaTime = (timestamp - this.lastTimeStamp) / 1000
-        this.time.value += deltaTime
         this.lastTimeStamp = timestamp
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
         this.ctx.save()
@@ -106,7 +108,7 @@ export class GameHandler {
         this.ai?.update(deltaTime)
         this.health.value = this.player.health
         this.mana.value = this.player.mana
-
+        this.time = performance.now() / 1000 - this.timeTaken
         this.gameObjects
             .filter((obj: Obj) => obj instanceof Entity)
             .forEach((obj: Entity) => obj.regenMana(deltaTime))
@@ -131,6 +133,7 @@ export class GameHandler {
     }
 
     async initialize() {
+        this.timeTaken = performance.now() / 1000
         const room = this.currentRoom < 5 ? `room${this.currentRoom}` : 'boss_room'
         this.currentRoomPath = getRoomPath(room)
         if(this.currentRoom == 1) this.time = ref(0)
@@ -261,7 +264,6 @@ export class GameHandler {
             this.isGameOver.value = true
             return true
         } else {
-            console.log('game!!!')
             return false
         }
     }
@@ -287,7 +289,7 @@ export class GameHandler {
             maxMana: this.player.maxMana,
             defeatedEnemies: this.getDefeatedEnemies(),
             usedEnhancement: this.getUsedEnhancement(),
-            timeTaken: this.getTimeTaken(),
+            timeTaken: this.time,
         }
         localStorage.setItem('gameState', JSON.stringify(gameState))
     }
