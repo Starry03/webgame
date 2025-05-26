@@ -50,7 +50,7 @@ const fetchCharacters = async () => {
     try {
         const response = await GameService.classes()
         if (!response.ok) {
-            throw new Error(`Errore HTTP: ${response.status}`)
+            throw new Error(`Errore HTTP: ${response.status}c`)
         }
         const data: Array<Character> = await response.json()
         // save all available characters in localStorage (playable and enemies)
