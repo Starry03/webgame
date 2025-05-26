@@ -9,7 +9,7 @@ import { prefixed } from './cryptoutils'
 import { Spawner } from './spawner'
 import { Ai } from './ai'
 import { loadMapData } from '@/internal/mapLogic/engine/utils/BackgroundLayerUtils.ts'
-import { reactive, shallowRef, type ShallowRef } from 'vue'
+import { reactive, shallowRef, ref, type ShallowRef, type Ref } from 'vue'
 
 export class GameHandler {
     player: Entity
@@ -30,6 +30,10 @@ export class GameHandler {
     ai: Ai | null
     usedEnhancement: number
     defeatedEnemies: number
+    health: Ref<number>
+    mana: Ref<number> 
+    time: Ref<number> = ref(0)
+    isGameOver: Ref<boolean> = ref(false)
 
     constructor(player: Entity, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
         this.ctx = ctx
@@ -54,6 +58,8 @@ export class GameHandler {
         this.ai = null
         this.usedEnhancement = 0
         this.defeatedEnemies = 0
+        this.health = ref<number>(this.player.health)
+        this.mana = ref<number>(this.player.mana)
 
         window.addEventListener('keydown', (e) => {
             e.preventDefault()
@@ -68,7 +74,18 @@ export class GameHandler {
     }
 
     gameLoop(timestamp: number) {
+        if (this.isGameOver.value) return
+        
+        if (this.player.isDead || (this.boss.value && this.boss.value.isDead)) {
+            if (!this.isGameOver.value) {
+                this.isGameOver.value = true
+                console.log('Game Over')
+            }
+            return
+        }
+
         const deltaTime = (timestamp - this.lastTimeStamp) / 1000
+        this.time.value += deltaTime
         this.lastTimeStamp = timestamp
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
         this.ctx.save()
@@ -79,7 +96,9 @@ export class GameHandler {
         this.player.handleInput(this.keys, deltaTime)
         this.player.attack(this.keys)
         this.ai?.update(deltaTime)
-
+        this.health.value = this.player.health
+        this.mana.value = this.player.mana
+        
         this.gameObjects
             .filter((obj: Obj) => obj instanceof Entity)
             .forEach((obj: Entity) => obj.regenMana(deltaTime))
@@ -151,12 +170,8 @@ export class GameHandler {
             bossEntity.custom_properties = { collidable: true }
             this.boss.value = bossEntity
             this.gameObjects.push(bossEntity)
-            console.log(
-                `Boss ${this.boss.value.name} initialized with speed: ${bossStats.speed}, hp: ${bossStats.hp}, mana: ${bossStats.mana}, attack: ${bossStats.attack}, defence: ${bossStats.defence}`,
-            )
-        } else{
+        } else {
             this.boss.value = undefined
-            console.log('No boss in this room')
         }
 
         this.gameObjects.forEach((obj: Obj) => {

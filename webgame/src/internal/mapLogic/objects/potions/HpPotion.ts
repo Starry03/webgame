@@ -46,7 +46,8 @@ export class HpPotion extends AnimatedObject {
     onInteraction(): void {
         if (!this.canInteract()) return
         if (this.gameHandler && this.gameHandler.player) {
-            this.gameHandler.player.health += 200
+            const player = this.gameHandler.player
+            player.health = Math.min(player.health + 1500, player.maxHealth) // Non supera il massimo
             this.custom_properties['takeable'] = false
             this.changeAnimation(AnimationType.DEAD, true, false)
             const usedEnhancement: number = this.gameHandler.getUsedEnhancement()

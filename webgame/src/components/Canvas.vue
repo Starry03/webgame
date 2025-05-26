@@ -2,12 +2,13 @@
     <div class="container flex flex-space-between flex-row" id="game-header">
         <div id="player-status" class="status">
             <StatusBar
-                v-if="mappedPlayer"
-                :health="mappedPlayer.health"
+                v-if="mappedPlayer && gameHandler"
+                :health="gameHandler.health.value"
                 :maxHealth="mappedPlayer.maxHealth"
-                :mana="mappedPlayer.mana"
+                :mana="gameHandler.mana.value"
                 :maxMana="mappedPlayer.maxMana"
                 :level="mappedPlayer.level"
+                :time="gameHandler.time"
                 :cooldownQ="mappedPlayer.cooldownQ"
                 :cooldownR="mappedPlayer.cooldownR"
                 :maxCooldownQ="mappedPlayer.maxCooldownQ"
@@ -58,6 +59,7 @@ import StatusBar from '@/components/StatusBar.vue'
 import type { Player } from '@/internal/player'
 import BossStatusBar from '@/components/BossStatusBar.vue'
 import type { Entity } from '@/internal/Entity'
+import { time } from 'console'
 
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 const gameHandler = shallowRef<GameHandler | null>(null)
@@ -83,6 +85,7 @@ const mappedPlayer = computed(() => {
 })
 
 const mappedBoss = computed(() => {
+    gameHandler.value?.time.value
     const boss = gameHandler.value?.boss.value
     if (!boss) return null
 
@@ -91,7 +94,6 @@ const mappedBoss = computed(() => {
         maxHealth: boss.maxHealth,
         mana: boss.mana,
         maxMana: boss.maxMana,
-        level: boss.exp,
         cooldownQ: boss.cooldowns.get(AnimationType.ATTACK_2) ?? ref(0),
         maxCooldownQ: boss.maxCooldownQ,
         cooldownR: boss.cooldowns.get(AnimationType.SPECIAL) ?? ref(0),

@@ -101,6 +101,7 @@ export class Entity extends Obj {
     }
 
     get_damage(damage: number) {
+        if (this.isDead) return
         this.health -= damage
         if (this.health <= 0) {
             this.health = 0
@@ -109,6 +110,11 @@ export class Entity extends Obj {
     }
 
     die() {
+        if (this.isDead) return
+
+        this.isAnimationBlocking = false
+        this.isIdleBlocked = false
+        
         this.changeAnimation(AnimationType.DEAD, true, false)
         this.custom_properties['collidable'] = false
         this.isDead = true
@@ -205,7 +211,8 @@ export class Entity extends Obj {
 
         for (const enemy of collidedEnemies) {
             if (this.isInAttackArc(enemy)) {
-                const damage = Math.floor(baseDamage * ((100 - enemy.defense) / 100))
+                let damage = Math.floor(baseDamage * ((100 - enemy.defense) / 100))
+                damage = Math.max(1, damage)
                 enemy.get_damage(damage)
             }
         }
