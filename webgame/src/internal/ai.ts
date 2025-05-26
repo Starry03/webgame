@@ -84,7 +84,6 @@ export class Ai {
             wantedPosition.forEach((move: WeightedMove) => {
                 move.object.move(new Set(move.move.split('')), deltaTime)
             })
-            resolve()
         })
     }
 }

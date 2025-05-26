@@ -9,7 +9,7 @@ import { prefixed } from './cryptoutils'
 import { Spawner } from './spawner'
 import { Ai } from './ai'
 import { loadMapData } from '@/internal/mapLogic/engine/utils/BackgroundLayerUtils.ts'
-import {type Router, useRouter} from 'vue-router'
+import { type Router, useRouter } from 'vue-router'
 import { reactive, shallowRef, ref, type ShallowRef, type Ref } from 'vue'
 
 export class GameHandler {
@@ -34,7 +34,7 @@ export class GameHandler {
     router: Router
     timeTaken: number
     health: Ref<number>
-    mana: Ref<number> 
+    mana: Ref<number>
     time: Ref<number> = ref(0)
     isGameOver: Ref<boolean> = ref(false)
 
@@ -87,12 +87,9 @@ export class GameHandler {
 
     gameLoop(timestamp: number) {
         if (this.isGameOver.value) return
-        
-        if (this.player.isDead || (this.boss.value && this.boss.value.isDead)) {
-            if (!this.isGameOver.value) {
-                this.isGameOver.value = true
-                console.log('Game Over')
-            }
+
+        if (this.player.isDead || (this.boss && this.boss.isDead)) {
+            if (!this.isGameOver.value) this.isGameOver.value = true
             return
         }
 
@@ -110,7 +107,7 @@ export class GameHandler {
         this.ai?.update(deltaTime)
         this.health.value = this.player.health
         this.mana.value = this.player.mana
-        
+
         this.gameObjects
             .filter((obj: Obj) => obj instanceof Entity)
             .forEach((obj: Entity) => obj.regenMana(deltaTime))
@@ -118,15 +115,11 @@ export class GameHandler {
             if (obj.selectedFrames == undefined) return
             obj.update(timestamp, deltaTime)
         })
-        requestAnimationFrame(this.gameLoop)
         if (this.isGameFinished()) {
             this.saveGameState()
             this.router.push('/stats')
-            return;
-        }
-        else {
-            requestAnimationFrame(this.gameLoop)
-        }
+            return
+        } else requestAnimationFrame(this.gameLoop)
     }
 
     changeRoom(room: number) {
@@ -203,7 +196,7 @@ export class GameHandler {
             this.boss = bossEntity
             this.gameObjects.push(bossEntity)
         } else {
-            this.boss.value = undefined
+            this.boss = undefined
         }
         this.gameObjects.forEach((obj: Obj) => {
             obj.setup()
@@ -263,19 +256,18 @@ export class GameHandler {
         this.defeatedEnemies = defeatedEnemies
     }
 
-    isGameFinished():  boolean {
+    isGameFinished(): boolean {
         if ((this.boss && this.boss.isDead) || this.player.isDead) {
-            console.log("game is finished!")
-            return true;
-        }
-        else {
-            console.log("game!!!")
-            return false;
+            console.log('game is finished!')
+            return true
+        } else {
+            console.log('game!!!')
+            return false
         }
     }
 
     getTimeTaken(): number {
-        return 0;
+        return 0
     }
 
     setTimeTaken(timeTaken: number) {
@@ -296,9 +288,8 @@ export class GameHandler {
             maxMana: this.player.maxMana,
             defeatedEnemies: this.getDefeatedEnemies(),
             usedEnhancement: this.getUsedEnhancement(),
-            timeTaken: this.getTimeTaken()
-        };
-        localStorage.setItem('gameState', JSON.stringify(gameState));
-        console.log("salvataggio completato!!")
+            timeTaken: this.getTimeTaken(),
+        }
+        localStorage.setItem('gameState', JSON.stringify(gameState))
     }
 }
