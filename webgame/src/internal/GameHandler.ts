@@ -10,6 +10,7 @@ import { Spawner } from './spawner'
 import { Ai } from './ai'
 import { loadMapData } from '@/internal/mapLogic/engine/utils/BackgroundLayerUtils.ts'
 import {type Router, useRouter} from 'vue-router'
+import { reactive, shallowRef, ref, type ShallowRef, type Ref } from 'vue'
 
 export class GameHandler {
     player: Entity
@@ -32,6 +33,10 @@ export class GameHandler {
     defeatedEnemies: number
     router: Router
     timeTaken: number
+    health: Ref<number>
+    mana: Ref<number> 
+    time: Ref<number> = ref(0)
+    isGameOver: Ref<boolean> = ref(false)
 
     constructor(player: Entity, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
         this.ctx = ctx
@@ -57,6 +62,8 @@ export class GameHandler {
         this.defeatedEnemies = 0
         this.router = useRouter()
         this.timeTaken = 0
+        this.health = ref<number>(this.player.health)
+        this.mana = ref<number>(this.player.mana)
 
         window.addEventListener('keydown', (e) => {
             e.preventDefault()
@@ -71,7 +78,18 @@ export class GameHandler {
     }
 
     gameLoop(timestamp: number) {
+        if (this.isGameOver.value) return
+        
+        if (this.player.isDead || (this.boss.value && this.boss.value.isDead)) {
+            if (!this.isGameOver.value) {
+                this.isGameOver.value = true
+                console.log('Game Over')
+            }
+            return
+        }
+
         const deltaTime = (timestamp - this.lastTimeStamp) / 1000
+        this.time.value += deltaTime
         this.lastTimeStamp = timestamp
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
         this.ctx.save()
@@ -82,7 +100,9 @@ export class GameHandler {
         this.player.handleInput(this.keys, deltaTime)
         this.player.attack(this.keys)
         this.ai?.update(deltaTime)
-
+        this.health.value = this.player.health
+        this.mana.value = this.player.mana
+        
         this.gameObjects
             .filter((obj: Obj) => obj instanceof Entity)
             .forEach((obj: Entity) => obj.regenMana(deltaTime))
@@ -159,6 +179,25 @@ export class GameHandler {
         this.gameObjects = [...this.currentRoomObjects, this.player]
         if (this.currentRoom === 5) {
             this.gameObjects.push(this.boss)
+            )
+            if (bossStats === undefined)
+                throw new Error('Boss character not found in available characters')
+            const bossEntity = new Gorg_red(
+                this.canvas,
+                this.ctx,
+                bossStats.speed,
+                bossStats.hp,
+                bossStats.mana,
+                bossStats.attack,
+                bossStats.defence,
+            )
+            bossEntity.name = 'gorgone viola'
+            bossEntity.pos = new Vector2(400, 200)
+            bossEntity.custom_properties = { collidable: true }
+            this.boss.value = bossEntity
+            this.gameObjects.push(bossEntity)
+        } else {
+            this.boss.value = undefined
         }
         this.gameObjects.forEach((obj: Obj) => {
             obj.setup()
