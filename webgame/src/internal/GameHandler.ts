@@ -190,7 +190,7 @@ export class GameHandler {
         })
 
         const bossStats: Character | undefined = this.availableCharacters.find(
-            (character: Character) => character.name === 'gorgone viola',
+            (character: Character) => character.name === 'gorgone rossa',
         )
         if (bossStats === undefined)
             throw new Error('Boss character not found in available characters')
