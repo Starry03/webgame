@@ -23,7 +23,7 @@ export class GameHandler {
     currentRoomObjects: Obj[]
     baseMapDim: Vector2 = new Vector2(800, 416)
     gameObjects: Obj[]
-    boss: ShallowRef<Entity | undefined>
+    boss: Ref<Entity | undefined>
     availableCharacters: Character[]
     currentRoom: number
     spawner: Spawner | null
@@ -53,7 +53,7 @@ export class GameHandler {
         this.bg_image = null
         this.gameObjects = []
         this.currentRoom = 1
-        this.boss = shallowRef(undefined)
+        this.boss = ref(undefined)
         this.spawner = null
         this.ai = null
         this.usedEnhancement = 0
