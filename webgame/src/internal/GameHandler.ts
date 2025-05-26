@@ -32,7 +32,6 @@ export class GameHandler {
     usedEnhancement: number
     defeatedEnemies: number
     router: Router
-    timeTaken: number
     health: Ref<number>
     mana: Ref<number>
     time: Ref<number> = ref(0)
@@ -62,7 +61,6 @@ export class GameHandler {
         this.usedEnhancement = 0
         this.defeatedEnemies = 0
         this.router = useRouter()
-        this.timeTaken = 0
         this.health = ref<number>(this.player.health)
         this.mana = ref<number>(this.player.mana)
 
@@ -135,6 +133,7 @@ export class GameHandler {
     async initialize() {
         const room = this.currentRoom < 5 ? `room${this.currentRoom}` : 'boss_room'
         this.currentRoomPath = getRoomPath(room)
+        if(this.currentRoom == 1) this.time = ref(0)
         this.bg_image = await loadMapData(this.currentRoomPath, room, this.canvas, this.ctx)
         this.currentRoomObjects = (await loadMapObjects(
             room,
@@ -233,7 +232,7 @@ export class GameHandler {
     }
 
     getCurrentLevel(): number {
-        return this.currentRoom
+        return this.player.exp
     }
 
     setCurrentLevel(level: number) {
@@ -259,6 +258,7 @@ export class GameHandler {
     isGameFinished(): boolean {
         if ((this.boss && this.boss.isDead) || this.player.isDead) {
             console.log('game is finished!')
+            this.isGameOver.value = true
             return true
         } else {
             console.log('game!!!')
@@ -266,12 +266,11 @@ export class GameHandler {
         }
     }
 
-    getTimeTaken(): number {
-        return 0
-    }
-
-    setTimeTaken(timeTaken: number) {
-        this.timeTaken = timeTaken
+    getTimeTaken(): string {
+        const totalSeconds = Math.floor(this.time.value)
+        const min = Math.floor(totalSeconds / 60)
+        const sec = totalSeconds % 60
+        return `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`
     }
 
     saveGameState() {
@@ -292,4 +291,5 @@ export class GameHandler {
         }
         localStorage.setItem('gameState', JSON.stringify(gameState))
     }
+
 }
