@@ -104,6 +104,7 @@ export class AESUtils {
             session: JSON.parse(session),
         }
         if (AESUtils.isExpired(session_ret)) throw new Error('session expired')
+        if (!localStorage.getItem(prefixed(Storage_e.USER))) throw new Error('User not found')
         return session_ret
     }
 

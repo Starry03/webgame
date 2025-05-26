@@ -159,14 +159,14 @@ ALTER TABLE ONLY public."user" ALTER COLUMN id SET DEFAULT nextval('public.user_
 
 COPY public.classe (name, speed, attack, defence, mana, hp, description, playable) FROM stdin;
 warrior	60	85	85	400	800	Un combattente potente con una forza d’attacco eccezionale e una buona resistenza. Anche se non eccelle nella velocità o nella magia, è un solido baluardo sul campo di battaglia	t
-wizard	45	100	40	1200	750	Un maestro delle arti magiche con un’enorme riserva di mana e punti vita. Equilibrato in velocità e difesa, è ideale per infliggere danni magici a distanza	t
 plant	0	40	5	300	150	Una pianta	f
 archer_skeleton	20	65	10	450	200	Uno scheletro con un arco	f
-thief	80	55	60	500	650	Agile e rapido, questo ladro si muove con velocità impressionante. Sebbene abbia una difesa e un attacco più bassi, la sua mobilità lo rende perfetto per colpi rapidi e fughe strategiche	t
 spear_skeleton	40	45	20	450	250	Uno scheletro con una lancia	f
 gorgone viola	45	90	30	800	1000	Er boss	f
 warrior_skeleton	40	50	25	450	300	Uno scheletro	f
 werewolf	45	60	20	500	400	Un lupo	f
+wizard	45	100	70	1200	750	Un maestro delle arti magiche con un’enorme riserva di mana e punti vita. Equilibrato in velocità e difesa, è ideale per infliggere danni magici a distanza	t
+thief	80	75	65	500	750	Agile e rapido, questo ladro si muove con velocità impressionante. Sebbene abbia una difesa e un attacco più bassi, la sua mobilità lo rende perfetto per colpi rapidi e fughe strategiche	t
 \.
 
 
@@ -183,6 +183,10 @@ COPY public.score (time_taken, exp, life_left, boosts, kills, id, owner) FROM st
 --
 
 COPY public.session (id, key, expires_at) FROM stdin;
+463	FjBA1rR+yUGp58Ahci7VZPlcRAAePQnGJN1wjDCw+Ic=	2025-05-27 16:00:17.967488
+464	2ZSAJxkaxB7/0NelQ9G6vXuSPOBHvZy2kqrEP0Wgdn4=	2025-05-27 16:11:46.598087
+465	nl0887zqplRNHCgaIifVrvhmQ9HoprNdeQqPswHSi6U=	2025-05-27 16:12:07.630675
+466	aFwy75xAGdjhuHrL/Ux447f0K1j3NmHmw3kJ+e0KVHg=	2025-05-27 16:49:13.766001
 \.
 
 
@@ -206,7 +210,7 @@ SELECT pg_catalog.setval('public.score_id_seq', 1, false);
 -- Name: session_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.session_id_seq', 462, true);
+SELECT pg_catalog.setval('public.session_id_seq', 466, true);
 
 
 --

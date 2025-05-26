@@ -76,7 +76,7 @@ const isBossRoom = computed(() => gameHandler.value?.currentRoom === 5)
 const mappedPlayer = computed(() => {
     if (!player.value) return null
 
-    const player_value: Reactive<Player> = player.value
+    const player_value: Reactive<Player> = player.value        
 
     return {
         health: player.value.health,
@@ -93,7 +93,7 @@ const mappedPlayer = computed(() => {
 })
 
 const mappedBoss = computed(() => {
-    gameHandler.value?.time.value
+    gameHandler.value?.time
     const boss = gameHandler.value?.boss
     if (!boss) return null
 
@@ -184,7 +184,12 @@ onMounted(async () => {
     gameHandler.value.gameLoop(performance.now())
 })
 
-onUnmounted(() => {})
+onUnmounted(() => {
+    if (gameHandler.value) {
+        gameHandler.value.destructor()
+        gameHandler.value = null
+    }
+})
 </script>
 
 <style scoped>
