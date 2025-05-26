@@ -205,3 +205,17 @@ h1 {
   border: 1px solid #ccc;
   background-color: #222;
 }
+
+.grid {
+  display: grid;
+  place-items: center;
+}
+
+.controller-grid {
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, ifr);
+}
+
+.rounded-full {
+  border-radius: 50%;
+}

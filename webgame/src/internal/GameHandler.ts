@@ -55,6 +55,7 @@ export class GameHandler {
 
         window.addEventListener('keydown', (e) => {
             e.preventDefault()
+            console.debug("added")
             this.keys.add(e.key)
         })
 
@@ -63,6 +64,14 @@ export class GameHandler {
             this.keys.delete(e.key)
             if (this.keys.size === 0) this.player.idle()
         })
+    }
+
+    addKey(key: string) {
+        this.keys.add(key)
+    }
+
+    removeKey(key: string) {
+        this.keys.delete(key)
     }
 
     gameLoop(timestamp: number) {

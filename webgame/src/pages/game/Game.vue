@@ -68,7 +68,6 @@ const isMobile = ref(false)
 
 function checkMobile() {
     isMobile.value = window.innerWidth <= 768 || /Mobi|Android/i.test(navigator.userAgent)
-    console.log('isMobile:', isMobile.value)
 }
 
 onMounted(() => {
