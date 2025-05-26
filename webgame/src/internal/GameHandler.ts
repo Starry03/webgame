@@ -9,7 +9,8 @@ import { prefixed } from './cryptoutils'
 import { Spawner } from './spawner'
 import { Ai } from './ai'
 import { loadMapData } from '@/internal/mapLogic/engine/utils/BackgroundLayerUtils.ts'
-import {type Router, useRouter} from 'vue-router'
+import { type Router, useRouter } from 'vue-router'
+import { ref, type Ref } from 'vue'
 
 export class GameHandler {
     player: Entity
@@ -32,6 +33,10 @@ export class GameHandler {
     defeatedEnemies: number
     router: Router
     timeTaken: number
+    health: Ref<number>
+    mana: Ref<number>
+    time: number
+    isGameOver: Ref<boolean> = ref(false)
 
     constructor(player: Entity, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
         this.ctx = ctx
@@ -57,6 +62,9 @@ export class GameHandler {
         this.defeatedEnemies = 0
         this.router = useRouter()
         this.timeTaken = 0
+        this.time = 0
+        this.health = ref<number>(this.player.health)
+        this.mana = ref<number>(this.player.mana)
 
         window.addEventListener('keydown', (e) => {
             e.preventDefault()
@@ -70,7 +78,23 @@ export class GameHandler {
         })
     }
 
+    addKey(key: string) {
+        this.keys.add(key)
+        console.debug(key)
+    }
+
+    removeKey(key: string) {
+        this.keys.delete(key)
+    }
+
     gameLoop(timestamp: number) {
+        if (this.isGameOver.value) return
+
+        if (this.player.isDead || (this.boss && this.boss.isDead)) {
+            if (!this.isGameOver.value) this.isGameOver.value = true
+            return
+        }
+
         const deltaTime = (timestamp - this.lastTimeStamp) / 1000
         this.lastTimeStamp = timestamp
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
@@ -82,7 +106,9 @@ export class GameHandler {
         this.player.handleInput(this.keys, deltaTime)
         this.player.attack(this.keys)
         this.ai?.update(deltaTime)
-
+        this.health.value = this.player.health
+        this.mana.value = this.player.mana
+        this.time = performance.now() / 1000 - this.timeTaken
         this.gameObjects
             .filter((obj: Obj) => obj instanceof Entity)
             .forEach((obj: Entity) => obj.regenMana(deltaTime))
@@ -90,12 +116,11 @@ export class GameHandler {
             if (obj.selectedFrames == undefined) return
             obj.update(timestamp, deltaTime)
         })
-        requestAnimationFrame(this.gameLoop)
         if (this.isGameFinished()) {
             this.saveGameState()
             this.router.push('/stats')
-            return;
-        }
+            return
+        } else requestAnimationFrame(this.gameLoop)
     }
 
     changeRoom(room: number) {
@@ -109,6 +134,7 @@ export class GameHandler {
     }
 
     async initialize() {
+        this.timeTaken = performance.now() / 1000
         const room = this.currentRoom < 5 ? `room${this.currentRoom}` : 'boss_room'
         this.currentRoomPath = getRoomPath(room)
         this.bg_image = await loadMapData(this.currentRoomPath, room, this.canvas, this.ctx)
@@ -155,7 +181,24 @@ export class GameHandler {
 
         this.gameObjects = [...this.currentRoomObjects, this.player]
         if (this.currentRoom === 5) {
-            this.gameObjects.push(this.boss)
+            const bossStats: Character | undefined = this.availableCharacters.find(
+                (character: Character) => character.name === 'gorgone viola',
+            )
+            if (bossStats === undefined)
+                throw new Error('Boss character not found in available characters')
+            const bossEntity = new Gorg_red(
+                this.canvas,
+                this.ctx,
+                bossStats.speed,
+                bossStats.hp,
+                bossStats.mana,
+                bossStats.attack,
+                bossStats.defence,
+            )
+            this.boss = bossEntity
+            this.gameObjects.push(bossEntity)
+        } else {
+            this.boss = undefined
         }
         this.gameObjects.forEach((obj: Obj) => {
             obj.setup()
@@ -215,19 +258,16 @@ export class GameHandler {
         this.defeatedEnemies = defeatedEnemies
     }
 
-    isGameFinished():  boolean {
+    isGameFinished(): boolean {
         if ((this.boss && this.boss.isDead) || this.player.isDead) {
-            console.log("game is finished!")
-            return true;
-        }
-        else {
-            console.log("game!!!")
-            return false;
+            return true
+        } else {
+            return false
         }
     }
 
     getTimeTaken(): number {
-        return 0;
+        return 0
     }
 
     setTimeTaken(timeTaken: number) {
@@ -248,9 +288,8 @@ export class GameHandler {
             maxMana: this.player.maxMana,
             defeatedEnemies: this.getDefeatedEnemies(),
             usedEnhancement: this.getUsedEnhancement(),
-            timeTaken: this.getTimeTaken()
-        };
-        localStorage.setItem('gameState', JSON.stringify(gameState));
-        console.log("salvataggio completato!!")
+            timeTaken: this.time,
+        }
+        localStorage.setItem('gameState', JSON.stringify(gameState))
     }
 }

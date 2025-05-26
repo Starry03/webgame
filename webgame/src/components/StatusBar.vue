@@ -45,16 +45,17 @@ const props = defineProps({
         type: Number,
         required: true,
     },
-    stopTimer:{
-        type: Boolean,
-        default: false,
+    time: {
+        type: Object,
         required: false,
-    }
+        default: () => ref(0),
+    },
 })
 
 function formatTime(seconds: number): string {
-    const min = Math.floor(seconds / 60)
-    const sec = seconds % 60
+    const totalSeconds = Math.floor(seconds)
+    const min = Math.floor(totalSeconds / 60)
+    const sec = totalSeconds % 60
     return `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`
 }
 
@@ -63,13 +64,13 @@ let intervalId: number | undefined
 
 onMounted(() => {
     const start = Date.now()
-    intervalId = window.setInterval(() => {
+    /*intervalId = window.setInterval(() => {
         if (props.stopTimer) {
             if (intervalId) clearInterval(intervalId)
         }else{
             playTime.value = Math.floor((Date.now() - start) / 1000)
         }
-    }, 1000)
+    }, 1000)*/
 })
 
 onUnmounted(() => {
@@ -108,7 +109,7 @@ const getTime = () => {
         <div class="player-header">
             <span class="player-name">{{ username }}</span>
             <span class="player-level">Lv. {{ props.level }}</span>
-            <span class="player-time">{{ formatTime(playTime) }}</span>
+            <span class="player-time">{{ formatTime(props.time?.value ?? 0) }}</span>
         </div>
         <div class="bars-and-cooldowns">
             <div class="bars">
