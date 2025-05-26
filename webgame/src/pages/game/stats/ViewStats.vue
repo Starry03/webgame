@@ -1,45 +1,22 @@
 <script setup>
-console.log("view stats")
-const props = defineProps({
-    stats: {
-        type: Object,
-        required: true,
-    }
-})
+import StatsComponent from '@/components/StatsComponent.vue'
+import { onMounted, ref } from 'vue'
+import {updateStats} from '@/components/StatsComponent.vue'
+const stats = ref([])
+
+onMounted(() => updateStats())
+
 </script>
 
 <template>
-    <section id="level-stats">
+    <section id="view-game-stats">
         <h1>Game Stats</h1>
-        <div class="item-stats">
-            <h2>Time taken</h2>
-            <p>{{stats.timeTaken}}</p>
-        </div>
-        <div class="item-stats">
-            <h2>Level</h2>
-            <p>{{stats.level}}</p>
-        </div>
-        <div class="item-stats">
-            <h2>Used Enhancements</h2>
-            <p>{{stats.usedEnhancement}}</p>
-        </div>
-        <div class="item-stats">
-            <h2>Defeated enemies</h2>
-            <p>{{stats.defeatedEnemies}}</p>
-        </div>
-        <div class="item-stats">
-            <h2>Health</h2>
-            <p>{{stats.healthPercentage}}</p>
-        </div>
-        <div class="item-stats">
-            <h2>Mana</h2>
-            <p>{{stats.manaPercentage}}</p>
-        </div>
+        <StatsComponent />
     </section>
 </template>
 
 <style scoped>
-#level-stats {
+#view-game-stats {
     background-color: black;
     color: white;
     padding: 30px;
