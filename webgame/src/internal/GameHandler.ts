@@ -10,7 +10,7 @@ import { Spawner } from './spawner'
 import { Ai } from './ai'
 import { loadMapData } from '@/internal/mapLogic/engine/utils/BackgroundLayerUtils.ts'
 import { type Router, useRouter } from 'vue-router'
-import { reactive, shallowRef, ref, type ShallowRef, type Ref } from 'vue'
+import { ref, type Ref } from 'vue'
 
 export class GameHandler {
     player: Entity
