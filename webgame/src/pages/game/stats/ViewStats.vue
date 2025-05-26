@@ -1,7 +1,7 @@
 <script setup>
 import StatsComponent from '@/components/StatsComponent.vue'
 import { onMounted, ref } from 'vue'
-import { RequestWrapper } from '@/internal/cryptoutils.ts'
+import { RequestWrapper, prefixed } from '@/internal/cryptoutils.ts'
 import { buildEndpoint } from '@/internal/apiService.ts'
 
 
@@ -10,19 +10,13 @@ const stats = ref([])
 const fetchStats = async () => {
     try {
         const response = await RequestWrapper.cryptedFetch(buildEndpoint("/game/data/set_score"), {
-            method: "POST",
+            method: "GET",
             headers: {"accept": "application/json"},
-            body: JSON.stringify({
-                "timeTaken": localStorage.getItem('timeTaken'),
-                "level": localStorage.getItem('level'),
-                "health": localStorage.getItem('health'),
-                "mana": localStorage.getItem('mana'),
-                "defeatedEnemies": localStorage.getItem('defeatedEnemies'),
-                "usedEnhancements": localStorage.getItem('usedEnhancements'),
-            })
         })
         if (!response.ok) {
-            throw new Error(`Errore HTTP: ${response.status}`)
+            const errorBody = await response.text();
+            console.error("DEBUG - Raw errorBody from response.text():", errorBody);
+            throw new Error(`ViewStats: Errore HTTP nel recupero delle statistiche: ${response.status} - ${response.statusText}. Dettagli: ${errorBody}`);
         }
         stats.value = await response.json()
     }

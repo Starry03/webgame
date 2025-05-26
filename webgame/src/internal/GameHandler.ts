@@ -5,12 +5,13 @@ import type { Obj } from './Obj'
 import { Storage_e, Vector2, type Character } from './types'
 import { Collider } from './collision'
 import { Gorg_red } from './Gorg_red'
-import { prefixed } from './cryptoutils'
+import { prefixed, RequestWrapper } from './cryptoutils'
 import { Spawner } from './spawner'
 import { Ai } from './ai'
 import { loadMapData } from '@/internal/mapLogic/engine/utils/BackgroundLayerUtils.ts'
 import { type Router, useRouter } from 'vue-router'
 import { ref, type Ref } from 'vue'
+import { buildEndpoint } from '@/internal/apiService.ts'
 
 export class GameHandler {
     player: Entity
@@ -310,7 +311,36 @@ export class GameHandler {
             usedEnhancements: this.getUsedEnhancement(),
             timeTaken: this.time,
         }
-        localStorage.setItem('gameState', JSON.stringify(gameState))
+        localStorage.setItem(prefixed('gameState'), JSON.stringify(gameState))
+        this.sendGameStateToBackend(gameState)
+    }
+
+    private async sendGameStateToBackend(gameState: any) {
+        try {
+            const dataToSend = {
+                "timeTaken": gameState.timeTaken,
+                "level": gameState.level,
+                "health": gameState.health,
+                "mana": gameState.mana,
+                "defeatedEnemies": gameState.defeatedEnemies,
+                "usedEnhancements": gameState.usedEnhancements,
+            }
+            const response = await RequestWrapper.cryptedFetch(buildEndpoint("/game/data/set_score"), {
+                method: "POST",
+                headers: { "accept": "application/json" },
+                body: JSON.stringify(dataToSend),
+            });
+
+            if (!response.ok) {
+                throw new Error(`GameHandler: Errore HTTP nel salvataggio: ${response.status}`);
+            }
+
+            const responseData = await response.json();
+            console.log('response data', responseData);
+        }
+        catch (error) {
+            console.error('Errore durante invio dei dati al backend',error);
+        }
     }
 
 }
