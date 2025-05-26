@@ -162,11 +162,11 @@ warrior	60	85	85	400	800	Un combattente potente con una forza d’attacco eccezi
 plant	0	40	5	300	150	Una pianta	f
 archer_skeleton	20	65	10	450	200	Uno scheletro con un arco	f
 spear_skeleton	40	45	20	450	250	Uno scheletro con una lancia	f
-gorgone viola	45	90	30	800	1000	Er boss	f
 warrior_skeleton	40	50	25	450	300	Uno scheletro	f
 werewolf	45	60	20	500	400	Un lupo	f
 wizard	45	100	70	1200	750	Un maestro delle arti magiche con un’enorme riserva di mana e punti vita. Equilibrato in velocità e difesa, è ideale per infliggere danni magici a distanza	t
 thief	80	75	65	500	750	Agile e rapido, questo ladro si muove con velocità impressionante. Sebbene abbia una difesa e un attacco più bassi, la sua mobilità lo rende perfetto per colpi rapidi e fughe strategiche	t
+gorgone rossa	45	90	30	800	1000	Er boss	f
 \.
 
 
