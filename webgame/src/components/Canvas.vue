@@ -94,7 +94,7 @@ const mappedPlayer = computed(() => {
 
 const mappedBoss = computed(() => {
     gameHandler.value?.time.value
-    const boss = gameHandler.value?.boss.value
+    const boss = gameHandler.value?.boss
     if (!boss) return null
 
     return {
@@ -180,7 +180,6 @@ onMounted(async () => {
     }
     gameHandler.value = new GameHandler(player.value as Entity, canvas, ctx)
     await gameHandler.value.initialize()
-    triggerRef(gameHandler.value.boss)
     triggerRef(gameHandler)
     gameHandler.value.gameLoop(performance.now())
 })
