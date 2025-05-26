@@ -35,7 +35,7 @@ export class GameHandler {
     timeTaken: number
     health: Ref<number>
     mana: Ref<number>
-    time: Ref<number> = ref(0)
+    time: number
     isGameOver: Ref<boolean> = ref(false)
 
     constructor(player: Entity, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
@@ -62,6 +62,7 @@ export class GameHandler {
         this.defeatedEnemies = 0
         this.router = useRouter()
         this.timeTaken = 0
+        this.time = 0
         this.health = ref<number>(this.player.health)
         this.mana = ref<number>(this.player.mana)
 
@@ -107,7 +108,7 @@ export class GameHandler {
         this.ai?.update(deltaTime)
         this.health.value = this.player.health
         this.mana.value = this.player.mana
-        this.time.value = performance.now() / 1000 - this.timeTaken
+        this.time = performance.now() / 1000 - this.timeTaken
         this.gameObjects
             .filter((obj: Obj) => obj instanceof Entity)
             .forEach((obj: Entity) => obj.regenMana(deltaTime))
@@ -287,7 +288,7 @@ export class GameHandler {
             maxMana: this.player.maxMana,
             defeatedEnemies: this.getDefeatedEnemies(),
             usedEnhancement: this.getUsedEnhancement(),
-            timeTaken: this.time.value,
+            timeTaken: this.time,
         }
         localStorage.setItem('gameState', JSON.stringify(gameState))
     }
