@@ -75,6 +75,10 @@ async def set_score(
                 },
             )
             session.commit()
+            return JSONResponse(
+                content={"message": "Score saved successfully"},
+                status_code=HTTP_200_OK,
+            )
         except Exception as e:
             session.rollback()
             return JSONResponse(
