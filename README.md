@@ -24,144 +24,46 @@ pip install -r /path/to/requirements.txt
 
 ### Client
 
+env variables in `webgame/.env` file
+
+```sh
+VITE_SERVER_URL=
+VITE_PUBLIC_KEY_PATH=/auth/public-key
+VITE_LOGIN_PATH=/auth/login
+VITE_DELETE_PATH=/auth/delete
+VITE_REGISTER_PATH=/auth/register
+VITE_CLASSES_PATH=/game/data/classes
+```
+
+run
+
 ```sh
 cd ./webgame
+npm i
 npm run dev
 ```
 
 ### Server
 
+
+env variables in `backend/.env` file
+
 ```sh
-# temporary
+DB_NAME=
+DB_USER=
+DB_PORT=
+DB_PASSWORD=
+DB_HOST=
+JWT_SECRET=
+JWT_EXPIRES_IN_DAYS=1
+JWT_ALGORITHM=HS256
+HASH_SALT=
+```
+
+run
+
+```sh
 cd ./backend
-# .venv/bin/uvicorn
 uvicorn app.main:app --reload --host=0.0.0.0
-```
-
-## Info
-
-### Menu
-
-- levels overview
-
-### Game UI
-
-- map preview (small -> big on click)
-- players stats
-
-### Player
-
-- hp
-- attack
-- def
-- mana points
-- speed
-- exp
-
-### Objects
-
-- potions
-  - health 70%
-  - mana 100%
-- stat boosters
-  - atk 3%
-  - def 3%
-- compass (default)
-
-### Enemies
-
-- wizard
-  - mano() -----> enemy
-- soldier
-- tank
-- healer
-
-### Boss
-
-- all-abilities
-
-## To-do (Menu)
-
-### Ivan
-
-- [x] page scelta personaggio -> mergiamo
-- [x] statistiche (frontend)
-- [ ] statistiche (request)
-
-### Lorenzo
-
-- [x] login
-
-### Starry
-
-- [ ] endpoint statistiche
-- [x] endpoint classi
-- [x] download font
-
-## To-do (Game)
-
-### Ivan
-
-- [ ] animazioni
-- [ ] generazione
-  - richiesta server items
-  - logica generazione stanza (quantità ecc)
-    - classe Obj()
-      - sprite (in accordo con animazioni)
-      - pos
-      - dim
-      - render(sprite)
-      - animate()
-      - move()
-    - classe Livello
-    - classe stanza (dimensione, lista items, stanze vicine == porte)
-
-### Lorenzo
-
-- [ ] animazioni
-- [ ] sprite
-
-### Starry
-
-- [ ] collisioni
-- [ ] gioco orizzontale (mobile)
-
-## Style
-
-- no margin
-- flex, grid
-
-### Index css
-
-- font
-- testi
-- button
-- colors
-
-### Vue style
-
-- responsive
-- altro
-
-## Debug mappe
-
-Accesso ai tileset delle stanze: modificare settings.json relativo alle impostazioni utente
-
-```sh
-"files.associations": {
-  "*.tsx": "xml"
-}
-```
-
-Decoding di zlib+base64, usato nella creazione delle stanze
-
-```sh
-npm install pako
-```
-
-Se TypeScript continua a non riconoscere pako, è possibile installare i tipi:
-
-```sh
-npm install @types/pako
-
+# or .venv/bin/uvicorn
 ```
