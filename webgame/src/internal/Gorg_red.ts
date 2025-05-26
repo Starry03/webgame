@@ -13,7 +13,7 @@ export class Gorg_red extends Entity {
     ) {
         super(canvas, ctx, speed, health, mana, attackPower, defense)
         this.name = 'Gorgone Rossa'
-        this.pos = new Vector2(400, 200)
+        this.pos = new Vector2(450, 200)
         this.custom_properties = { collidable: true }
         this.framePaths = {
             run: [

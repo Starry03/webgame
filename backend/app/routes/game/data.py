@@ -61,19 +61,24 @@ async def set_score(
             user_id = user_id[0]
             session.execute(
                 text(
-                    "INSERT INTO public.score (owner, time_taken, exp, life_left, boosts, kills) "
-                    "VALUES (:owner, :time_taken, :exp, :life_left, :boosts, :kills)"
+                    """INSERT INTO public.score (owner, timeTaken, level, usedEnhancments, defeatedEnemies, health, mana)
+                    VALUES (:owner, :timeTaken, :level, :usedEnhancments, :defeatedEnemies, :health, :mana)"""
                 ),
                 {
                     "owner": user_id,
-                    "time_taken": body.time_taken,
-                    "exp": body.exp,
-                    "life_left": body.life_left,
-                    "boosts": body.boosts,
-                    "kills": body.kills,
+                    "timeTaken": body.timeTaken,
+                    "level": body.level,
+                    "usedEnhancments": body.usedEnhancments,
+                    "defeatedEnemies": body.defeatedEnemies,
+                    "health": body.health,
+                    "mana": body.mana,
                 },
             )
             session.commit()
+            return JSONResponse(
+                content={"message": "Score saved successfully"},
+                status_code=HTTP_200_OK,
+            )
         except Exception as e:
             session.rollback()
             return JSONResponse(

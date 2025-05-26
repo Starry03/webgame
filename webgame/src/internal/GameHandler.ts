@@ -24,7 +24,7 @@ export class GameHandler {
     currentRoomObjects: Obj[]
     baseMapDim: Vector2 = new Vector2(800, 416)
     gameObjects: Obj[]
-    boss: Entity | undefined
+    boss: Ref<Entity | undefined>
     availableCharacters: Character[]
     currentRoom: number
     spawner: Spawner | null
@@ -59,7 +59,7 @@ export class GameHandler {
         this.bg_image = null
         this.gameObjects = []
         this.currentRoom = 1
-        this.boss = undefined
+        this.boss = ref(undefined)
         this.spawner = null
         this.ai = null
         this.usedEnhancement = 0
@@ -101,7 +101,7 @@ export class GameHandler {
             return
         }
 
-        if (this.player.isDead || (this.boss && this.boss.isDead)) {
+        if (this.player.isDead || (this.boss && this.boss.value && this.boss.value.isDead)) {
             if (!this.isGameOver.value) this.isGameOver.value = true
             this.saveGameState()
             this.destructor()
@@ -190,11 +190,11 @@ export class GameHandler {
         })
 
         const bossStats: Character | undefined = this.availableCharacters.find(
-            (character: Character) => character.name === 'gorgone viola',
+            (character: Character) => character.name === 'gorgone rossa',
         )
         if (bossStats === undefined)
             throw new Error('Boss character not found in available characters')
-        this.boss = new Gorg_red(
+        this.boss.value = new Gorg_red(
             this.canvas,
             this.ctx,
             bossStats.speed,
@@ -207,7 +207,7 @@ export class GameHandler {
         this.gameObjects = [...this.currentRoomObjects, this.player]
         if (this.currentRoom === 5) {
             const bossStats: Character | undefined = this.availableCharacters.find(
-                (character: Character) => character.name === 'gorgone viola',
+                (character: Character) => character.name === 'gorgone rossa',
             )
             if (bossStats === undefined)
                 throw new Error('Boss character not found in available characters')
@@ -220,10 +220,10 @@ export class GameHandler {
                 bossStats.attack,
                 bossStats.defence,
             )
-            this.boss = bossEntity
+            this.boss.value = bossEntity
             this.gameObjects.push(bossEntity)
         } else {
-            this.boss = undefined
+            this.boss.value = undefined
         }
         this.gameObjects.forEach((obj: Obj) => {
             obj.setup()
@@ -281,6 +281,15 @@ export class GameHandler {
 
     setDefeatedEnemies(defeatedEnemies: number) {
         this.defeatedEnemies = defeatedEnemies
+    }
+
+    isGameFinished(): boolean {
+        if ((this.boss && this.boss.value && this.boss.value.isDead) || this.player.isDead) {
+            console.log('game is finished!')
+            return true
+        } else {
+            return false
+        }
     }
 
     getTimeTaken(): string {

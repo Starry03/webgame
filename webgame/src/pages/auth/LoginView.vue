@@ -1,11 +1,6 @@
 <template>
     <div class="master flex flex-center">
-        <button
-            class="button button-secondary button-home"
-            @click="goHome"
-        >
-            home
-        </button>
+        <button class="button button-secondary button-home" @click="goHome">home</button>
         <div class="container flex flex-center flex-row gap-big">
             <img src="/assets/images/disegno.webp" alt="Logo" class="logo flex-grow" />
             <div id="cnt" class="flex flex-center flex-column gap-big flex-grow">
@@ -77,10 +72,9 @@ const router = useRouter()
 async function goHome() {
     try {
         AESUtils.read()
-        router.push("/")
-    }
-    catch(e) {
-        window.alert("non sei loggato")
+        router.push('/')
+    } catch (e) {
+        window.alert('non sei loggato')
     }
 }
 
@@ -105,6 +99,7 @@ async function process_session(req: { session: Session; token: Token }) {
     session.sym_key = RSAUtils.decrypt(session.sym_key)
     AESUtils.save(session, token)
     isLogging.value = false
+    SessionUtils.saveUser({ username: username.value } as User)
     await router.push('/')
 }
 
@@ -114,7 +109,6 @@ async function login() {
     try {
         const req = await main_req(import.meta.env.VITE_LOGIN_PATH)
         await process_session(req)
-        SessionUtils.saveUser({ username: username.value } as User)
     } catch (error) {
         isLogging.value = false
         login_error.value = error as Error
@@ -128,7 +122,6 @@ async function register() {
     try {
         const req = await main_req(import.meta.env.VITE_REGISTER_PATH)
         await process_session(req)
-        SessionUtils.saveUser({ username: username.value } as User)
     } catch (error) {
         isLogging.value = false
         login_error.value = error as Error
