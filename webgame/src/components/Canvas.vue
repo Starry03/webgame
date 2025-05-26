@@ -93,7 +93,7 @@ const mappedPlayer = computed(() => {
 })
 
 const mappedBoss = computed(() => {
-    gameHandler.value?.time.value
+    gameHandler.value?.time
     const boss = gameHandler.value?.boss
     if (!boss) return null
 

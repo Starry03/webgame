@@ -47,9 +47,8 @@ const props = defineProps({
         required: true,
     },
     time: {
-        type: Object,
-        required: false,
-        default: () => ref(0),
+        type: Number,
+        required: true,
     },
 })
 
@@ -95,7 +94,7 @@ const username = storedUser ? JSON.parse(storedUser)?.username ?? 'Player' : 'Pl
         <div class="player-header">
             <span class="player-name">{{ username }}</span>
             <span class="player-level">Lv. {{ exptolev(props.level) }}</span>
-            <span class="player-time">{{ formatTime(props.time?.value ?? 0) }}</span>
+            <span class="player-time">{{ formatTime(props.time) }}</span>
         </div>
         <div class="bars-and-cooldowns">
             <div class="bars">

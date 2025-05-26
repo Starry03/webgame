@@ -34,6 +34,7 @@ export class GameHandler {
     router: Router
     health: Ref<number>
     mana: Ref<number>
+    timeTaken: number
     time: number
     isGameOver: Ref<boolean> = ref(false)
 
@@ -62,7 +63,7 @@ export class GameHandler {
         this.defeatedEnemies = 0
         this.router = useRouter()
         this.timeTaken = 0
-        this.time = 0
+        this.time = 0 
         this.health = ref<number>(this.player.health)
         this.mana = ref<number>(this.player.mana)
 
@@ -136,7 +137,7 @@ export class GameHandler {
         this.timeTaken = performance.now() / 1000
         const room = this.currentRoom < 5 ? `room${this.currentRoom}` : 'boss_room'
         this.currentRoomPath = getRoomPath(room)
-        if(this.currentRoom == 1) this.time = ref(0)
+        if(this.currentRoom == 1) this.time = 0
         this.bg_image = await loadMapData(this.currentRoomPath, room, this.canvas, this.ctx)
         this.currentRoomObjects = (await loadMapObjects(
             room,
@@ -261,7 +262,6 @@ export class GameHandler {
     isGameFinished(): boolean {
         if ((this.boss && this.boss.isDead) || this.player.isDead) {
             console.log('game is finished!')
-            this.isGameOver.value = true
             return true
         } else {
             return false
@@ -269,7 +269,7 @@ export class GameHandler {
     }
 
     getTimeTaken(): string {
-        const totalSeconds = Math.floor(this.time.value)
+        const totalSeconds = Math.floor(this.time)
         const min = Math.floor(totalSeconds / 60)
         const sec = totalSeconds % 60
         return `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`
