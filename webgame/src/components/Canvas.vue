@@ -184,7 +184,6 @@ onMounted(async () => {
     gameHandler.value.gameLoop(performance.now())
 })
 
-onUnmounted(() => {})
 </script>
 
 <style scoped>
