@@ -184,7 +184,12 @@ onMounted(async () => {
     gameHandler.value.gameLoop(performance.now())
 })
 
-onUnmounted(() => {})
+onUnmounted(() => {
+    if (gameHandler.value) {
+        gameHandler.value.destructor()
+        gameHandler.value = null
+    }
+})
 </script>
 
 <style scoped>

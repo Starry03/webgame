@@ -4,6 +4,7 @@ import { computed, defineProps, onMounted, onUnmounted, ref, type Ref } from 'vu
 import Filler from './Filler.vue'
 import { Storage_e } from '@/internal/types'
 import { GameHandler } from '@/internal/GameHandler'
+import { prefixed } from '@/internal/cryptoutils'
 
 const props = defineProps({
     health: {
@@ -84,8 +85,8 @@ const manaPercentage = computed(() => {
     return isNaN(percentage) || percentage < 0 ? 0 : percentage
 })
 
-const storedUser = localStorage.getItem(Storage_e.USER)
-const username = storedUser ? JSON.parse(storedUser)?.username ?? 'Player' : 'Player'
+const storedUser = localStorage.getItem(prefixed(Storage_e.USER))
+const username = storedUser ? JSON.parse(storedUser)?.username : 'Player'
 
 </script>
 
@@ -93,7 +94,7 @@ const username = storedUser ? JSON.parse(storedUser)?.username ?? 'Player' : 'Pl
     <div class="status-bar flex flex-col gap-mid">
         <div class="player-header">
             <span class="player-name">{{ username }}</span>
-            <span class="player-level">Lv. {{ exptolev(props.level) }}</span>
+            <span class="player-level">Lv. {{ exptolev(props.level) + 1 }}</span>
             <span class="player-time">{{ formatTime(props.time) }}</span>
         </div>
         <div class="bars-and-cooldowns">

@@ -64,7 +64,7 @@ export class Player extends Entity {
 
         super.enterInteraction(collision)
     }
-
+    
     exitInteraction(collision: CollisionInfo): void {
         if (this.interactedObjects.size > 1) {
             const closestObj = this.getClosestInteractableObj()
