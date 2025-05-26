@@ -3,6 +3,8 @@ import ProgressBar from './ProgressBar.vue'
 import { computed, defineProps, onMounted, onUnmounted, ref, type Ref } from 'vue'
 import Filler from './Filler.vue'
 import { Storage_e } from '@/internal/types'
+import { GameHandler } from '@/internal/GameHandler'
+import { prefixed } from '@/internal/cryptoutils'
 
 const props = defineProps({
     health: {
@@ -25,7 +27,7 @@ const props = defineProps({
     },
     level: {
         type: Number,
-        default: 1,
+        default: 0,
     },
     cooldownQ: {
         type: Object as () => Ref<number>,
@@ -46,9 +48,8 @@ const props = defineProps({
         required: true,
     },
     time: {
-        type: Object,
-        required: false,
-        default: () => ref(0),
+        type: Number,
+        required: true,
     },
 })
 
@@ -59,18 +60,15 @@ function formatTime(seconds: number): string {
     return `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`
 }
 
+function exptolev(exp: number) : number{
+    return Math.floor(exp/100)
+}
+
 const playTime = ref(0)
 let intervalId: number | undefined
 
 onMounted(() => {
     const start = Date.now()
-    /*intervalId = window.setInterval(() => {
-        if (props.stopTimer) {
-            if (intervalId) clearInterval(intervalId)
-        }else{
-            playTime.value = Math.floor((Date.now() - start) / 1000)
-        }
-    }, 1000)*/
 })
 
 onUnmounted(() => {
@@ -87,20 +85,8 @@ const manaPercentage = computed(() => {
     return isNaN(percentage) || percentage < 0 ? 0 : percentage
 })
 
-const storedUser = localStorage.getItem(Storage_e.USER)
-const username = storedUser ? JSON.parse(storedUser)?.username ?? 'Player' : 'Player'
-
-const getHealthPercentage = () => {
-    return healthPercentage.value
-}
-
-const getManaPercentage = () => {
-    return manaPercentage.value
-}
-
-const getTime = () => {
-    return intervalId
-}
+const storedUser = localStorage.getItem(prefixed(Storage_e.USER))
+const username = storedUser ? JSON.parse(storedUser)?.username : 'Player'
 
 </script>
 
@@ -108,8 +94,8 @@ const getTime = () => {
     <div class="status-bar flex flex-col gap-mid">
         <div class="player-header">
             <span class="player-name">{{ username }}</span>
-            <span class="player-level">Lv. {{ props.level }}</span>
-            <span class="player-time">{{ formatTime(props.time?.value ?? 0) }}</span>
+            <span class="player-level">Lv. {{ exptolev(props.level) + 1 }}</span>
+            <span class="player-time">{{ formatTime(props.time) }}</span>
         </div>
         <div class="bars-and-cooldowns">
             <div class="bars">

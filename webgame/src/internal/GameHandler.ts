@@ -32,11 +32,14 @@ export class GameHandler {
     usedEnhancement: number
     defeatedEnemies: number
     router: Router
-    timeTaken: number
     health: Ref<number>
     mana: Ref<number>
+    timeTaken: number
     time: number
     isGameOver: Ref<boolean> = ref(false)
+    private listener: (e: KeyboardEvent) => void
+    private listenerhandler: (e: KeyboardEvent) => void
+    private frameId: number | null = null
 
     constructor(player: Entity, canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
         this.ctx = ctx
@@ -56,26 +59,29 @@ export class GameHandler {
         this.bg_image = null
         this.gameObjects = []
         this.currentRoom = 1
+        this.boss = undefined
         this.spawner = null
         this.ai = null
         this.usedEnhancement = 0
         this.defeatedEnemies = 0
         this.router = useRouter()
         this.timeTaken = 0
-        this.time = 0
+        this.time = 0 
         this.health = ref<number>(this.player.health)
         this.mana = ref<number>(this.player.mana)
-
-        window.addEventListener('keydown', (e) => {
+        this.listener = (e: KeyboardEvent) => {
             e.preventDefault()
             this.keys.add(e.key)
-        })
-
-        window.addEventListener('keyup', (e) => {
+        }
+        this.listenerhandler = (e: KeyboardEvent) => {
             e.preventDefault()
             this.keys.delete(e.key)
             if (this.keys.size === 0) this.player.idle()
-        })
+        }
+
+        window.addEventListener('keydown', this.listener)
+
+        window.addEventListener('keyup', this.listenerhandler)
     }
 
     addKey(key: string) {
@@ -88,11 +94,18 @@ export class GameHandler {
     }
 
     gameLoop(timestamp: number) {
-        if (this.isGameOver.value) return
+        if (this.isGameOver.value) {
+            this.saveGameState()
+            this.destructor()
+            this.router.push('/stats')
+            return
+        }
 
         if (this.player.isDead || (this.boss && this.boss.isDead)) {
             if (!this.isGameOver.value) this.isGameOver.value = true
-            return
+            this.saveGameState()
+            this.destructor()
+            this.router.push('/stats')
         }
 
         const deltaTime = (timestamp - this.lastTimeStamp) / 1000
@@ -116,11 +129,18 @@ export class GameHandler {
             if (obj.selectedFrames == undefined) return
             obj.update(timestamp, deltaTime)
         })
-        if (this.isGameFinished()) {
-            this.saveGameState()
-            this.router.push('/stats')
-            return
-        } else requestAnimationFrame(this.gameLoop)
+        
+        this.frameId = requestAnimationFrame(this.gameLoop)
+    }
+
+    destructor() {
+        window.removeEventListener('keydown', this.listener)
+        window.removeEventListener('keyup', this.listenerhandler)
+        if(this.frameId) {
+            cancelAnimationFrame(this.frameId)
+            this.frameId = null
+        }
+
     }
 
     changeRoom(room: number) {
@@ -128,7 +148,6 @@ export class GameHandler {
         this.gameObjects.forEach((obj: Obj) => obj.resetCollisions())
         this.currentRoomObjects = []
         this.gameObjects = []
-        this.boss = undefined
         this.bg_image = null
         this.initialize()
     }
@@ -137,6 +156,12 @@ export class GameHandler {
         this.timeTaken = performance.now() / 1000
         const room = this.currentRoom < 5 ? `room${this.currentRoom}` : 'boss_room'
         this.currentRoomPath = getRoomPath(room)
+
+        if(this.currentRoom == 1) {
+            this.time = 0
+            this.player.health = this.player.maxHealth
+            this.health.value = this.player.maxHealth
+        }
         this.bg_image = await loadMapData(this.currentRoomPath, room, this.canvas, this.ctx)
         this.currentRoomObjects = (await loadMapObjects(
             room,
@@ -235,7 +260,7 @@ export class GameHandler {
     }
 
     getCurrentLevel(): number {
-        return this.currentRoom
+        return this.player.exp
     }
 
     setCurrentLevel(level: number) {
@@ -260,18 +285,18 @@ export class GameHandler {
 
     isGameFinished(): boolean {
         if ((this.boss && this.boss.isDead) || this.player.isDead) {
+            console.log('game is finished!')
             return true
         } else {
             return false
         }
     }
 
-    getTimeTaken(): number {
-        return 0
-    }
-
-    setTimeTaken(timeTaken: number) {
-        this.timeTaken = timeTaken
+    getTimeTaken(): string {
+        const totalSeconds = Math.floor(this.time)
+        const min = Math.floor(totalSeconds / 60)
+        const sec = totalSeconds % 60
+        return `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`
     }
 
     saveGameState() {
@@ -292,4 +317,5 @@ export class GameHandler {
         }
         localStorage.setItem('gameState', JSON.stringify(gameState))
     }
+
 }
