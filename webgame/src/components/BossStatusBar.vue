@@ -49,7 +49,7 @@ onMounted(() => {
     if (chars) {
         try {
             const arr = JSON.parse(chars)
-            const bossObj = arr.find((c: any) => c.name === 'gorgone rossa' || c.name === 'gorgone viola')
+            const bossObj = arr.find((c: any) => c.name === 'gorgone rossa')
             bossName.value = bossObj?.displayName || bossObj?.name || 'Boss'
         } catch (e) {
             bossName.value = 'Boss'
