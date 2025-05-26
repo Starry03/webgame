@@ -1,6 +1,11 @@
 <template>
     <div class="master flex flex-center">
-        <button class="button button-secondary button-home" @click="$router.push('/')">home</button>
+        <button
+            class="button button-secondary button-home"
+            @click="goHome"
+        >
+            home
+        </button>
         <div class="container flex flex-center flex-row gap-big">
             <img src="/assets/images/disegno.webp" alt="Logo" class="logo flex-grow" />
             <div id="cnt" class="flex flex-center flex-column gap-big flex-grow">
@@ -69,6 +74,16 @@ const password = ref<string>('')
 const login_error = ref<Error | null>(null)
 const router = useRouter()
 
+async function goHome() {
+    try {
+        AESUtils.read()
+        router.push("/")
+    }
+    catch(e) {
+        window.alert("non sei loggato")
+    }
+}
+
 async function main_req(path: string): Promise<{ session: Session; token: Token }> {
     const f = await AuthService.login(path, username.value, password.value)
     if (f.status === 409) throw new Error('User already exists')
@@ -130,7 +145,7 @@ async function delete_account() {
         console.error(error)
         login_error.value = error as Error
     }
-    window.alert("user deleted")
+    window.alert('user deleted')
     isLogging.value = false
 }
 </script>

@@ -43,6 +43,7 @@
         </div>
     </div>
     <div class="canvas-wrapper">
+        <Controller v-if="isMobile && gameHandler" :handler="gameHandler"/>
         <canvas ref="canvasRef" id="canvas" :width="800" :height="416" />
     </div>
 </template>
@@ -59,11 +60,18 @@ import StatusBar from '@/components/StatusBar.vue'
 import type { Player } from '@/internal/player'
 import BossStatusBar from '@/components/BossStatusBar.vue'
 import type { Entity } from '@/internal/Entity'
-import { time } from 'console'
+import Controller from '@/components/Controller.vue'
 
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 const gameHandler = shallowRef<GameHandler | null>(null)
 const player = ref<Player | null>(null)
+const isMobile = ref(false)
+
+function checkMobile() {
+    isMobile.value = window.innerWidth <= 768 || /Mobi|Android/i.test(navigator.userAgent)
+}
+
+const isBossRoom = computed(() => gameHandler.value?.currentRoom === 5)
 
 const mappedPlayer = computed(() => {
     if (!player.value) return null
@@ -86,7 +94,7 @@ const mappedPlayer = computed(() => {
 
 const mappedBoss = computed(() => {
     gameHandler.value?.time.value
-    const boss = gameHandler.value?.boss.value
+    const boss = gameHandler.value?.boss
     if (!boss) return null
 
     return {
@@ -94,7 +102,8 @@ const mappedBoss = computed(() => {
         maxHealth: boss.maxHealth,
         mana: boss.mana,
         maxMana: boss.maxMana,
-        cooldownQ: boss.cooldowns.get(AnimationType.ATTACK_2) ?? ref(0),
+        level: boss.exp,
+        cooldownQ: boss.cooldowns.get(AnimationType.ATTACK_2),
         maxCooldownQ: boss.maxCooldownQ,
         cooldownR: boss.cooldowns.get(AnimationType.SPECIAL) ?? ref(0),
         maxCooldownR: boss.maxCooldownR,
@@ -104,6 +113,8 @@ const mappedBoss = computed(() => {
 onMounted(async () => {
     const character = localStorage.getItem(prefixed(Storage_e.SELECTED_CHARACTER))
     const characterObject: Character = JSON.parse(character || '{}')
+
+    checkMobile()
 
     const canvas = canvasRef.value
     if (!canvas) {
@@ -169,7 +180,6 @@ onMounted(async () => {
     }
     gameHandler.value = new GameHandler(player.value as Entity, canvas, ctx)
     await gameHandler.value.initialize()
-    triggerRef(gameHandler.value.boss)
     triggerRef(gameHandler)
     gameHandler.value.gameLoop(performance.now())
 })
@@ -189,7 +199,6 @@ onUnmounted(() => {})
     border-bottom: 2px solid #444;
     margin: 0 auto;
 }
-
 
 .status {
     flex: 1 1 0;
@@ -248,17 +257,17 @@ onUnmounted(() => {})
 
 @media (max-width: 900px), (max-height: 500px) {
     #game-header {
-        max-width: 99vw;   
+        max-width: 99vw;
         width: 100vw;
         margin: 0 auto;
         padding: 5px;
     }
 
-    .canvas-wrapper, #canvas {
+    .canvas-wrapper,
+    #canvas {
         max-width: 99vw;
     }
 }
-
 
 @media (max-width: 768px) and (height <= 500px) {
     #game-header {
@@ -273,7 +282,6 @@ onUnmounted(() => {})
     .boss-status {
         font-size: 0.9em;
     }
-
 }
 
 @media (max-width: 900px), (max-height: 500px) {
@@ -281,8 +289,8 @@ onUnmounted(() => {})
         max-height: 60vh;
     }
 
-    .status-col{
-        max-width: 48vw;;
+    .status-col {
+        max-width: 48vw;
     }
 
     #canvas {
@@ -306,7 +314,8 @@ onUnmounted(() => {})
         border-bottom: 2px solid #444;
     }
 
-    #player-status, #boss-status {
+    #player-status,
+    #boss-status {
         width: 100vw;
         max-width: 200vw;
         display: flex;
@@ -391,7 +400,9 @@ onUnmounted(() => {})
     font-family: 'Press Start 2P', cursive;
     font-size: 0.8rem;
     color: gold;
-    text-shadow: 0 0 8px #fff, 0 0 16px #f93200;
+    text-shadow:
+        0 0 8px #fff,
+        0 0 16px #f93200;
     animation: vs-scale 1s infinite alternate;
     padding: 0 0.5em;
     border: none;
@@ -404,7 +415,11 @@ onUnmounted(() => {})
 }
 
 @keyframes vs-scale {
-    0% { transform: scale(1); }
-    100% { transform: scale(1.35); }
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.35);
+    }
 }
 </style>
