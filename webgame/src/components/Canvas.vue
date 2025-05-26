@@ -76,7 +76,7 @@ const isBossRoom = computed(() => gameHandler.value?.currentRoom === 5)
 const mappedPlayer = computed(() => {
     if (!player.value) return null
 
-    const player_value: Reactive<Player> = player.value
+    const player_value: Reactive<Player> = player.value        
 
     return {
         health: player.value.health,
