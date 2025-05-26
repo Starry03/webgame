@@ -21,10 +21,8 @@ export class Ai {
     }
 
     heuristic(pos: Vector2, dir: Vector2, a: Entity, goal: Entity): number {
-        if (!a.canMove(pos, dir)) {
-            console.debug('works')
-            return 9999999999
-        }
+        if (!a.canMove(pos, dir)) return 9999999999
+
         const dx = goal.pos.x - pos.x
         const dy = goal.pos.y - pos.y
         const dist = Math.sqrt(dx * dx + dy * dy)

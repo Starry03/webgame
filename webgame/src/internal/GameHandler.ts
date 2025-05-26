@@ -55,7 +55,6 @@ export class GameHandler {
 
         window.addEventListener('keydown', (e) => {
             e.preventDefault()
-            console.debug("added")
             this.keys.add(e.key)
         })
 

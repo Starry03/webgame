@@ -15,7 +15,6 @@ const props = defineProps({
 })
 
 const p = () => {
-    console.debug('ciao')
     props.press()
 }
 </script>
@@ -28,7 +27,7 @@ const p = () => {
             height: '48px',
             fontSize: 'var(--font-mid)',
         }"
-        @mousedown="p"
+        @mousedown="p()"
         @mouseup="props.release()"
     >
         {{ text }}

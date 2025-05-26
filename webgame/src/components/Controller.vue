@@ -2,6 +2,7 @@
 import { GameHandler } from '@/internal/GameHandler'
 import ControllerButton from './ControllerButton.vue'
 import StarLayout from './StarLayout.vue'
+import { onMounted } from 'vue'
 
 const props = defineProps({
     handler: {
