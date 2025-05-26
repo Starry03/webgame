@@ -66,7 +66,7 @@ export class GameHandler {
         this.defeatedEnemies = 0
         this.router = useRouter()
         this.timeTaken = 0
-        this.time = 0 
+        this.time = 0
         this.health = ref<number>(this.player.health)
         this.mana = ref<number>(this.player.mana)
         this.listener = (e: KeyboardEvent) => {
@@ -129,7 +129,7 @@ export class GameHandler {
             if (obj.selectedFrames == undefined) return
             obj.update(timestamp, deltaTime)
         })
-        
+
         this.frameId = requestAnimationFrame(this.gameLoop)
     }
 
@@ -283,15 +283,6 @@ export class GameHandler {
         this.defeatedEnemies = defeatedEnemies
     }
 
-    isGameFinished(): boolean {
-        if ((this.boss && this.boss.isDead) || this.player.isDead) {
-            console.log('game is finished!')
-            return true
-        } else {
-            return false
-        }
-    }
-
     getTimeTaken(): string {
         const totalSeconds = Math.floor(this.time)
         const min = Math.floor(totalSeconds / 60)
@@ -304,15 +295,10 @@ export class GameHandler {
 
         const gameState = {
             level: this.getCurrentLevel(),
-            playerSpeed: this.player.speed,
-            playerAttack: this.player.attack,
-            playerDefense: this.player.defense,
             health: this.player.health,
-            maxHealth: this.player.maxHealth,
             mana: this.player.mana,
-            maxMana: this.player.maxMana,
             defeatedEnemies: this.getDefeatedEnemies(),
-            usedEnhancement: this.getUsedEnhancement(),
+            usedEnhancements: this.getUsedEnhancement(),
             timeTaken: this.time,
         }
         localStorage.setItem('gameState', JSON.stringify(gameState))

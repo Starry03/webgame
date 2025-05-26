@@ -1,64 +1,37 @@
 <script setup>
-import { onMounted, reactive, ref } from 'vue'
-import { GameHandler } from '@/internal/GameHandler'
-import { Player } from '@/internal/player'
-import { Vector2 } from '@/internal/types.ts'
-import ViewStats from '@/pages/game/stats/ViewStats.vue'
 
-const stats = reactive({
-    timeTaken: 0,
-    usedEnhancement: 0,
-    defeatedEnemies: 0,
-    healthPercentage: 0,
-    manaPercentage: 0,
-    level: 0,
+const props = defineProps({
+    stats: Object,
+    required: true
 })
 
-const updateStats = () => {
-    const storedStats = JSON.parse(localStorage.getItem('gameStats') || '{}')
-    console.log('extraction complete!')
-    stats.timeTaken = storedStats.timeTaken || 0
-    stats.usedEnhancement = storedStats.usedEnhancement || 0
-    stats.defeatedEnemies = storedStats.defeatedEnemies || 0
-    stats.healthPercentage = storedStats.healthPercentage || 0
-    stats.manaPercentage = storedStats.manaPercentage || 0
-    stats.level = storedStats.level || 0
-}
-
-onMounted(() => {
-    updateStats()
-
-    defineExpose({
-        refreshState: updateStats
-    })
-})
 </script>
 
 <template>
     <section id="level-stats">
         <div class="item-stats">
             <h2>Time taken</h2>
-            <p id="time-taken">{{ stats.timeTaken }}</p>
+            <p id="time-taken">{{ props.timeTaken }}</p>
         </div>
         <div class="item-stats">
             <h2>Level</h2>
-            <p id="level">{{ stats.level }}</p>
+            <p id="level">{{ props.level }}</p>
         </div>
         <div class="item-stats">
             <h2>Used Enhancements</h2>
-            <p id="used-enhancement">{{ stats.usedEnhancement }}</p>
+            <p id="used-enhancement">{{ props.usedEnhancement }}</p>
         </div>
         <div class="item-stats">
             <h2>Defeated enemies</h2>
-            <p id="defeated-enemies">{{ stats.defeatedEnemies }}</p>
+            <p id="defeated-enemies">{{ props.defeatedEnemies }}</p>
         </div>
         <div class="item-stats">
             <h2>Health</h2>
-            <p id="health-percentage">{{ stats.healthPercentage }}</p>
+            <p id="health-percentage">{{ props.healthPercentage }}</p>
         </div>
         <div class="item-stats">
             <h2>Mana</h2>
-            <p id="mana-percentage">{{ stats.manaPercentage }}</p>
+            <p id="mana-percentage">{{ props.manaPercentage }}</p>
         </div>
     </section>
 </template>
@@ -75,12 +48,6 @@ h1 {
     color: white;
     font-size: 1.2em;
     font-family: 'Press Start 2P', cursive;
-}
-
-label {
-    font-weight: bold;
-    color: white;
-    font-size: 1.2em;
 }
 
 p {

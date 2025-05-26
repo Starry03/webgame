@@ -1,15 +1,48 @@
 <script setup>
 import StatsComponent from '@/components/StatsComponent.vue'
 import { onMounted, ref } from 'vue'
+import { RequestWrapper } from '@/internal/cryptoutils.ts'
+import { buildEndpoint } from '@/internal/apiService.ts'
 
-onMounted(() => updateStats())
+
+const stats = ref([])
+
+const fetchStats = async () => {
+    try {
+        const response = await RequestWrapper.cryptedFetch(buildEndpoint("game/data/set_score", {
+            method: "POST",
+            headers: {"accept": "application/json"},
+            body: JSON.stringify({
+                "timeTaken": localStorage.getItem('timeTaken'),
+                "level": localStorage.getItem('level'),
+                "health": localStorage.getItem('health'),
+                "mana": localStorage.getItem('mana'),
+                "defeatedEnemies": localStorage.getItem('defeatedEnemies'),
+                "usedEnhancements": localStorage.getItem('usedEnhancements'),
+            })
+        }))
+        if (!response.ok) {
+            throw new Error(`Errore HTTP: ${response.status}`)
+        }
+        stats.value = await response.json()
+    }
+    catch (error) {
+        console.error("errore nel fetch delle statistiche", error)
+    }
+}
+
+onMounted(() => fetchStats())
 
 </script>
 
 <template>
     <section id="view-game-stats">
         <h1>Game Stats</h1>
-        <StatsComponent />
+        <StatsComponent
+        v-for="stat in stats"
+        :key:stats.id
+        :stat="stat"
+        />
     </section>
 </template>
 
