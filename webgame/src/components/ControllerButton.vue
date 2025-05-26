@@ -13,6 +13,11 @@ const props = defineProps({
         require: true,
     },
 })
+
+const p = () => {
+    console.debug('ciao')
+    props.press()
+}
 </script>
 
 <template>
@@ -23,7 +28,7 @@ const props = defineProps({
             height: '48px',
             fontSize: 'var(--font-mid)',
         }"
-        @mousedown="props.press()"
+        @mousedown="p"
         @mouseup="props.release()"
     >
         {{ text }}

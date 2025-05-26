@@ -20,7 +20,7 @@ export class Ai {
         this.enemies = enemies
     }
 
-    private heuristic(pos: Vector2, dir: Vector2, a: Entity, goal: Entity): number {
+    heuristic(pos: Vector2, dir: Vector2, a: Entity, goal: Entity): number {
         if (!a.canMove(pos, dir)) {
             console.debug('works')
             return 9999999999
