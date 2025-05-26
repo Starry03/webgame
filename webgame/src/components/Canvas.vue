@@ -31,14 +31,14 @@
         <div id="boss-status" class="status" v-if="mappedBoss">
             <BossStatusBar
                 v-if="mappedBoss"
-                :health="mappedBoss.health"
-                :maxHealth="mappedBoss.maxHealth"
-                :mana="mappedBoss.mana"
-                :maxMana="mappedBoss.maxMana"
+                :health="mappedBoss.health ?? 0"
+                :maxHealth="mappedBoss.maxHealth ?? 0"
+                :mana="mappedBoss.mana ?? 0"
+                :maxMana="mappedBoss.maxMana ?? 0"
                 :cooldownQ="mappedBoss.cooldownQ"
                 :cooldownR="mappedBoss.cooldownR"
-                :maxCooldownQ="mappedBoss.maxCooldownQ"
-                :maxCooldownR="mappedBoss.maxCooldownR"
+                :maxCooldownQ="mappedBoss.maxCooldownQ ?? 0"
+                :maxCooldownR="mappedBoss.maxCooldownR ?? 0"
             />
         </div>
     </div>
@@ -94,7 +94,7 @@ const mappedPlayer = computed(() => {
 
 const mappedBoss = computed(() => {
     gameHandler.value?.time
-    const boss = gameHandler.value?.boss
+    const boss = gameHandler.value?.boss?.value
     if (!boss) return null
 
     return {
@@ -102,7 +102,6 @@ const mappedBoss = computed(() => {
         maxHealth: boss.maxHealth,
         mana: boss.mana,
         maxMana: boss.maxMana,
-        level: boss.exp,
         cooldownQ: boss.cooldowns.get(AnimationType.ATTACK_2),
         maxCooldownQ: boss.maxCooldownQ,
         cooldownR: boss.cooldowns.get(AnimationType.SPECIAL) ?? ref(0),
