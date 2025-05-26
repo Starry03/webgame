@@ -24,7 +24,7 @@ export class GameHandler {
     currentRoomObjects: Obj[]
     baseMapDim: Vector2 = new Vector2(800, 416)
     gameObjects: Obj[]
-    boss: Ref<Entity | undefined>
+    boss: Entity | undefined
     availableCharacters: Character[]
     currentRoom: number
     spawner: Spawner | null
@@ -56,7 +56,7 @@ export class GameHandler {
         this.bg_image = null
         this.gameObjects = []
         this.currentRoom = 1
-        this.boss = ref(undefined)
+        this.boss = undefined
         this.spawner = null
         this.ai = null
         this.usedEnhancement = 0
@@ -167,7 +167,7 @@ export class GameHandler {
         )
         if (bossStats === undefined)
             throw new Error('Boss character not found in available characters')
-        this.boss.value = new Gorg_red(
+        this.boss = new Gorg_red(
             this.canvas,
             this.ctx,
             bossStats.speed,
