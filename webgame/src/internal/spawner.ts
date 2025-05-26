@@ -110,8 +110,8 @@ export class Spawner {
         let spawnPos: Vector2 | null = null
         let attempt: Vector2 | null = null
         while (attempt === null) {
-            const x = Math.floor(Math.random() * this.canvas.width)
-            const y = Math.floor(Math.random() * this.canvas.height)
+            const x = Math.floor(Math.random() * (this.canvas.width - 50))
+            const y = Math.floor(Math.random() * (this.canvas.height - 50))
             attempt = new Vector2(x, y)
             this.gameObjects.forEach((obj: Obj) => {
                 if (attempt === null) return
