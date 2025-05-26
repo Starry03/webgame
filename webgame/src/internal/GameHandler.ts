@@ -96,9 +96,6 @@ export class GameHandler {
             this.router.push('/stats')
             return;
         }
-        else {
-            requestAnimationFrame(this.gameLoop)
-        }
     }
 
     changeRoom(room: number) {
