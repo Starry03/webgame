@@ -14,9 +14,6 @@ const props = defineProps({
     },
 })
 
-const p = () => {
-    props.press()
-}
 </script>
 
 <template>
@@ -27,8 +24,8 @@ const p = () => {
             height: '48px',
             fontSize: 'var(--font-mid)',
         }"
-        @mousedown="p()"
-        @mouseup="props.release()"
+        @touchstart="props.press()"
+        @touchend="props.release()"
     >
         {{ text }}
     </button>

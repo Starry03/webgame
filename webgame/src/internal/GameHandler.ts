@@ -139,7 +139,7 @@ export class GameHandler {
         this.gameObjects = [...this.currentRoomObjects, this.player]
         if (this.currentRoom === 5) {
             const bossStats: Character | undefined = this.availableCharacters.find(
-            (character: Character) => character.name === 'gorgone viola',
+                (character: Character) => character.name === 'gorgone viola',
             )
             if (bossStats === undefined)
                 throw new Error('Boss character not found in available characters')
