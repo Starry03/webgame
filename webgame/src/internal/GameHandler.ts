@@ -80,7 +80,7 @@ export class GameHandler {
     gameLoop(timestamp: number) {
         if (this.isGameOver.value) return
         
-        if (this.player.isDead || (this.boss.value && this.boss.value.isDead)) {
+        if (this.player.isDead || (this.boss && this.boss.isDead)) {
             if (!this.isGameOver.value) {
                 this.isGameOver.value = true
                 console.log('Game Over')
@@ -178,8 +178,6 @@ export class GameHandler {
 
         this.gameObjects = [...this.currentRoomObjects, this.player]
         if (this.currentRoom === 5) {
-            this.gameObjects.push(this.boss)
-            )
             if (bossStats === undefined)
                 throw new Error('Boss character not found in available characters')
             const bossEntity = new Gorg_red(
@@ -194,10 +192,10 @@ export class GameHandler {
             bossEntity.name = 'gorgone viola'
             bossEntity.pos = new Vector2(400, 200)
             bossEntity.custom_properties = { collidable: true }
-            this.boss.value = bossEntity
+            this.boss = bossEntity
             this.gameObjects.push(bossEntity)
         } else {
-            this.boss.value = undefined
+            this.boss = undefined
         }
         this.gameObjects.forEach((obj: Obj) => {
             obj.setup()
