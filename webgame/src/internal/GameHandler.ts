@@ -77,6 +77,14 @@ export class GameHandler {
         })
     }
 
+    addKey(key: string) {
+        this.keys.add(key)
+    }
+
+    removeKey(key: string) {
+        this.keys.delete(key)
+    }
+
     gameLoop(timestamp: number) {
         if (this.isGameOver.value) return
         
@@ -178,7 +186,8 @@ export class GameHandler {
 
         this.gameObjects = [...this.currentRoomObjects, this.player]
         if (this.currentRoom === 5) {
-            this.gameObjects.push(this.boss)
+            const bossStats: Character | undefined = this.availableCharacters.find(
+                (character: Character) => character.name === 'gorgone viola',
             )
             if (bossStats === undefined)
                 throw new Error('Boss character not found in available characters')
@@ -191,10 +200,7 @@ export class GameHandler {
                 bossStats.attack,
                 bossStats.defence,
             )
-            bossEntity.name = 'gorgone viola'
-            bossEntity.pos = new Vector2(400, 200)
-            bossEntity.custom_properties = { collidable: true }
-            this.boss.value = bossEntity
+            this.boss = bossEntity
             this.gameObjects.push(bossEntity)
         } else {
             this.boss.value = undefined

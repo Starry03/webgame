@@ -25,41 +25,31 @@ export class Spawner {
         this.ctx = ctx
         this.gameObjects = gameObjects
         this.enemies = enemies
-        console.debug(
-            'Spawner initialized with enemies:',
-            this.enemies.map((e) => e.name),
-        )
     }
 
     async spawn(number: number, gameHandler: GameHandler) {
-        const promises: Promise<void>[] = []
         for (let i = 0; i < number; i++) {
-            promises.push(
-                new Promise((resolve) => {
-                    const randomIndex = Math.floor(Math.random() * this.enemies.length)
-                    const enemy = this.enemies[randomIndex]
-                    const newEnemy = this.createEnemy(enemy)
-                    if (newEnemy === null) throw new Error('Enemy not found')
-                    newEnemy.setup()
-                    newEnemy.name = enemy.name
-                    newEnemy.setGameHandler(gameHandler)
-                    this.findSpawnPosition(newEnemy as Entity)
-                        .then((spawPos: Vector2) => {
-                            newEnemy.pos = spawPos
-                            this.gameObjects.push(newEnemy)
-                            console.debug('Spawned enemy:', newEnemy.name, newEnemy.pos)
-                            resolve()
-                        })
-                        .catch((error) => {
-                            console.error('Error finding spawn position:', error)
-                        })
-                }),
-            )
+            new Promise(() => {
+                const randomIndex = Math.floor(Math.random() * this.enemies.length)
+                const enemy = this.enemies[randomIndex]
+                const newEnemy = this.createEnemy(enemy)
+                if (newEnemy === null) throw new Error('Enemy not found')
+                newEnemy.setup()
+                newEnemy.name = enemy.name
+                newEnemy.setGameHandler(gameHandler)
+                this.findSpawnPosition(newEnemy as Entity)
+                    .then((spawPos: Vector2) => {
+                        newEnemy.pos = spawPos
+                        this.gameObjects.push(newEnemy)
+                    })
+                    .catch((error) => {
+                        console.error('Error finding spawn position:', error)
+                    })
+            })
         }
-        await Promise.all(promises)
     }
 
-    private createEnemy(enemy: Character) {
+    createEnemy(enemy: Character): Entity | null {
         switch (enemy.name) {
             case 'plant':
                 return new Plent(
@@ -116,7 +106,7 @@ export class Spawner {
         }
     }
 
-    private async findSpawnPosition(enemy: Entity): Promise<Vector2> {
+    async findSpawnPosition(enemy: Entity): Promise<Vector2> {
         let spawnPos: Vector2 | null = null
         let attempt: Vector2 | null = null
         while (attempt === null) {
