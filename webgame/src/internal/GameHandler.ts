@@ -111,15 +111,13 @@ export class GameHandler {
             if (obj.selectedFrames == undefined) return
             obj.update(timestamp, deltaTime)
         })
-        requestAnimationFrame(this.gameLoop)
+        
         if (this.isGameFinished()) {
             this.saveGameState()
             this.router.push('/stats')
             return;
         }
-        else {
-            requestAnimationFrame(this.gameLoop)
-        }
+        requestAnimationFrame(this.gameLoop)
     }
 
     changeRoom(room: number) {
@@ -127,7 +125,6 @@ export class GameHandler {
         this.gameObjects.forEach((obj: Obj) => obj.resetCollisions())
         this.currentRoomObjects = []
         this.gameObjects = []
-        this.boss = undefined
         this.bg_image = null
         this.initialize()
     }
@@ -167,7 +164,7 @@ export class GameHandler {
         )
         if (bossStats === undefined)
             throw new Error('Boss character not found in available characters')
-        this.boss = new Gorg_red(
+        this.boss.value = new Gorg_red(
             this.canvas,
             this.ctx,
             bossStats.speed,
@@ -179,8 +176,6 @@ export class GameHandler {
 
         this.gameObjects = [...this.currentRoomObjects, this.player]
         if (this.currentRoom === 5) {
-            this.gameObjects.push(this.boss)
-            )
             if (bossStats === undefined)
                 throw new Error('Boss character not found in available characters')
             const bossEntity = new Gorg_red(
@@ -259,7 +254,7 @@ export class GameHandler {
     }
 
     isGameFinished():  boolean {
-        if ((this.boss && this.boss.isDead) || this.player.isDead) {
+        if ((this.boss && this.boss.value && this.boss.value.isDead) || this.player.isDead) {
             console.log("game is finished!")
             return true;
         }
