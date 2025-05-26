@@ -9,7 +9,7 @@ const stats = ref([])
 
 const fetchStats = async () => {
     try {
-        const response = await RequestWrapper.cryptedFetch(buildEndpoint("game/data/set_score", {
+        const response = await RequestWrapper.cryptedFetch(buildEndpoint("/game/data/set_score", {
             method: "POST",
             headers: {"accept": "application/json"},
             body: JSON.stringify({
@@ -40,7 +40,6 @@ onMounted(() => fetchStats())
         <h1>Game Stats</h1>
         <StatsComponent
         v-for="stat in stats"
-        :key:stats.id
         :stat="stat"
         />
     </section>
