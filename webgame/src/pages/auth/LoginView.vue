@@ -81,6 +81,7 @@ async function goHome() {
 async function main_req(path: string): Promise<{ session: Session; token: Token }> {
     const f = await AuthService.login(path, username.value, password.value)
     if (f.status === 409) throw new Error('User already exists')
+    if (f.status === 404) throw new Error("User doesn't exist")
     if (f.status !== 200) throw new Error('Unauthorized')
     try {
         const res = await f.json()
@@ -134,12 +135,13 @@ async function delete_account() {
     login_error.value = null
     try {
         await main_req(import.meta.env.VITE_DELETE_PATH ?? '')
+        window.alert('user deleted')
     } catch (error) {
         console.error(error)
         login_error.value = error as Error
+        isLogging.value = false
+        window.alert('user not deleted')
     }
-    window.alert('user deleted')
-    isLogging.value = false
 }
 </script>
 

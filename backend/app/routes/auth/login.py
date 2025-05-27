@@ -10,6 +10,7 @@ from jwt import InvalidTokenError
 from starlette.status import (
     HTTP_401_UNAUTHORIZED,
     HTTP_409_CONFLICT,
+    HTTP_404_NOT_FOUND,
     HTTP_500_INTERNAL_SERVER_ERROR,
 )
 from cryptography.hazmat.primitives import serialization
@@ -50,8 +51,9 @@ async def delete(request: Request):
             status_code=HTTP_401_UNAUTHORIZED,
         )
     username = current_user[1]
-    UserManager.delete_user(username)
-    return JSONResponse(status_code=200, content={"detail": "user deleted"})
+    if (not UserManager.delete_user(username)):
+        return JSONResponse(status_code=HTTP_404_NOT_FOUND, content={"detail": "user not found"})
+    return JSONResponse(content={"detail": "user deleted"})
 
 
 @router.get("/public-key", response_class=JSONResponse)
