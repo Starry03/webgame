@@ -289,7 +289,7 @@ export class GameHandler {
             mana: Number(this.player.mana.toFixed(2)),
             defeatedEnemies: this.getDefeatedEnemies(),
             usedEnhancements: this.getUsedEnhancement(),
-            timeTaken: Number(this.time.toFixed(2)),
+            timeTaken: parseFloat(this.time.toFixed(2))
         } as Stats
         localStorage.setItem(prefixed(Storage_e.STATS), JSON.stringify(gameState))
     }
