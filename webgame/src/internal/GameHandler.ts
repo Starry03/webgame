@@ -312,35 +312,6 @@ export class GameHandler {
             timeTaken: this.time,
         }
         localStorage.setItem(prefixed('gameState'), JSON.stringify(gameState))
-        this.sendGameStateToBackend(gameState)
-    }
-
-    private async sendGameStateToBackend(gameState: any) {
-        try {
-            const dataToSend = {
-                "timeTaken": gameState.timeTaken,
-                "level": gameState.level,
-                "health": gameState.health,
-                "mana": gameState.mana,
-                "defeatedEnemies": gameState.defeatedEnemies,
-                "usedEnhancements": gameState.usedEnhancements,
-            }
-            const response = await RequestWrapper.cryptedFetch(buildEndpoint("/game/data/set_score"), {
-                method: "POST",
-                headers: { "accept": "application/json" },
-                body: JSON.stringify(dataToSend),
-            });
-
-            if (!response.ok) {
-                throw new Error(`GameHandler: Errore HTTP nel salvataggio: ${response.status}`);
-            }
-
-            const responseData = await response.json();
-            console.log('response data', responseData);
-        }
-        catch (error) {
-            console.error('Errore durante invio dei dati al backend',error);
-        }
     }
 
 }
