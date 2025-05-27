@@ -177,6 +177,11 @@ gorgone rossa	45	90	30	800	1000	Er boss	f
 
 COPY public.score (time_taken, level, health, used_enhancments, defeated_enemies, id, owner, mana) FROM stdin;
 13	101	0	0	2	1	31	400
+17	201	0	0	3	2	33	351
+17	201	0	0	3	3	33	351
+17	201	0	0	3	4	33	351
+17	201	0	0	3	5	33	351
+17	201	0	0	3	6	33	351
 \.
 
 
@@ -204,6 +209,7 @@ COPY public.session (id, key, expires_at) FROM stdin;
 479	B9JyCLkvE3kVTiiubI3rZ925FMLQRzs7KbwJU65kNNU=	2025-05-28 12:31:43.848795
 480	IyevuBjtClX/uGsbAnNiHY3OpLWnIGK3xHjStwmXwDQ=	2025-05-28 12:37:38.033038
 481	UhhjY6H/7fa0lxbSda07E34h9BLOSM2OyeUIKna/+pQ=	2025-05-28 12:49:08.223905
+482	ygLmm/ugGBVsWDJl36s8fVwTVXAW94Lw1gXdqpmuJJw=	2025-05-28 12:49:40.983865
 \.
 
 
@@ -213,7 +219,6 @@ COPY public.session (id, key, expires_at) FROM stdin;
 
 COPY public."user" (id, username, password) FROM stdin;
 31	starry2	1b8b7d51173804baa165f018b7e401476e6f05d2e1fdb08e9cf605aa1f85cd84
-32	niggahairyballz69	1b8b7d51173804baa165f018b7e401476e6f05d2e1fdb08e9cf605aa1f85cd84
 33	starry	1b8b7d51173804baa165f018b7e401476e6f05d2e1fdb08e9cf605aa1f85cd84
 \.
 
@@ -222,14 +227,14 @@ COPY public."user" (id, username, password) FROM stdin;
 -- Name: score_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.score_id_seq', 1, true);
+SELECT pg_catalog.setval('public.score_id_seq', 6, true);
 
 
 --
 -- Name: session_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.session_id_seq', 481, true);
+SELECT pg_catalog.setval('public.session_id_seq', 482, true);
 
 
 --
