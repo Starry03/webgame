@@ -70,7 +70,7 @@ class AESDecryptionMiddleware(BaseHTTPMiddleware):
         decrypted_body = AESManager.decrypt(
             base64.b64decode(body), base64.b64decode(session_key)
         ).decode()
-        request._body = decrypted_body
+        request._body = decrypted_body.encode("utf-8")
 
     def decrypt_token(self, request: Request, session_key: str, encrypted_token: str):
         try:

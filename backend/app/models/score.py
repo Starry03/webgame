@@ -4,7 +4,7 @@ from pydantic import BaseModel
 class Score(BaseModel):
     id: int
     owner: int
-    timeTaken: int
+    timeTaken: float
     level: int
     usedEnhancments: int
     defeatedEnemies: int

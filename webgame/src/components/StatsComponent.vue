@@ -1,37 +1,39 @@
-<script setup>
+<script setup lang="ts">
+import { type Stats } from '@/internal/types'
 
 const props = defineProps({
-    stats: Object,
-    required: true
+    stats: {
+        type: Object as () => Stats,
+        required: true,
+    },
 })
-
 </script>
 
 <template>
     <section id="level-stats">
         <div class="item-stats">
             <h2>Time taken</h2>
-            <p id="time-taken">{{ props.timeTaken }}</p>
+            <p id="time-taken">{{ props.stats.timeTaken }}</p>
         </div>
         <div class="item-stats">
             <h2>Level</h2>
-            <p id="level">{{ props.level }}</p>
+            <p id="level">{{ props.stats.level }}</p>
         </div>
         <div class="item-stats">
             <h2>Used Enhancements</h2>
-            <p id="used-enhancement">{{ props.usedEnhancement }}</p>
+            <p id="used-enhancement">{{ props.stats.usedEnhancements }}</p>
         </div>
         <div class="item-stats">
             <h2>Defeated enemies</h2>
-            <p id="defeated-enemies">{{ props.defeatedEnemies }}</p>
+            <p id="defeated-enemies">{{ props.stats.defeatedEnemies }}</p>
         </div>
         <div class="item-stats">
             <h2>Health</h2>
-            <p id="health-percentage">{{ props.healthPercentage }}</p>
+            <p id="health-percentage">{{ props.stats.health }}</p>
         </div>
         <div class="item-stats">
             <h2>Mana</h2>
-            <p id="mana-percentage">{{ props.manaPercentage }}</p>
+            <p id="mana-percentage">{{ props.stats.mana }}</p>
         </div>
     </section>
 </template>
@@ -55,7 +57,6 @@ p {
     margin-right: 10px;
     margin-bottom: 10px;
 }
-
 
 .item-stats {
     margin-bottom: 15px;

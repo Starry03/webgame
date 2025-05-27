@@ -2,7 +2,7 @@ import { Entity } from './Entity'
 import { getRoomPath } from '@/internal/mapLogic/engine/MapUtils.ts'
 import { loadMapObjects } from '@/internal/mapLogic/engine/utils/ObjectLayerUtils.ts'
 import type { Obj } from './Obj'
-import { Storage_e, Vector2, type Character } from './types'
+import { Storage_e, Vector2, type Character, type Stats } from './types'
 import { Collider } from './collision'
 import { Gorg_red } from './Gorg_red'
 import { prefixed } from './cryptoutils'
@@ -136,11 +136,10 @@ export class GameHandler {
     destructor() {
         window.removeEventListener('keydown', this.listener)
         window.removeEventListener('keyup', this.listenerhandler)
-        if(this.frameId) {
+        if (this.frameId) {
             cancelAnimationFrame(this.frameId)
             this.frameId = null
         }
-
     }
 
     changeRoom(room: number) {
@@ -157,7 +156,7 @@ export class GameHandler {
         const room = this.currentRoom < 5 ? `room${this.currentRoom}` : 'boss_room'
         this.currentRoomPath = getRoomPath(room)
 
-        if(this.currentRoom == 1) {
+        if (this.currentRoom == 1) {
             this.time = 0
             this.player.health = this.player.maxHealth
             this.health.value = this.player.maxHealth
@@ -309,8 +308,7 @@ export class GameHandler {
             defeatedEnemies: this.getDefeatedEnemies(),
             usedEnhancements: this.getUsedEnhancement(),
             timeTaken: this.time,
-        }
-        localStorage.setItem('gameState', JSON.stringify(gameState))
+        } as Stats
+        localStorage.setItem(prefixed(Storage_e.STATS), JSON.stringify(gameState))
     }
-
 }
