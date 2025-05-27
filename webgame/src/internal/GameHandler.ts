@@ -280,22 +280,6 @@ export class GameHandler {
         this.defeatedEnemies = defeatedEnemies
     }
 
-    isGameFinished(): boolean {
-        if ((this.boss && this.boss.value && this.boss.value.isDead) || this.player.isDead) {
-            console.log('game is finished!')
-            return true
-        } else {
-            return false
-        }
-    }
-
-    getTimeTaken(): string {
-        const totalSeconds = Math.floor(this.time)
-        const min = Math.floor(totalSeconds / 60)
-        const sec = totalSeconds % 60
-        return `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`
-    }
-
     saveGameState() {
         if (!this || !this.player) return
 
