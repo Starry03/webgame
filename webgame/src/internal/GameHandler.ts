@@ -301,11 +301,11 @@ export class GameHandler {
 
         const gameState = {
             level: this.getCurrentLevel(),
-            health: this.player.health,
-            mana: this.player.mana,
+            health: Number(this.player.health.toFixed(2)),
+            mana: Number(this.player.mana.toFixed(2)),
             defeatedEnemies: this.getDefeatedEnemies(),
             usedEnhancements: this.getUsedEnhancement(),
-            timeTaken: this.time,
+            timeTaken: Number(this.time.toFixed(2)),
         } as Stats
         localStorage.setItem(prefixed(Storage_e.STATS), JSON.stringify(gameState))
     }
