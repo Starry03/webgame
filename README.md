@@ -45,6 +45,9 @@ npm run dev
 
 ### Server
 
+private key in `backend/auth/private_key.pem` file
+
+public key in `backend/auth/public_key.pem` file
 
 env variables in `backend/.env` file
 
