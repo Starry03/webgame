@@ -1,41 +1,37 @@
-<script setup>
+<script setup lang="ts">
 import StatsComponent from '@/components/StatsComponent.vue'
 import { onMounted, ref } from 'vue'
-import { RequestWrapper, prefixed } from '@/internal/cryptoutils.ts'
+import { prefixed, RequestWrapper } from '@/internal/cryptoutils.ts'
 import { buildEndpoint } from '@/internal/apiService.ts'
+import { Storage_e, type Stats } from '@/internal/types'
 
-
-const stats = ref([])
+const stats = ref({} as Stats)
 
 const fetchStats = async () => {
     try {
-        const response = await RequestWrapper.cryptedFetch(buildEndpoint("/game/data/set_score"), {
-            method: "GET",
-            headers: {"accept": "application/json"},
+        const statsData: string | null = localStorage.getItem(prefixed(Storage_e.STATS))
+        if (!statsData) return
+        const response = await RequestWrapper.cryptedFetch(buildEndpoint('/game/data/set_score'), {
+            method: 'POST',
+            headers: { accept: 'application/json' },
+            body: statsData,
         })
         if (!response.ok) {
-            const errorBody = await response.text();
-            console.error("DEBUG - Raw errorBody from response.text():", errorBody);
-            throw new Error(`ViewStats: Errore HTTP nel recupero delle statistiche: ${response.status} - ${response.statusText}. Dettagli: ${errorBody}`);
+            throw new Error(`Errore HTTP: ${response.status}`)
         }
-        stats.value = await response.json()
-    }
-    catch (error) {
-        console.error("errore nel fetch delle statistiche", error)
+        stats.value = JSON.parse(statsData) as Stats
+    } catch (error) {
+        console.error('errore nel fetch delle statistiche', error)
     }
 }
 
 onMounted(() => fetchStats())
-
 </script>
 
 <template>
     <section id="view-game-stats">
         <h1>Game Stats</h1>
-        <StatsComponent
-        v-for="stat in stats"
-        :stats="stat"
-        />
+        <StatsComponent :stats="stats" />
     </section>
 </template>
 

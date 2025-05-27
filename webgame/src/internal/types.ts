@@ -20,8 +20,9 @@ export enum Storage_e {
     SERVER_PUBLIC_KEY = 'server_public_key',
     SESSION = 'session',
     TOKEN = 'token',
-    USER = 'aitdt_user',
+    USER = 'user',
     CHARACTERS = 'characters',
+    STATS = 'gameState',
 }
 
 export enum AttackType {
@@ -86,4 +87,13 @@ export class Vector2 {
     toString(): string {
         return `(${this.x}, ${this.y})`
     }
+}
+
+export type Stats = {
+    timeTaken: number
+    level: number
+    health: number
+    mana: number
+    defeatedEnemies: number
+    usedEnhancements: number
 }

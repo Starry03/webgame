@@ -25,7 +25,10 @@ class AESManager:
                     "INSERT INTO public.session (key, expires_at) VALUES (:sym_key, :expires_at) RETURNING id"
                 ),
                 {"sym_key": b64key, "expires_at": exp_time},
-            ).fetchone()[0]
+            ).fetchone()
+            if res is None:
+                raise Exception("Failed to create session")
+            res = res[0]
             session.commit()
             return UserSession(id=res, sym_key=b64key, expiration_date=exp_time)
 

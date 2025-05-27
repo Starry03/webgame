@@ -43,11 +43,11 @@ ALTER TABLE public.classe OWNER TO postgres;
 --
 
 CREATE TABLE public.score (
-    "timeTaken" integer DEFAULT 0 NOT NULL,
+    time_taken integer DEFAULT 0 NOT NULL,
     level integer DEFAULT 0 NOT NULL,
     health integer NOT NULL,
-    "usedEnhancments" integer DEFAULT 0 NOT NULL,
-    "defeatedEnemies" integer DEFAULT 0 NOT NULL,
+    used_enhancments integer DEFAULT 0 NOT NULL,
+    defeated_enemies integer DEFAULT 0 NOT NULL,
     id integer NOT NULL,
     owner integer NOT NULL,
     mana integer NOT NULL
@@ -175,7 +175,8 @@ gorgone rossa	45	90	30	800	1000	Er boss	f
 -- Data for Name: score; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.score ("timeTaken", level, health, "usedEnhancments", "defeatedEnemies", id, owner, mana) FROM stdin;
+COPY public.score (time_taken, level, health, used_enhancments, defeated_enemies, id, owner, mana) FROM stdin;
+13	101	0	0	2	1	31	400
 \.
 
 
@@ -200,6 +201,9 @@ COPY public.session (id, key, expires_at) FROM stdin;
 476	Fkkuyr1tIJqQw8TgeYz47JSQOqExuXVfVdAUWDJ5RS4=	2025-05-27 18:56:50.518148
 477	TKfo8WDzmkhQNlMGaLRf+eDTVCUkVKhQmZ6d84RUdiA=	2025-05-27 18:57:01.826707
 478	W/RW0izfoz1pptYQITBL1cG+ONqchQnLJSGMGWjVADc=	2025-05-27 18:57:16.817464
+479	B9JyCLkvE3kVTiiubI3rZ925FMLQRzs7KbwJU65kNNU=	2025-05-28 12:31:43.848795
+480	IyevuBjtClX/uGsbAnNiHY3OpLWnIGK3xHjStwmXwDQ=	2025-05-28 12:37:38.033038
+481	UhhjY6H/7fa0lxbSda07E34h9BLOSM2OyeUIKna/+pQ=	2025-05-28 12:49:08.223905
 \.
 
 
@@ -208,8 +212,9 @@ COPY public.session (id, key, expires_at) FROM stdin;
 --
 
 COPY public."user" (id, username, password) FROM stdin;
-27	starry	1b8b7d51173804baa165f018b7e401476e6f05d2e1fdb08e9cf605aa1f85cd84
 31	starry2	1b8b7d51173804baa165f018b7e401476e6f05d2e1fdb08e9cf605aa1f85cd84
+32	niggahairyballz69	1b8b7d51173804baa165f018b7e401476e6f05d2e1fdb08e9cf605aa1f85cd84
+33	starry	1b8b7d51173804baa165f018b7e401476e6f05d2e1fdb08e9cf605aa1f85cd84
 \.
 
 
@@ -217,21 +222,21 @@ COPY public."user" (id, username, password) FROM stdin;
 -- Name: score_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.score_id_seq', 1, false);
+SELECT pg_catalog.setval('public.score_id_seq', 1, true);
 
 
 --
 -- Name: session_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.session_id_seq', 478, true);
+SELECT pg_catalog.setval('public.session_id_seq', 481, true);
 
 
 --
 -- Name: user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.user_id_seq', 31, true);
+SELECT pg_catalog.setval('public.user_id_seq', 33, true);
 
 
 --
