@@ -60,19 +60,22 @@ onMounted(() => fetchStats())
 }
 
 #back-to-home-button {
-    margin-top: 0.5rem;
-    cursor: pointer;
-    border-radius: 8px;
-    padding: 0.75rem 1rem;
-    width: 150px;
     background-color: red;
-    font-size: 1rem;
-    transition: all 0.2s ease-in-out;
+    color: white;
+    font-weight: bold;
+    padding: 10px 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 #back-to-home-button:hover {
-    transform: scale(1.05);
+    transform: scale(1.1);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
 }
+
 
 @media (orientation: portrait) {
     #view-game-stats {
@@ -82,7 +85,7 @@ onMounted(() => fetchStats())
 
 @media (orientation: landscape) {
     #view-game-stats {
-        padding: 5rem 5rem;
+        padding: 1rem 1rem;
     }
 }
 </style>
