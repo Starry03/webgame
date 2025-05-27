@@ -108,7 +108,6 @@ export class AESUtils {
         return session_ret
     }
 
-    /* TODO: check*/
     static isExpired(session: { token: Token; session: Session }): boolean {
         const expirationDate = new Date(session.session.expiration_date)
         const currentDate = new Date()
