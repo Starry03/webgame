@@ -4,8 +4,10 @@ import { onMounted, ref } from 'vue'
 import { prefixed, RequestWrapper } from '@/internal/cryptoutils.ts'
 import { buildEndpoint } from '@/internal/apiService.ts'
 import { Storage_e, type Stats } from '@/internal/types'
+import {useRouter} from 'vue-router'
 
 const stats = ref({} as Stats)
+const router = useRouter()
 
 const fetchStats = async () => {
     try {
@@ -25,6 +27,10 @@ const fetchStats = async () => {
     }
 }
 
+const backToHome = () => {
+    router.push("/")
+}
+
 onMounted(() => fetchStats())
 </script>
 
@@ -32,23 +38,51 @@ onMounted(() => fetchStats())
     <section id="view-game-stats">
         <h1>Game Stats</h1>
         <StatsComponent :stats="stats" />
+        <button id="back-to-home-button" @click="backToHome">HOME</button>
     </section>
 </template>
 
 <style scoped>
 #view-game-stats {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     background-color: black;
     color: white;
-    padding: 30px;
+    padding: 1rem;
     border-radius: 10px;
-    width: 80%;
-    max-width: 400px;
-    margin: 0 auto;
     text-align: center;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 1000;
+}
+
+#back-to-home-button {
+    margin-top: 0.5rem;
+    cursor: pointer;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    width: 150px;
+    background-color: red;
+    font-size: 1rem;
+    transition: all 0.2s ease-in-out;
+}
+
+#back-to-home-button:hover {
+    transform: scale(1.05);
+}
+
+@media (orientation: portrait) {
+    #view-game-stats {
+        padding: 5rem 5rem;
+    }
+}
+
+@media (orientation: landscape) {
+    #view-game-stats {
+        padding: 5rem 5rem;
+    }
 }
 </style>

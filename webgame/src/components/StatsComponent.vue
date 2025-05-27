@@ -40,35 +40,43 @@ const props = defineProps({
 
 <style scoped>
 h2 {
-    font-size: 1.5em;
-    margin-bottom: 20px;
+    font-size: 1.5rem;
     font-family: 'Press Start 2P', cursive;
 }
 
 h1 {
     font-weight: bold;
     color: white;
-    font-size: 1.2em;
+    font-size: 1rem;
     font-family: 'Press Start 2P', cursive;
 }
 
 p {
     display: inline-block;
-    margin-right: 10px;
-    margin-bottom: 10px;
 }
 
 .item-stats {
-    margin-bottom: 15px;
+    margin-bottom: 3rem;
 }
 
-#health-percentage:disabled {
-    background-color: crimson;
+#health-percentage {
+    color: crimson;
     cursor: not-allowed;
 }
 
-#mana-percentage:disabled {
-    background-color: cyan;
+#mana-percentage {
+    color: cyan;
     cursor: not-allowed;
+}
+
+#level {
+    color: green;
+    cursor: not-allowed;
+}
+
+@media (orientation: landscape) {
+    .item-stats {
+        margin-bottom: 1rem;
+    }
 }
 </style>
