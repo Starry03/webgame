@@ -16,7 +16,7 @@
 
 @media screen and (max-height: 600px) {
   :root {
-    font-size: 12px;
+    font-size: 10px;
   }
 
   .button {
