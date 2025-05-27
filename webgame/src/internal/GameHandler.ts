@@ -65,7 +65,7 @@ export class GameHandler {
         this.usedEnhancement = 0
         this.defeatedEnemies = 0
         this.router = useRouter()
-        this.timeTaken = 0
+        this.timeTaken = performance.now() / 1000
         this.time = 0
         this.health = ref<number>(this.player.health)
         this.mana = ref<number>(this.player.mana)
@@ -152,12 +152,10 @@ export class GameHandler {
     }
 
     async initialize() {
-        this.timeTaken = performance.now() / 1000
         const room = this.currentRoom < 5 ? `room${this.currentRoom}` : 'boss_room'
         this.currentRoomPath = getRoomPath(room)
 
         if (this.currentRoom == 1) {
-            this.time = 0
             this.player.health = this.player.maxHealth
             this.health.value = this.player.maxHealth
         }
