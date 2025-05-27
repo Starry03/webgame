@@ -1,7 +1,6 @@
 import { AnimatedObject } from '@/internal/mapLogic/classes/AnimatedObject'
 import { NotAnimatedObject } from '@/internal/mapLogic/classes/NotAnimatedObject'
 import {AnimationType, Vector2} from '@/internal/types.ts';
-import * as pako from 'pako';
 import {Door} from '@/internal/mapLogic/objects/door/Door'
 import type { Obj } from '@/internal/Obj';
 import {SwitchEntrance} from '@/internal/mapLogic/objects/SwitchEntrance';
