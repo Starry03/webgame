@@ -2,7 +2,7 @@
 
 ## About
 
-Webgame made using vite, ts, postgresql, fastapi for a university exam.
+Webgame made using vite, ts, postgresql and fastapi for a university exam.
 
 The repo is no longer mantained.
 
